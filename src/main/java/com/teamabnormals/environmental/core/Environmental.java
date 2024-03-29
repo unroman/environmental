@@ -73,6 +73,7 @@ public class Environmental {
 		EnvironmentalConfiguredFeatures.CONFIGURED_FEATURES.register(bus);
 		EnvironmentalPlacedFeatures.PLACED_FEATURES.register(bus);
 		EnvironmentalNoiseParameters.NOISE_PARAMETERS.register(bus);
+		EnvironmentalPlacementModifierTypes.PLACEMENT_MODIFIER_TYPES.register(bus);
 		EnvironmentalAttributes.ATTRIBUTES.register(bus);
 		EnvironmentalMobEffects.MOB_EFFECTS.register(bus);
 		EnvironmentalMenuTypes.MENU_TYPES.register(bus);

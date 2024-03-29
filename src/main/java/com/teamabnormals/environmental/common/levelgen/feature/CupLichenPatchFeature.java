@@ -24,7 +24,7 @@ public class CupLichenPatchFeature extends Feature<NoneFeatureConfiguration> {
 		BlockPos origin = context.origin();
 
 		int r = this.getRadius();
-		int s = this. getYSpread();
+		int s = this.getYSpread();
 
 		boolean place = false;
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
@@ -57,12 +57,12 @@ public class CupLichenPatchFeature extends Feature<NoneFeatureConfiguration> {
 	}
 
 	protected int getCups(double distance, RandomSource random) {
-		int cups = distance < 0.2D ? 3 : distance < 0.4D ? 2 : distance < 0.7D ? 1 : 0;
+		int cups = distance < 0.2D ? 3 : distance < 0.35D ? 2 : distance < 0.5D ? 1 : 0;
 
 		float f = random.nextFloat();
-		if (f < 0.5F)
+		if (f < 0.4F)
 			cups--;
-		else if (f < 0.7F)
+		else if (f < 0.8F)
 			cups++;
 
 		return Mth.clamp(cups, 0, 4);

@@ -18,12 +18,12 @@ public class SmallCupLichenPatchFeature extends CupLichenPatchFeature {
 
 	@Override
 	protected int getCups(double distance, RandomSource random) {
-		int cups = distance < 0.4D ? 2 : distance < 0.7D ? 1 : 0;
+		int cups = distance < 0.3D ? 2 : distance < 0.5D ? 1 : 0;
 
 		float f = random.nextFloat();
-		if (f < 0.5F)
+		if (f < 0.4F)
 			cups--;
-		else if (f < 0.6F)
+		else if (f < 0.7F)
 			cups++;
 
 		return Mth.clamp(cups, 0, 4);

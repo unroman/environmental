@@ -63,6 +63,7 @@ public class EnvironmentalGeneration {
 
 	public static void pineBarrens(BiomeGenerationSettings.Builder generation, boolean snowy, boolean oldGrowth) {
 		OverworldBiomes.globalOverworldGeneration(generation);
+		generation.addFeature(Decoration.VEGETAL_DECORATION, PATCH_CUP_LICHEN_NOISE.getHolder().get());
 		BiomeDefaultFeatures.addFerns(generation);
 		BiomeDefaultFeatures.addDefaultOres(generation);
 		BiomeDefaultFeatures.addDefaultSoftDisks(generation);
@@ -72,7 +73,6 @@ public class EnvironmentalGeneration {
 			generation.addFeature(Decoration.VEGETAL_DECORATION, GRAINY_COARSE_DIRT.getHolder().get());
 			generation.addFeature(Decoration.VEGETAL_DECORATION, FALLEN_PINE_TREE.getHolder().get());
 		} else {
-			// generation.addFeature(Decoration.VEGETAL_DECORATION, PATCH_TALL_GRASS_PINE_BARRENS.getHolder().get());
 			generation.addFeature(Decoration.VEGETAL_DECORATION, FALLEN_TALL_PINE_TREE.getHolder().get());
 		}
 		generation.addFeature(Decoration.VEGETAL_DECORATION, oldGrowth ? TREES_OLD_GROWTH_PINE_BARRENS.getHolder().get() : TREES_PINE_BARRENS.getHolder().get());
