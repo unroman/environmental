@@ -11,10 +11,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -32,11 +32,12 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -45,6 +46,7 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -56,9 +58,8 @@ public class Tapir extends Animal {
 	private static final EntityDataAccessor<Boolean> IS_SNIFFING = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_GRAZING = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Optional<BlockPos>> FLORA_POS = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
-	private static final EntityDataAccessor<Optional<BlockState>> FLORA_STATE = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BLOCK_STATE);
 
-	private int forgetFloraTime;
+	private Item floraItem;
 	private boolean running;
 
 	private int sniffTimer;
@@ -99,17 +100,14 @@ public class Tapir extends Animal {
 		this.entityData.define(IS_SNIFFING, false);
         this.entityData.define(IS_GRAZING, false);
 		this.entityData.define(FLORA_POS, Optional.empty());
-		this.entityData.define(FLORA_STATE, Optional.empty());
 	}
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("BabyPattern", this.hasBabyPattern());
-		BlockState florastate = this.getFloraState();
-		if (florastate != null) {
-			compound.put("FloraState", NbtUtils.writeBlockState(florastate));
-		}
+		if (this.floraItem != null)
+			compound.putString("FloraItem", ForgeRegistries.ITEMS.getKey(this.floraItem).toString());
 		BlockPos florapos = this.getFloraPos();
 		if (florapos != null) {
 			compound.putInt("FloraX", florapos.getX());
@@ -123,11 +121,9 @@ public class Tapir extends Animal {
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setHasBabyPattern(compound.getBoolean("BabyPattern"));
-		if (compound.contains("FloraState", 10)) {
-			BlockState florastate = NbtUtils.readBlockState(compound.getCompound("FloraState"));
-			if (!florastate.isAir())
-				this.setFloraState(florastate);
-		}
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("FloraItem")));
+		if (item != Items.AIR)
+			this.floraItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("FloraItem")));
 		if (compound.contains("FloraX", 99) && compound.contains("FloraY", 99) && compound.contains("FloraZ", 99)) {
 			BlockPos blockpos = new BlockPos(compound.getInt("FloraX"), compound.getInt("FloraY"), compound.getInt("FloraZ"));
 			this.setFloraPos(blockpos);
@@ -138,12 +134,8 @@ public class Tapir extends Animal {
 	public void stopTracking() {
 		this.setTrackingTime(0);
 		this.setFloraPos(null);
-		this.setFloraState(null);
+		this.floraItem = null;
 		this.loveCause = null;
-	}
-
-	public boolean isTrackingFlora() {
-		return this.hasFloraPos() && this.hasFloraState() && this.getTrackingTime() > 0;
 	}
 
 	public int getTrackingTime() {
@@ -198,20 +190,12 @@ public class Tapir extends Animal {
 		this.entityData.set(FLORA_POS, Optional.ofNullable(pos));
 	}
 
-	public boolean hasFloraState() {
-		return this.getFloraState() != null;
+	public Item getFloraItem() {
+		return this.floraItem;
 	}
 
-	public BlockState getFloraState() {
-		return this.entityData.get(FLORA_STATE).orElse(null);
-	}
-
-	public void setFloraState(BlockState state) {
-		this.entityData.set(FLORA_STATE, Optional.ofNullable(state));
-	}
-
-	public Block getFloraBlock() {
-		return this.getFloraState() != null ? this.getFloraState().getBlock() : null;
+	public boolean hasFloraItem() {
+		return this.floraItem != null;
 	}
 
     public float getSniffAmount(float partialTick) {
@@ -238,11 +222,11 @@ public class Tapir extends Animal {
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof BlockItem blockitem && !this.isBaby() && this.isFood(stack)) {
-			if (!this.hasFloraState()) {
+			if (this.getTrackingTime() <= 0) {
 				if (!this.level.isClientSide()) {
-					this.setFloraState(blockitem.getBlock().defaultBlockState());
+					this.floraItem = blockitem;
 					this.loveCause = player.getUUID();
-					this.forgetFloraTime = 300;
+					this.setTrackingTime(300);
 					this.level.broadcastEntityEvent(this, (byte) 4);
 				}
 				return InteractionResult.sidedSuccess(this.level.isClientSide);
@@ -291,21 +275,23 @@ public class Tapir extends Animal {
 		super.aiStep();
 
 		if (!this.level.isClientSide()) {
-			if (!this.isTrackingFlora() && !this.isSniffing() && this.forgetFloraTime > 0) {
-				this.forgetFloraTime--;
-				if (this.forgetFloraTime == 0)
-					this.stopTracking();
-			}
+			if (this.getTrackingTime() > 0) {
+				if (this.hasFloraPos()) {
+					if (!this.isGrazing()) {
+						if (this.isLeashed())
+							this.setTrackingTime(this.getTrackingTime() - 3);
+						else
+							this.setTrackingTime(this.getTrackingTime() - 1);
 
-            if (this.getTrackingTime() > 0 && !this.isGrazing()) {
-				if (this.isLeashed())
-                	this.setTrackingTime(this.getTrackingTime() - 3);
-				else
+						if (this.getTrackingTime() == 0)
+							this.stopTracking();
+					}
+				} else if (!this.isSniffing()) {
 					this.setTrackingTime(this.getTrackingTime() - 1);
-
-                if (this.getTrackingTime() == 0)
-                    this.stopTracking();
-            }
+					if (this.getTrackingTime() == 0)
+						this.stopTracking();
+				}
+			}
 
 			if (this.isSniffing()) {
 				if (this.sniffTimer-- <= 0) {
@@ -316,11 +302,11 @@ public class Tapir extends Animal {
 				this.sniffTimer = 0;
 			}
 
-            if (this.tickCount % 20 == 0 && this.isGrazing() && this.hasFloraState()) {
+            if (this.tickCount % 20 == 0 && this.isGrazing() && this.hasFloraPos()) {
                 this.playSound(SoundEvents.GENERIC_EAT, 0.5F + 0.5F * (float) this.random.nextInt(2), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 this.level.broadcastEntityEvent(this, (byte) 7);
             }
-		} else if (this.tickCount % 10 == 0 && this.isTrackingFlora()) {
+		} else if (this.tickCount % 10 == 0 && this.getTrackingTime() > 0 && this.hasFloraItem()) {
 			double d0 = random.nextGaussian() * 0.02D;
 			double d1 = random.nextGaussian() * 0.02D;
 			double d2 = random.nextGaussian() * 0.02D;
@@ -348,16 +334,18 @@ public class Tapir extends Animal {
 			this.headShakeAnim = 20;
 			this.headShakeAnim0 = 20;
 		} else if (id == 7) {
-            for (int i = 0; i < 8; ++i) {
-                Vec3 vector3d = new Vec3((this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, (this.random.nextFloat() - 0.5D) * 0.1D);
-                vector3d = vector3d.xRot(-this.getXRot() * Mth.DEG_TO_RAD);
-                vector3d = vector3d.yRot(-this.getYRot() * Mth.DEG_TO_RAD);
-                double d0 = -this.random.nextFloat() * 0.2D;
-                Vec3 vector3d1 = new Vec3((this.random.nextFloat() - 0.5D) * 0.2D, d0, 0.85D + (this.random.nextFloat() - 0.5D) * 0.1D);
-                vector3d1 = vector3d1.yRot(-this.yBodyRot * Mth.DEG_TO_RAD);
-                vector3d1 = vector3d1.add(this.getX(), this.getEyeY() - 0.5D, this.getZ());
-                this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, this.getFloraState()), vector3d1.x, vector3d1.y, vector3d1.z, vector3d.x, vector3d.y + 0.05D, vector3d.z);
-            }
+			if (this.getFloraPos() != null) {
+				for (int i = 0; i < 8; ++i) {
+					Vec3 vector3d = new Vec3((this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, (this.random.nextFloat() - 0.5D) * 0.1D);
+					vector3d = vector3d.xRot(-this.getXRot() * Mth.DEG_TO_RAD);
+					vector3d = vector3d.yRot(-this.getYRot() * Mth.DEG_TO_RAD);
+					double d0 = -this.random.nextFloat() * 0.2D;
+					Vec3 vector3d1 = new Vec3((this.random.nextFloat() - 0.5D) * 0.2D, d0, 0.85D + (this.random.nextFloat() - 0.5D) * 0.1D);
+					vector3d1 = vector3d1.yRot(-this.yBodyRot * Mth.DEG_TO_RAD);
+					vector3d1 = vector3d1.add(this.getX(), this.getEyeY() - 0.5D, this.getZ());
+					this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, this.level.getBlockState(this.getFloraPos())), vector3d1.x, vector3d1.y, vector3d1.z, vector3d.x, vector3d.y + 0.05D, vector3d.z);
+				}
+			}
         } else {
             super.handleEntityEvent(id);
         }
