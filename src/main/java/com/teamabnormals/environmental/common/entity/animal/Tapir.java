@@ -8,6 +8,7 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalParticleTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -66,11 +67,14 @@ public class Tapir extends Animal {
     private float sniffAmount;
     private float sniffAmount0;
 
-    private float grazeAmount;
-    private float grazeAmount0;
-
 	private float snoutRaiseAmount;
 	private float snoutRaiseAmount0;
+
+	private float noAnimAmount;
+	private float noAnimAmount0;
+
+	private float neckAngle;
+	private float neckAngle0;
 
 	private int headShakeAnim;
 	private int headShakeAnim0;
@@ -198,16 +202,16 @@ public class Tapir extends Animal {
 		return this.floraItem != null;
 	}
 
-    public float getSniffAmount(float partialTick) {
-        return Mth.lerp(partialTick, this.sniffAmount0, this.sniffAmount);
-    }
-
-    public float getGrazeAmount(float partialTick) {
-        return Mth.lerp(partialTick, this.grazeAmount0, this.grazeAmount);
-    }
-
 	public float getSnoutRaiseAmount(float partialTick) {
 		return Mth.lerp(partialTick, this.snoutRaiseAmount0, this.snoutRaiseAmount);
+	}
+
+	public float getNoAnimAmount(float partialTick) {
+		return Mth.lerp(partialTick, this.noAnimAmount0, this.noAnimAmount);
+	}
+
+	public float getNeckAngle(float partialTick) {
+		return Mth.lerp(partialTick, this.neckAngle0, this.neckAngle);
 	}
 
 	public float getHeadShakeAnim(float partialTick) {
@@ -247,15 +251,31 @@ public class Tapir extends Animal {
         else
             this.sniffAmount = Math.max(0.0F, this.sniffAmount - 0.25F);
 
-        this.grazeAmount0 = this.grazeAmount;
-        if (this.isGrazing())
-            this.grazeAmount = Math.min(1.0F, this.grazeAmount + 0.15F);
-        else
-            this.grazeAmount = Math.max(0.0F, this.grazeAmount - 0.15F);
-
 		this.headShakeAnim0 = this.headShakeAnim;
 		if (this.headShakeAnim > 0)
 			this.headShakeAnim--;
+
+		this.noAnimAmount0 = this.noAnimAmount;
+		if (this.isSniffing() || this.isGrazing())
+			this.noAnimAmount = Math.min(1.0F, this.noAnimAmount + 0.15F);
+		else
+			this.noAnimAmount = Math.max(0.0F, this.noAnimAmount - 0.15F);
+
+		this.neckAngle0 = this.neckAngle;
+		if (this.isSniffing()) {
+			this.neckAngle = Math.min(1.0F, this.neckAngle + 0.15F);
+		} else if (this.isGrazing()) {
+			BlockPos florapos = this.getFloraPos();
+			boolean lookup = florapos != null && this.level.getBlockState(florapos).getShape(this.level, florapos).min(Axis.Y) + florapos.getY() > this.getEyeY();
+			if (lookup)
+				this.neckAngle = Math.max(-1.0F, this.neckAngle - 0.15F);
+			else
+				this.neckAngle = Math.min(1.0F, this.neckAngle + 0.15F);
+		} else if (this.neckAngle > 0.0F) {
+			this.neckAngle = Math.max(0.0F, this.neckAngle - 0.15F);
+		} else {
+			this.neckAngle = Math.min(0.0F, this.neckAngle + 0.15F);
+		}
 
 		this.snoutRaiseAmount0 = this.snoutRaiseAmount;
 		if (this.isBeingTempted())
@@ -340,9 +360,9 @@ public class Tapir extends Animal {
 					vector3d = vector3d.xRot(-this.getXRot() * Mth.DEG_TO_RAD);
 					vector3d = vector3d.yRot(-this.getYRot() * Mth.DEG_TO_RAD);
 					double d0 = -this.random.nextFloat() * 0.2D;
-					Vec3 vector3d1 = new Vec3((this.random.nextFloat() - 0.5D) * 0.2D, d0, 0.85D + (this.random.nextFloat() - 0.5D) * 0.1D);
+					Vec3 vector3d1 = new Vec3((this.random.nextFloat() - 0.5D) * 0.2D, d0, 0.9D - 0.05D * this.neckAngle + (this.random.nextFloat() - 0.5D) * 0.1D);
 					vector3d1 = vector3d1.yRot(-this.yBodyRot * Mth.DEG_TO_RAD);
-					vector3d1 = vector3d1.add(this.getX(), this.getEyeY() - 0.5D, this.getZ());
+					vector3d1 = vector3d1.add(this.getX(), this.getEyeY() - 0.15D - 0.35D * this.neckAngle, this.getZ());
 					this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, this.level.getBlockState(this.getFloraPos())), vector3d1.x, vector3d1.y, vector3d1.z, vector3d.x, vector3d.y + 0.05D, vector3d.z);
 				}
 			}

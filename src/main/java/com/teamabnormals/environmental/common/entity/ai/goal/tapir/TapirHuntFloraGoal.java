@@ -65,7 +65,7 @@ public class TapirHuntFloraGoal extends Goal {
 			}
 		}
 
-		if (florapos.closerThan(this.tapir.blockPosition(), 1.25D)) {
+		if (florapos.closerThan(this.tapir.blockPosition(), 1.5D)) {
 			this.tapir.getLookControl().setLookAt(florapos.getX() + 0.5D, this.tapir.getEyeY(), florapos.getZ() + 0.5D, 10.0F, this.tapir.getMaxHeadXRot());
 
 			if (!this.tapir.isGrazing()) {
