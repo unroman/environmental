@@ -372,7 +372,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			}))));
 		}
 		protected static LootTable.Builder createDwarfSpruceDrops(Block block) {
-			return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(DWARF_SPRUCE.get()).when(HAS_SHEARS).otherwise(applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))))));
+			return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(DWARF_SPRUCE.get()).when(HAS_SHEARS).otherwise(applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))));
 		}
 
 		protected static LootTable.Builder createCattailDrops(Block block, ItemLike drop) {
