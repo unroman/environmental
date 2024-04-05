@@ -6,6 +6,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
 public class EnvironmentalBiomeTags {
+	public static final TagKey<Biome> IS_PINE_BARRENS = biomeTag("is_pine_barrens");
+
 	public static final TagKey<Biome> ONLY_ALLOWS_MUDDY_RABBITS = biomeTag("only_allows_muddy_rabbits");
 	public static final TagKey<Biome> ONLY_ALLOWS_GRAY_RABBITS = biomeTag("only_allows_gray_rabbits");
 
@@ -29,6 +31,7 @@ public class EnvironmentalBiomeTags {
 
 	public static final TagKey<Biome> HAS_CATTAILS = biomeTag("has_feature/cattails");
 	public static final TagKey<Biome> HAS_CUP_LICHEN = biomeTag("has_feature/cup_lichen");
+	public static final TagKey<Biome> HAS_RARE_DWARF_SPRUCE = biomeTag("has_feature/dwarf_spruce_rare");
 	public static final TagKey<Biome> HAS_BLUEBELL = biomeTag("has_feature/bluebell");
 	public static final TagKey<Biome> HAS_VIOLET = biomeTag("has_feature/violet");
 	public static final TagKey<Biome> HAS_TASSELFLOWER = biomeTag("has_feature/tasselflower");

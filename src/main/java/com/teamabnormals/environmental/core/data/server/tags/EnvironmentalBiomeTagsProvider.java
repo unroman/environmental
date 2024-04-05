@@ -47,7 +47,7 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_CONIFEROUS,
-				EnvironmentalBiomeTags.HAS_LOG_CABIN
+				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
 		this.tag(EnvironmentalBiomes.SNOWY_PINE_BARRENS.get(),
@@ -55,14 +55,14 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				BiomeTags.SPAWNS_COLD_VARIANT_FROGS,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_SNOWY, Tags.Biomes.IS_CONIFEROUS,
-				EnvironmentalBiomeTags.HAS_LOG_CABIN
+				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
 		this.tag(EnvironmentalBiomes.OLD_GROWTH_PINE_BARRENS.get(),
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_CONIFEROUS, Tags.Biomes.IS_DENSE_OVERWORLD, Tags.Biomes.IS_RARE,
-				EnvironmentalBiomeTags.HAS_LOG_CABIN
+				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
 		this.tag(EnvironmentalBiomes.SNOWY_OLD_GROWTH_PINE_BARRENS.get(),
@@ -70,7 +70,7 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				BiomeTags.SPAWNS_COLD_VARIANT_FROGS,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_SNOWY, Tags.Biomes.IS_CONIFEROUS, Tags.Biomes.IS_DENSE_OVERWORLD, Tags.Biomes.IS_RARE,
-				EnvironmentalBiomeTags.HAS_LOG_CABIN
+				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
 		this.tag(EnvironmentalBiomes.PINE_SLOPES.get(),
@@ -97,6 +97,7 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 
 		this.tag(EnvironmentalBiomeTags.HAS_CATTAILS).add(Biomes.RIVER, Biomes.SWAMP, Biomes.MANGROVE_SWAMP);
 		this.tag(EnvironmentalBiomeTags.HAS_CUP_LICHEN).addTag(BiomeTags.IS_TAIGA);
+		this.tag(EnvironmentalBiomeTags.HAS_RARE_DWARF_SPRUCE).addTag(BiomeTags.IS_TAIGA);
 		this.tag(EnvironmentalBiomeTags.HAS_BLUEBELL).add(Biomes.DARK_FOREST);
 		this.tag(EnvironmentalBiomeTags.HAS_VIOLET).addTag(BiomeTags.IS_TAIGA);
 		this.tag(EnvironmentalBiomeTags.HAS_TASSELFLOWER).addTag(BiomeTags.IS_SAVANNA);
