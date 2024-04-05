@@ -1,5 +1,6 @@
 package com.teamabnormals.environmental.core.other;
 
+import com.teamabnormals.environmental.core.registry.EnvironmentalFeatures.EnvironmentalPlacedFeatures;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
@@ -64,7 +65,6 @@ public class EnvironmentalGeneration {
 	public static void pineBarrens(BiomeGenerationSettings.Builder generation, boolean snowy, boolean oldGrowth) {
 		OverworldBiomes.globalOverworldGeneration(generation);
 		generation.addFeature(Decoration.VEGETAL_DECORATION, PATCH_CUP_LICHEN_NOISE.getHolder().get());
-		BiomeDefaultFeatures.addFerns(generation);
 		BiomeDefaultFeatures.addDefaultOres(generation);
 		BiomeDefaultFeatures.addDefaultSoftDisks(generation);
 		BiomeDefaultFeatures.addDefaultFlowers(generation);
@@ -79,7 +79,7 @@ public class EnvironmentalGeneration {
 		generation.addFeature(Decoration.VEGETAL_DECORATION, TREES_PINE_BARRENS_ON_STONE.getHolder().get());
 		generation.addFeature(Decoration.VEGETAL_DECORATION, VegetationPlacements.BROWN_MUSHROOM_TAIGA);
 		generation.addFeature(Decoration.VEGETAL_DECORATION, VegetationPlacements.RED_MUSHROOM_TAIGA);
-		generation.addFeature(Decoration.LOCAL_MODIFICATIONS, DWARF_SPRUCE.getHolder().get());
+		generation.addFeature(Decoration.VEGETAL_DECORATION, DWARF_SPRUCE.getHolder().get());
 		if (!oldGrowth)
 			generation.addFeature(Decoration.VEGETAL_DECORATION, snowy ? PATCH_GRASS_SNOWY_PINE_BARRENS.getHolder().get() : PATCH_GRASS_PINE_BARRENS.getHolder().get());
 		else
@@ -87,6 +87,7 @@ public class EnvironmentalGeneration {
 		generation.addFeature(Decoration.VEGETAL_DECORATION, PATCH_CUP_LICHEN_SMALL.getHolder().get());
 		generation.addFeature(Decoration.VEGETAL_DECORATION, PATCH_CUP_LICHEN_STONE.getHolder().get());
 		BiomeDefaultFeatures.addDefaultExtraVegetation(generation);
+		generation.addFeature(Decoration.VEGETAL_DECORATION, PATCH_LARGE_FERN_JUNGLE.getHolder().get());
 	}
 
 	public static void pineSlopes(BiomeGenerationSettings.Builder generation) {
