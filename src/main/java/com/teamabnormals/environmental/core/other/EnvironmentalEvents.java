@@ -418,7 +418,7 @@ public class EnvironmentalEvents {
 		if (entity instanceof Wolf wolf) {
 			wolf.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(wolf, Animal.class, false, (target) -> {
 				EntityType<?> type = target.getType();
-				return type == EnvironmentalEntityTypes.DEER.get() || type == EnvironmentalEntityTypes.REINDEER.get();
+				return type == EnvironmentalEntityTypes.DEER.get() || type == EnvironmentalEntityTypes.TAPIR.get() || type == EnvironmentalEntityTypes.REINDEER.get();
 			}));
 		}
 
