@@ -4,6 +4,7 @@ import com.teamabnormals.environmental.common.entity.ai.goal.tapir.TapirHuntFlor
 import com.teamabnormals.environmental.common.entity.ai.goal.tapir.TapirPanicGoal;
 import com.teamabnormals.environmental.common.entity.ai.goal.tapir.TapirSniffForFloraGoal;
 import com.teamabnormals.environmental.common.entity.ai.goal.tapir.TapirTemptGoal;
+import com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalParticleTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
@@ -51,6 +52,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class Tapir extends Animal {
 	private static final EntityDataAccessor<Integer> TRACKING_TIME = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.INT);
@@ -59,6 +61,8 @@ public class Tapir extends Animal {
 	private static final EntityDataAccessor<Boolean> IS_SNIFFING = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_GRAZING = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Optional<BlockPos>> FLORA_POS = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
+	private static final Predicate<LivingEntity> AVOID_ENTITY_PREDICATE = (entity) ->
+			entity.getType() == EntityType.PIG;
 
 	private Item floraItem;
 	private boolean running;
