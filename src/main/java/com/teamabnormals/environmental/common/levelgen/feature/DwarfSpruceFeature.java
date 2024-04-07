@@ -1,11 +1,11 @@
 package com.teamabnormals.environmental.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
-import com.teamabnormals.environmental.common.block.DwarfSpruceTallBlock;
+import com.teamabnormals.environmental.common.block.DwarfSpruceHeadBlock;
+import com.teamabnormals.environmental.common.block.DwarfSprucePlantBlock;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -20,12 +20,17 @@ public class DwarfSpruceFeature extends Feature<NoneFeatureConfiguration> {
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
 		WorldGenLevel level = context.level();
 		BlockPos origin = context.origin();
-		if (level.isEmptyBlock(origin) && EnvironmentalBlocks.DWARF_SPRUCE.get().defaultBlockState().canSurvive(level, origin)) {
-			if (context.random().nextInt(3) == 0 || !level.isEmptyBlock(origin)) {
-				level.setBlock(origin, EnvironmentalBlocks.DWARF_SPRUCE.get().defaultBlockState(), 2);
+		if (level.isEmptyBlock(origin) && isDirt(level.getBlockState(origin.below()))) {
+			int i = context.random().nextInt(3);
+			if (i == 0 && level.isEmptyBlock(origin.above()) && level.isEmptyBlock(origin.above(2))) {
+				level.setBlock(origin, EnvironmentalBlocks.DWARF_SPRUCE_PLANT.get().defaultBlockState().setValue(DwarfSprucePlantBlock.BOTTOM, true), 2);
+				level.setBlock(origin.above(), EnvironmentalBlocks.DWARF_SPRUCE_PLANT.get().defaultBlockState().setValue(DwarfSprucePlantBlock.BOTTOM, false), 2);
+				level.setBlock(origin.above(2), EnvironmentalBlocks.DWARF_SPRUCE.get().defaultBlockState().setValue(DwarfSpruceHeadBlock.TOP, true), 2);
+			} else if (i <= 1 && level.isEmptyBlock(origin.above())) {
+				level.setBlock(origin, EnvironmentalBlocks.DWARF_SPRUCE_PLANT.get().defaultBlockState().setValue(DwarfSprucePlantBlock.BOTTOM, true), 2);
+				level.setBlock(origin.above(), EnvironmentalBlocks.DWARF_SPRUCE.get().defaultBlockState().setValue(DwarfSpruceHeadBlock.TOP, true), 2);
 			} else {
-				level.setBlock(origin, EnvironmentalBlocks.TALL_DWARF_SPRUCE.get().defaultBlockState().setValue(DwarfSpruceTallBlock.HALF, DoubleBlockHalf.LOWER), 2);
-				level.setBlock(origin.above(), EnvironmentalBlocks.TALL_DWARF_SPRUCE.get().defaultBlockState().setValue(DwarfSpruceTallBlock.HALF, DoubleBlockHalf.UPPER), 2);
+				level.setBlock(origin, EnvironmentalBlocks.DWARF_SPRUCE.get().defaultBlockState(), 2);
 			}
 			return true;
 		}

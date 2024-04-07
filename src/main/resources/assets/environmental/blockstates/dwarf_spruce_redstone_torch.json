@@ -1,0 +1,24 @@
+{
+    "multipart": [
+		{   
+		    "when": { "top": "false", "lit": "false" },
+            "apply": { "model": "environmental:block/dwarf_spruce_redstone_torch" }
+        },
+		{   
+		    "when": { "top": "true", "lit": "false" },
+            "apply": { "model": "environmental:block/dwarf_spruce_top_redstone_torch" }
+        },
+		{   
+		    "when": { "top": "false", "lit": "true" },
+            "apply": { "model": "environmental:block/dwarf_spruce_redstone_torch_on" }
+        },
+		{   
+		    "when": { "top": "true", "lit": "true" },
+            "apply": { "model": "environmental:block/dwarf_spruce_top_redstone_torch_on" }
+        },
+		{   
+		    "when": { "star": "true" },
+            "apply": { "model": "environmental:block/dwarf_spruce_star" }
+        }
+    ]
+}

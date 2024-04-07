@@ -7,6 +7,7 @@ import com.teamabnormals.blueprint.common.block.VerticalSlabBlock;
 import com.teamabnormals.blueprint.common.block.VerticalSlabBlock.VerticalSlabType;
 import com.teamabnormals.environmental.common.block.CattailBlock;
 import com.teamabnormals.environmental.common.block.CupLichenBlock;
+import com.teamabnormals.environmental.common.block.DwarfSpruceHeadBlock;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import net.minecraft.advancements.critereon.*;
@@ -182,8 +183,19 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(GIANT_TALL_GRASS.get(), (block) -> createDoublePlantWithOtherDrop(block, Blocks.GRASS, Items.WHEAT_SEEDS, 3, 0.125F));
 			this.add(CUP_LICHEN.get(), EnvironmentalBlockLoot::createCupLichenDrops);
 			this.add(CACTUS_BOBBLE.get(), noDrop());
-			this.add(DWARF_SPRUCE.get(), EnvironmentalBlockLoot::createDwarfSpruceDrops);
-			this.add(TALL_DWARF_SPRUCE.get(), EnvironmentalBlockLoot::createDwarfSpruceDrops);
+
+			this.add(DWARF_SPRUCE.get(), (block) -> createDwarfSpruceDrops(block, true));
+			this.add(DWARF_SPRUCE_PLANT.get(), (block) -> createDwarfSpruceDrops(block, false));
+			this.add(DWARF_SPRUCE_TORCH.get(), (block) -> createDwarfSpruceDrops(block, true));
+			this.add(DWARF_SPRUCE_PLANT_TORCH.get(), (block) -> createDwarfSpruceDrops(block, false));
+			this.add(DWARF_SPRUCE_SOUL_TORCH.get(), (block) -> createDwarfSpruceDrops(block, true));
+			this.add(DWARF_SPRUCE_PLANT_SOUL_TORCH.get(), (block) -> createDwarfSpruceDrops(block, false));
+			this.add(DWARF_SPRUCE_REDSTONE_TORCH.get(), (block) -> createDwarfSpruceDrops(block, true));
+			this.add(DWARF_SPRUCE_PLANT_REDSTONE_TORCH.get(), (block) -> createDwarfSpruceDrops(block, false));
+			this.add(DWARF_SPRUCE_ENDER_TORCH.get(), (block) -> createDwarfSpruceDrops(block, true));
+			this.add(DWARF_SPRUCE_PLANT_ENDER_TORCH.get(), (block) -> createDwarfSpruceDrops(block, false));
+			this.add(DWARF_SPRUCE_CUPRIC_TORCH.get(), (block) -> createDwarfSpruceDrops(block, true));
+			this.add(DWARF_SPRUCE_PLANT_CUPRIC_TORCH.get(), (block) -> createDwarfSpruceDrops(block, false));
 
 			this.dropSelf(CATTAIL_FLUFF_BLOCK.get());
 			this.dropSelf(CHERRY_CRATE.get());
@@ -371,8 +383,12 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 				return SetItemCountFunction.setCount(ConstantValue.exactly((float) cups.intValue())).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CupLichenBlock.CUPS, cups)));
 			}))));
 		}
-		protected static LootTable.Builder createDwarfSpruceDrops(Block block) {
-			return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(DWARF_SPRUCE.get()).when(HAS_SHEARS).otherwise(applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))));
+
+		protected static LootTable.Builder createDwarfSpruceDrops(Block block, boolean isHead) {
+			LootTable.Builder builder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(DWARF_SPRUCE.get()).when(HAS_SHEARS).otherwise(applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))));
+			if (isHead)
+				builder = builder.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.NETHER_STAR)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DwarfSpruceHeadBlock.STAR, true))));
+			return builder;
 		}
 
 		protected static LootTable.Builder createCattailDrops(Block block, ItemLike drop) {

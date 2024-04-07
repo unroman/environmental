@@ -1,5 +1,16 @@
 {
-    "variants": {
-        "": { "model": "environmental:block/dwarf_spruce" }
-    }
+    "multipart": [
+		{   
+		    "when": { "top": "false" },
+            "apply": { "model": "environmental:block/dwarf_spruce" }
+        },
+		{   
+		    "when": { "top": "true" },
+            "apply": { "model": "environmental:block/dwarf_spruce_top" }
+        },
+		{   
+		    "when": { "star": "true" },
+            "apply": { "model": "environmental:block/dwarf_spruce_star" }
+        }
+    ]
 }

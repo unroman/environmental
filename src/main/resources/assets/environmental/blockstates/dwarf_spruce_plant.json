@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "bottom=false": { "model": "environmental:block/dwarf_spruce_middle" },
+        "bottom=true": { "model": "environmental:block/dwarf_spruce_bottom" }
+    }
+}

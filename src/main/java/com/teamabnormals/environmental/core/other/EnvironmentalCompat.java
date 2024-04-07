@@ -250,8 +250,19 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.GIANT_TALL_GRASS.get(), 60, 100);
 		DataUtil.registerFlammable(EnvironmentalBlocks.MYCELIUM_SPROUTS.get(), 60, 100);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CUP_LICHEN.get(), 60, 100);
+
 		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE.get(), 60, 100);
-		DataUtil.registerFlammable(EnvironmentalBlocks.TALL_DWARF_SPRUCE.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_PLANT.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_PLANT_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_SOUL_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_PLANT_SOUL_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_REDSTONE_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_PLANT_REDSTONE_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_ENDER_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_PLANT_ENDER_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_CUPRIC_TORCH.get(), 60, 100);
+		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_PLANT_CUPRIC_TORCH.get(), 60, 100);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_LEAVES.get(), 30, 60);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_LEAF_CARPET.get(), 30, 60);

@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "bottom=false,lit=false": { "model": "environmental:block/dwarf_spruce_middle_redstone_torch" },
+        "bottom=true,lit=false": { "model": "environmental:block/dwarf_spruce_bottom_redstone_torch" },
+        "bottom=false,lit=true": { "model": "environmental:block/dwarf_spruce_middle_redstone_torch_on" },
+        "bottom=true,lit=true": { "model": "environmental:block/dwarf_spruce_bottom_redstone_torch_on" }
+    }
+}

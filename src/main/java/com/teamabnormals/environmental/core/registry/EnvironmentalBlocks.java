@@ -17,11 +17,14 @@ import com.teamabnormals.environmental.common.block.*;
 import com.teamabnormals.environmental.common.block.grower.*;
 import com.teamabnormals.environmental.common.levelgen.util.WisteriaColor;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.other.EnvironmentalConstants;
 import com.teamabnormals.environmental.core.other.EnvironmentalProperties;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -70,8 +73,18 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> CUP_LICHEN = HELPER.createBlock("cup_lichen", () -> new CupLichenBlock(EnvironmentalProperties.CUP_LICHEN), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<Block> CACTUS_BOBBLE = HELPER.createBlockNoItem("cactus_bobble", () -> new CactusBobbleBlock(EnvironmentalProperties.CACTUS_BOBBLE));
 
-	public static final RegistryObject<Block> DWARF_SPRUCE = HELPER.createFuelBlock("dwarf_spruce", () -> new DwarfSpruceBlock(EnvironmentalProperties.DWARF_SPRUCE), 100, CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<Block> TALL_DWARF_SPRUCE = HELPER.createBlockNoItem("tall_dwarf_spruce", () -> new DwarfSpruceTallBlock(EnvironmentalProperties.DWARF_SPRUCE));
+	public static final RegistryObject<Block> DWARF_SPRUCE = HELPER.createFuelBlock("dwarf_spruce", () -> new DwarfSpruceHeadBlock(EnvironmentalProperties.DWARF_SPRUCE), 100, CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<Block> DWARF_SPRUCE_PLANT = HELPER.createBlockNoItem("dwarf_spruce_plant", () -> new DwarfSprucePlantBlock(EnvironmentalProperties.DWARF_SPRUCE, (DwarfSpruceHeadBlock) DWARF_SPRUCE.get()));
+	public static final RegistryObject<Block> DWARF_SPRUCE_TORCH = HELPER.createBlockNoItem("dwarf_spruce_torch", () -> new DwarfSpruceHeadBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 14), () -> Items.TORCH));
+	public static final RegistryObject<Block> DWARF_SPRUCE_PLANT_TORCH = HELPER.createBlockNoItem("dwarf_spruce_plant_torch", () -> new DwarfSprucePlantBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 14), () -> Items.TORCH, (DwarfSpruceHeadBlock) DWARF_SPRUCE_TORCH.get()));
+	public static final RegistryObject<Block> DWARF_SPRUCE_SOUL_TORCH = HELPER.createBlockNoItem("dwarf_spruce_soul_torch", () -> new DwarfSpruceHeadBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 10), () -> Items.SOUL_TORCH));
+	public static final RegistryObject<Block> DWARF_SPRUCE_PLANT_SOUL_TORCH = HELPER.createBlockNoItem("dwarf_spruce_plant_soul_torch", () -> new DwarfSprucePlantBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 10), () -> Items.SOUL_TORCH, (DwarfSpruceHeadBlock) DWARF_SPRUCE_SOUL_TORCH.get()));
+	public static final RegistryObject<Block> DWARF_SPRUCE_REDSTONE_TORCH = HELPER.createBlockNoItem("dwarf_spruce_redstone_torch", () -> new RedstoneDwarfSpruceHeadBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0), () -> Items.REDSTONE_TORCH));
+	public static final RegistryObject<Block> DWARF_SPRUCE_PLANT_REDSTONE_TORCH = HELPER.createBlockNoItem("dwarf_spruce_plant_redstone_torch", () -> new RedstoneDwarfSprucePlantBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0), () -> Items.REDSTONE_TORCH, (DwarfSpruceHeadBlock) DWARF_SPRUCE_REDSTONE_TORCH.get()));
+	public static final RegistryObject<Block> DWARF_SPRUCE_ENDER_TORCH = HELPER.createBlockNoItem("dwarf_spruce_ender_torch", () -> new DwarfSpruceHeadBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 14), EnvironmentalConstants.ENDER_TORCH));
+	public static final RegistryObject<Block> DWARF_SPRUCE_PLANT_ENDER_TORCH = HELPER.createBlockNoItem("dwarf_spruce_plant_ender_torch", () -> new DwarfSprucePlantBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 14), EnvironmentalConstants.ENDER_TORCH, (DwarfSpruceHeadBlock) DWARF_SPRUCE_ENDER_TORCH.get()));
+	public static final RegistryObject<Block> DWARF_SPRUCE_CUPRIC_TORCH = HELPER.createBlockNoItem("dwarf_spruce_cupric_torch", () -> new DwarfSpruceHeadBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 10), EnvironmentalConstants.CUPRIC_TORCH));
+	public static final RegistryObject<Block> DWARF_SPRUCE_PLANT_CUPRIC_TORCH = HELPER.createBlockNoItem("dwarf_spruce_plant_cupric_torch", () -> new DwarfSprucePlantBlock(EnvironmentalProperties.DWARF_SPRUCE.lightLevel(state -> 10), EnvironmentalConstants.CUPRIC_TORCH, (DwarfSpruceHeadBlock) DWARF_SPRUCE_CUPRIC_TORCH.get()));
 
 	public static final RegistryObject<Block> POTTED_CUP_LICHEN = HELPER.createBlockNoItem("potted_cup_lichen", () -> new FlowerPotBlock(EnvironmentalBlocks.CUP_LICHEN.get(), PropertyUtil.flowerPot()));
 	public static final RegistryObject<Block> POTTED_DWARF_SPRUCE = HELPER.createBlockNoItem("potted_dwarf_spruce", () -> new FlowerPotBlock(EnvironmentalBlocks.DWARF_SPRUCE.get(), PropertyUtil.flowerPot()));

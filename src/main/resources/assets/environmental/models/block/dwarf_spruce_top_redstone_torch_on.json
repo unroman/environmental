@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "environmental:block/dwarf_spruce_top_redstone_torch_on"
+    }
+}
