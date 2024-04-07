@@ -81,6 +81,7 @@ public class Environmental {
 		EnvironmentalSlabfishConditions.SLABFISH_CONDITIONS.register(bus);
 		EnvironmentalDataSerializers.DATA_SERIALIZERS.register(bus);
 		EnvironmentalBiomeModifierTypes.BIOME_MODIFIER_SERIALIZERS.register(bus);
+		EnvironmentalBannerPatterns.BANNER_PATTERNS.register(bus);
 
 		MinecraftForge.EVENT_BUS.register(this);
 
@@ -124,6 +125,7 @@ public class Environmental {
 		generator.addProvider(includeServer, new EnvironmentalEntityTypeTagsProvider(generator, helper));
 		generator.addProvider(includeServer, new EnvironmentalStructureTagsProvider(generator, helper));
 		generator.addProvider(includeServer, new EnvironmentalBiomeTagsProvider(generator, helper));
+		generator.addProvider(includeServer, new EnvironmentalBannerPatternTagsProvider(generator, helper));
 		generator.addProvider(includeServer, new EnvironmentalPaintingVariantTagsProvider(generator, helper));
 		generator.addProvider(includeServer, new EnvironmentalRecipeProvider(generator));
 		generator.addProvider(includeServer, new EnvironmentalAdvancementProvider(generator, helper));

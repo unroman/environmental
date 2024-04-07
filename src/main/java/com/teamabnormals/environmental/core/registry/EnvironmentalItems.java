@@ -1,6 +1,7 @@
 package com.teamabnormals.environmental.core.registry;
 
 import com.mojang.datafixers.util.Pair;
+import com.teamabnormals.blueprint.common.item.BlueprintBannerPatternItem;
 import com.teamabnormals.blueprint.common.item.BlueprintRecordItem;
 import com.teamabnormals.blueprint.core.util.registry.AbstractSubRegistryHelper;
 import com.teamabnormals.blueprint.core.util.registry.ItemSubRegistryHelper;
@@ -11,6 +12,7 @@ import com.teamabnormals.environmental.common.item.explorer.ThiefHoodItem;
 import com.teamabnormals.environmental.common.item.explorer.WandererBootsItem;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalTiers.EnvironmentalArmorMaterials;
+import com.teamabnormals.environmental.core.other.tags.EnvironmentalBannerPatternTags;
 import com.teamabnormals.environmental.integration.boatload.EnvironmentalBoatTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -70,6 +72,7 @@ public class EnvironmentalItems {
 
 	public static final RegistryObject<Item> MUSIC_DISC_LEAVING_HOME = HELPER.createItem("music_disc_leaving_home", () -> new BlueprintRecordItem(6, EnvironmentalSoundEvents.MUSIC_DISC_LEAVING_HOME, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC).rarity(Rarity.RARE), 144));
 	public static final RegistryObject<Item> MUSIC_DISC_SLABRAVE = HELPER.createItem("music_disc_slabrave", () -> new BlueprintRecordItem(13, EnvironmentalSoundEvents.MUSIC_DISC_SLABRAVE, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC).rarity(Rarity.RARE), 111));
+	public static final RegistryObject<Item> LUMBERER_BANNER_PATTERN = HELPER.createItem("lumberer_banner_pattern", () -> new BlueprintBannerPatternItem(EnvironmentalBannerPatternTags.PATTERN_ITEM_LUMBERER, new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1)));
 
 	public static final RegistryObject<Item> LARGE_LILY_PAD = HELPER.createItem("large_lily_pad", () -> new LargeLilyPadItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 	public static final RegistryObject<Item> GIANT_LILY_PAD = HELPER.createItem("giant_lily_pad", () -> new GiantLilyPadItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
