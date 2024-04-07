@@ -35,6 +35,12 @@
                 "min": 0.8
               },
               "function": "minecraft:set_damage"
+            },
+            {
+              "enchantments": [
+                "minecraft:unbreaking"
+              ],
+              "function": "minecraft:enchant_randomly"
             }
           ],
           "name": "minecraft:shears",
@@ -57,16 +63,18 @@
                 "minecraft:unbreaking"
               ],
               "function": "minecraft:enchant_randomly"
+            },
+            {
+              "enchantments": [
+                "minecraft:efficiency"
+              ],
+              "function": "minecraft:enchant_randomly"
             }
           ],
           "name": "minecraft:shears"
         }
       ],
-      "rolls": {
-        "type": "minecraft:uniform",
-        "max": 2.0,
-        "min": 1.0
-      }
+      "rolls": 1.0
     },
     {
       "bonus_rolls": 0.0,
