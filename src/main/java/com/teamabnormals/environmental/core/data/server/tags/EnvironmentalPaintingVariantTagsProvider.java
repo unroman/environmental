@@ -10,12 +10,12 @@ import static com.teamabnormals.environmental.core.registry.EnvironmentalPaintin
 
 public class EnvironmentalPaintingVariantTagsProvider extends PaintingVariantTagsProvider {
 
-	public EnvironmentalPaintingVariantTagsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, Environmental.MOD_ID, existingFileHelper);
+	public EnvironmentalPaintingVariantTagsProvider(DataGenerator generator, ExistingFileHelper helper) {
+		super(generator, Environmental.MOD_ID, helper);
 	}
 
 	@Override
 	public void addTags() {
-		this.tag(PaintingVariantTags.PLACEABLE).add(SNAKE_BLOCK.get(), SLABFISH.get(), ARCHIVE.get());
+		this.tag(PaintingVariantTags.PLACEABLE).add(SNAKE_BLOCK.get(), SLABFISH.get(), ARCHIVE.get(), OPTIMAL_AERODYNAMICS.get(), IN_PLAINS_SIGHT.get(), THE_PLACE_WITHIN_THE_PINES.get());
 	}
 }

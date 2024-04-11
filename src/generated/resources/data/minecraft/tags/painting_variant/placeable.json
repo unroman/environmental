@@ -2,6 +2,9 @@
   "values": [
     "environmental:snake_block",
     "environmental:slabfish",
-    "environmental:archive"
+    "environmental:archive",
+    "environmental:optimal_aerodynamics",
+    "environmental:in_plains_sight",
+    "environmental:the_place_within_the_pines"
   ]
 }
