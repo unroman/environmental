@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class DwarfSpruceHeadBlock extends BushBlock implements BonemealableBlock {
+public class DwarfSpruceHeadBlock extends BushBlock implements DwarfSpruceBlock, BonemealableBlock {
 	private static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
 	public static final BooleanProperty TOP = BooleanProperty.create("top");
 	public static final BooleanProperty STAR = BooleanProperty.create("star");
@@ -70,6 +70,11 @@ public class DwarfSpruceHeadBlock extends BushBlock implements BonemealableBlock
 	}
 
 	@Override
+	public Item getTorch() {
+		return this.torch == null ? null : this.torch.get();
+	}
+
+	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
@@ -84,7 +89,7 @@ public class DwarfSpruceHeadBlock extends BushBlock implements BonemealableBlock
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		BlockPos belowpos = pos.below();
 		BlockState belowstate = level.getBlockState(belowpos);
-		return belowstate.getBlock() instanceof DwarfSpruceHeadBlock || belowstate.getBlock() instanceof DwarfSprucePlantBlock || canSupportCenter(level, belowpos, Direction.UP) || belowstate.getBlock() instanceof LeavesBlock;
+		return belowstate.getBlock() instanceof DwarfSpruceBlock || canSupportCenter(level, belowpos, Direction.UP) || belowstate.getBlock() instanceof LeavesBlock;
 	}
 
 	@Override
@@ -132,7 +137,7 @@ public class DwarfSpruceHeadBlock extends BushBlock implements BonemealableBlock
 				flag = true;
 			} else if (this.torch != null) {
 				popResource(level, pos, new ItemStack(this.torch.get()));
-				level.setBlockAndUpdate(pos, EnvironmentalBlocks.DWARF_SPRUCE.get().defaultBlockState().setValue(TOP, state.getValue(TOP)).setValue(STAR, state.getValue(STAR)));
+				level.setBlockAndUpdate(pos, this.getWithoutTorchesState(state));
 				flag = true;
 			}
 
@@ -173,6 +178,11 @@ public class DwarfSpruceHeadBlock extends BushBlock implements BonemealableBlock
 		}
 
 		return super.use(state, level, pos, player, hand, result);
+	}
+
+	@Override
+	public BlockState getWithoutTorchesState(BlockState state) {
+		return EnvironmentalBlocks.DWARF_SPRUCE.get().defaultBlockState().setValue(TOP, state.getValue(TOP)).setValue(STAR, state.getValue(STAR));
 	}
 
 	@Override

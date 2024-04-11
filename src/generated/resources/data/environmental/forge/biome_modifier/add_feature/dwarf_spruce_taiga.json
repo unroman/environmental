@@ -1,0 +1,10 @@
+{
+  "type": "environmental:add_features_ignore",
+  "biomes": "#environmental:has_feature/dwarf_spruce_sparse",
+  "features": [
+    "environmental:dwarf_spruce_taiga",
+    "environmental:dwarf_spruce_taiga_dense"
+  ],
+  "ignored_biomes": "#environmental:is_pine_barrens",
+  "step": "vegetal_decoration"
+}

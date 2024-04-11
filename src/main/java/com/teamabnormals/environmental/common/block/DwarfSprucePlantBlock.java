@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class DwarfSprucePlantBlock extends BushBlock implements BonemealableBlock {
+public class DwarfSprucePlantBlock extends BushBlock implements DwarfSpruceBlock, BonemealableBlock {
 	private static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 	public static final BooleanProperty BOTTOM = BooleanProperty.create("bottom");
 	private static final Map<Supplier<? extends Item>, Block> TORCH_SPRUCES = Maps.newHashMap();
@@ -64,6 +64,11 @@ public class DwarfSprucePlantBlock extends BushBlock implements BonemealableBloc
 		if (torch != null)
 			TORCH_SPRUCES.put(torch, this);
 		this.registerDefaultState(this.stateDefinition.any().setValue(BOTTOM, false));
+	}
+
+	@Override
+	public Item getTorch() {
+		return this.torch == null ? null : this.torch.get();
 	}
 
 	@Override
@@ -104,7 +109,7 @@ public class DwarfSprucePlantBlock extends BushBlock implements BonemealableBloc
 
 		if (itemstack.canPerformAction(ToolActions.SHEARS_HARVEST) && this.torch != null) {
 			popResource(level, pos, new ItemStack(this.torch.get()));
-			level.setBlockAndUpdate(pos, EnvironmentalBlocks.DWARF_SPRUCE_PLANT.get().defaultBlockState().setValue(BOTTOM, state.getValue(BOTTOM)));
+			level.setBlockAndUpdate(pos, this.getWithoutTorchesState(state));
 
 			itemstack.hurtAndBreak(1, player, (player1) -> player1.broadcastBreakEvent(hand));
 			level.playSound(null, pos, SoundEvents.SNOW_GOLEM_SHEAR, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
@@ -129,6 +134,11 @@ public class DwarfSprucePlantBlock extends BushBlock implements BonemealableBloc
 		}
 
 		return super.use(state, level, pos, player, hand, result);
+	}
+
+	@Override
+	public BlockState getWithoutTorchesState(BlockState state) {
+		return EnvironmentalBlocks.DWARF_SPRUCE_PLANT.get().defaultBlockState().setValue(BOTTOM, state.getValue(BOTTOM));
 	}
 
 	@Override

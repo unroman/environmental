@@ -5,6 +5,7 @@ import com.teamabnormals.blueprint.common.world.storage.tracking.IDataManager;
 import com.teamabnormals.blueprint.core.util.MathUtil;
 import com.teamabnormals.environmental.common.block.GiantLilyPadBlock;
 import com.teamabnormals.environmental.common.block.LargeLilyPadBlock;
+import com.teamabnormals.environmental.common.entity.ai.goal.CatLeapAtDwarfSpruceGoal;
 import com.teamabnormals.environmental.common.entity.ai.goal.HuntTruffleGoal;
 import com.teamabnormals.environmental.common.entity.animal.koi.Koi;
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
@@ -36,10 +37,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Ocelot;
-import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.player.Player;
@@ -424,6 +422,10 @@ public class EnvironmentalEvents {
 
 		if (entity instanceof Ocelot ocelot) {
 			ocelot.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(ocelot, Animal.class, 10, false, false, (targetEntity) -> targetEntity.getType() == EnvironmentalEntityTypes.DUCK.get()));
+		}
+
+		if (entity instanceof Cat cat) {
+			cat.targetSelector.addGoal(7, new CatLeapAtDwarfSpruceGoal(cat));
 		}
 
 		if (entity instanceof Pig pig && EnvironmentalConfig.COMMON.pigsHuntTruffles.get()) {
