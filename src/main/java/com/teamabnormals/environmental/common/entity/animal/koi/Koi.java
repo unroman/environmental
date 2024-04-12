@@ -97,11 +97,13 @@ public class Koi extends AbstractFish {
 		spawnGroupData = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, tag);
 		if (spawnType == MobSpawnType.BUCKET && tag != null && tag.contains("BucketVariantTag", 3)) {
 			this.setVariant(tag.getInt("BucketVariantTag"));
-			return spawnGroupData;
+		} else if (spawnType == MobSpawnType.BUCKET) {
+			this.setVariant(random.nextInt(KoiBreed.values().length));
 		} else {
 			this.setVariant(getNoiseVariant(this.blockPosition()));
-			return spawnGroupData;
 		}
+
+		return spawnGroupData;
 	}
 
 	public static int getNoiseVariant(BlockPos pos) {
@@ -182,17 +184,17 @@ public class Koi extends AbstractFish {
 
 	@Override
 	public SoundEvent getAmbientSound() {
-		return SoundEvents.COD_AMBIENT;
+		return EnvironmentalSoundEvents.KOI_AMBIENT.get();
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return SoundEvents.COD_DEATH;
+		return EnvironmentalSoundEvents.KOI_DEATH.get();
 	}
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.COD_HURT;
+		return EnvironmentalSoundEvents.KOI_HURT.get();
 	}
 
 	@Override

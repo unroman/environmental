@@ -19,6 +19,9 @@ public class EnvironmentalSoundEvents {
 	public static final RegistryObject<SoundEvent> SLABFISH_BACKPACK = HELPER.createSoundEvent("entity.slabfish.backpack");
 	public static final RegistryObject<SoundEvent> SLABFISH_SWEATER = HELPER.createSoundEvent("entity.slabfish.sweater");
 
+	public static final RegistryObject<SoundEvent> KOI_HURT = HELPER.createSoundEvent("entity.koi.hurt");
+	public static final RegistryObject<SoundEvent> KOI_DEATH = HELPER.createSoundEvent("entity.koi.death");
+	public static final RegistryObject<SoundEvent> KOI_AMBIENT = HELPER.createSoundEvent("entity.koi.ambient");
 	public static final RegistryObject<SoundEvent> KOI_FLOP = HELPER.createSoundEvent("entity.koi.flop");
 
 	public static final RegistryObject<SoundEvent> DEER_AMBIENT = HELPER.createSoundEvent("entity.deer.ambient");
