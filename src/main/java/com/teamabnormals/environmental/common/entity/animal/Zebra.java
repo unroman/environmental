@@ -7,6 +7,7 @@ import com.teamabnormals.environmental.common.network.message.C2SZebraJumpMessag
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -207,7 +208,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 	public void aiStep() {
 		super.aiStep();
 		if (!this.level.isClientSide)
-			this.updatePersistentAnger((ServerLevel)this.level, true);
+			this.updatePersistentAnger((ServerLevel) this.level, true);
 	}
 
 	@Override
@@ -515,31 +516,31 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 	protected SoundEvent getAmbientSound() {
 		if (this.canDoIdleAnimation())
 			super.getAmbientSound();
-		return SoundEvents.HORSE_AMBIENT;
+		return EnvironmentalSoundEvents.ZEBRA_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getAngrySound() {
 		if (this.canDoIdleAnimation())
 			super.getAngrySound();
-		return SoundEvents.HORSE_ANGRY;
+		return EnvironmentalSoundEvents.ZEBRA_ANGRY.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.HORSE_DEATH;
+		return EnvironmentalSoundEvents.ZEBRA_DEATH.get();
 	}
 
 	@Override
 	protected SoundEvent getEatingSound() {
-		return SoundEvents.HORSE_EAT;
+		return EnvironmentalSoundEvents.ZEBRA_EAT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		if (!this.isKicking())
 			super.getHurtSound(source);
-		return SoundEvents.HORSE_HURT;
+		return EnvironmentalSoundEvents.ZEBRA_HURT.get();
 	}
 
 	public void playKickingSound() {
@@ -548,6 +549,19 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 
 	public void playAngrySound() {
 		this.playSound(this.getAngrySound(), this.getSoundVolume(), this.getVoicePitch());
+	}
+
+	@Override
+	protected void playGallopSound(SoundType soundType) {
+		this.playSound(EnvironmentalSoundEvents.ZEBRA_GALLOP.get(), soundType.getVolume() * 0.15F, soundType.getPitch());
+		if (this.random.nextInt(10) == 0) {
+			this.playSound(EnvironmentalSoundEvents.ZEBRA_BREATHE.get(), soundType.getVolume() * 0.6F, soundType.getPitch());
+		}
+	}
+
+	@Override
+	protected void playJumpSound() {
+		this.playSound(EnvironmentalSoundEvents.ZEBRA_JUMP.get(), 0.4F, 1.0F);
 	}
 
 	@Override
@@ -601,7 +615,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 			f3 += 0.15F * rot * nostandanim;
 		}
 
-		rider.setPos(this.getX() + (double)(f2 * f), this.getY() + this.getPassengersRidingOffset() + rider.getMyRidingOffset() + (double)f3, this.getZ() - (double)(f2 * f1));
+		rider.setPos(this.getX() + (double) (f2 * f), this.getY() + this.getPassengersRidingOffset() + rider.getMyRidingOffset() + (double) f3, this.getZ() - (double) (f2 * f1));
 	}
 
 	@Override
@@ -626,7 +640,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 		double d0 = this.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) + parentA.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) + this.generateRandomAttackDamage(this.random);
 		parentB.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(d0 / 3.0D);
 	}
-	
+
 	@Override
 	public double getPassengersRidingOffset() {
 		return super.getPassengersRidingOffset() - 0.175D;

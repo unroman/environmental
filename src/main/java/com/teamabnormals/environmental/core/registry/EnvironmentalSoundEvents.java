@@ -49,6 +49,15 @@ public class EnvironmentalSoundEvents {
 	public static final RegistryObject<SoundEvent> PINECONE_GOLEM_DEATH = HELPER.createSoundEvent("entity.pinecone_golem.death");
 	public static final RegistryObject<SoundEvent> PINECONE_GOLEM_STEP = HELPER.createSoundEvent("entity.pinecone_golem.step");
 
+	public static final RegistryObject<SoundEvent> ZEBRA_AMBIENT = HELPER.createSoundEvent("entity.zebra.ambient");
+	public static final RegistryObject<SoundEvent> ZEBRA_ANGRY = HELPER.createSoundEvent("entity.zebra.angry");
+	public static final RegistryObject<SoundEvent> ZEBRA_BREATHE = HELPER.createSoundEvent("entity.zebra.breathe");
+	public static final RegistryObject<SoundEvent> ZEBRA_DEATH = HELPER.createSoundEvent("entity.zebra.death");
+	public static final RegistryObject<SoundEvent> ZEBRA_EAT = HELPER.createSoundEvent("entity.zebra.eat");
+	public static final RegistryObject<SoundEvent> ZEBRA_GALLOP = HELPER.createSoundEvent("entity.zebra.gallop");
+	public static final RegistryObject<SoundEvent> ZEBRA_HURT = HELPER.createSoundEvent("entity.zebra.hurt");
+	public static final RegistryObject<SoundEvent> ZEBRA_JUMP = HELPER.createSoundEvent("entity.zebra.jump");
+
 	public static final RegistryObject<SoundEvent> PIG_SNIFF = HELPER.createSoundEvent("entity.pig.sniff");
 
 	public static final RegistryObject<SoundEvent> CATTAIL_PICK_SEEDS = HELPER.createSoundEvent("item.cattail_seeds.pick_from_plant");
