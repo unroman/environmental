@@ -425,7 +425,7 @@ public class EnvironmentalEvents {
 		}
 
 		if (entity instanceof Cat cat) {
-			cat.targetSelector.addGoal(7, new CatLeapAtDwarfSpruceGoal(cat));
+			cat.targetSelector.addGoal(8, new CatLeapAtDwarfSpruceGoal(cat));
 		}
 
 		if (entity instanceof Pig pig && EnvironmentalConfig.COMMON.pigsHuntTruffles.get()) {

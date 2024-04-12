@@ -106,9 +106,10 @@ public class DwarfSprucePlantBlock extends BushBlock implements DwarfSpruceBlock
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		Item item = itemstack.getItem();
+		Item torch = this.getTorch();
 
-		if (itemstack.canPerformAction(ToolActions.SHEARS_HARVEST) && this.torch != null) {
-			popResource(level, pos, new ItemStack(this.torch.get()));
+		if (itemstack.canPerformAction(ToolActions.SHEARS_HARVEST) && torch != null) {
+			popResource(level, pos, new ItemStack(torch));
 			level.setBlockAndUpdate(pos, this.getWithoutTorchesState(state));
 
 			itemstack.hurtAndBreak(1, player, (player1) -> player1.broadcastBreakEvent(hand));
@@ -116,7 +117,7 @@ public class DwarfSprucePlantBlock extends BushBlock implements DwarfSpruceBlock
 			level.gameEvent(player, GameEvent.SHEAR, pos);
 			player.awardStat(Stats.ITEM_USED.get(item));
 			return InteractionResult.sidedSuccess(level.isClientSide);
-		} else if (item != Items.AIR && this.torch == null) {
+		} else if (item != Items.AIR && torch == null) {
 			Block torchspruce = TORCH_SPRUCES.getOrDefault(TORCH_SPRUCES.keySet().stream().filter(key -> item == key.get()).findFirst().orElse(null), null);
 			if (torchspruce != null) {
 				if (!player.isCreative())
@@ -144,8 +145,9 @@ public class DwarfSprucePlantBlock extends BushBlock implements DwarfSpruceBlock
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drops = super.getDrops(state, builder);
-		if (this.torch != null && this.torch.get() != Items.AIR)
-			drops.add(new ItemStack(this.torch.get()));
+		Item torch = this.getTorch();
+		if (torch != null)
+			drops.add(new ItemStack(torch));
 		return drops;
 	}
 
