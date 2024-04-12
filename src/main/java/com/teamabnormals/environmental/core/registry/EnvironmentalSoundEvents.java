@@ -45,6 +45,10 @@ public class EnvironmentalSoundEvents {
 	public static final RegistryObject<SoundEvent> TAPIR_STEP = HELPER.createSoundEvent("entity.tapir.step");
 	public static final RegistryObject<SoundEvent> TAPIR_LEAF_STEP = HELPER.createSoundEvent("entity.tapir.leaf_step");
 
+	public static final RegistryObject<SoundEvent> PINECONE_GOLEM_HURT = HELPER.createSoundEvent("entity.pinecone_golem.hurt");
+	public static final RegistryObject<SoundEvent> PINECONE_GOLEM_DEATH = HELPER.createSoundEvent("entity.pinecone_golem.death");
+	public static final RegistryObject<SoundEvent> PINECONE_GOLEM_STEP = HELPER.createSoundEvent("entity.pinecone_golem.step");
+
 	public static final RegistryObject<SoundEvent> PIG_SNIFF = HELPER.createSoundEvent("entity.pig.sniff");
 
 	public static final RegistryObject<SoundEvent> CATTAIL_PICK_SEEDS = HELPER.createSoundEvent("item.cattail_seeds.pick_from_plant");

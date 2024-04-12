@@ -315,7 +315,7 @@
   "entity.tapir.death": {
     "sounds": [
       "environmental:mob/tapir/death1",
-	  "environmental:mob/tapir/death2"
+      "environmental:mob/tapir/death2"
     ],
     "subtitle": "subtitles.environmental.entity.tapir.death"
   },
@@ -352,5 +352,36 @@
       "environmental:mob/tapir/sniff3"
     ],
     "subtitle": "subtitles.environmental.entity.tapir.sniff"
+  },
+  "entity.pinecone_golem.step": {
+    "sounds": [
+      "step/wood1",
+      "step/wood2",
+      "step/wood3",
+      "step/wood4",
+      "step/wood5",
+      "step/wood6"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "entity.pinecone_golem.hurt": {
+    "sounds": [
+      "step/wood1",
+      "step/wood2",
+      "step/wood3",
+      "step/wood4",
+      "step/wood5",
+      "step/wood6"
+    ],
+    "subtitle": "subtitles.environmental.entity.pinecone_golem.hurt"
+  },
+  "entity.pinecone_golem.death": {
+    "sounds": [
+      "dig/wood1",
+      "dig/wood2",
+      "dig/wood3",
+      "dig/wood4"
+    ],
+    "subtitle": "subtitles.environmental.entity.pinecone_golem.hurt"
   }
 }

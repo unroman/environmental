@@ -4,8 +4,10 @@ import com.teamabnormals.environmental.common.entity.ai.goal.pineconegolem.Pinec
 import com.teamabnormals.environmental.common.entity.ai.goal.pineconegolem.PineconeGolemLookForSpotGoal;
 import com.teamabnormals.environmental.common.entity.ai.goal.pineconegolem.PineconeGolemPlantSaplingGoal;
 import com.teamabnormals.environmental.common.entity.ai.goal.pineconegolem.PineconeGolemTemptGoal;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -53,16 +55,17 @@ public class PineconeGolem extends AbstractGolem {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return null;
+        return EnvironmentalSoundEvents.PINECONE_GOLEM_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return null;
+        return EnvironmentalSoundEvents.PINECONE_GOLEM_DEATH.get();
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(EnvironmentalSoundEvents.PINECONE_GOLEM_STEP.get(), 0.1F, 1.0F);
     }
 
     @Override
