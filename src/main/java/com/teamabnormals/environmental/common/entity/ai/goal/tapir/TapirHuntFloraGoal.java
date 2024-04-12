@@ -1,6 +1,7 @@
 package com.teamabnormals.environmental.common.entity.ai.goal.tapir;
 
 import com.teamabnormals.environmental.common.entity.animal.Tapir;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -59,7 +60,7 @@ public class TapirHuntFloraGoal extends Goal {
 				return;
 			} else if (florapos.closerThan(this.tapir.blockPosition(), 5.0D)) {
 				this.tapir.level.broadcastEntityEvent(this.tapir, (byte) 5);
-				this.tapir.playSound(SoundEvents.PIG_DEATH);
+				this.tapir.playSound(EnvironmentalSoundEvents.TAPIR_REJECT.get());
 				this.tapir.stopTracking();
 				return;
 			}

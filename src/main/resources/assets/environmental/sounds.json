@@ -326,5 +326,31 @@
       "environmental:mob/tapir/hurt3"
     ],
     "subtitle": "subtitles.environmental.entity.tapir.hurt"
+  },
+  "entity.tapir.step": {
+    "sounds": [
+      "mob/pig/step1",
+      "mob/pig/step2",
+      "mob/pig/step3",
+      "mob/pig/step4",
+      "mob/pig/step5"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "entity.tapir.reject": {
+    "sounds": [
+      "environmental:mob/tapir/reject1",
+      "environmental:mob/tapir/reject2",
+      "environmental:mob/tapir/reject3"
+    ],
+    "subtitle": "subtitles.environmental.entity.tapir.sniff"
+  },
+  "entity.tapir.sniff": {
+    "sounds": [
+      "environmental:mob/tapir/sniff1",
+      "environmental:mob/tapir/sniff2",
+      "environmental:mob/tapir/sniff3"
+    ],
+    "subtitle": "subtitles.environmental.entity.tapir.sniff"
   }
 }

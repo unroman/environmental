@@ -526,6 +526,8 @@
 	"subtitles.environmental.entity.tapir.ambient": "Tapir squeals",
 	"subtitles.environmental.entity.tapir.death": "Tapir dies",
 	"subtitles.environmental.entity.tapir.hurt": "Tapir hurts",
+	"subtitles.environmental.entity.tapir.sniff": "Tapir sniffs",
+	"subtitles.environmental.entity.tapir.reject": "Tapir rejects",
 	"subtitles.environmental.entity.tapir.leaf_step": "Leaves rustle",
 	"subtitles.environmental.entity.yak.ambient": "Yak grunts",
 	"subtitles.environmental.entity.yak.death": "Yak dies",

@@ -1,6 +1,7 @@
 package com.teamabnormals.environmental.common.entity.ai.goal.tapir;
 
 import com.teamabnormals.environmental.common.entity.animal.Tapir;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -106,7 +107,7 @@ public class TapirSniffForFloraGoal extends Goal {
             this.tapir.setSniffing(false);
             this.tapir.level.broadcastEntityEvent(this.tapir, (byte) 5);
             this.tapir.level.broadcastEntityEvent(this.tapir, (byte) 6);
-            this.tapir.playSound(SoundEvents.PIG_DEATH);
+            this.tapir.playSound(EnvironmentalSoundEvents.TAPIR_REJECT.get());
             this.stopTime = this.adjustedTickDelay(20);
         } else if (--this.outOfWaterTime <= 0) {
             if (this.sniffTime <= 129) {
