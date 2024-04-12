@@ -1,6 +1,5 @@
 {
   "music_disc.slabrave": {
-    "category": "master",
     "sounds": [
       {
         "name": "environmental:records/slabrave",
@@ -9,7 +8,6 @@
     ]
   },
   "music_disc.leaving_home": {
-    "category": "master",
     "sounds": [
       {
         "name": "environmental:records/leaving_home",
@@ -62,7 +60,6 @@
     "subtitle": "subtitles.environmental.entity.slabfish.death"
   },
   "entity.slabfish.step": {
-    "category": "neutral",
     "sounds": [
       {
         "name": "entity/fish/flop1",
