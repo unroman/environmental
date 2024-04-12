@@ -504,6 +504,7 @@
 	"item.environmental.yak_spawn_egg": "Yak Spawn Egg",
 	"item.environmental.zebra_spawn_egg": "Zebra Spawn Egg",
 	"item.environmental.zombie_deer_spawn_egg": "Zombie Deer Spawn Egg",
+	"subtitles.environmental.block.cattail.meow": "Cattail meows",
 	"subtitles.environmental.block.giant_lily_pad.bounce": "Giant Lily Pad splashes",
 	"subtitles.environmental.block.large_lily_pad.bounce": "Large Lily Pad splashes",
 	"subtitles.environmental.entity.deer.ambient": "Deer bleats",
@@ -543,6 +544,5 @@
 	"subtitles.environmental.entity.zebra.gallop": "Zebra gallops",
 	"subtitles.environmental.entity.zebra.hurt": "Zebra hurts",
 	"subtitles.environmental.entity.zebra.jump": "Zebra jumps",
-	"subtitles.environmental.item.cattails.pick": "Cattails pop",
 	"subtitles.environmental.item.shovel.dig": "Shovel digs"
 }

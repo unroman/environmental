@@ -17,13 +17,6 @@
       }
     ]
   },
-  "item.cattail_seeds.pick_from_plant": {
-    "sounds": [
-      "item/sweet_berries/pick_from_bush1",
-      "item/sweet_berries/pick_from_bush2"
-    ],
-    "subtitle": "subtitles.environmental.item.cattails.pick"
-  },
   "item.shovel.dig": {
     "sounds": [
       "item/shovel/flatten1",
@@ -445,5 +438,32 @@
       "mob/horse/jump"
     ],
     "subtitle": "subtitles.environmental.entity.zebra.jump"
+  },
+  "block.cattail.meow": {
+    "sounds": [
+      {
+        "name": "mob/cat/meow1",
+        "volume": 0.6
+      },
+      {
+        "name": "mob/cat/meow2",
+        "volume": 0.5
+      },
+      {
+        "name": "mob/cat/meow3",
+        "volume": 0.6
+      },
+      {
+        "name": "mob/cat/meow4",
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "subtitles.environmental.block.cattail.meow"
+  },
+  "block.cattail.harvest": {
+    "sounds": [
+      "mob/sheep/shear"
+    ],
+    "subtitle": "subtitles.item.shears.shear"
   }
 }

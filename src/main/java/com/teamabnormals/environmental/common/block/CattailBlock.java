@@ -7,6 +7,7 @@ import com.teamabnormals.environmental.core.other.tags.EnvironmentalBlockTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import com.teamabnormals.environmental.core.registry.EnvironmentalParticleTypes;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -166,9 +167,9 @@ public class CattailBlock extends BushBlock implements SimpleWaterloggedBlock, B
 			return InteractionResult.PASS;
 		} else if (fluffy && stack.canPerformAction(ToolActions.SHEARS_CARVE)) {
 			if (!level.isClientSide()) {
-				level.playSound(null, pos, SoundEvents.SNOW_GOLEM_SHEAR, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+				level.playSound(null, pos, EnvironmentalSoundEvents.CATTAIL_HARVEST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
 				if (level.random.nextInt(900) < 5) {
-					level.playSound(null, pos, SoundEvents.CAT_AMBIENT, SoundSource.BLOCKS, 2.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
+					level.playSound(null, pos, EnvironmentalSoundEvents.CATTAIL_MEOW.get(), SoundSource.BLOCKS, 2.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
 				}
 				popResource(level, pos, new ItemStack(EnvironmentalItems.CATTAIL_FLUFF.get(), 1 + level.random.nextInt(state.getValue(CATTAILS))));
 				level.setBlockAndUpdate(pos, state.setValue(FLUFFY, false));
