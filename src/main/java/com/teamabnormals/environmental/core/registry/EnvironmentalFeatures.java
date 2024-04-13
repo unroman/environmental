@@ -322,7 +322,6 @@ public class EnvironmentalFeatures {
 	public static final class EnvironmentalPlacedFeatures {
 		public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Environmental.MOD_ID);
 
-		private static final PlacementFilter PINE_PLACEMENT_FILTER = BlockPredicateFilter.forPredicate(BlockPredicate.not(BlockPredicate.matchesBlocks(Direction.DOWN.getNormal(), Blocks.ROOTED_DIRT)));
 		private static final PlacementFilter PINE_ON_STONE_PLACEMENT_FILTER = BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(Direction.DOWN.getNormal(), BlockTags.BASE_STONE_OVERWORLD));
 
 		public static final RegistryObject<PlacedFeature> ORE_MUD = register("ore_mud", EnvironmentalConfiguredFeatures.ORE_MUD, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)), BiomeFilter.biome());
@@ -384,8 +383,8 @@ public class EnvironmentalFeatures {
 
 		public static final RegistryObject<PlacedFeature> PINE = register("pine", EnvironmentalConfiguredFeatures.PINE, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
 		public static final RegistryObject<PlacedFeature> TALL_PINE_WITH_PODZOL = register("tall_pine_with_podzol", EnvironmentalConfiguredFeatures.TALL_PINE_WITH_PODZOL, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> TREES_PINE_BARRENS = register("trees_pine_barrens", EnvironmentalConfiguredFeatures.TREES_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(14, 0.1F, 1), PINE_PLACEMENT_FILTER));
-		public static final RegistryObject<PlacedFeature> TREES_OLD_GROWTH_PINE_BARRENS = register("trees_old_growth_pine_barrens", EnvironmentalConfiguredFeatures.TREES_OLD_GROWTH_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(22, 0.1F, 1), PINE_PLACEMENT_FILTER));
+		public static final RegistryObject<PlacedFeature> TREES_PINE_BARRENS = register("trees_pine_barrens", EnvironmentalConfiguredFeatures.TREES_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(14, 0.1F, 1)));
+		public static final RegistryObject<PlacedFeature> TREES_OLD_GROWTH_PINE_BARRENS = register("trees_old_growth_pine_barrens", EnvironmentalConfiguredFeatures.TREES_OLD_GROWTH_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(22, 0.1F, 1)));
 		public static final RegistryObject<PlacedFeature> TREES_PINE_BARRENS_ON_STONE = register("trees_pine_barrens_on_stone", EnvironmentalConfiguredFeatures.PINE_ON_STONE, treePlacement(PlacementUtils.countExtra(3, 0.1F, 1), PINE_ON_STONE_PLACEMENT_FILTER));
 		public static final RegistryObject<PlacedFeature> TREES_PINE_SLOPES = register("trees_pine_slopes", EnvironmentalConfiguredFeatures.PINE_ON_STONE, treePlacement(PlacementUtils.countExtra(6, 0.1F, 1), PINE_ON_STONE_PLACEMENT_FILTER));
 

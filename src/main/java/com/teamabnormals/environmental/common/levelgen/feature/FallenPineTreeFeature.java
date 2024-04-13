@@ -160,10 +160,7 @@ public class FallenPineTreeFeature extends Feature<NoneFeatureConfiguration> {
 					else
 						mutable.setWithOffset(pos, h, y, 0);
 
-					if (TreeFeature.validTreePos(level, mutable))
-						level.setBlock(mutable, Blocks.ROOTED_DIRT.defaultBlockState(), 2);
-					else
-						break;
+					break;
 				}
 			}
 		}
