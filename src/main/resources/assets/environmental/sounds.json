@@ -359,9 +359,18 @@
   },
   "entity.tapir.sniff": {
     "sounds": [
-      "environmental:mob/tapir/sniff1",
-      "environmental:mob/tapir/sniff2",
-      "environmental:mob/tapir/sniff3"
+      {
+        "name": "environmental:mob/pig/sniff1",
+        "volume": 0.4
+      },
+      {
+        "name": "environmental:mob/pig/sniff2",
+        "volume": 0.4
+      },
+      {
+        "name": "environmental:mob/pig/sniff3",
+        "volume": 0.4
+      }
     ],
     "subtitle": "subtitles.environmental.entity.tapir.sniff"
   },

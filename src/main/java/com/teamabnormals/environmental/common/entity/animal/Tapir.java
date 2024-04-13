@@ -315,7 +315,7 @@ public class Tapir extends Animal {
 
 			if (this.isSniffing()) {
 				if (this.sniffTimer-- <= 0) {
-					this.playSound(EnvironmentalSoundEvents.TAPIR_SNIFF.get(), 0.3F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+					this.playSound(EnvironmentalSoundEvents.TAPIR_SNIFF.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 					this.sniffTimer = 10 + this.random.nextInt(20);
 				}
 			} else {
