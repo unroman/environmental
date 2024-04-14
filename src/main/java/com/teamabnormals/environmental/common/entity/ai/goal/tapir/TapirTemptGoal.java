@@ -31,7 +31,7 @@ public class TapirTemptGoal extends Goal {
             --this.calmDown;
             return false;
         } else {
-            this.player = this.tapir.level.getNearestPlayer(this.targetingConditions, this.tapir);
+            this.player = this.tapir.level().getNearestPlayer(this.targetingConditions, this.tapir);
             return this.player != null;
         }
     }

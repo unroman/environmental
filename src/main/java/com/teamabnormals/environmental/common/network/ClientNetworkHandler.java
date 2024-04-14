@@ -19,7 +19,7 @@ public class ClientNetworkHandler {
 		Player player = Minecraft.getInstance().player;
 
 		if (player != null) {
-			Level world = player.level;
+			Level world = player.level();
 			Entity entity = world.getEntity(packet.getEntityId());
 
 			if (entity instanceof Slabfish slabfish) {

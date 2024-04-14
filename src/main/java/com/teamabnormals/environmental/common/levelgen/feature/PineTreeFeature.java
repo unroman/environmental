@@ -2,14 +2,13 @@ package com.teamabnormals.environmental.common.levelgen.feature;
 
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
-import com.teamabnormals.blueprint.common.block.wood.LogBlock;
 import com.teamabnormals.blueprint.common.levelgen.feature.BlueprintTreeFeature;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
-import com.teamabnormals.environmental.core.registry.EnvironmentalFeatures.EnvironmentalPlacedFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -36,8 +35,8 @@ public class PineTreeFeature extends BlueprintTreeFeature {
 		float f = random.nextFloat();
 		int leafbranches = f > 0.6F ? 4 : f > 0.25F ? 3 : f > 0.05F ? 2 : 1;
 
-        if (trunkheight >= 14 && random.nextBoolean())
-            leafbranches++;
+		if (trunkheight >= 14 && random.nextBoolean())
+			leafbranches++;
 		if (trunkheight >= 16)
 			leafbranches++;
 		if (trunkheight >= 16 && leafbranches < 4)
@@ -83,7 +82,7 @@ public class PineTreeFeature extends BlueprintTreeFeature {
 
 	private void createBranch(BlockPos pos, Direction direction, RandomSource random, TreeConfiguration config) {
 		BlockPos blockpos = pos.relative(direction);
-		this.addSpecialLog(blockpos, config.trunkProvider.getState(random, blockpos).setValue(LogBlock.AXIS, direction.getAxis()));
+		this.addSpecialLog(blockpos, config.trunkProvider.getState(random, blockpos).setValue(RotatedPillarBlock.AXIS, direction.getAxis()));
 	}
 
 	private void createBranchWithLeaves(BlockPos pos, Direction direction, RandomSource random, TreeConfiguration config) {

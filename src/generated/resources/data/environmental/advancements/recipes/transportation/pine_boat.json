@@ -24,5 +24,6 @@
     "recipes": [
       "environmental:pine_boat"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

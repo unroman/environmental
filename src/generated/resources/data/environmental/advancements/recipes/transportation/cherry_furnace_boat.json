@@ -31,7 +31,8 @@
           "recipes": [
             "environmental:cherry_furnace_boat"
           ]
-        }
+        },
+        "sends_telemetry_event": false
       },
       "conditions": [
         {

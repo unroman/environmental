@@ -32,5 +32,6 @@
     [
       "upgrade_thief_hood"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

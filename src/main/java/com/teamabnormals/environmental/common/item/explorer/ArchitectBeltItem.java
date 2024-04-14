@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -32,7 +33,7 @@ public class ArchitectBeltItem extends ExplorerArmorItem {
 	private static final String NBT_TAG = "ArchitectBeltUses";
 
 	public ArchitectBeltItem(Properties properties) {
-		super(EquipmentSlot.LEGS, properties);
+		super(ArmorItem.Type.LEGGINGS, properties);
 	}
 
 	@Override
@@ -49,15 +50,15 @@ public class ArchitectBeltItem extends ExplorerArmorItem {
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.putAll(super.getDefaultAttributeModifiers(this.getSlot()));
+		builder.putAll(super.getDefaultAttributeModifiers(this.getEquipmentSlot()));
 		UUID uuid = UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D");
 
 		int uses = stack.getTag().getInt(NBT_TAG);
 		int increase = getIncreaseForUses(uses);
 
-		builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(uuid, "Reach modifier", increase, AttributeModifier.Operation.ADDITION));
+		builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(uuid, "Reach modifier", increase, AttributeModifier.Operation.ADDITION));
 
-		return slot == this.slot ? builder.build() : super.getDefaultAttributeModifiers(slot);
+		return slot == this.getEquipmentSlot() ? builder.build() : super.getDefaultAttributeModifiers(slot);
 	}
 
 	@SubscribeEvent

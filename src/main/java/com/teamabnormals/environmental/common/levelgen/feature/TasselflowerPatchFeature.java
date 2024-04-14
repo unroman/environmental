@@ -27,7 +27,7 @@ public class TasselflowerPatchFeature extends Feature<NoneFeatureConfiguration> 
 		BlockPos pos = context.origin();
 		BlockState blockstate = EnvironmentalBlocks.TASSELFLOWER.get().defaultBlockState();
 
-		if (!isGrassOrDirt(level, pos.below()) || !level.getBlockState(pos).getMaterial().isReplaceable() || !isNearWater(level, pos))
+		if (!isGrassOrDirt(level, pos.below()) || !level.getBlockState(pos).canBeReplaced() || !isNearWater(level, pos))
 			return false;
 
 		int flowers = 0;

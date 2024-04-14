@@ -6,7 +6,7 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -42,7 +42,7 @@ public class ThrownDuckEgg extends ThrowableItemProjectile {
 	public void handleEntityEvent(byte id) {
 		if (id == 3) {
 			for (int i = 0; i < 8; ++i) {
-				this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), ((double) this.random.nextFloat() - 0.5D) * 0.08D, ((double) this.random.nextFloat() - 0.5D) * 0.08D, ((double) this.random.nextFloat() - 0.5D) * 0.08D);
+				this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), ((double) this.random.nextFloat() - 0.5D) * 0.08D, ((double) this.random.nextFloat() - 0.5D) * 0.08D, ((double) this.random.nextFloat() - 0.5D) * 0.08D);
 			}
 		}
 	}
@@ -50,13 +50,13 @@ public class ThrownDuckEgg extends ThrowableItemProjectile {
 	@Override
 	protected void onHitEntity(EntityHitResult result) {
 		super.onHitEntity(result);
-		result.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), 0.0F);
+		result.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), 0.0F);
 	}
 
 	@Override
 	protected void onHit(HitResult result) {
 		super.onHit(result);
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			if (this.random.nextInt(8) == 0) {
 				int i = 1;
 				if (this.random.nextInt(32) == 0) {
@@ -64,13 +64,13 @@ public class ThrownDuckEgg extends ThrowableItemProjectile {
 				}
 
 				for (int j = 0; j < i; ++j) {
-					Duck chickenentity = EnvironmentalEntityTypes.DUCK.get().create(this.level);
+					Duck chickenentity = EnvironmentalEntityTypes.DUCK.get().create(this.level());
 					chickenentity.setAge(-24000);
 					chickenentity.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-					this.level.addFreshEntity(chickenentity);
+					this.level().addFreshEntity(chickenentity);
 				}
 			}
-			this.level.broadcastEntityEvent(this, (byte) 3);
+			this.level().broadcastEntityEvent(this, (byte) 3);
 			this.discard();
 		}
 	}
@@ -86,7 +86,7 @@ public class ThrownDuckEgg extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

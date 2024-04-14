@@ -17,7 +17,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -183,7 +182,8 @@ public class HibiscusBushFeature extends Feature<NoneFeatureConfiguration> {
 		return state.is(BlockTags.LEAVES) && state.getBlock() != EnvironmentalBlocks.HIBISCUS_LEAVES.get();
 	}
 
+	// TODO: Check side effects of turning from Plant material to canBeReplaced
 	private static boolean isAirOrPlant(BlockState state) {
-		return state.isAir() || state.getMaterial() == Material.REPLACEABLE_PLANT || state.getMaterial() == Material.PLANT;
+		return state.isAir() || state.canBeReplaced();
 	}
 }

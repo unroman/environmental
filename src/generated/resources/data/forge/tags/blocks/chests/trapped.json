@@ -1,8 +1,8 @@
 {
   "values": [
-    "environmental:willow_trapped_chest",
-    "environmental:pine_trapped_chest",
-    "environmental:wisteria_trapped_chest",
-    "environmental:cherry_trapped_chest"
+    "environmental:trapped_willow_chest",
+    "environmental:trapped_pine_chest",
+    "environmental:trapped_wisteria_chest",
+    "environmental:trapped_cherry_chest"
   ]
 }

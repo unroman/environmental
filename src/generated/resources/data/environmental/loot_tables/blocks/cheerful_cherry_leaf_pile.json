@@ -113,5 +113,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "environmental:blocks/cheerful_cherry_leaf_pile"
 }

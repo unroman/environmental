@@ -54,5 +54,6 @@
     [
       "shear_yak_with_pants"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

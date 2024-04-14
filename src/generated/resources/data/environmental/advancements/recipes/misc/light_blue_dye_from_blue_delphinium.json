@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:light_blue_dye_from_blue_delphinium"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

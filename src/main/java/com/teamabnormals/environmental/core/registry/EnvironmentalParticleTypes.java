@@ -30,13 +30,13 @@ public class EnvironmentalParticleTypes {
 
 	@SubscribeEvent
 	public static void registerParticleFactorys(RegisterParticleProvidersEvent event) {
-		event.register(EnvironmentalParticleTypes.CHERRY_BLOSSOM.get(), CherryBlossomParticle.Factory::new);
-		event.register(EnvironmentalParticleTypes.CHEERFUL_CHERRY_BLOSSOM.get(), CherryBlossomParticle.Factory::new);
-		event.register(EnvironmentalParticleTypes.MOODY_CHERRY_BLOSSOM.get(), CherryBlossomParticle.Factory::new);
-		event.register(EnvironmentalParticleTypes.RED_LOTUS_BLOSSOM.get(), LotusBlossomParticle.Factory::new);
-		event.register(EnvironmentalParticleTypes.WHITE_LOTUS_BLOSSOM.get(), LotusBlossomParticle.Factory::new);
-		event.register(EnvironmentalParticleTypes.PIG_FINDS_TRUFFLE.get(), PigFindsTruffleParticle.Factory::new);
-		event.register(EnvironmentalParticleTypes.TAPIR_FINDS_FLORA.get(), PigFindsTruffleParticle.Factory::new);
-		event.register(EnvironmentalParticleTypes.CATTAIL_FLUFF.get(), CattailFluffParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.CHERRY_BLOSSOM.get(), CherryBlossomParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.CHEERFUL_CHERRY_BLOSSOM.get(), CherryBlossomParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.MOODY_CHERRY_BLOSSOM.get(), CherryBlossomParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.RED_LOTUS_BLOSSOM.get(), LotusBlossomParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.WHITE_LOTUS_BLOSSOM.get(), LotusBlossomParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.PIG_FINDS_TRUFFLE.get(), PigFindsTruffleParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.TAPIR_FINDS_FLORA.get(), PigFindsTruffleParticle.Factory::new);
+		event.registerSpriteSet(EnvironmentalParticleTypes.CATTAIL_FLUFF.get(), CattailFluffParticle.Factory::new);
 	}
 }

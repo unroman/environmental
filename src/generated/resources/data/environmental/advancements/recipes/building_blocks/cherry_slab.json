@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:cherry_slab"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

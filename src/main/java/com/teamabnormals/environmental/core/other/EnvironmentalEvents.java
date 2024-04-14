@@ -51,7 +51,6 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
@@ -71,7 +70,7 @@ import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -89,11 +88,11 @@ import java.util.Set;
 public class EnvironmentalEvents {
 
 	@SubscribeEvent
-	public static void onLivingSpawn(LivingSpawnEvent.CheckSpawn event) {
+	public static void onLivingSpawn(MobSpawnEvent.FinalizeSpawn event) {
 		Mob entity = event.getEntity();
-		LevelAccessor level = event.getLevel();
+		ServerLevelAccessor level = event.getLevel();
 
-		if (!(EnvironmentalConfig.COMMON.blockOnlyNaturalSpawns.get() && event.isSpawner()) && entity.getType().getCategory() == MobCategory.MONSTER && !entity.getType().is(EnvironmentalEntityTypeTags.UNAFFECTED_BY_SERENITY)) {
+		if (!(EnvironmentalConfig.COMMON.blockOnlyNaturalSpawns.get() && event.getSpawnType() == MobSpawnType.SPAWNER) && entity.getType().getCategory() == MobCategory.MONSTER && !entity.getType().is(EnvironmentalEntityTypeTags.UNAFFECTED_BY_SERENITY)) {
 			int horizontalRange = EnvironmentalConfig.COMMON.koiHorizontalSerenityRange.get();
 			int verticalRange = EnvironmentalConfig.COMMON.koiVerticalSerenityRange.get();
 			for (Koi koi : level.getEntitiesOfClass(Koi.class, entity.getBoundingBox().inflate(horizontalRange, verticalRange, horizontalRange))) {
@@ -104,9 +103,9 @@ public class EnvironmentalEvents {
 			}
 		}
 
-		if (event.getResult() != Result.DENY && level instanceof ServerLevelAccessor serverLevel) {
+		if (event.getResult() != Result.DENY) {
 			RandomSource random = level.getRandom();
-			if (entity.getType() == EntityType.PIG && EnvironmentalConfig.COMMON.muddyPigs.get() && EnvironmentalConfig.COMMON.naturalMuddyPigs.get() && serverLevel.getBiome(entity.blockPosition()).is(EnvironmentalBiomeTags.HAS_MUDDY_PIG)) {
+			if (entity.getType() == EntityType.PIG && EnvironmentalConfig.COMMON.muddyPigs.get() && EnvironmentalConfig.COMMON.naturalMuddyPigs.get() && level.getBiome(entity.blockPosition()).is(EnvironmentalBiomeTags.HAS_MUDDY_PIG)) {
 				IDataManager data = (IDataManager) entity;
 				data.setValue(EnvironmentalDataProcessors.IS_MUDDY, true);
 				data.setValue(EnvironmentalDataProcessors.MUD_DRYING_TIME, 36000);
@@ -127,7 +126,7 @@ public class EnvironmentalEvents {
 
 			if (potion == Potions.WATER && list.isEmpty()) {
 				AABB axisalignedbb = thrownPotion.getBoundingBox().inflate(2.0D, 1.0D, 2.0D);
-				List<Slabfish> slabs = thrownPotion.level.getEntitiesOfClass(Slabfish.class, axisalignedbb);
+				List<Slabfish> slabs = thrownPotion.level().getEntitiesOfClass(Slabfish.class, axisalignedbb);
 				if (!slabs.isEmpty()) {
 					for (Slabfish slabfish : slabs) {
 						slabfish.setSlabfishOverlay(SlabfishOverlay.NONE);
@@ -359,7 +358,7 @@ public class EnvironmentalEvents {
 
 						ghost.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 140, 0, false, false));
 						ghost.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, false, false));
-						world.playSound(null, new BlockPos(entity.position()), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 1, 1);
+						world.playSound(null, entity.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 1, 1);
 
 						ghost.setPos(slabfish.getX(), slabfish.getY(), slabfish.getZ());
 						ghost.moveTo(slabfish.getX(), slabfish.getY(), slabfish.getZ(), slabfish.getYRot(), slabfish.getXRot());
@@ -382,7 +381,7 @@ public class EnvironmentalEvents {
 	@SubscribeEvent
 	public static void onBabySpawn(BabyEntitySpawnEvent event) {
 		if (event.getParentA() instanceof Pig pig && event.getParentB() instanceof Pig && EnvironmentalConfig.COMMON.largerPigLitters.get()) {
-			Level level = pig.getLevel();
+			Level level = pig.level();
 			int minBonus = EnvironmentalConfig.COMMON.minimumAdditionalPiglets.get();
 			int piglets = minBonus + level.random.nextInt(EnvironmentalConfig.COMMON.maximumAdditionalPiglets.get() + 1 - minBonus);
 			for (int i = 0; i < piglets; ++i) {
@@ -396,7 +395,7 @@ public class EnvironmentalEvents {
 		}
 
 		if (event.getParentA() instanceof Hoglin hoglin && event.getParentB() instanceof Hoglin && EnvironmentalConfig.COMMON.largerHoglinLitters.get()) {
-			Level level = hoglin.getLevel();
+			Level level = hoglin.level();
 			int minBonus = EnvironmentalConfig.COMMON.minimumAdditionalHoglets.get();
 			int piglets = minBonus + level.random.nextInt(EnvironmentalConfig.COMMON.maximumAdditionalHoglets.get() + 1 - minBonus);
 			for (int i = 0; i < piglets; ++i) {

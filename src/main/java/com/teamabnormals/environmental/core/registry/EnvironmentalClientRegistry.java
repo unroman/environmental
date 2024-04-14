@@ -24,8 +24,8 @@ public class EnvironmentalClientRegistry {
 	}
 
 	@SubscribeEvent
-	public static void onEvent(ModelEvent.BakingCompleted event) {
-		event.getModels().put(new ModelResourceLocation(EnvironmentalItems.SLABFISH_BUCKET.getId(), "inventory"), new SlabfishBucketModel(event.getModelManager()));
+	public static void onEvent(ModelEvent.ModifyBakingResult event) {
+		event.getModels().put(new ModelResourceLocation(EnvironmentalItems.SLABFISH_BUCKET.getId(), "inventory"), new SlabfishBucketModel(event.getModels()));
 	}
 
 	@SubscribeEvent

@@ -17,7 +17,7 @@ public class DeerGrazeGoal extends Goal {
 
 	public DeerGrazeGoal(AbstractDeer deerIn) {
 		this.deer = deerIn;
-		this.level = deerIn.getLevel();
+		this.level = deerIn.level();
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
 	}
 

@@ -89,9 +89,9 @@ public class Duck extends Animal {
 		// Wing rotation
 		this.oFlap = this.wingRotation;
 		this.oFlapSpeed = this.destPos;
-		this.destPos = (float) ((double) this.destPos + (double) (this.onGround || this.wasTouchingWater ? -1 : 4) * 0.3D);
+		this.destPos = (float) ((double) this.destPos + (double) (this.onGround() || this.wasTouchingWater ? -1 : 4) * 0.3D);
 		this.destPos = Mth.clamp(this.destPos, 0.0F, 1.0F);
-		if (!this.onGround && !flag && this.wingRotDelta < 1.0F) {
+		if (!this.onGround() && !flag && this.wingRotDelta < 1.0F) {
 			this.wingRotDelta = 1.0F;
 		}
 		this.wingRotDelta = (float) ((double) this.wingRotDelta * 0.9D);
@@ -113,11 +113,11 @@ public class Duck extends Animal {
 
 		// Motion
 		Vec3 vector3d = this.getDeltaMovement();
-		if (!this.onGround && vector3d.y < 0.0D) {
+		if (!this.onGround() && vector3d.y < 0.0D) {
 			this.setDeltaMovement(vector3d.multiply(1.0D, 0.6D, 1.0D));
 		}
 
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			// Egg laying
 			if (this.isAlive() && !this.isBaby() && !this.wasTouchingWater && !this.isDuckJockey() && --this.timeUntilNextEgg <= 0) {
 				this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
@@ -228,15 +228,14 @@ public class Duck extends Animal {
 	}
 
 	@Override
-	public void positionRider(Entity passenger) {
-		super.positionRider(passenger);
+	public void positionRider(Entity passenger, Entity.MoveFunction function) {
+		super.positionRider(passenger, function);
 		float f = Mth.sin(this.yBodyRot * ((float) Math.PI / 180F));
 		float f1 = Mth.cos(this.yBodyRot * ((float) Math.PI / 180F));
-		passenger.setPos(this.getX() + (double) (0.1F * f), this.getY(0.5D) + passenger.getMyRidingOffset() + 0.0D, this.getZ() - (double) (0.1F * f1));
+		function.accept(passenger, this.getX() + (double) (0.1F * f), this.getY(0.5D) + passenger.getMyRidingOffset() + 0.0D, this.getZ() - (double) (0.1F * f1));
 		if (passenger instanceof LivingEntity) {
 			((LivingEntity) passenger).yBodyRot = this.yBodyRot;
 		}
-
 	}
 
 	public boolean isDuckJockey() {

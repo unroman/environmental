@@ -7,27 +7,31 @@ import com.teamabnormals.environmental.core.other.tags.EnvironmentalBlockTags;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 import static com.teamabnormals.environmental.core.registry.EnvironmentalBlocks.*;
 import static com.teamabnormals.environmental.core.registry.EnvironmentalItems.*;
 
 public class EnvironmentalItemTagsProvider extends ItemTagsProvider {
 
-	public EnvironmentalItemTagsProvider(DataGenerator generator, BlockTagsProvider blockTags, ExistingFileHelper existingFileHelper) {
-		super(generator, blockTags, Environmental.MOD_ID, existingFileHelper);
+	public EnvironmentalItemTagsProvider(PackOutput output, CompletableFuture<Provider> provider, CompletableFuture<TagsProvider.TagLookup<Block>> lookup, ExistingFileHelper helper) {
+		super(output, provider, lookup, Environmental.MOD_ID, helper);
 	}
 
 	@Override
-	public void addTags() {
+	public void addTags(Provider provider) {
 		this.copy(EnvironmentalBlockTags.WILLOW_LOGS, EnvironmentalItemTags.WILLOW_LOGS);
 		this.copy(EnvironmentalBlockTags.PINE_LOGS, EnvironmentalItemTags.PINE_LOGS);
 		this.copy(EnvironmentalBlockTags.WISTERIA_LOGS, EnvironmentalItemTags.WISTERIA_LOGS);
@@ -64,7 +68,6 @@ public class EnvironmentalItemTagsProvider extends ItemTagsProvider {
 		this.copy(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES);
 		this.copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
 		this.copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
-		this.copy(BlockTags.SAND, ItemTags.SAND);
 		this.copy(BlockTags.SLABS, ItemTags.SLABS);
 		this.copy(BlockTags.WALLS, ItemTags.WALLS);
 		this.copy(BlockTags.STAIRS, ItemTags.STAIRS);
@@ -73,7 +76,6 @@ public class EnvironmentalItemTagsProvider extends ItemTagsProvider {
 		this.tag(ItemTags.SMALL_FLOWERS).add(EnvironmentalBlocks.CARTWHEEL.get().asItem(), EnvironmentalBlocks.BLUEBELL.get().asItem(), EnvironmentalBlocks.VIOLET.get().asItem(), EnvironmentalBlocks.DIANTHUS.get().asItem(), EnvironmentalBlocks.RED_LOTUS_FLOWER.get().asItem(), EnvironmentalBlocks.WHITE_LOTUS_FLOWER.get().asItem(), EnvironmentalBlocks.TASSELFLOWER.get().asItem(), EnvironmentalBlocks.YELLOW_HIBISCUS.get().asItem(), EnvironmentalBlocks.ORANGE_HIBISCUS.get().asItem(), EnvironmentalBlocks.RED_HIBISCUS.get().asItem(), EnvironmentalBlocks.PINK_HIBISCUS.get().asItem(), EnvironmentalBlocks.MAGENTA_HIBISCUS.get().asItem(), EnvironmentalBlocks.PURPLE_HIBISCUS.get().asItem());
 		this.copy(BlockTags.TALL_FLOWERS, ItemTags.TALL_FLOWERS);
 		this.copy(BlockTags.STANDING_SIGNS, ItemTags.SIGNS);
-		this.copy(BlockTags.OVERWORLD_NATURAL_LOGS, ItemTags.OVERWORLD_NATURAL_LOGS);
 		this.copy(BlockTags.DAMPENS_VIBRATIONS, ItemTags.DAMPENS_VIBRATIONS);
 		this.tag(ItemTags.BOATS).add(WILLOW_BOAT.getFirst().get(), PINE_BOAT.getFirst().get(), WISTERIA_BOAT.getFirst().get(), CHERRY_BOAT.getFirst().get());
 		this.tag(ItemTags.CHEST_BOATS).add(WILLOW_BOAT.getSecond().get(), PINE_BOAT.getSecond().get(), WISTERIA_BOAT.getSecond().get(), CHERRY_BOAT.getSecond().get());
@@ -86,7 +88,6 @@ public class EnvironmentalItemTagsProvider extends ItemTagsProvider {
 		this.copy(Tags.Blocks.CHESTS_WOODEN, Tags.Items.CHESTS_WOODEN);
 		this.copy(Tags.Blocks.CHESTS_TRAPPED, Tags.Items.CHESTS_TRAPPED);
 		this.copy(Tags.Blocks.FENCE_GATES_WOODEN, Tags.Items.FENCE_GATES_WOODEN);
-		this.copy(Tags.Blocks.FENCES_WOODEN, Tags.Items.FENCES_WOODEN);
 		this.tag(Tags.Items.BOOKSHELVES).add(WILLOW_BOOKSHELF.get().asItem(), PINE_BOOKSHELF.get().asItem(), WISTERIA_BOOKSHELF.get().asItem(), CHERRY_BOOKSHELF.get().asItem());
 		this.tag(EnvironmentalItemTags.FRUITS).addTag(EnvironmentalItemTags.FRUITS_CHERRY);
 		this.tag(EnvironmentalItemTags.FRUITS_CHERRY).add(CHERRIES.get());
@@ -96,13 +97,8 @@ public class EnvironmentalItemTagsProvider extends ItemTagsProvider {
 		this.tag(EnvironmentalItemTags.COOKED_VENISON).add(COOKED_VENISON.get());
 		this.tag(EnvironmentalItemTags.RAW_FISHES).addTag(EnvironmentalItemTags.RAW_FISHES_KOI);
 		this.tag(EnvironmentalItemTags.RAW_FISHES_KOI).add(KOI.get());
-		this.tag(BlueprintItemTags.EGGS).add(DUCK_EGG.get());
+		this.tag(Tags.Items.EGGS).add(DUCK_EGG.get());
 
-		this.copy(BlueprintBlockTags.LADDERS, BlueprintItemTags.LADDERS);
-		this.copy(BlueprintBlockTags.HEDGES, BlueprintItemTags.HEDGES);
-		this.copy(BlueprintBlockTags.VERTICAL_SLABS, BlueprintItemTags.VERTICAL_SLABS);
-		this.copy(BlueprintBlockTags.WOODEN_VERTICAL_SLABS, BlueprintItemTags.WOODEN_VERTICAL_SLABS);
-		this.tag(BlueprintItemTags.BOATABLE_CHESTS).add(WILLOW_CHESTS.getFirst().get().asItem(), PINE_CHESTS.getFirst().get().asItem(), WISTERIA_CHESTS.getFirst().get().asItem(), CHERRY_CHESTS.getFirst().get().asItem());
-		this.tag(BlueprintItemTags.REVERTABLE_CHESTS).add(WILLOW_CHESTS.getFirst().get().asItem(), PINE_CHESTS.getFirst().get().asItem(), WISTERIA_CHESTS.getFirst().get().asItem(), CHERRY_CHESTS.getFirst().get().asItem());
+		this.copy(BlueprintBlockTags.WOODEN_LADDERS, BlueprintItemTags.WOODEN_LADDERS);
 	}
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:yak_hair_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

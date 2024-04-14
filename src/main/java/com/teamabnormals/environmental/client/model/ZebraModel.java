@@ -107,8 +107,8 @@ public class ZebraModel<T extends Zebra> extends AgeableListModel<T> {
 	@Override
 	public void prepareMobModel(T zebra, float limbSwing, float limbSwingAmount, float partialTick) {
 		super.prepareMobModel(zebra, limbSwing, limbSwingAmount, partialTick);
-		float bodyrot = Mth.rotlerp(zebra.yBodyRotO, zebra.yBodyRot, partialTick);
-		float headrot = Mth.rotlerp(zebra.yHeadRotO, zebra.yHeadRot, partialTick);
+		float bodyrot = Mth.rotLerp(zebra.yBodyRotO, zebra.yBodyRot, partialTick);
+		float headrot = Mth.rotLerp(zebra.yHeadRotO, zebra.yHeadRot, partialTick);
 		float headyangle = headrot - bodyrot;
 		float headswing = Mth.lerp(partialTick, zebra.xRotO, zebra.getXRot()) * Mth.DEG_TO_RAD;
 

@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:slabfish_effigy"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

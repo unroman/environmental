@@ -1,0 +1,46 @@
+{
+  "type": "environmental:cartwheel",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "environmental:cartwheel",
+            "Properties": {
+              "facing": "north"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "environmental:cartwheel",
+            "Properties": {
+              "facing": "south"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "environmental:cartwheel",
+            "Properties": {
+              "facing": "east"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "environmental:cartwheel",
+            "Properties": {
+              "facing": "west"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    }
+  }
+}

@@ -113,5 +113,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "environmental:blocks/willow_leaf_pile"
 }

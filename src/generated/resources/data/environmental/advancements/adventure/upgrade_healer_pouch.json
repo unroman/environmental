@@ -32,5 +32,6 @@
     [
       "upgrade_healer_pouch"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

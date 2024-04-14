@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:string_from_cattail_fluff"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

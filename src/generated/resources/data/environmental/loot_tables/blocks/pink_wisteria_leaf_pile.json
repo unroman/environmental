@@ -113,5 +113,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "environmental:blocks/pink_wisteria_leaf_pile"
 }

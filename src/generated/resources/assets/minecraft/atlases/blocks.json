@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "environmental:item/slabfish_sweater_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "environmental:item/slabfish_backpack_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "environmental:item/slabfish_backpack_type_slot"
+    }
+  ]
+}

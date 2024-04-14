@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:dirt_tile_stairs_from_dirt_tiles_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

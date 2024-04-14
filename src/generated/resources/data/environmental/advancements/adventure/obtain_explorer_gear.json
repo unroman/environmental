@@ -72,5 +72,6 @@
       "architect_belt",
       "wanderer_boots"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

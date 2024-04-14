@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:duckweed_thatch_slab"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

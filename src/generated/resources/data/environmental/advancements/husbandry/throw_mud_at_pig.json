@@ -8,7 +8,12 @@
             "direct_entity": {
               "type": "environmental:mud_ball"
             },
-            "is_projectile": true
+            "tags": [
+              {
+                "expected": true,
+                "id": "minecraft:is_projectile"
+              }
+            ]
           }
         },
         "entity": [
@@ -43,5 +48,6 @@
     [
       "throw_mud_at_pig"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

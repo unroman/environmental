@@ -4,23 +4,26 @@ import com.teamabnormals.blueprint.core.other.tags.BlueprintEntityTypeTags;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 import static com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags.*;
 import static com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes.*;
 
 public class EnvironmentalEntityTypeTagsProvider extends EntityTypeTagsProvider {
 
-	public EnvironmentalEntityTypeTagsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, Environmental.MOD_ID, existingFileHelper);
+	public EnvironmentalEntityTypeTagsProvider(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper helper) {
+		super(output, provider, Environmental.MOD_ID, helper);
 	}
 
 	@Override
-	public void addTags() {
+	public void addTags(Provider provider) {
 		this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(MUD_BALL.get(), DUCK_EGG.get());
 		this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(REINDEER.get());
 		this.tag(EntityTypeTags.AXOLOTL_HUNT_TARGETS).add(KOI.get());

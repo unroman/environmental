@@ -4,12 +4,13 @@
     {
       "conditions": [
         {
-          "type": "blueprint:quark_flag",
-          "flag": "apple_crate"
+          "type": "forge:mod_loaded",
+          "modid": "berry_good"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
+        "category": "misc",
         "key": {
           "#": {
             "item": "environmental:cherries"
@@ -22,7 +23,8 @@
         ],
         "result": {
           "item": "environmental:cherry_crate"
-        }
+        },
+        "show_notification": true
       }
     }
   ]

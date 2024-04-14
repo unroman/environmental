@@ -4,7 +4,6 @@ import com.teamabnormals.environmental.common.entity.animal.Tapir;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
@@ -52,14 +51,14 @@ public class TapirHuntFloraGoal extends Goal {
 	@Override
 	public void tick() {
 		BlockPos florapos = this.tapir.getFloraPos();
-		BlockState florastate = this.tapir.level.getBlockState(florapos);
+		BlockState florastate = this.tapir.level().getBlockState(florapos);
 
-		if (!florastate.getBlock().getCloneItemStack(this.tapir.level, florapos, florastate).is(this.tapir.getFloraItem())) {
+		if (!florastate.getBlock().getCloneItemStack(this.tapir.level(), florapos, florastate).is(this.tapir.getFloraItem())) {
 			if (this.tapir.isGrazing()) {
 				this.tapir.stopTracking();
 				return;
 			} else if (florapos.closerThan(this.tapir.blockPosition(), 5.0D)) {
-				this.tapir.level.broadcastEntityEvent(this.tapir, (byte) 5);
+				this.tapir.level().broadcastEntityEvent(this.tapir, (byte) 5);
 				this.tapir.playSound(EnvironmentalSoundEvents.TAPIR_REJECT.get());
 				this.tapir.stopTracking();
 				return;
@@ -75,12 +74,12 @@ public class TapirHuntFloraGoal extends Goal {
 				this.tapir.getNavigation().stop();
 			} else {
 				if (--this.grazeTime <= 0) {
-					this.tapir.level.destroyBlock(florapos, false);
+					this.tapir.level().destroyBlock(florapos, false);
 					this.tapir.stopTracking();
 
 					Vec3 vec3 = DefaultRandomPos.getPos(this.tapir, 10, 7);
 					if (vec3 != null)
-						this.moveTo(new BlockPos(vec3));
+						this.moveTo(BlockPos.containing(vec3));
 				}
 
 				if (this.tapir.getAge() == 0) {
@@ -98,7 +97,7 @@ public class TapirHuntFloraGoal extends Goal {
 						}
 					} else if (this.canBreedWith(this.partner) && this.tapir.getFloraPos().equals(this.partner.getFloraPos())) {
 						if (--this.romanticDinnerTime <= 0)
-							this.tapir.spawnChildFromBreeding((ServerLevel) this.tapir.level, this.partner);
+							this.tapir.spawnChildFromBreeding((ServerLevel) this.tapir.level(), this.partner);
 					} else {
 						this.partner = null;
 					}
@@ -118,11 +117,11 @@ public class TapirHuntFloraGoal extends Goal {
 
 	@Nullable
 	private Tapir findClosestPartner() {
-		List<? extends Tapir> list = this.tapir.level.getNearbyEntities(Tapir.class, PARTNER_TARGETING, this.tapir, this.tapir.getBoundingBox().inflate(8.0D));
+		List<? extends Tapir> list = this.tapir.level().getNearbyEntities(Tapir.class, PARTNER_TARGETING, this.tapir, this.tapir.getBoundingBox().inflate(8.0D));
 		double d0 = Double.MAX_VALUE;
 		Tapir partner = null;
 
-		for(Tapir entity : list) {
+		for (Tapir entity : list) {
 			double d1 = this.tapir.distanceToSqr(entity);
 			if (this.canBreedWith(entity) && d1 < d0) {
 				d0 = d1;

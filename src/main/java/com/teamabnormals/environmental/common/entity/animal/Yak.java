@@ -101,7 +101,7 @@ public class Yak extends Animal implements IForgeShearable, Shearable, NeutralMo
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setSheared(compound.getBoolean("Sheared"));
-		this.readPersistentAngerSaveData(this.level, compound);
+		this.readPersistentAngerSaveData(this.level(), compound);
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class Yak extends Animal implements IForgeShearable, Shearable, NeutralMo
 			modifiableattributeinstance.removeModifier(ATTACKING_SPEED_BOOST);
 		}
 
-		this.updatePersistentAnger((ServerLevel) this.level, true);
+		this.updatePersistentAnger((ServerLevel) this.level(), true);
 
 		if (this.isAngry()) {
 			this.lastHurtByPlayerTime = this.tickCount;
@@ -126,7 +126,7 @@ public class Yak extends Animal implements IForgeShearable, Shearable, NeutralMo
 
 	@Override
 	public void aiStep() {
-		if (this.level.isClientSide && this.grassEatTimer > 0) {
+		if (this.level().isClientSide && this.grassEatTimer > 0) {
 			this.grassEatTimer--;
 		}
 		super.aiStep();
@@ -148,7 +148,7 @@ public class Yak extends Animal implements IForgeShearable, Shearable, NeutralMo
 			player.playSound(EnvironmentalSoundEvents.YAK_MILK.get(), 1.0F, 1.0F);
 			ItemStack newStack = ItemUtils.createFilledResult(stack, player, Items.MILK_BUCKET.getDefaultInstance());
 			player.setItemInHand(hand, newStack);
-			return InteractionResult.sidedSuccess(this.level.isClientSide);
+			return InteractionResult.sidedSuccess(this.level().isClientSide);
 		} else {
 			return super.mobInteract(player, hand);
 		}
@@ -272,7 +272,7 @@ public class Yak extends Animal implements IForgeShearable, Shearable, NeutralMo
 
 	@Override
 	public void shear(SoundSource category) {
-		this.level.playSound(null, this, SoundEvents.SHEEP_SHEAR, category, 1.0F, 1.0F);
+		this.level().playSound(null, this, SoundEvents.SHEEP_SHEAR, category, 1.0F, 1.0F);
 		this.setSheared(true);
 		int i = 4 + this.random.nextInt(12);
 

@@ -38,5 +38,6 @@
     [
       "feed_deer_flower"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -40,7 +40,7 @@ public class ZebraFleeGoal extends Goal {
 			return false;
 
 		if (!this.zebra.isTamed() && this.zebra.getTarget() == null) {
-			List<Zebra> zebras = this.zebra.getLevel().getEntitiesOfClass(Zebra.class, this.zebra.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), zebra1 -> zebra1 != this.zebra && zebra1.isFleeing())
+			List<Zebra> zebras = this.zebra.level().getEntitiesOfClass(Zebra.class, this.zebra.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), zebra1 -> zebra1 != this.zebra && zebra1.isFleeing())
 					.stream().sorted(Comparator.comparingDouble(entity -> entity.distanceToSqr(this.zebra))).toList();
 			if (!zebras.isEmpty()) {
 				Zebra zebra1 = zebras.get(0);
@@ -101,7 +101,7 @@ public class ZebraFleeGoal extends Goal {
 			}
 
 			if (++this.stuckTime > this.adjustedTickDelay(20)) {
-				List<Zebra> zebras = this.zebra.getLevel().getEntitiesOfClass(Zebra.class, this.zebra.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), zebra1 -> zebra1 != this.zebra && zebra1.isFleeing() && zebra1.getFleeGoal().fleeDirection != this.fleeDirection && !zebra1.getFleeGoal().isStuck)
+				List<Zebra> zebras = this.zebra.level().getEntitiesOfClass(Zebra.class, this.zebra.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), zebra1 -> zebra1 != this.zebra && zebra1.isFleeing() && zebra1.getFleeGoal().fleeDirection != this.fleeDirection && !zebra1.getFleeGoal().isStuck)
 						.stream().sorted(Comparator.comparingDouble(entity -> entity.distanceToSqr(this.zebra))).toList();
 
 				if (!zebras.isEmpty()) {

@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:moody_cherry_leaves_from_moody_cherry_leaf_pile"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

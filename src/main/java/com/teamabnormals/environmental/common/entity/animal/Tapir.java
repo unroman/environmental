@@ -41,7 +41,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -57,15 +56,15 @@ public class Tapir extends Animal {
 	private static final EntityDataAccessor<Boolean> HAS_BABY_PATTERN = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> BEING_TEMPTED = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> IS_SNIFFING = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> IS_GRAZING = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> IS_GRAZING = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Optional<BlockPos>> FLORA_POS = SynchedEntityData.defineId(Tapir.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
 
 	private Item floraItem;
 	private boolean running;
 
 	private int sniffTimer;
-    private float sniffAmount;
-    private float sniffAmount0;
+	private float sniffAmount;
+	private float sniffAmount0;
 
 	private float snoutRaiseAmount;
 	private float snoutRaiseAmount0;
@@ -102,7 +101,7 @@ public class Tapir extends Animal {
 		this.entityData.define(HAS_BABY_PATTERN, false);
 		this.entityData.define(BEING_TEMPTED, false);
 		this.entityData.define(IS_SNIFFING, false);
-        this.entityData.define(IS_GRAZING, false);
+		this.entityData.define(IS_GRAZING, false);
 		this.entityData.define(FLORA_POS, Optional.empty());
 	}
 
@@ -174,13 +173,13 @@ public class Tapir extends Animal {
 		this.entityData.set(IS_SNIFFING, sniffing);
 	}
 
-    public boolean isGrazing() {
-        return this.entityData.get(IS_GRAZING);
-    }
+	public boolean isGrazing() {
+		return this.entityData.get(IS_GRAZING);
+	}
 
-    public void setGrazing(boolean grazing) {
-        this.entityData.set(IS_GRAZING, grazing);
-    }
+	public void setGrazing(boolean grazing) {
+		this.entityData.set(IS_GRAZING, grazing);
+	}
 
 	public boolean hasFloraPos() {
 		return this.getFloraPos() != null;
@@ -227,13 +226,13 @@ public class Tapir extends Animal {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof BlockItem blockitem && !this.isBaby() && this.isFood(stack)) {
 			if (this.getTrackingTime() <= 0) {
-				if (!this.level.isClientSide()) {
+				if (!this.level().isClientSide()) {
 					this.floraItem = blockitem;
 					this.loveCause = player.getUUID();
 					this.setTrackingTime(300);
-					this.level.broadcastEntityEvent(this, (byte) 4);
+					this.level().broadcastEntityEvent(this, (byte) 4);
 				}
-				return InteractionResult.sidedSuccess(this.level.isClientSide);
+				return InteractionResult.sidedSuccess(this.level().isClientSide);
 			}
 			return InteractionResult.PASS;
 		}
@@ -241,15 +240,15 @@ public class Tapir extends Animal {
 		return super.mobInteract(player, hand);
 	}
 
-    @Override
-    public void tick() {
-        super.tick();
+	@Override
+	public void tick() {
+		super.tick();
 
-        this.sniffAmount0 = this.sniffAmount;
-        if (this.isSniffing())
-            this.sniffAmount = Math.min(1.0F, this.sniffAmount + 0.25F);
-        else
-            this.sniffAmount = Math.max(0.0F, this.sniffAmount - 0.25F);
+		this.sniffAmount0 = this.sniffAmount;
+		if (this.isSniffing())
+			this.sniffAmount = Math.min(1.0F, this.sniffAmount + 0.25F);
+		else
+			this.sniffAmount = Math.max(0.0F, this.sniffAmount - 0.25F);
 
 		this.headShakeAnim0 = this.headShakeAnim;
 		if (this.headShakeAnim > 0)
@@ -266,7 +265,7 @@ public class Tapir extends Animal {
 			this.neckAngle = Math.min(1.0F, this.neckAngle + 0.15F);
 		} else if (this.isGrazing()) {
 			BlockPos florapos = this.getFloraPos();
-			boolean lookup = florapos != null && this.level.getBlockState(florapos).getShape(this.level, florapos).min(Axis.Y) + florapos.getY() > this.getEyeY();
+			boolean lookup = florapos != null && this.level().getBlockState(florapos).getShape(this.level(), florapos).min(Axis.Y) + florapos.getY() > this.getEyeY();
 			if (lookup)
 				this.neckAngle = Math.max(-1.0F, this.neckAngle - 0.15F);
 			else
@@ -282,7 +281,7 @@ public class Tapir extends Animal {
 			this.snoutRaiseAmount = Math.min(1.0F, this.snoutRaiseAmount + 0.25F);
 		else
 			this.snoutRaiseAmount = Math.max(0.0F, this.snoutRaiseAmount - 0.25F);
-    }
+	}
 
 	@Override
 	public void customServerAiStep() {
@@ -294,7 +293,7 @@ public class Tapir extends Animal {
 	public void aiStep() {
 		super.aiStep();
 
-		if (!this.level.isClientSide()) {
+		if (!this.level().isClientSide()) {
 			if (this.getTrackingTime() > 0) {
 				if (this.hasFloraPos()) {
 					if (!this.isGrazing()) {
@@ -322,33 +321,33 @@ public class Tapir extends Animal {
 				this.sniffTimer = 0;
 			}
 
-            if (this.tickCount % 20 == 0 && this.isGrazing() && this.hasFloraPos()) {
-                this.playSound(SoundEvents.GENERIC_EAT, 0.5F + 0.5F * (float) this.random.nextInt(2), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                this.level.broadcastEntityEvent(this, (byte) 7);
-            }
+			if (this.tickCount % 20 == 0 && this.isGrazing() && this.hasFloraPos()) {
+				this.playSound(SoundEvents.GENERIC_EAT, 0.5F + 0.5F * (float) this.random.nextInt(2), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+				this.level().broadcastEntityEvent(this, (byte) 7);
+			}
 		} else if (this.tickCount % 10 == 0 && this.getTrackingTime() > 0 && this.hasFloraItem()) {
 			double d0 = random.nextGaussian() * 0.02D;
 			double d1 = random.nextGaussian() * 0.02D;
 			double d2 = random.nextGaussian() * 0.02D;
-			level.addParticle(EnvironmentalParticleTypes.TAPIR_FINDS_FLORA.get(), this.getRandomX(0.5D), this.getRandomY() + 0.5D, this.getRandomZ(0.5D), d0, d1, d2);
+			this.level().addParticle(EnvironmentalParticleTypes.TAPIR_FINDS_FLORA.get(), this.getRandomX(0.5D), this.getRandomY() + 0.5D, this.getRandomZ(0.5D), d0, d1, d2);
 		}
 	}
 
-    @Override
-    public void handleEntityEvent(byte id) {
-        if (id == 4) {
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 4) {
 			for (int i = 0; i < 7; ++i) {
 				double d0 = this.random.nextGaussian() * 0.02D;
 				double d1 = this.random.nextGaussian() * 0.02D;
 				double d2 = this.random.nextGaussian() * 0.02D;
-				this.level.addParticle(EnvironmentalParticleTypes.TAPIR_FINDS_FLORA.get(), this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+				this.level().addParticle(EnvironmentalParticleTypes.TAPIR_FINDS_FLORA.get(), this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
 			}
-        } else if (id == 5) {
+		} else if (id == 5) {
 			for (int i = 0; i < 7; ++i) {
 				double d0 = this.random.nextGaussian() * 0.02D;
 				double d1 = this.random.nextGaussian() * 0.02D;
 				double d2 = this.random.nextGaussian() * 0.02D;
-				this.level.addParticle(ParticleTypes.SMOKE, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+				this.level().addParticle(ParticleTypes.SMOKE, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
 			}
 		} else if (id == 6) {
 			this.headShakeAnim = 20;
@@ -363,13 +362,13 @@ public class Tapir extends Animal {
 					Vec3 vector3d1 = new Vec3((this.random.nextFloat() - 0.5D) * 0.2D, d0, 0.9D - 0.05D * this.neckAngle + (this.random.nextFloat() - 0.5D) * 0.1D);
 					vector3d1 = vector3d1.yRot(-this.yBodyRot * Mth.DEG_TO_RAD);
 					vector3d1 = vector3d1.add(this.getX(), this.getEyeY() - 0.15D - 0.35D * this.neckAngle, this.getZ());
-					this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, this.level.getBlockState(this.getFloraPos())), vector3d1.x, vector3d1.y, vector3d1.z, vector3d.x, vector3d.y + 0.05D, vector3d.z);
+					this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, this.level().getBlockState(this.getFloraPos())), vector3d1.x, vector3d1.y, vector3d1.z, vector3d.x, vector3d.y + 0.05D, vector3d.z);
 				}
 			}
-        } else {
-            super.handleEntityEvent(id);
-        }
-    }
+		} else {
+			super.handleEntityEvent(id);
+		}
+	}
 
 	@Override
 	public boolean canFallInLove() {
@@ -400,7 +399,7 @@ public class Tapir extends Animal {
 	protected void playStepSound(BlockPos pos, BlockState state) {
 		AABB aabb = this.getBoundingBox();
 		for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX + 0.001D), Mth.floor(aabb.minY + 0.001D), Mth.floor(aabb.minZ + 0.001D), Mth.floor(aabb.maxX - 0.001D), Mth.floor(aabb.maxY - 0.001D), Mth.floor(aabb.maxZ - 0.001D))) {
-			if (this.level.getBlockState(blockpos).getBlock() instanceof LeavesBlock) {
+			if (this.level().getBlockState(blockpos).getBlock() instanceof LeavesBlock) {
 				this.playSound(EnvironmentalSoundEvents.TAPIR_LEAF_STEP.get(), 0.6F, 1.0F);
 				break;
 			}
@@ -427,23 +426,25 @@ public class Tapir extends Animal {
 		}
 	}
 
+	// TODO: Tapir food...
 	@Override
 	public boolean isFood(ItemStack stack) {
 		if (stack.getItem() instanceof BlockItem blockItem) {
 			BlockState state = blockItem.getBlock().defaultBlockState();
-			Material material = state.getMaterial();
-			return (material == Material.PLANT
-					|| material == Material.WATER_PLANT
-					|| material == Material.REPLACEABLE_PLANT
-					|| material == Material.REPLACEABLE_FIREPROOF_PLANT
-					|| material == Material.REPLACEABLE_WATER_PLANT
-					|| material == Material.BAMBOO_SAPLING
-					|| material == Material.BAMBOO
-					|| material == Material.LEAVES
-					|| material == Material.CACTUS
-					|| material == Material.MOSS
-					|| material == Material.VEGETABLE
-			);
+			return true;
+//			Material material = state.getMaterial();
+//			return (material == Material.PLANT
+//					|| material == Material.WATER_PLANT
+//					|| material == Material.REPLACEABLE_PLANT
+//					|| material == Material.REPLACEABLE_FIREPROOF_PLANT
+//					|| material == Material.REPLACEABLE_WATER_PLANT
+//					|| material == Material.BAMBOO_SAPLING
+//					|| material == Material.BAMBOO
+//					|| material == Material.LEAVES
+//					|| material == Material.CACTUS
+//					|| material == Material.MOSS
+//					|| material == Material.VEGETABLE
+//			);
 		}
 
 		return false;
@@ -470,14 +471,15 @@ public class Tapir extends Animal {
 		@Override
 		protected PathFinder createPathFinder(int p_33382_) {
 			this.nodeEvaluator = new TapirNodeEvaluator();
-            this.nodeEvaluator.setCanPassDoors(true);
+			this.nodeEvaluator.setCanPassDoors(true);
 			return new PathFinder(this.nodeEvaluator, p_33382_);
 		}
 	}
 
 	public static class TapirNodeEvaluator extends WalkNodeEvaluator {
-		protected BlockPathTypes evaluateBlockPathType(BlockGetter level, boolean p_33388_, boolean p_33389_, BlockPos p_33390_, BlockPathTypes p_33391_) {
-			return p_33391_ == BlockPathTypes.LEAVES ? BlockPathTypes.WALKABLE : super.evaluateBlockPathType(level, p_33388_, p_33389_, p_33390_, p_33391_);
+		@Override
+		protected BlockPathTypes evaluateBlockPathType(BlockGetter level, BlockPos p_33390_, BlockPathTypes p_33391_) {
+			return p_33391_ == BlockPathTypes.LEAVES ? BlockPathTypes.WALKABLE : super.evaluateBlockPathType(level, p_33390_, p_33391_);
 		}
 	}
 }

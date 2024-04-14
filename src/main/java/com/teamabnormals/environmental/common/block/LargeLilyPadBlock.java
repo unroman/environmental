@@ -1,18 +1,14 @@
 package com.teamabnormals.environmental.common.block;
 
-import com.teamabnormals.blueprint.core.util.item.filling.TargetedItemCategoryFiller;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -20,13 +16,13 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -38,7 +34,6 @@ import javax.annotation.Nullable;
 public class LargeLilyPadBlock extends BushBlock implements IPlantable {
 	protected static final VoxelShape GIANT_LILY_PAD_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 3.2001D, 16.0D);
 	public static final EnumProperty<LilyPadPosition> POSITION = EnumProperty.create("position", LilyPadPosition.class);
-	private static final TargetedItemCategoryFiller FILLER = new TargetedItemCategoryFiller(() -> Items.LILY_PAD);
 
 	public LargeLilyPadBlock(BlockBehaviour.Properties builder) {
 		super(builder);
@@ -93,7 +88,7 @@ public class LargeLilyPadBlock extends BushBlock implements IPlantable {
 			double d0 = entity instanceof LivingEntity ? 1.3D : 0.9D;
 			entity.setDeltaMovement(vector3d.x, -vector3d.y * d0, vector3d.z);
 			if (vector3d.y < -0.1D) {
-				entity.getLevel().playSound(entity instanceof Player player ? player : null, entity.getX(), entity.getY(), entity.getZ(), EnvironmentalSoundEvents.LARGE_LILY_PAD_BOUNCE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+				entity.level().playSound(entity instanceof Player player ? player : null, entity.getX(), entity.getY(), entity.getZ(), EnvironmentalSoundEvents.LARGE_LILY_PAD_BOUNCE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 			}
 		}
 	}
@@ -104,7 +99,7 @@ public class LargeLilyPadBlock extends BushBlock implements IPlantable {
 	}
 
 	public static boolean isValidBlock(BlockState state, BlockGetter level, BlockPos pos) {
-		return (level.getFluidState(pos).is(Fluids.WATER) || state.getMaterial() == Material.ICE) && level.getFluidState(pos.above()).is(Fluids.EMPTY);
+		return (level.getFluidState(pos).is(Fluids.WATER) || state.getBlock() instanceof IceBlock) && level.getFluidState(pos.above()).is(Fluids.EMPTY);
 	}
 
 	@Override
@@ -207,10 +202,5 @@ public class LargeLilyPadBlock extends BushBlock implements IPlantable {
 		public String getSerializedName() {
 			return this.heightName;
 		}
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		FILLER.fillItem(this.asItem(), group, items);
 	}
 }

@@ -79,7 +79,7 @@ public class CattailStalkBlock extends BushBlock implements SimpleWaterloggedBlo
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
 		Optional<BlockPos> optional = this.getHeadPos(level, pos, state.getBlock());
 		return optional.isPresent() && this.getHeadBlock().canGrowInto(level.getBlockState(optional.get().above()));
 	}

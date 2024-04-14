@@ -38,7 +38,7 @@ public class HerdWanderGoal extends RandomStrollGoal {
 	@Nullable
 	@Override
 	protected Vec3 getPosition() {
-		List<PathfinderMob> herd = this.mob.level.getEntitiesOfClass(PathfinderMob.class, this.mob.getBoundingBox().inflate(32.0D, 8.0D, 32.0D), this.herdPredicate.and(entity -> entity != this.mob));
+		List<PathfinderMob> herd = this.mob.level().getEntitiesOfClass(PathfinderMob.class, this.mob.getBoundingBox().inflate(32.0D, 8.0D, 32.0D), this.herdPredicate.and(entity -> entity != this.mob));
 		List<PathfinderMob> closeherd = herd.stream().sorted(Comparator.comparingDouble(entity -> entity.distanceToSqr(this.mob))).limit(this.preferredHerdSize - 1).toList();
 
 		if (!closeherd.isEmpty()) {

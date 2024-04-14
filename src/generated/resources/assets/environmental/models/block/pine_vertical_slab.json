@@ -1,8 +1,0 @@
-{
-  "parent": "blueprint:block/vertical_slab",
-  "textures": {
-    "bottom": "environmental:block/pine_planks",
-    "side": "environmental:block/pine_planks",
-    "top": "environmental:block/pine_planks"
-  }
-}

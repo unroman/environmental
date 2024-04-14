@@ -27,7 +27,7 @@ public class SlabbyGrabItemGoal extends Goal implements ContainerListener {
 	private boolean canPickupItem(Container inventory, ItemStack stack) {
 		for (int i = 3; i < inventory.getContainerSize(); i++) {
 			ItemStack stackInSlot = inventory.getItem(i);
-			if (stackInSlot.isEmpty() || (ItemStack.isSame(stack, stackInSlot) && ItemStack.tagMatches(stackInSlot, stack) && stackInSlot.getCount() < Math.min(stackInSlot.getMaxStackSize(), inventory.getMaxStackSize())))
+			if (stackInSlot.isEmpty() || (ItemStack.isSameItem(stack, stackInSlot) && ItemStack.isSameItemSameTags(stackInSlot, stack) && stackInSlot.getCount() < Math.min(stackInSlot.getMaxStackSize(), inventory.getMaxStackSize())))
 				return true;
 		}
 		return false;
@@ -38,12 +38,12 @@ public class SlabbyGrabItemGoal extends Goal implements ContainerListener {
 		if (!this.slabfish.hasBackpack() || this.slabfish.backpackFull || this.slabfish.isOrderedToSit()) {
 			return false;
 		} else {
-			List<ItemEntity> list = this.slabfish.level.getEntitiesOfClass(ItemEntity.class, this.slabfish.getBoundingBox().inflate(12.0D, 4.0D, 12.0D));
+			List<ItemEntity> list = this.slabfish.level().getEntitiesOfClass(ItemEntity.class, this.slabfish.getBoundingBox().inflate(12.0D, 4.0D, 12.0D));
 			ItemEntity item = null;
 			double d0 = Double.MAX_VALUE;
 
 			for (ItemEntity item1 : list) {
-				if (item1.getThrower() == this.slabfish.getUUID() || !canPickupItem(this.slabfish.slabfishBackpack, item1.getItem()))
+				if (item1.getOwner() == this.slabfish || !canPickupItem(this.slabfish.slabfishBackpack, item1.getItem()))
 					continue;
 				double d1 = this.slabfish.distanceToSqr(item1);
 				if (d1 < d0) {

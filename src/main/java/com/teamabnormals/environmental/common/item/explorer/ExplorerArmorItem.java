@@ -11,10 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeableArmorItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,7 +22,7 @@ import java.util.List;
 
 public abstract class ExplorerArmorItem extends DyeableArmorItem implements ExplorerArmor {
 
-	public ExplorerArmorItem(EquipmentSlot slot, Properties properties) {
+	public ExplorerArmorItem(ArmorItem.Type slot, Properties properties) {
 		super(EnvironmentalArmorMaterials.EXPLORER, slot, properties);
 	}
 

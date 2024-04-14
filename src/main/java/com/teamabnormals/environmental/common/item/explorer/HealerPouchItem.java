@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,7 +26,7 @@ public class HealerPouchItem extends ExplorerArmorItem {
 	private static final String NBT_TAG = "HealerPouchUses";
 
 	public HealerPouchItem(Properties properties) {
-		super(EquipmentSlot.CHEST, properties);
+		super(ArmorItem.Type.CHESTPLATE, properties);
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class HealerPouchItem extends ExplorerArmorItem {
 					((HealerPouchItem) stack.getItem()).levelUp(stack, player);
 				}
 			} else {
-				if (entity.level.getRandom().nextInt(entity.level.getDifficulty().getId() + 3) != 0) {
+				if (entity.level().getRandom().nextInt(entity.level().getDifficulty().getId() + 3) != 0) {
 					entity.heal(4.0F);
 					entity.addEffect(new MobEffectInstance(EnvironmentalMobEffects.PANIC.get(), 120, 0));
 				}

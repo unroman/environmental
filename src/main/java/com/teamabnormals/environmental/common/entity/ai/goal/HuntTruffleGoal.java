@@ -92,7 +92,7 @@ public class HuntTruffleGoal extends Goal {
 	}
 
 	private boolean findTruffle() {
-		if (!this.pig.level.dimensionType().natural())
+		if (!this.pig.level().dimensionType().natural())
 			return false;
 
 		int range = 80;
@@ -111,11 +111,11 @@ public class HuntTruffleGoal extends Goal {
 						blockpos$mutable.setWithOffset(blockpos, x, y - 1, z);
 
 						if (this.pig.isWithinRestriction(blockpos$mutable)) {
-							if (this.isTruffle(this.pig.level, blockpos$mutable)) {
+							if (this.isTruffle(this.pig.level(), blockpos$mutable)) {
 								this.data.setValue(EnvironmentalDataProcessors.HAS_TRUFFLE_TARGET, true);
 								this.data.setValue(EnvironmentalDataProcessors.TRUFFLE_POS, blockpos$mutable);
 								return true;
-							} else if (this.isSuitableForTruffle(this.pig.level, blockpos$mutable)) {
+							} else if (this.isSuitableForTruffle(this.pig.level(), blockpos$mutable)) {
 								if (i <= 48 && !flag) {
 									flag = true;
 									truffleblocks.clear();
@@ -132,7 +132,7 @@ public class HuntTruffleGoal extends Goal {
 		if (truffleblocks.size() > 0) {
 			BlockPos trufflepos = truffleblocks.get(this.pig.getRandom().nextInt(truffleblocks.size()));
 
-			this.pig.level.setBlock(trufflepos, EnvironmentalBlocks.BURIED_TRUFFLE.get().defaultBlockState(), 3);
+			this.pig.level().setBlock(trufflepos, EnvironmentalBlocks.BURIED_TRUFFLE.get().defaultBlockState(), 3);
 			this.data.setValue(EnvironmentalDataProcessors.HAS_TRUFFLE_TARGET, true);
 			this.data.setValue(EnvironmentalDataProcessors.TRUFFLE_POS, trufflepos);
 

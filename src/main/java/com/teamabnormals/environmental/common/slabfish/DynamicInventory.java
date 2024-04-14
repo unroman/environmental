@@ -89,7 +89,7 @@ public abstract class DynamicInventory implements Container {
 		ItemStack copy = stack.copy();
 		for (int i = loopStart; i < loopEnd; i++) {
 			ItemStack stackInSlot = this.getItem(i);
-			if (this.canPlaceItem(i, stack) && ItemStack.isSame(stackInSlot, copy) && ItemStack.tagMatches(stackInSlot, copy)) {
+			if (this.canPlaceItem(i, stack) && ItemStack.isSameItem(stackInSlot, copy) && ItemStack.isSameItemSameTags(stackInSlot, copy)) {
 				this.mergeStacks(copy, stackInSlot, i);
 				if (copy.isEmpty()) {
 					this.setChanged();

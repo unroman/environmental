@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:pink_dye_from_pink_delphinium"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

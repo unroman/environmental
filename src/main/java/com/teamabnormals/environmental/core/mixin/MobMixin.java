@@ -4,7 +4,7 @@ import com.teamabnormals.environmental.core.other.tags.EnvironmentalStructureTag
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet.Named;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -39,7 +39,7 @@ public abstract class MobMixin extends LivingEntity {
 	private void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty, CallbackInfo info) {
 		int difficultyChance = difficulty.getDifficulty().getId() + 1;
 		if (this.getCommandSenderWorld() instanceof ServerLevel serverLevel) {
-			Optional<Named<Structure>> structures = serverLevel.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(EnvironmentalStructureTags.HAS_HEALER_POUCH);
+			Optional<Named<Structure>> structures = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE).getTag(EnvironmentalStructureTags.HAS_HEALER_POUCH);
 			if (structures.isPresent()) {
 				boolean valid = false;
 				for (Holder<Structure> structure : structures.get()) {

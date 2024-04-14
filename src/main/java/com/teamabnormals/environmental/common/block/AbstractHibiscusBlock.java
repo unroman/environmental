@@ -1,23 +1,23 @@
 package com.teamabnormals.environmental.common.block;
 
 import com.google.common.collect.Lists;
-import com.teamabnormals.blueprint.common.block.BlueprintFlowerBlock;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class AbstractHibiscusBlock extends BlueprintFlowerBlock implements BonemealableBlock {
+public abstract class AbstractHibiscusBlock extends FlowerBlock implements BonemealableBlock {
 
 	public AbstractHibiscusBlock(Supplier<MobEffect> stewEffect, int stewEffectDuration, Properties properties) {
 		super(stewEffect, stewEffectDuration, properties);
@@ -28,7 +28,7 @@ public abstract class AbstractHibiscusBlock extends BlueprintFlowerBlock impleme
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter blockGetter, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader blockGetter, BlockPos pos, BlockState state, boolean isClient) {
 		return true;
 	}
 

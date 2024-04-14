@@ -47,26 +47,21 @@ public class EnvironmentalCompat {
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.WILLOW_LEAVES.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.WILLOW_SAPLING.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.WILLOW_LEAF_CARPET.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.HANGING_WILLOW_LEAVES.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.PINE_LEAVES.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.PINE_SAPLING.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.PINE_LEAF_CARPET.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.PINECONE.get(), 0.85F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.CHERRY_LEAVES.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.CHERRY_SAPLING.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.CHERRY_LEAF_CARPET.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAVES.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.CHEERFUL_CHERRY_SAPLING.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAF_CARPET.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_CHERRY_LEAVES.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_CHERRY_SAPLING.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_CHERRY_LEAF_CARPET.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalItems.CHERRIES.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalItems.CHERRY_PIE.get(), 1.0F);
@@ -87,20 +82,16 @@ public class EnvironmentalCompat {
 		DataUtil.registerCompostable(EnvironmentalBlocks.CATTAIL_THATCH.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.CATTAIL_THATCH_SLAB.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.CATTAIL_THATCH_STAIRS.get(), 0.65F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.CATTAIL_THATCH_VERTICAL_SLAB.get(), 0.65F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.DUCKWEED_THATCH.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.DUCKWEED_THATCH_SLAB.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.DUCKWEED_THATCH_STAIRS.get(), 0.65F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.DUCKWEED_THATCH_VERTICAL_SLAB.get(), 0.65F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.GRASS_THATCH.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.GRASS_THATCH_SLAB.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.GRASS_THATCH_STAIRS.get(), 0.65F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.GRASS_THATCH_VERTICAL_SLAB.get(), 0.65F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.WISTERIA_LEAVES.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.WISTERIA_LEAF_CARPET.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.BLUE_WISTERIA_LEAVES.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.WHITE_WISTERIA_LEAVES.get(), 0.30F);
@@ -117,11 +108,6 @@ public class EnvironmentalCompat {
 		DataUtil.registerCompostable(EnvironmentalBlocks.PINK_WISTERIA_SAPLING.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.PURPLE_WISTERIA_SAPLING.get(), 0.30F);
 
-		DataUtil.registerCompostable(EnvironmentalBlocks.BLUE_WISTERIA_LEAF_CARPET.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.WHITE_WISTERIA_LEAF_CARPET.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.PINK_WISTERIA_LEAF_CARPET.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.PURPLE_WISTERIA_LEAF_CARPET.get(), 0.30F);
-
 		DataUtil.registerCompostable(EnvironmentalBlocks.CARTWHEEL.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.VIOLET.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.DIANTHUS.get(), 0.65F);
@@ -137,7 +123,6 @@ public class EnvironmentalCompat {
 		DataUtil.registerCompostable(EnvironmentalBlocks.PURPLE_HIBISCUS.get(), 0.65F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.HIBISCUS_LEAVES.get(), 0.50F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.HIBISCUS_LEAF_CARPET.get(), 0.50F);
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.BLUE_DELPHINIUM.get(), 0.65F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.WHITE_DELPHINIUM.get(), 0.65F);
@@ -155,20 +140,16 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.GRASS_THATCH.get(), 60, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.GRASS_THATCH_STAIRS.get(), 60, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.GRASS_THATCH_SLAB.get(), 60, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.GRASS_THATCH_VERTICAL_SLAB.get(), 60, 20);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.CATTAIL_THATCH.get(), 60, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CATTAIL_THATCH_STAIRS.get(), 60, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CATTAIL_THATCH_SLAB.get(), 60, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CATTAIL_THATCH_VERTICAL_SLAB.get(), 60, 20);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.DUCKWEED_THATCH.get(), 60, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.DUCKWEED_THATCH_STAIRS.get(), 60, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.DUCKWEED_THATCH_SLAB.get(), 60, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.DUCKWEED_THATCH_VERTICAL_SLAB.get(), 60, 20);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.HIBISCUS_LEAVES.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.HIBISCUS_LEAF_CARPET.get(), 30, 60);
 		DataUtil.registerFlammable(EnvironmentalBlocks.HIBISCUS_LEAF_PILE.get(), 30, 60);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_LEAVES.get(), 30, 60);
@@ -182,14 +163,8 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_STAIRS.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_FENCE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_FENCE_GATE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.VERTICAL_WILLOW_PLANKS.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_VERTICAL_SLAB.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_BOOKSHELF.get(), 30, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_BEEHIVE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_WILLOW_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_HEDGE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_LEAF_PILE.get(), 30, 60);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WILLOW_BOARDS.get(), 5, 20);
 
@@ -203,14 +178,8 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_STAIRS.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_FENCE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_FENCE_GATE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.VERTICAL_PINE_PLANKS.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_VERTICAL_SLAB.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_BOOKSHELF.get(), 30, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_BEEHIVE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_PINE_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_HEDGE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_LEAF_PILE.get(), 30, 60);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_BOARDS.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINECONE.get(), 5, 20);
@@ -225,26 +194,16 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_STAIRS.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_FENCE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_FENCE_GATE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.VERTICAL_CHERRY_PLANKS.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_VERTICAL_SLAB.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_BOOKSHELF.get(), 30, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_CRATE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_BEEHIVE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_CHERRY_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_HEDGE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_LEAF_PILE.get(), 30, 60);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_BOARDS.get(), 5, 20);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAVES.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_CHERRY_HEDGE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAF_PILE.get(), 30, 60);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_CHERRY_LEAVES.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_CHERRY_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_CHERRY_HEDGE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_CHERRY_LEAF_PILE.get(), 30, 60);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.GIANT_TALL_GRASS.get(), 60, 100);
@@ -265,8 +224,6 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.DWARF_SPRUCE_PLANT_CUPRIC_TORCH.get(), 60, 100);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_LEAVES.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_HEDGE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_LEAF_PILE.get(), 30, 60);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.BLUE_WISTERIA_LEAVES.get(), 30, 60);
@@ -290,20 +247,8 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.WHITE_DELPHINIUM.get(), 60, 100);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINK_DELPHINIUM.get(), 60, 100);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PURPLE_DELPHINIUM.get(), 60, 100);
-		DataUtil.registerFlammable(EnvironmentalBlocks.VERTICAL_WISTERIA_PLANKS.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.BLUE_WISTERIA_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WHITE_WISTERIA_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PINK_WISTERIA_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PURPLE_WISTERIA_LEAF_CARPET.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_VERTICAL_SLAB.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_BOOKSHELF.get(), 30, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_BEEHIVE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_WISTERIA_POST.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PINK_WISTERIA_HEDGE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.BLUE_WISTERIA_HEDGE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.PURPLE_WISTERIA_HEDGE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.WHITE_WISTERIA_HEDGE.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WISTERIA_BOARDS.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.BLUE_WISTERIA_LEAF_PILE.get(), 30, 60);
 		DataUtil.registerFlammable(EnvironmentalBlocks.WHITE_WISTERIA_LEAF_PILE.get(), 30, 60);

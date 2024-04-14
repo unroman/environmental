@@ -1,6 +1,5 @@
 package com.teamabnormals.environmental.common.item;
 
-import com.teamabnormals.blueprint.common.item.BlueprintMobBucketItem;
 import com.teamabnormals.environmental.common.entity.animal.koi.KoiBreed;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalCriteriaTriggers;
@@ -16,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 
-public class KoiBucketItem extends BlueprintMobBucketItem {
+public class KoiBucketItem extends MobBucketItem {
 
 	public KoiBucketItem(Properties properties) {
 		super(EnvironmentalEntityTypes.KOI, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, properties);

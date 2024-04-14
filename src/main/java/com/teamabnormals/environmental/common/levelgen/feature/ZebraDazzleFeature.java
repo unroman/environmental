@@ -8,7 +8,6 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -37,7 +36,8 @@ public class ZebraDazzleFeature extends Feature<NoneFeatureConfiguration> {
 			double d1 = pos.getY() + random.nextInt(3) - 1;
 			double d2 = (double) pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double) spawnRange + 0.5D;
 			if (level.noCollision(EnvironmentalEntityTypes.ZEBRA.get().getAABB(d0, d1, d2))) {
-				if (spawnedZebras < 24 && SpawnPlacements.checkSpawnRules(EnvironmentalEntityTypes.ZEBRA.get(), level, MobSpawnType.STRUCTURE, new BlockPos(d0, d1, d2), level.getRandom())) {
+				// TODO: Test spawn rules stuff
+				if (spawnedZebras < 24) { // && SpawnPlacements.checkSpawnRules(EnvironmentalEntityTypes.ZEBRA.get(), level, MobSpawnType.STRUCTURE, BlockPos.containing(d0, d1, d2), level.getRandom())) {
 					Zebra zebra = EnvironmentalEntityTypes.ZEBRA.get().create(level.getLevel());
 					if (zebra != null) {
 						zebras.add(Pair.of(zebra, new Vec3(d0, d1, d2)));

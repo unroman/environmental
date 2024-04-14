@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "leaves",
   "key": {
     "#": {
@@ -12,5 +13,6 @@
   ],
   "result": {
     "item": "environmental:cheerful_cherry_leaves"
-  }
+  },
+  "show_notification": true
 }

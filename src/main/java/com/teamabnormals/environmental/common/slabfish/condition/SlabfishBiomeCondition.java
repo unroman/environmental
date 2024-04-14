@@ -4,6 +4,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
@@ -37,7 +38,7 @@ public class SlabfishBiomeCondition implements SlabfishCondition {
 			throw new JsonSyntaxException("Either 'biome' or 'tag' can be present.");
 		if (!json.has("biome") && !json.has("tag"))
 			throw new JsonSyntaxException("Either 'biome' or 'tag' must be present.");
-		return new SlabfishBiomeCondition(json.has("tag") ? null : ForgeRegistries.BIOMES.getValue(new ResourceLocation(json.get("biome").getAsString())), json.has("tag") ? TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(json.get("tag").getAsString())) : null);
+		return new SlabfishBiomeCondition(json.has("tag") ? null : ForgeRegistries.BIOMES.getValue(new ResourceLocation(json.get("biome").getAsString())), json.has("tag") ? TagKey.create(Registries.BIOME, new ResourceLocation(json.get("tag").getAsString())) : null);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -29,7 +30,7 @@ public class WandererBootsItem extends ExplorerArmorItem {
 	public static final String NBT_TAG = "WandererBootsUses";
 
 	public WandererBootsItem(Properties properties) {
-		super(EquipmentSlot.FEET, properties);
+		super(ArmorItem.Type.BOOTS, properties);
 	}
 
 	@Override
@@ -46,14 +47,14 @@ public class WandererBootsItem extends ExplorerArmorItem {
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.putAll(super.getDefaultAttributeModifiers(this.getSlot()));
+		builder.putAll(super.getDefaultAttributeModifiers(this.getEquipmentSlot()));
 		UUID uuid = UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B");
 
 		int uses = Math.round(stack.getOrCreateTag().getFloat(NBT_TAG));
 		double increase = 0.15F + (0.05F * getIncreaseForUses(uses));
 
 		builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Speed modifier", increase, AttributeModifier.Operation.MULTIPLY_BASE));
-		return slot == this.slot ? builder.build() : super.getDefaultAttributeModifiers(slot);
+		return slot == this.getEquipmentSlot() ? builder.build() : super.getDefaultAttributeModifiers(slot);
 	}
 
 	@SubscribeEvent

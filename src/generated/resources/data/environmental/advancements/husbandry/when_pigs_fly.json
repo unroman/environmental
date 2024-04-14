@@ -25,5 +25,6 @@
     [
       "when_pigs_fly"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

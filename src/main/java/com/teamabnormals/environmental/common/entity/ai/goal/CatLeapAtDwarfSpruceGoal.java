@@ -57,7 +57,7 @@ public class CatLeapAtDwarfSpruceGoal extends Goal {
 		if (this.tryTicks < -this.maxStayTicks || this.tryTicks > 600)
 			return false;
 		else
-			return ((!this.cat.isOnGround() && !this.cat.isInFluidType()) || !this.leaping) && this.isTorchSpruce(this.cat.level, this.targetPos);
+			return ((!this.cat.onGround() && !this.cat.isInFluidType()) || !this.leaping) && this.isTorchSpruce(this.cat.level(), this.targetPos);
 	}
 
 	@Override
@@ -78,15 +78,15 @@ public class CatLeapAtDwarfSpruceGoal extends Goal {
 
 		if (this.leaping) {
 			if (this.cat.blockPosition().equals(this.targetPos)) {
-				BlockState blockstate = this.cat.level.getBlockState(this.targetPos);
+				BlockState blockstate = this.cat.level().getBlockState(this.targetPos);
 				DwarfSpruceBlock block = (DwarfSpruceBlock) blockstate.getBlock();
-				this.cat.level.setBlockAndUpdate(this.targetPos, block.getWithoutTorchesState(blockstate));
-				Block.popResource(this.cat.level, this.targetPos, new ItemStack(block.getTorch()));
+				this.cat.level().setBlockAndUpdate(this.targetPos, block.getWithoutTorchesState(blockstate));
+				Block.popResource(this.cat.level(), this.targetPos, new ItemStack(block.getTorch()));
 			}
 		} else {
 			int patience = 1;
 
-			if (d3 < 2.0D && this.cat.isOnGround()) {
+			if (d3 < 2.0D && this.cat.onGround()) {
 				if (Math.abs(d1) <= 2.0D) {
 					Vec3 vec3 = this.cat.getDeltaMovement();
 					Vec3 vec31 = new Vec3(this.targetPos.getX() + 0.5D - this.cat.getX(), 0.0D, this.targetPos.getZ() + 0.5D - this.cat.getZ());
@@ -133,11 +133,11 @@ public class CatLeapAtDwarfSpruceGoal extends Goal {
 				for(int x = 0; x <= r; x = x > 0 ? -x : 1 - x) {
 					for(int z = x < r && x > -r ? r : 0; z <= r; z = z > 0 ? -z : 1 - z) {
 						mutable.setWithOffset(blockpos, x, y, z);
-						if (this.isSpruceBottom(this.cat.level, mutable)) {
+						if (this.isSpruceBottom(this.cat.level(), mutable)) {
 							List<BlockPos> treepositions = new ArrayList<>();
 							for (int i = 0; i <= 2; i++) {
 								mutable.setWithOffset(blockpos, x, y + i, z);
-								if (this.isTorchSpruce(this.cat.level, mutable))
+								if (this.isTorchSpruce(this.cat.level(), mutable))
 									treepositions.add(mutable.immutable());
 							}
 							if (!treepositions.isEmpty())

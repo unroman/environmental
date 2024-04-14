@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -140,7 +141,7 @@ public abstract class AbstractDeer extends Animal {
 		this.setFlowerAmount(compound.getInt("FlowerAmount"));
 		ListTag listtag = compound.getList("Flowers", 10);
 		for (int i = 0; i < listtag.size(); ++i) {
-			BlockState blockstate = NbtUtils.readBlockState(listtag.getCompound(i));
+			BlockState blockstate = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), listtag.getCompound(i));
 			if (blockstate != null && !blockstate.isAir()) {
 				this.flowers.add(blockstate);
 			}
@@ -160,9 +161,9 @@ public abstract class AbstractDeer extends Animal {
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (this.level.isClientSide) {
+		if (this.level().isClientSide) {
 			if (this.getFlowerAmount() > 0 && this.tickCount % 16 == 0)
-				this.level.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getRandomX(1.0D), this.getRandomY(), this.getRandomZ(1.0D), 0.0D, 0.0D, 0.0D);
+				this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getRandomX(1.0D), this.getRandomY(), this.getRandomZ(1.0D), 0.0D, 0.0D, 0.0D);
 		} else {
 			if (this.floweringTime > 0)
 				--this.floweringTime;
@@ -211,19 +212,19 @@ public abstract class AbstractDeer extends Animal {
 
 		if (!this.isTrusting()) {
 			if (flag && this.isFood(stack)) {
-				if (!this.level.isClientSide) {
+				if (!this.level().isClientSide) {
 					this.usePlayerItem(player, hand, stack);
 					if (this.random.nextInt(3) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
 						this.setTrusting(true);
 						this.spawnTrustingParticles(true);
-						this.level.broadcastEntityEvent(this, (byte) 5);
+						this.level().broadcastEntityEvent(this, (byte) 5);
 					} else {
 						this.spawnTrustingParticles(false);
-						this.level.broadcastEntityEvent(this, (byte) 6);
+						this.level().broadcastEntityEvent(this, (byte) 6);
 					}
 				}
 
-				return InteractionResult.sidedSuccess(this.level.isClientSide);
+				return InteractionResult.sidedSuccess(this.level().isClientSide);
 			} else {
 				return InteractionResult.PASS;
 			}
@@ -241,11 +242,11 @@ public abstract class AbstractDeer extends Animal {
 			BlockPos pos = this.blockPosition();
 			BlockState state = this.flowers.get(this.random.nextInt(this.flowers.size()));
 			boolean tall = state.getBlock() instanceof DoublePlantBlock;
-			if (state.canSurvive(this.level, pos) && this.level.isEmptyBlock(pos) && (!tall || this.level.isEmptyBlock(pos.above()))) {
+			if (state.canSurvive(this.level(), pos) && this.level().isEmptyBlock(pos) && (!tall || this.level().isEmptyBlock(pos.above()))) {
 				if (!tall) {
-					this.level.setBlock(pos, state, 3);
+					this.level().setBlock(pos, state, 3);
 				} else {
-					DoublePlantBlock.placeAt(this.level, state, pos, 2);
+					DoublePlantBlock.placeAt(this.level(), state, pos, 2);
 				}
 				SoundType sound = state.getSoundType();
 				this.playSound(sound.getPlaceSound(), (sound.getVolume() + 1.0F) / 4.0F, sound.getPitch() * 0.8F);
@@ -260,7 +261,7 @@ public abstract class AbstractDeer extends Animal {
 			double d0 = this.random.nextGaussian() * 0.02D;
 			double d1 = this.random.nextGaussian() * 0.02D;
 			double d2 = this.random.nextGaussian() * 0.02D;
-			this.level.addParticle(particle, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+			this.level().addParticle(particle, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
 		}
 	}
 
@@ -274,7 +275,7 @@ public abstract class AbstractDeer extends Animal {
 			double d0 = this.random.nextGaussian() * 0.02D;
 			double d1 = this.random.nextGaussian() * 0.02D;
 			double d2 = this.random.nextGaussian() * 0.02D;
-			this.level.addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+			this.level().addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
 		}
 	}
 
@@ -282,17 +283,17 @@ public abstract class AbstractDeer extends Animal {
 		int amount = 15;
 		double d0 = 0.5D;
 		double d1;
-		if (blockstate.isSolidRender(this.level, blockpos)) {
+		if (blockstate.isSolidRender(this.level(), blockpos)) {
 			blockpos = blockpos.above();
 			amount *= 3;
 			d0 = 3.0D;
 			d1 = 1.0D;
 		} else {
-			d1 = blockstate.getShape(this.level, blockpos).max(Direction.Axis.Y);
+			d1 = blockstate.getShape(this.level(), blockpos).max(Direction.Axis.Y);
 		}
 
-		((ServerLevel) this.level).sendParticles(ParticleTypes.HAPPY_VILLAGER, (double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D, (double) blockpos.getZ() + 0.5D, 0, 0.0D, 0.0D, 0.0D, 0.0D);
-		RandomSource random = this.level.getRandom();
+		((ServerLevel) this.level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, (double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D, (double) blockpos.getZ() + 0.5D, 0, 0.0D, 0.0D, 0.0D, 0.0D);
+		RandomSource random = this.level().getRandom();
 
 		for (int i = 0; i < amount; ++i) {
 			double d2 = random.nextGaussian() * 0.02D;
@@ -302,7 +303,7 @@ public abstract class AbstractDeer extends Animal {
 			double d6 = (double) blockpos.getX() + d5 + random.nextDouble() * d0 * 2.0D;
 			double d7 = (double) blockpos.getY() + random.nextDouble() * d1;
 			double d8 = (double) blockpos.getZ() + d5 + random.nextDouble() * d0 * 2.0D;
-			((ServerLevel) this.level).sendParticles(ParticleTypes.HAPPY_VILLAGER, d6, d7, d8, 0, d2, d3, d4, 0.0D);
+			((ServerLevel) this.level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, d6, d7, d8, 0, d2, d3, d4, 0.0D);
 		}
 	}
 
@@ -332,7 +333,7 @@ public abstract class AbstractDeer extends Animal {
 
 		if (this.hopProgress != 3) {
 			--this.hopProgress;
-		} else if (this.isOnGround() || this.isInWaterOrBubble()) {
+		} else if (this.onGround() || this.isInWaterOrBubble()) {
 			this.hopProgress = 2;
 		}
 
@@ -476,7 +477,7 @@ public abstract class AbstractDeer extends Animal {
 	}
 
 	public LivingEntity getNearestScaryEntity() {
-		return this.level.getNearestEntity(this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), (p_148124_) -> {
+		return this.level().getNearestEntity(this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), (p_148124_) -> {
 			return true;
 		}), this.isTrusting() ? TRUSTING_AVOID_ENTITY_TARGETING : AVOID_ENTITY_TARGETING, this, this.getX(), this.getY(), this.getZ());
 	}

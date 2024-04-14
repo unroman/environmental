@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:lime_dye_from_dianthus"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

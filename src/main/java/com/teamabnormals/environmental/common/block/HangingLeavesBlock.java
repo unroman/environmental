@@ -1,14 +1,9 @@
 package com.teamabnormals.environmental.common.block;
 
-import com.teamabnormals.blueprint.core.util.item.filling.TargetedItemCategoryFiller;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -24,7 +19,6 @@ import net.minecraftforge.common.IForgeShearable;
 
 public class HangingLeavesBlock extends Block implements IForgeShearable {
 	protected static final VoxelShape SHAPE = Block.box(2.0, 7.0, 2.0, 14.0, 16.0, 14.0);
-	private static final TargetedItemCategoryFiller FILLER = new TargetedItemCategoryFiller(() -> Items.VINE);
 
 	public HangingLeavesBlock(Block.Properties properties) {
 		super(properties);
@@ -58,10 +52,5 @@ public class HangingLeavesBlock extends Block implements IForgeShearable {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		FILLER.fillItem(this.asItem(), group, items);
 	}
 }

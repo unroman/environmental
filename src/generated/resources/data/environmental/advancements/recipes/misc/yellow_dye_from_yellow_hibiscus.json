@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:yellow_dye_from_yellow_hibiscus"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

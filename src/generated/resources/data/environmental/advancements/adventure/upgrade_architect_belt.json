@@ -32,5 +32,6 @@
     [
       "upgrade_architect_belt"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

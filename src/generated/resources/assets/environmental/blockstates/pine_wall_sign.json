@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "environmental:block/pine_wall_sign"
+      "model": "environmental:block/pine_sign"
     }
   }
 }

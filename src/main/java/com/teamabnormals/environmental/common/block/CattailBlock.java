@@ -2,7 +2,6 @@ package com.teamabnormals.environmental.common.block;
 
 import com.teamabnormals.blueprint.core.util.BlockUtil;
 import com.teamabnormals.blueprint.core.util.MathUtil;
-import com.teamabnormals.blueprint.core.util.item.filling.TargetedItemCategoryFiller;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBlockTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
@@ -10,9 +9,7 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalParticleTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -21,7 +18,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -49,7 +45,6 @@ import net.minecraftforge.common.ToolActions;
 
 public class CattailBlock extends BushBlock implements SimpleWaterloggedBlock, BonemealableBlock {
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
-	private static final TargetedItemCategoryFiller FILLER = new TargetedItemCategoryFiller(() -> Items.SEA_PICKLE);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty TOP = BooleanProperty.create("top");
 	public static final BooleanProperty FLUFFY = BooleanProperty.create("fluffy");
@@ -205,7 +200,7 @@ public class CattailBlock extends BushBlock implements SimpleWaterloggedBlock, B
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
 		return this.canGrowInto(level.getBlockState(pos.above())) || (!state.getValue(FLUFFY) && !state.getValue(WATERLOGGED));
 	}
 
@@ -247,11 +242,6 @@ public class CattailBlock extends BushBlock implements SimpleWaterloggedBlock, B
 		} else {
 			return BlockUtil.transferAllBlockStates(state, EnvironmentalBlocks.CATTAIL_STALK.get().defaultBlockState()).setValue(CattailStalkBlock.BOTTOM, !level.getBlockState(pos.below()).is(EnvironmentalBlocks.CATTAIL_STALK.get()));
 		}
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		FILLER.fillItem(this.asItem(), group, items);
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -1,10 +1,10 @@
 package com.teamabnormals.environmental.common.entity.animal;
 
-import com.teamabnormals.environmental.common.damagesource.MountDamageSource;
 import com.teamabnormals.environmental.common.entity.ai.goal.HerdLandWanderGoal;
 import com.teamabnormals.environmental.common.entity.ai.goal.zebra.*;
 import com.teamabnormals.environmental.common.network.message.C2SZebraJumpMessage;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.other.EnvironmentalDamageTypes;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
@@ -118,14 +118,14 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		this.readPersistentAngerSaveData(this.level, compound);
+		this.readPersistentAngerSaveData(this.level(), compound);
 	}
 
 	@Override
 	protected void randomizeAttributes(RandomSource random) {
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.generateRandomMaxHealth(random));
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.generateRandomSpeed(random));
-		this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(this.generateRandomJumpStrength(random));
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateMaxHealth(random::nextInt));
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateSpeed(random::nextDouble));
+		this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(generateJumpStrength(random::nextDouble));
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(this.generateRandomAttackDamage(random));
 	}
 
@@ -137,7 +137,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 	public void tick() {
 		super.tick();
 
-		if (this.onGround || this.isInFluidType())
+		if (this.onGround() || this.isInFluidType())
 			this.jumpStrength = -1.0F;
 
 		if (this.isEffectiveAi() && this.isAlive()) {
@@ -148,7 +148,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 				boolean isfleeing = this.isFleeing() && !this.isImmobile() && !this.getNavigation().isDone();
 
 				if (!this.isStanding() || jumpkick) {
-					List<LivingEntity> nearby = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(0.9F), this.kickablePredicate);
+					List<LivingEntity> nearby = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(0.9F), this.kickablePredicate);
 					boolean shouldkick = false;
 					boolean backkick = true;
 
@@ -207,8 +207,8 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!this.level.isClientSide)
-			this.updatePersistentAnger((ServerLevel) this.level, true);
+		if (!this.level().isClientSide)
+			this.updatePersistentAnger((ServerLevel) this.level(), true);
 	}
 
 	@Override
@@ -221,11 +221,11 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 
 	@Override
 	public void setLastHurtByMob(@Nullable LivingEntity attacker) {
-		if (attacker != null && this.level instanceof ServerLevel) {
+		if (attacker != null && this.level() instanceof ServerLevel) {
 			int fleetime = this.getRandom().nextInt(40) + 100;
 			float fleedirection = this.getRandom().nextFloat() * 360.0F;
 
-			List<Zebra> zebras = this.level.getEntitiesOfClass(Zebra.class, this.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), zebra -> zebra != this && !zebra.isFleeing() && !zebra.isTamed() && zebra.getTarget() == null)
+			List<Zebra> zebras = this.level().getEntitiesOfClass(Zebra.class, this.getBoundingBox().inflate(10.0D, 4.0D, 10.0D), zebra -> zebra != this && !zebra.isFleeing() && !zebra.isTamed() && zebra.getTarget() == null)
 					.stream().sorted(Comparator.comparingDouble(entity -> entity.distanceToSqr(this))).limit(3).toList();
 			for (Zebra zebra : zebras)
 				zebra.getFleeGoal().trigger(fleetime, fleedirection);
@@ -250,7 +250,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 		if (!this.isBaby()) {
 			if (this.isTamed() && player.isSecondaryUseActive()) {
 				this.openCustomInventoryScreen(player);
-				return InteractionResult.sidedSuccess(this.level.isClientSide);
+				return InteractionResult.sidedSuccess(this.level().isClientSide);
 			}
 
 			if (this.isVehicle()) {
@@ -272,7 +272,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 				if (this.getTarget() == null) {
 					this.makeMad();
 					this.setTarget(player);
-					return InteractionResult.sidedSuccess(this.level.isClientSide);
+					return InteractionResult.sidedSuccess(this.level().isClientSide);
 				} else {
 					return InteractionResult.CONSUME;
 				}
@@ -281,13 +281,13 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 			boolean flag = !this.isBaby() && !this.isSaddled() && stack.is(Items.SADDLE);
 			if (this.isArmor(stack) || flag) {
 				this.openCustomInventoryScreen(player);
-				return InteractionResult.sidedSuccess(this.level.isClientSide);
+				return InteractionResult.sidedSuccess(this.level().isClientSide);
 			}
 		}
 
 		if (!this.isBaby()) {
 			this.doPlayerRide(player);
-			return InteractionResult.sidedSuccess(this.level.isClientSide);
+			return InteractionResult.sidedSuccess(this.level().isClientSide);
 		} else {
 			return InteractionResult.PASS;
 		}
@@ -298,7 +298,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 		if (!this.isTamed()) {
 			this.makeMad();
 			this.setTarget(player);
-			return InteractionResult.sidedSuccess(this.level.isClientSide);
+			return InteractionResult.sidedSuccess(this.level().isClientSide);
 		}
 		return super.fedFood(player, stack);
 	}
@@ -379,13 +379,13 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 
 		if (!backKick) {
 			this.playFrontKickAnim();
-			this.level.broadcastEntityEvent(this, (byte) 8);
+			this.level().broadcastEntityEvent(this, (byte) 8);
 		} else {
 			this.playBackKickAnim();
-			this.level.broadcastEntityEvent(this, (byte) 9);
+			this.level().broadcastEntityEvent(this, (byte) 9);
 		}
 
-		List<LivingEntity> nearby = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(1.0F), this.kickablePredicate);
+		List<LivingEntity> nearby = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(1.0F), this.kickablePredicate);
 		for (LivingEntity living : nearby) {
 			Vec3 attackAngleVector = living.position().subtract(this.position()).normalize();
 			attackAngleVector = new Vec3(attackAngleVector.x, 0.0D, attackAngleVector.z);
@@ -399,11 +399,11 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 			if (!backKick && angle > 0.7D || backKick && angle < -0.7D) {
 				DamageSource source;
 				LivingEntity rider = this.getControllingPassenger();
-				if (rider != null)
-					source = new MountDamageSource("ridingZebra", this, rider);
-				else
-					source = DamageSource.mobAttack(this);
-
+				if (rider != null) {
+					source = EnvironmentalDamageTypes.ridingZebra(this.level(), this, rider);
+				} else {
+					source = this.damageSources().mobAttack(this);
+				}
 				float damage = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
 				float knockback = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
 
@@ -566,11 +566,11 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {
-		if (!state.getMaterial().isLiquid()) {
-			BlockState blockstate = this.level.getBlockState(pos.above());
-			SoundType soundtype = state.getSoundType(level, pos, this);
+		if (!state.liquid()) {
+			BlockState blockstate = this.level().getBlockState(pos.above());
+			SoundType soundtype = state.getSoundType(this.level(), pos, this);
 			if (blockstate.is(Blocks.SNOW)) {
-				soundtype = blockstate.getSoundType(level, pos, this);
+				soundtype = blockstate.getSoundType(this.level(), pos, this);
 			}
 
 			if ((this.isVehicle() || this.getMoveControl().getSpeedModifier() > 1.6D) && this.canGallop) {
@@ -589,8 +589,8 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 	}
 
 	@Override
-	public void positionRider(Entity rider) {
-		super.positionRider(rider);
+	public void positionRider(Entity rider, Entity.MoveFunction function) {
+		super.positionRider(rider, function);
 
 		float f = Mth.sin(this.yBodyRot * Mth.DEG_TO_RAD);
 		float f1 = Mth.cos(this.yBodyRot * Mth.DEG_TO_RAD);
@@ -601,8 +601,8 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 		if (this.standAnimO > 0.0F) {
 			f2 += 0.7F * this.standAnimO;
 			f3 += 0.15F * this.standAnimO;
-			if (rider instanceof LivingEntity)
-				((LivingEntity) rider).yBodyRot = this.yBodyRot;
+			if (rider instanceof LivingEntity living)
+				living.yBodyRot = this.yBodyRot;
 		}
 
 		if (this.backKickAnimO > 0.0F) {
@@ -615,7 +615,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 			f3 += 0.15F * rot * nostandanim;
 		}
 
-		rider.setPos(this.getX() + (double) (f2 * f), this.getY() + this.getPassengersRidingOffset() + rider.getMyRidingOffset() + (double) f3, this.getZ() - (double) (f2 * f1));
+		function.accept(rider, this.getX() + (double) (f2 * f), this.getY() + this.getPassengersRidingOffset() + rider.getMyRidingOffset() + (double) f3, this.getZ() - (double) (f2 * f1));
 	}
 
 	@Override

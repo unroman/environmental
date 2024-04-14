@@ -11,12 +11,18 @@ import com.teamabnormals.environmental.common.levelgen.treedecorators.PinePodzol
 import com.teamabnormals.environmental.common.levelgen.treedecorators.PineconeDecorator;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBlockTags;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
-import net.minecraft.data.worldgen.placement.AquaticPlacements;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.BiasedToBottomInt;
@@ -44,7 +50,9 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.DeferredRegister;
@@ -52,7 +60,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = Environmental.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class EnvironmentalFeatures {
@@ -206,243 +213,470 @@ public class EnvironmentalFeatures {
 	}
 
 	public static final class EnvironmentalConfiguredFeatures {
-		public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, Environmental.MOD_ID);
+		public static final ResourceKey<ConfiguredFeature<?, ?>> WILLOW = createKey("willow");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> WEEPING_WILLOW = createKey("weeping_willow");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_WILLOW = createKey("trees_willow");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_SWAMP = createKey("trees_swamp");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> SWAMP_OAK = createKey("swamp_oak");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> MARSH_OAK = createKey("marsh_oak");
 
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> WILLOW = register("willow", () -> new ConfiguredFeature<>(Feature.TREE, Configs.WILLOW));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> WEEPING_WILLOW = register("weeping_willow", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WEEPING_WILLOW_TREE.get(), Configs.WEEPING_WILLOW));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> TREES_WILLOW = register("trees_willow", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WILLOW_TREE_PLACER.get(), NoneFeatureConfiguration.NONE));
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_SWAMP = register("trees_swamp", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(EnvironmentalPlacedFeatures.SWAMP_OAK.getHolder().get(), 0.1F)), EnvironmentalPlacedFeatures.TREES_WILLOW.getHolder().get())));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> SWAMP_OAK = register("swamp_oak", () -> new ConfiguredFeature<>(Feature.TREE, Configs.SWAMP_OAK));
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> MARSH_OAK = register("marsh_oak", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(TreePlacements.FANCY_OAK_CHECKED, 0.33333334F)), TreePlacements.OAK_CHECKED)));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> STONE_ROCK = createKey("stone_rock");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PINE_SLOPES_BOULDER = createKey("pine_slopes_boulder");
 
-		public static final RegistryObject<ConfiguredFeature<BlockStateConfiguration, ?>> STONE_ROCK = register("stone_rock", () -> new ConfiguredFeature<>(Feature.FOREST_ROCK, new BlockStateConfiguration(Blocks.STONE.defaultBlockState())));
-		public static final RegistryObject<ConfiguredFeature<BlockStateConfiguration, ?>> PINE_SLOPES_BOULDER = register("pine_slopes_boulder", () -> new ConfiguredFeature<>(EnvironmentalFeatures.PINE_SLOPES_BOULDER.get(), new BlockStateConfiguration(Blocks.STONE.defaultBlockState())));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CHERRY = createKey("cherry");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CHERRY_BEES_0002 = createKey("cherry_bees_0002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CHERRY_BEES_005 = createKey("cherry_bees_005");
 
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> CHERRY = register("cherry", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHERRY));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> CHERRY_BEES_0002 = register("cherry_bees_0002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHERRY_BEES_0002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> CHERRY_BEES_005 = register("cherry_bees_005", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHERRY_BEES_005));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CHEERFUL_CHERRY = createKey("cheerful_cherry");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CHEERFUL_CHERRY_BEES_0002 = createKey("cheerful_cherry_bees_0002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CHEERFUL_CHERRY_BEES_005 = createKey("cheerful_cherry_bees_005");
 
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> CHEERFUL_CHERRY = register("cheerful_cherry", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHEERFUL_CHERRY));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> CHEERFUL_CHERRY_BEES_0002 = register("cheerful_cherry_bees_0002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHEERFUL_CHERRY_BEES_0002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> CHEERFUL_CHERRY_BEES_005 = register("cheerful_cherry_bees_005", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHEERFUL_CHERRY_BEES_005));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> MOODY_CHERRY = createKey("moody_cherry");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> MOODY_CHERRY_BEES_0002 = createKey("moody_cherry_bees_0002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> MOODY_CHERRY_BEES_005 = createKey("moody_cherry_bees_005");
 
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> MOODY_CHERRY = register("moody_cherry", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.MOODY_CHERRY));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> MOODY_CHERRY_BEES_0002 = register("moody_cherry_bees_0002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.MOODY_CHERRY_BEES_0002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> MOODY_CHERRY_BEES_005 = register("moody_cherry_bees_005", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CHERRY_TREE.get(), Configs.MOODY_CHERRY_BEES_005));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_BLOSSOM_WOODS = createKey("trees_blossom_woods");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_BLOSSOM_VALLEYS = createKey("trees_blossom_valleys");
 
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_BLOSSOM_WOODS = register("trees_blossom_woods", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(TreePlacements.OAK_BEES_0002, 0.05F), new WeightedPlacedFeature(EnvironmentalPlacedFeatures.CHEERFUL_CHERRY_BEES_0002.getHolder().get(), 0.3F), new WeightedPlacedFeature(EnvironmentalPlacedFeatures.MOODY_CHERRY_BEES_0002.getHolder().get(), 0.3F)), EnvironmentalPlacedFeatures.CHERRY_BEES_0002.getHolder().get())));
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_BLOSSOM_VALLEYS = register("trees_blossom_valleys", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(TreePlacements.OAK_BEES_002, 0.05F), new WeightedPlacedFeature(EnvironmentalPlacedFeatures.CHEERFUL_CHERRY_BEES_005.getHolder().get(), 0.3F), new WeightedPlacedFeature(EnvironmentalPlacedFeatures.MOODY_CHERRY_BEES_005.getHolder().get(), 0.3F)), EnvironmentalPlacedFeatures.CHERRY_BEES_005.getHolder().get())));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_WISTERIA = createKey("white_wisteria");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_WISTERIA_BEES_002 = createKey("white_wisteria_bees_002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_WISTERIA_BEES_005 = createKey("white_wisteria_bees_005");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_WISTERIA = createKey("blue_wisteria");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_WISTERIA_BEES_002 = createKey("blue_wisteria_bees_002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_WISTERIA_BEES_005 = createKey("blue_wisteria_bees_005");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PURPLE_WISTERIA = createKey("purple_wisteria");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PURPLE_WISTERIA_BEES_002 = createKey("purple_wisteria_bees_002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PURPLE_WISTERIA_BEES_005 = createKey("purple_wisteria_bees_005");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_WISTERIA = createKey("pink_wisteria");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_WISTERIA_BEES_002 = createKey("pink_wisteria_bees_002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_WISTERIA_BEES_005 = createKey("pink_wisteria_bees_005");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_WISTERIA = createKey("trees_wisteria");
 
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> WHITE_WISTERIA = register("white_wisteria", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.WHITE_WISTERIA));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> WHITE_WISTERIA_BEES_002 = register("white_wisteria_bees_002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.WHITE_WISTERIA_BEES_002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> WHITE_WISTERIA_BEES_005 = register("white_wisteria_bees_005", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.WHITE_WISTERIA_BEES_005));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> BLUE_WISTERIA = register("blue_wisteria", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.BLUE_WISTERIA));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> BLUE_WISTERIA_BEES_002 = register("blue_wisteria_bees_002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.BLUE_WISTERIA_BEES_002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> BLUE_WISTERIA_BEES_005 = register("blue_wisteria_bees_005", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.BLUE_WISTERIA_BEES_005));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PURPLE_WISTERIA = register("purple_wisteria", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PURPLE_WISTERIA));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PURPLE_WISTERIA_BEES_002 = register("purple_wisteria_bees_002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PURPLE_WISTERIA_BEES_002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PURPLE_WISTERIA_BEES_005 = register("purple_wisteria_bees_005", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PURPLE_WISTERIA_BEES_005));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PINK_WISTERIA = register("pink_wisteria", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PINK_WISTERIA));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PINK_WISTERIA_BEES_002 = register("pink_wisteria_bees_002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PINK_WISTERIA_BEES_002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PINK_WISTERIA_BEES_005 = register("pink_wisteria_bees_005", () -> new ConfiguredFeature<>(EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PINK_WISTERIA_BEES_005));
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_WISTERIA = register("trees_wisteria", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(EnvironmentalPlacedFeatures.PINK_WISTERIA_BEES_002.getHolder().get(), 0.25F), new WeightedPlacedFeature(EnvironmentalPlacedFeatures.BLUE_WISTERIA_BEES_002.getHolder().get(), 0.25F), new WeightedPlacedFeature(EnvironmentalPlacedFeatures.PURPLE_WISTERIA_BEES_002.getHolder().get(), 0.25F)), EnvironmentalPlacedFeatures.WHITE_WISTERIA_BEES_002.getHolder().get())));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PINE = createKey("pine");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PINE_BEES_0002 = createKey("pine_bees_0002");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PINE_ON_STONE = createKey("pine_on_stone");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_PINE = createKey("tall_pine");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_PINE_WITH_PODZOL = createKey("tall_pine_with_podzol");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_PINE_BARRENS = createKey("trees_pine_barrens");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_OLD_GROWTH_PINE_BARRENS = createKey("trees_old_growth_pine_barrens");
 
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PINE = register("pine", () -> new ConfiguredFeature<>(EnvironmentalFeatures.PINE_TREE.get(), Configs.PINE));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PINE_BEES_0002 = register("pine_bees_0002", () -> new ConfiguredFeature<>(EnvironmentalFeatures.PINE_TREE.get(), Configs.PINE_BEES_0002));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> PINE_ON_STONE = register("pine_on_stone", () -> new ConfiguredFeature<>(EnvironmentalFeatures.PINE_TREE_ON_STONE.get(), Configs.PINE));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> TALL_PINE = register("tall_pine", () -> new ConfiguredFeature<>(EnvironmentalFeatures.PINE_TREE.get(), Configs.TALL_PINE));
-		public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> TALL_PINE_WITH_PODZOL = register("tall_pine_with_podzol", () -> new ConfiguredFeature<>(EnvironmentalFeatures.PINE_TREE.get(), Configs.TALL_PINE_WITH_PODZOL));
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_PINE_BARRENS = register("trees_pine_barrens", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(TreePlacements.SPRUCE_CHECKED, 0.2F)), EnvironmentalPlacedFeatures.PINE.getHolder().get())));
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_OLD_GROWTH_PINE_BARRENS = register("trees_old_growth_pine_barrens", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(TreePlacements.SPRUCE_CHECKED, 0.15F)), EnvironmentalPlacedFeatures.TALL_PINE_WITH_PODZOL.getHolder().get())));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> GRAINY_COARSE_DIRT = createKey("grainy_coarse_dirt");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> COARSE_DIRT_ON_STONE = createKey("coarse_dirt_on_stone");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_COARSE_DIRT_ON_STONE = createKey("small_coarse_dirt_on_stone");
 
-		public static final RegistryObject<ConfiguredFeature<ProbabilityFeatureConfiguration, ?>> GRAINY_COARSE_DIRT = register("grainy_coarse_dirt", () -> new ConfiguredFeature<>(EnvironmentalFeatures.GRAINY_COARSE_DIRT.get(), new ProbabilityFeatureConfiguration(0.1F)));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> COARSE_DIRT_ON_STONE = register("coarse_dirt_on_stone", () -> new ConfiguredFeature<>(EnvironmentalFeatures.COARSE_DIRT_ON_STONE.get(), NoneFeatureConfiguration.NONE));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> SMALL_COARSE_DIRT_ON_STONE = register("small_coarse_dirt_on_stone", () -> new ConfiguredFeature<>(EnvironmentalFeatures.SMALL_COARSE_DIRT_ON_STONE.get(), NoneFeatureConfiguration.NONE));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_PINE_TREE = createKey("fallen_pine_tree");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_TALL_PINE_TREE = createKey("fallen_tall_pine_tree");
 
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> FALLEN_PINE_TREE = register("fallen_pine_tree", () -> new ConfiguredFeature<>(EnvironmentalFeatures.FALLEN_PINE_TREE.get(), NoneFeatureConfiguration.INSTANCE));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> FALLEN_TALL_PINE_TREE = register("fallen_tall_pine_tree", () -> new ConfiguredFeature<>(EnvironmentalFeatures.FALLEN_TALL_PINE_TREE.get(), NoneFeatureConfiguration.INSTANCE));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> DWARF_SPRUCE = createKey("dwarf_spruce");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> DWARF_SPRUCE_DENSE = createKey("dwarf_spruce_dense");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> DWARF_SPRUCE_TAIGA = createKey("dwarf_spruce_taiga");
 
-		public static final RegistryObject<ConfiguredFeature<DwarfSpruceConfiguration, ?>> DWARF_SPRUCE = register("dwarf_spruce", () -> new ConfiguredFeature<>(EnvironmentalFeatures.DWARF_SPRUCE.get(), new DwarfSpruceConfiguration(5, 0.6F)));
-		public static final RegistryObject<ConfiguredFeature<DwarfSpruceConfiguration, ?>> DWARF_SPRUCE_DENSE = register("dwarf_spruce_dense", () -> new ConfiguredFeature<>(EnvironmentalFeatures.DWARF_SPRUCE.get(), new DwarfSpruceConfiguration(96, -0.8F)));
-		public static final RegistryObject<ConfiguredFeature<DwarfSpruceConfiguration, ?>> DWARF_SPRUCE_TAIGA = register("dwarf_spruce_taiga", () -> new ConfiguredFeature<>(EnvironmentalFeatures.DWARF_SPRUCE.get(), new DwarfSpruceConfiguration(3, 0.0F)));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CUP_LICHEN = createKey("patch_cup_lichen");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CUP_LICHEN_SMALL = createKey("patch_cup_lichen_small");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CUP_LICHEN_STONE = createKey("patch_cup_lichen_stone");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CUP_LICHEN_NOISE = createKey("patch_cup_lichen_noise");
 
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> PATCH_CUP_LICHEN = register("patch_cup_lichen", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CUP_LICHEN_PATCH.get(), NoneFeatureConfiguration.INSTANCE));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> PATCH_CUP_LICHEN_SMALL = register("patch_cup_lichen_small", () -> new ConfiguredFeature<>(EnvironmentalFeatures.SMALL_CUP_LICHEN_PATCH.get(), NoneFeatureConfiguration.INSTANCE));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> PATCH_CUP_LICHEN_STONE = register("patch_cup_lichen_stone", () -> new ConfiguredFeature<>(EnvironmentalFeatures.STONE_CUP_LICHEN_PATCH.get(), NoneFeatureConfiguration.INSTANCE));
-		public static final RegistryObject<ConfiguredFeature<RandomFeatureConfiguration, ?>> PATCH_CUP_LICHEN_NOISE = register("patch_cup_lichen_noise", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(PlacementUtils.inlinePlaced(PATCH_CUP_LICHEN_SMALL.getHolder().get()), 0.8F)), PlacementUtils.inlinePlaced(PATCH_CUP_LICHEN.getHolder().get()))));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_BLUE_ORCHID = createKey("flower_blue_orchid");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_CORNFLOWER = createKey("flower_cornflower");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_DIANTHUS = createKey("flower_dianthus");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_BLUEBELL = createKey("flower_bluebell");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_BLUEBELL_LARGE = createKey("flower_bluebell_large");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_VIOLET = createKey("flower_violet");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_RED_LOTUS = createKey("flower_red_lotus");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_WHITE_LOTUS = createKey("flower_white_lotus");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_CARTWHEEL = createKey("flower_cartwheel");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_BIRD_OF_PARADISE = createKey("flower_bird_of_paradise");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_TULIPS = createKey("patch_tulips");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_TASSELFLOWER = createKey("patch_tasselflower");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_DELPHINIUMS = createKey("patch_delphiniums");
 
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_BLUE_ORCHID = register("flower_blue_orchid", () -> new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.BLUE_ORCHID))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_CORNFLOWER = register("flower_cornflower", () -> new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.CORNFLOWER))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_DIANTHUS = register("flower_dianthus", () -> new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.DIANTHUS.get()))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_BLUEBELL = register("flower_bluebell", () -> new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(128, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.BLUEBELL.get()))))));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> FLOWER_BLUEBELL_LARGE = register("flower_bluebell_large", () -> new ConfiguredFeature<>(EnvironmentalFeatures.LARGE_BLUEBELL_PATCH.get(), NoneFeatureConfiguration.NONE));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_VIOLET = register("flower_violet", () -> new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(32, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.VIOLET.get()))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_RED_LOTUS = register("flower_red_lotus", () -> new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(24, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.RED_LOTUS_FLOWER.get()))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_WHITE_LOTUS = register("flower_white_lotus", () -> new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(24, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.WHITE_LOTUS_FLOWER.get()))))));
-		public static final RegistryObject<ConfiguredFeature<SimpleBlockConfiguration, ?>> FLOWER_CARTWHEEL = register("flower_cartwheel", () -> new ConfiguredFeature<>(CARTWHEEL.get(), new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.NORTH), 1).add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.SOUTH), 1).add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.EAST), 1).add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.WEST), 1)))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_BIRD_OF_PARADISE = register("flower_bird_of_paradise", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.BIRD_OF_PARADISE.get())), List.of(), 32)));
-		public static final RegistryObject<ConfiguredFeature<SimpleRandomFeatureConfiguration, ?>> PATCH_TULIPS = register("patch_tulips", () -> new ConfiguredFeature<>(Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(HolderSet.direct(PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.WHITE_TULIP)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.RED_TULIP)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.PINK_TULIP)))), PlacementUtils.inlinePlaced(Feature.FLOWER, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.ORANGE_TULIP))))))));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> PATCH_TASSELFLOWER = register("patch_tasselflower", () -> new ConfiguredFeature<>(EnvironmentalFeatures.TASSELFLOWER_PATCH.get(), NoneFeatureConfiguration.NONE));
-		public static final RegistryObject<ConfiguredFeature<SimpleRandomFeatureConfiguration, ?>> PATCH_DELPHINIUMS = register("patch_delphiniums", () -> new ConfiguredFeature<>(Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(HolderSet.direct(PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.PINK_DELPHINIUM.get())))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.PURPLE_DELPHINIUM.get())))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.BLUE_DELPHINIUM.get())))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.WHITE_DELPHINIUM.get()))))))));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> ZEBRA_DAZZLE = createKey("zebra_dazzle");
 
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> ZEBRA_DAZZLE = register("zebra_dazzle", () -> new ConfiguredFeature<>(EnvironmentalFeatures.ZEBRA_DAZZLE.get(), NoneFeatureConfiguration.NONE));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> HIBISCUS_BUSH = createKey("hibiscus_bush");
 
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> HIBISCUS_BUSH = register("hibiscus_bush", () -> new ConfiguredFeature<>(EnvironmentalFeatures.HIBISCUS_BUSH.get(), NoneFeatureConfiguration.NONE));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CATTAILS = createKey("cattails");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> CATTAILS_DENSE = createKey("cattails_dense");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_DUCKWEED = createKey("patch_duckweed");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_GIANT_TALL_GRASS = createKey("patch_giant_tall_grass");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> HUGE_BROWN_MUSHROOM = createKey("huge_brown_mushroom");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MUD = createKey("ore_mud");
 
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> CATTAILS = register("cattails", () -> new ConfiguredFeature<>(EnvironmentalFeatures.CATTAILS.get(), NoneFeatureConfiguration.NONE));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> CATTAILS_DENSE = register("cattails_dense", () -> new ConfiguredFeature<>(EnvironmentalFeatures.DENSE_CATTAILS.get(), NoneFeatureConfiguration.NONE));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_DUCKWEED = register("patch_duckweed", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, new RandomPatchConfiguration(1024, 8, 5, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.DUCKWEED.get()))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_GIANT_TALL_GRASS = register("patch_giant_tall_grass", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, grassPatch(BlockStateProvider.simple(EnvironmentalBlocks.GIANT_TALL_GRASS.get()), 64)));
-		public static final RegistryObject<ConfiguredFeature<HugeMushroomFeatureConfiguration, ?>> HUGE_BROWN_MUSHROOM = register("huge_brown_mushroom", () -> new ConfiguredFeature<>(Feature.HUGE_BROWN_MUSHROOM, new HugeMushroomFeatureConfiguration(BlockStateProvider.simple(Blocks.BROWN_MUSHROOM_BLOCK.defaultBlockState().setValue(HugeMushroomBlock.UP, true).setValue(HugeMushroomBlock.DOWN, false)), BlockStateProvider.simple(Blocks.MUSHROOM_STEM.defaultBlockState().setValue(HugeMushroomBlock.UP, false).setValue(HugeMushroomBlock.DOWN, false)), 3)));
-		public static final RegistryObject<ConfiguredFeature<OreConfiguration, ?>> ORE_MUD = register("ore_mud", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(EnvironmentalBlockTags.MUD_REPLACEABLES), Blocks.MUD.defaultBlockState(), 64)));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> BAMBOO_SHORT = createKey("bamboo_short");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> BAMBOO_SHORT_PODZOL = createKey("bamboo_short_podzol");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_CHERRY_LEAVES = createKey("fallen_cherry_leaves");
 
-		public static final RegistryObject<ConfiguredFeature<ProbabilityFeatureConfiguration, ?>> BAMBOO_SHORT = register("bamboo_short", () -> new ConfiguredFeature<>(EnvironmentalFeatures.SHORT_BAMBOO.get(), new ProbabilityFeatureConfiguration(0.0F)));
-		public static final RegistryObject<ConfiguredFeature<ProbabilityFeatureConfiguration, ?>> BAMBOO_SHORT_PODZOL = register("bamboo_short_podzol", () -> new ConfiguredFeature<>(EnvironmentalFeatures.SHORT_BAMBOO.get(), new ProbabilityFeatureConfiguration(0.2F)));
-		public static final RegistryObject<ConfiguredFeature<NoneFeatureConfiguration, ?>> FALLEN_CHERRY_LEAVES = register("fallen_cherry_leaves", () -> new ConfiguredFeature<>(EnvironmentalFeatures.FALLEN_LEAVES.get(), NoneFeatureConfiguration.NONE));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_MYCELIUM_SPROUTS = createKey("patch_mycelium_sprouts");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_PINE_BARRENS_GRASS = createKey("patch_pine_barrens_grass");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_JUNGLE_LARGE_FERN = createKey("patch_jungle_large_fern");
 
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_MYCELIUM_SPROUTS = register("patch_mycelium_sprouts", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, grassPatch(BlockStateProvider.simple(EnvironmentalBlocks.MYCELIUM_SPROUTS.get()), 32)));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_PINE_BARRENS_GRASS = register("patch_pine_barrens_grass", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(Blocks.GRASS.defaultBlockState(), 3).add(Blocks.FERN.defaultBlockState(), 2)), 32)));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_JUNGLE_LARGE_FERN = register("patch_jungle_large_fern", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LARGE_FERN)))));
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_WATERLILY = createKey("patch_waterlily");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_SUGAR_CANE = createKey("patch_sugar_cane");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_GRASS = createKey("patch_grass");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> FOREST_FLOWERS = createKey("forest_flowers");
+		public static final ResourceKey<ConfiguredFeature<?, ?>> SEAGRASS_MID = createKey("seagrass_mid");
 
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_WATERLILY = register("patch_waterlily", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, new RandomPatchConfiguration(10, 7, 3, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LILY_PAD))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_SUGAR_CANE = register("patch_sugar_cane", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, new RandomPatchConfiguration(20, 4, 0, PlacementUtils.inlinePlaced(Feature.BLOCK_COLUMN, BlockColumnConfiguration.simple(BiasedToBottomInt.of(2, 4), BlockStateProvider.simple(Blocks.SUGAR_CANE)), BlockPredicateFilter.forPredicate(BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(Blocks.SUGAR_CANE.defaultBlockState(), BlockPos.ZERO), BlockPredicate.anyOf(BlockPredicate.matchesFluids(new BlockPos(1, -1, 0), Fluids.WATER, Fluids.FLOWING_WATER), BlockPredicate.matchesFluids(new BlockPos(-1, -1, 0), Fluids.WATER, Fluids.FLOWING_WATER), BlockPredicate.matchesFluids(new BlockPos(0, -1, 1), Fluids.WATER, Fluids.FLOWING_WATER), BlockPredicate.matchesFluids(new BlockPos(0, -1, -1), Fluids.WATER, Fluids.FLOWING_WATER))))))));
-		public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_GRASS = register("patch_grass", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32)));
-		public static final RegistryObject<ConfiguredFeature<SimpleRandomFeatureConfiguration, ?>> FOREST_FLOWERS = register("forest_flowers", () -> new ConfiguredFeature<>(Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(HolderSet.direct(PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LILAC)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.ROSE_BUSH)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.PEONY)))), PlacementUtils.inlinePlaced(Feature.NO_BONEMEAL_FLOWER, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LILY_OF_THE_VALLEY))))))));
-		public static final RegistryObject<ConfiguredFeature<ProbabilityFeatureConfiguration, ?>> SEAGRASS_MID = register("seagrass_mid", () -> new ConfiguredFeature<>(Feature.SEAGRASS, new ProbabilityFeatureConfiguration(0.6F)));
+		public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+			HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+			HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
+			HolderGetter<StructureProcessorList> processors = context.lookup(Registries.PROCESSOR_LIST);
+
+			register(context, WILLOW, Feature.TREE, Configs.WILLOW);
+			register(context, WEEPING_WILLOW, EnvironmentalFeatures.WEEPING_WILLOW_TREE.get(), Configs.WEEPING_WILLOW);
+			register(context, TREES_WILLOW, EnvironmentalFeatures.WILLOW_TREE_PLACER.get(), NoneFeatureConfiguration.NONE);
+			register(context, TREES_SWAMP, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.SWAMP_OAK), 0.1F)), placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.TREES_WILLOW)));
+			register(context, SWAMP_OAK, Feature.TREE, Configs.SWAMP_OAK);
+			register(context, MARSH_OAK, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.FANCY_OAK_CHECKED), 0.33333334F)), placedFeatures.getOrThrow(TreePlacements.OAK_CHECKED)));
+
+			register(context, STONE_ROCK, Feature.FOREST_ROCK, new BlockStateConfiguration(Blocks.STONE.defaultBlockState()));
+			register(context, PINE_SLOPES_BOULDER, EnvironmentalFeatures.PINE_SLOPES_BOULDER.get(), new BlockStateConfiguration(Blocks.STONE.defaultBlockState()));
+
+			register(context, CHERRY, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHERRY);
+			register(context, CHERRY_BEES_0002, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHERRY_BEES_0002);
+			register(context, CHERRY_BEES_005, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHERRY_BEES_005);
+
+			register(context, CHEERFUL_CHERRY, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHEERFUL_CHERRY);
+			register(context, CHEERFUL_CHERRY_BEES_0002, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHEERFUL_CHERRY_BEES_0002);
+			register(context, CHEERFUL_CHERRY_BEES_005, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.CHEERFUL_CHERRY_BEES_005);
+
+			register(context, MOODY_CHERRY, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.MOODY_CHERRY);
+			register(context, MOODY_CHERRY_BEES_0002, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.MOODY_CHERRY_BEES_0002);
+			register(context, MOODY_CHERRY_BEES_005, EnvironmentalFeatures.CHERRY_TREE.get(), Configs.MOODY_CHERRY_BEES_005);
+
+			register(context, TREES_BLOSSOM_WOODS, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.OAK_BEES_0002), 0.05F), new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.CHEERFUL_CHERRY_BEES_0002), 0.3F), new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.MOODY_CHERRY_BEES_0002), 0.3F)), placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.CHERRY_BEES_0002)));
+			register(context, TREES_BLOSSOM_VALLEYS, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.OAK_BEES_002), 0.05F), new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.CHEERFUL_CHERRY_BEES_005), 0.3F), new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.MOODY_CHERRY_BEES_005), 0.3F)), placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.CHERRY_BEES_005)));
+
+			register(context, WHITE_WISTERIA, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.WHITE_WISTERIA);
+			register(context, WHITE_WISTERIA_BEES_002, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.WHITE_WISTERIA_BEES_002);
+			register(context, WHITE_WISTERIA_BEES_005, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.WHITE_WISTERIA_BEES_005);
+			register(context, BLUE_WISTERIA, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.BLUE_WISTERIA);
+			register(context, BLUE_WISTERIA_BEES_002, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.BLUE_WISTERIA_BEES_002);
+			register(context, BLUE_WISTERIA_BEES_005, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.BLUE_WISTERIA_BEES_005);
+			register(context, PURPLE_WISTERIA, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PURPLE_WISTERIA);
+			register(context, PURPLE_WISTERIA_BEES_002, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PURPLE_WISTERIA_BEES_002);
+			register(context, PURPLE_WISTERIA_BEES_005, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PURPLE_WISTERIA_BEES_005);
+			register(context, PINK_WISTERIA, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PINK_WISTERIA);
+			register(context, PINK_WISTERIA_BEES_002, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PINK_WISTERIA_BEES_002);
+			register(context, PINK_WISTERIA_BEES_005, EnvironmentalFeatures.WISTERIA_TREE.get(), Configs.PINK_WISTERIA_BEES_005);
+			register(context, TREES_WISTERIA, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.PINK_WISTERIA_BEES_002), 0.25F), new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.BLUE_WISTERIA_BEES_002), 0.25F), new WeightedPlacedFeature(placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.PURPLE_WISTERIA_BEES_002), 0.25F)), placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.WHITE_WISTERIA_BEES_002)));
+
+			register(context, PINE, EnvironmentalFeatures.PINE_TREE.get(), Configs.PINE);
+			register(context, PINE_BEES_0002, EnvironmentalFeatures.PINE_TREE.get(), Configs.PINE_BEES_0002);
+			register(context, PINE_ON_STONE, EnvironmentalFeatures.PINE_TREE_ON_STONE.get(), Configs.PINE);
+			register(context, TALL_PINE, EnvironmentalFeatures.PINE_TREE.get(), Configs.TALL_PINE);
+			register(context, TALL_PINE_WITH_PODZOL, EnvironmentalFeatures.PINE_TREE.get(), Configs.TALL_PINE_WITH_PODZOL);
+			register(context, TREES_PINE_BARRENS, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.SPRUCE_CHECKED), 0.2F)), placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.PINE)));
+			register(context, TREES_OLD_GROWTH_PINE_BARRENS, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.SPRUCE_CHECKED), 0.15F)), placedFeatures.getOrThrow(EnvironmentalPlacedFeatures.TALL_PINE_WITH_PODZOL)));
+
+			register(context, GRAINY_COARSE_DIRT, EnvironmentalFeatures.GRAINY_COARSE_DIRT.get(), new ProbabilityFeatureConfiguration(0.1F));
+			register(context, COARSE_DIRT_ON_STONE, EnvironmentalFeatures.COARSE_DIRT_ON_STONE.get(), NoneFeatureConfiguration.NONE);
+			register(context, SMALL_COARSE_DIRT_ON_STONE, EnvironmentalFeatures.SMALL_COARSE_DIRT_ON_STONE.get(), NoneFeatureConfiguration.NONE);
+
+			register(context, FALLEN_PINE_TREE, EnvironmentalFeatures.FALLEN_PINE_TREE.get(), NoneFeatureConfiguration.INSTANCE);
+			register(context, FALLEN_TALL_PINE_TREE, EnvironmentalFeatures.FALLEN_TALL_PINE_TREE.get(), NoneFeatureConfiguration.INSTANCE);
+
+			register(context, DWARF_SPRUCE, EnvironmentalFeatures.DWARF_SPRUCE.get(), new DwarfSpruceConfiguration(5, 0.6F));
+			register(context, DWARF_SPRUCE_DENSE, EnvironmentalFeatures.DWARF_SPRUCE.get(), new DwarfSpruceConfiguration(96, -0.8F));
+			register(context, DWARF_SPRUCE_TAIGA, EnvironmentalFeatures.DWARF_SPRUCE.get(), new DwarfSpruceConfiguration(3, 0.0F));
+
+			register(context, PATCH_CUP_LICHEN, EnvironmentalFeatures.CUP_LICHEN_PATCH.get(), NoneFeatureConfiguration.INSTANCE);
+			register(context, PATCH_CUP_LICHEN_SMALL, EnvironmentalFeatures.SMALL_CUP_LICHEN_PATCH.get(), NoneFeatureConfiguration.INSTANCE);
+			register(context, PATCH_CUP_LICHEN_STONE, EnvironmentalFeatures.STONE_CUP_LICHEN_PATCH.get(), NoneFeatureConfiguration.INSTANCE);
+			register(context, PATCH_CUP_LICHEN_NOISE, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(PATCH_CUP_LICHEN_SMALL)), 0.8F)), PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(PATCH_CUP_LICHEN))));
+
+			register(context, FLOWER_BLUE_ORCHID, Feature.FLOWER, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.BLUE_ORCHID)))));
+			register(context, FLOWER_CORNFLOWER, Feature.FLOWER, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.CORNFLOWER)))));
+			register(context, FLOWER_DIANTHUS, Feature.FLOWER, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.DIANTHUS.get())))));
+			register(context, FLOWER_BLUEBELL, Feature.FLOWER, new RandomPatchConfiguration(128, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.BLUEBELL.get())))));
+			register(context, FLOWER_BLUEBELL_LARGE, EnvironmentalFeatures.LARGE_BLUEBELL_PATCH.get(), NoneFeatureConfiguration.NONE);
+			register(context, FLOWER_VIOLET, Feature.FLOWER, new RandomPatchConfiguration(32, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.VIOLET.get())))));
+			register(context, FLOWER_RED_LOTUS, Feature.FLOWER, new RandomPatchConfiguration(24, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.RED_LOTUS_FLOWER.get())))));
+			register(context, FLOWER_WHITE_LOTUS, Feature.FLOWER, new RandomPatchConfiguration(24, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.WHITE_LOTUS_FLOWER.get())))));
+			register(context, FLOWER_CARTWHEEL, CARTWHEEL.get(), new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.NORTH), 1).add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.SOUTH), 1).add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.EAST), 1).add(EnvironmentalBlocks.CARTWHEEL.get().defaultBlockState().setValue(CartwheelBlock.FACING, Direction.WEST), 1))));
+			register(context, FLOWER_BIRD_OF_PARADISE, Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.BIRD_OF_PARADISE.get())), List.of(), 32));
+			register(context, PATCH_TULIPS, Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(HolderSet.direct(PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.WHITE_TULIP)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.RED_TULIP)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.PINK_TULIP)))), PlacementUtils.inlinePlaced(Feature.FLOWER, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.ORANGE_TULIP)))))));
+			register(context, PATCH_TASSELFLOWER, EnvironmentalFeatures.TASSELFLOWER_PATCH.get(), NoneFeatureConfiguration.NONE);
+			register(context, PATCH_DELPHINIUMS, Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(HolderSet.direct(PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.PINK_DELPHINIUM.get())))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.PURPLE_DELPHINIUM.get())))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.BLUE_DELPHINIUM.get())))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.WHITE_DELPHINIUM.get())))))));
+
+			register(context, ZEBRA_DAZZLE, EnvironmentalFeatures.ZEBRA_DAZZLE.get(), NoneFeatureConfiguration.NONE);
+
+			register(context, HIBISCUS_BUSH, EnvironmentalFeatures.HIBISCUS_BUSH.get(), NoneFeatureConfiguration.NONE);
+
+			register(context, CATTAILS, EnvironmentalFeatures.CATTAILS.get(), NoneFeatureConfiguration.NONE);
+			register(context, CATTAILS_DENSE, EnvironmentalFeatures.DENSE_CATTAILS.get(), NoneFeatureConfiguration.NONE);
+			register(context, PATCH_DUCKWEED, Feature.RANDOM_PATCH, new RandomPatchConfiguration(1024, 8, 5, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(EnvironmentalBlocks.DUCKWEED.get())))));
+			register(context, PATCH_GIANT_TALL_GRASS, Feature.RANDOM_PATCH, grassPatch(BlockStateProvider.simple(EnvironmentalBlocks.GIANT_TALL_GRASS.get()), 64));
+			register(context, HUGE_BROWN_MUSHROOM, Feature.HUGE_BROWN_MUSHROOM, new HugeMushroomFeatureConfiguration(BlockStateProvider.simple(Blocks.BROWN_MUSHROOM_BLOCK.defaultBlockState().setValue(HugeMushroomBlock.UP, true).setValue(HugeMushroomBlock.DOWN, false)), BlockStateProvider.simple(Blocks.MUSHROOM_STEM.defaultBlockState().setValue(HugeMushroomBlock.UP, false).setValue(HugeMushroomBlock.DOWN, false)), 3));
+			register(context, ORE_MUD, Feature.ORE, new OreConfiguration(new TagMatchTest(EnvironmentalBlockTags.MUD_REPLACEABLES), Blocks.MUD.defaultBlockState(), 64));
+
+			register(context, BAMBOO_SHORT, EnvironmentalFeatures.SHORT_BAMBOO.get(), new ProbabilityFeatureConfiguration(0.0F));
+			register(context, BAMBOO_SHORT_PODZOL, EnvironmentalFeatures.SHORT_BAMBOO.get(), new ProbabilityFeatureConfiguration(0.2F));
+			register(context, FALLEN_CHERRY_LEAVES, EnvironmentalFeatures.FALLEN_LEAVES.get(), NoneFeatureConfiguration.NONE);
+
+			register(context, PATCH_MYCELIUM_SPROUTS, Feature.RANDOM_PATCH, grassPatch(BlockStateProvider.simple(EnvironmentalBlocks.MYCELIUM_SPROUTS.get()), 32));
+			register(context, PATCH_PINE_BARRENS_GRASS, Feature.RANDOM_PATCH, grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(Blocks.GRASS.defaultBlockState(), 3).add(Blocks.FERN.defaultBlockState(), 2)), 32));
+			register(context, PATCH_JUNGLE_LARGE_FERN, Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LARGE_FERN))));
+
+			register(context, PATCH_WATERLILY, Feature.RANDOM_PATCH, new RandomPatchConfiguration(10, 7, 3, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LILY_PAD)))));
+			register(context, PATCH_SUGAR_CANE, Feature.RANDOM_PATCH, new RandomPatchConfiguration(20, 4, 0, PlacementUtils.inlinePlaced(Feature.BLOCK_COLUMN, BlockColumnConfiguration.simple(BiasedToBottomInt.of(2, 4), BlockStateProvider.simple(Blocks.SUGAR_CANE)), BlockPredicateFilter.forPredicate(BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(Blocks.SUGAR_CANE.defaultBlockState(), BlockPos.ZERO), BlockPredicate.anyOf(BlockPredicate.matchesFluids(new BlockPos(1, -1, 0), Fluids.WATER, Fluids.FLOWING_WATER), BlockPredicate.matchesFluids(new BlockPos(-1, -1, 0), Fluids.WATER, Fluids.FLOWING_WATER), BlockPredicate.matchesFluids(new BlockPos(0, -1, 1), Fluids.WATER, Fluids.FLOWING_WATER), BlockPredicate.matchesFluids(new BlockPos(0, -1, -1), Fluids.WATER, Fluids.FLOWING_WATER)))))));
+			register(context, PATCH_GRASS, Feature.RANDOM_PATCH, grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
+			register(context, FOREST_FLOWERS, Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(HolderSet.direct(PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LILAC)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.ROSE_BUSH)))), PlacementUtils.inlinePlaced(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.PEONY)))), PlacementUtils.inlinePlaced(Feature.NO_BONEMEAL_FLOWER, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.LILY_OF_THE_VALLEY)))))));
+			register(context, SEAGRASS_MID, Feature.SEAGRASS, new ProbabilityFeatureConfiguration(0.6F));
+		}
 
 		private static RandomPatchConfiguration grassPatch(BlockStateProvider p_195203_, int p_195204_) {
 			return FeatureUtils.simpleRandomPatchConfiguration(p_195204_, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(p_195203_)));
 		}
 
-		private static <FC extends FeatureConfiguration, F extends Feature<FC>> RegistryObject<ConfiguredFeature<FC, ?>> register(String name, Supplier<ConfiguredFeature<FC, F>> feature) {
-			return CONFIGURED_FEATURES.register(name, feature);
+		public static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
+			return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Environmental.MOD_ID, name));
+		}
+
+		public static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC config) {
+			context.register(key, new ConfiguredFeature<>(feature, config));
 		}
 	}
 
 	public static final class EnvironmentalPlacedFeatures {
-		public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Environmental.MOD_ID);
-
 		private static final PlacementFilter PINE_ON_STONE_PLACEMENT_FILTER = BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(Direction.DOWN.getNormal(), BlockTags.BASE_STONE_OVERWORLD));
 
-		public static final RegistryObject<PlacedFeature> ORE_MUD = register("ore_mud", EnvironmentalConfiguredFeatures.ORE_MUD, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)), BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> SEAGRASS_MARSH = register("seagrass_marsh", EnvironmentalConfiguredFeatures.SEAGRASS_MID, AquaticPlacements.seagrassPlacement(128));
-		public static final RegistryObject<PlacedFeature> PATCH_WATERLILY_MARSH = register("patch_waterlily", EnvironmentalConfiguredFeatures.PATCH_WATERLILY, VegetationPlacements.worldSurfaceSquaredWithCount(1));
-		public static final RegistryObject<PlacedFeature> PATCH_DUCKWEED = register("patch_duckweed", EnvironmentalConfiguredFeatures.PATCH_DUCKWEED, PlacementUtils.countExtra(0, 0.25F, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_DUCKWEED_SWAMP = register("patch_duckweed_swamp", EnvironmentalConfiguredFeatures.PATCH_DUCKWEED, PlacementUtils.countExtra(0, 0.25F, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> ORE_MUD = createKey("ore_mud");
+		public static final ResourceKey<PlacedFeature> SEAGRASS_MARSH = createKey("seagrass_marsh");
+		public static final ResourceKey<PlacedFeature> PATCH_WATERLILY_MARSH = createKey("patch_waterlily");
+		public static final ResourceKey<PlacedFeature> PATCH_DUCKWEED = createKey("patch_duckweed");
+		public static final ResourceKey<PlacedFeature> PATCH_DUCKWEED_SWAMP = createKey("patch_duckweed_swamp");
 
-		public static final RegistryObject<PlacedFeature> FLOWER_BLUE_ORCHID = register("flower_blue_orchid", EnvironmentalConfiguredFeatures.FLOWER_BLUE_ORCHID, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_CORNFLOWER = register("flower_cornflower", EnvironmentalConfiguredFeatures.FLOWER_CORNFLOWER, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_DIANTHUS = register("flower_dianthus", EnvironmentalConfiguredFeatures.FLOWER_DIANTHUS, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_BLUEBELL = register("flower_bluebell", EnvironmentalConfiguredFeatures.FLOWER_BLUEBELL, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_BLUEBELL_LARGE = register("flower_bluebell_large", EnvironmentalConfiguredFeatures.FLOWER_BLUEBELL_LARGE, RarityFilter.onAverageOnceEvery(256), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_VIOLET = register("flower_violet", EnvironmentalConfiguredFeatures.FLOWER_VIOLET, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_RED_LOTUS = register("flower_red_lotus", EnvironmentalConfiguredFeatures.FLOWER_RED_LOTUS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_WHITE_LOTUS = register("flower_white_lotus", EnvironmentalConfiguredFeatures.FLOWER_WHITE_LOTUS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FLOWER_BIRD_OF_PARADISE = register("flower_bird_of_paradise", EnvironmentalConfiguredFeatures.FLOWER_BIRD_OF_PARADISE, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_TULIPS = register("patch_tulips", EnvironmentalConfiguredFeatures.PATCH_TULIPS, RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FOREST_FLOWERS = register("forest_flowers", EnvironmentalConfiguredFeatures.FOREST_FLOWERS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, CountPlacement.of(ClampedInt.of(UniformInt.of(-3, 1), 0, 1)), BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_TASSELFLOWER = register("patch_tasselflower", EnvironmentalConfiguredFeatures.PATCH_TASSELFLOWER, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_DELPHINIUMS = register("patch_delphiniums", EnvironmentalConfiguredFeatures.PATCH_DELPHINIUMS, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, CountPlacement.of(ClampedInt.of(UniformInt.of(-3, 2), 0, 2)), BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> FLOWER_BLUE_ORCHID = createKey("flower_blue_orchid");
+		public static final ResourceKey<PlacedFeature> FLOWER_CORNFLOWER = createKey("flower_cornflower");
+		public static final ResourceKey<PlacedFeature> FLOWER_DIANTHUS = createKey("flower_dianthus");
+		public static final ResourceKey<PlacedFeature> FLOWER_BLUEBELL = createKey("flower_bluebell");
+		public static final ResourceKey<PlacedFeature> FLOWER_BLUEBELL_LARGE = createKey("flower_bluebell_large");
+		public static final ResourceKey<PlacedFeature> FLOWER_VIOLET = createKey("flower_violet");
+		public static final ResourceKey<PlacedFeature> FLOWER_RED_LOTUS = createKey("flower_red_lotus");
+		public static final ResourceKey<PlacedFeature> FLOWER_WHITE_LOTUS = createKey("flower_white_lotus");
+		public static final ResourceKey<PlacedFeature> FLOWER_BIRD_OF_PARADISE = createKey("flower_bird_of_paradise");
+		public static final ResourceKey<PlacedFeature> PATCH_TULIPS = createKey("patch_tulips");
+		public static final ResourceKey<PlacedFeature> FOREST_FLOWERS = createKey("forest_flowers");
+		public static final ResourceKey<PlacedFeature> PATCH_TASSELFLOWER = createKey("patch_tasselflower");
+		public static final ResourceKey<PlacedFeature> PATCH_DELPHINIUMS = createKey("patch_delphiniums");
 
-		public static final RegistryObject<PlacedFeature> FLOWER_CARTWHEEL = register("flower_cartwheel", EnvironmentalConfiguredFeatures.FLOWER_CARTWHEEL, RarityFilter.onAverageOnceEvery(12), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> FLOWER_CARTWHEEL = createKey("flower_cartwheel");
 
-		public static final RegistryObject<PlacedFeature> ZEBRA_DAZZLE = register("zebra_dazzle", EnvironmentalConfiguredFeatures.ZEBRA_DAZZLE, RarityFilter.onAverageOnceEvery(128), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> ZEBRA_DAZZLE = createKey("zebra_dazzle");
 
-		public static final RegistryObject<PlacedFeature> HIBISCUS_BUSH = register("hibiscus_bush", EnvironmentalConfiguredFeatures.HIBISCUS_BUSH, RarityFilter.onAverageOnceEvery(256), CountPlacement.of(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> HIBISCUS_BUSH = createKey("hibiscus_bush");
 
-		public static final RegistryObject<PlacedFeature> WHITE_WISTERIA_BEES_002 = register("white_wisteria_bees_002", EnvironmentalConfiguredFeatures.WHITE_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> PINK_WISTERIA_BEES_002 = register("pink_wisteria_bees_002", EnvironmentalConfiguredFeatures.PINK_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> PURPLE_WISTERIA_BEES_002 = register("purple_wisteria_bees_002", EnvironmentalConfiguredFeatures.PURPLE_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> BLUE_WISTERIA_BEES_002 = register("blue_wisteria_bees_002", EnvironmentalConfiguredFeatures.BLUE_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> TREES_WISTERIA = register("trees_wisteria", EnvironmentalConfiguredFeatures.TREES_WISTERIA, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.25F, 2)));
+		public static final ResourceKey<PlacedFeature> WHITE_WISTERIA_BEES_002 = createKey("white_wisteria_bees_002");
+		public static final ResourceKey<PlacedFeature> PINK_WISTERIA_BEES_002 = createKey("pink_wisteria_bees_002");
+		public static final ResourceKey<PlacedFeature> PURPLE_WISTERIA_BEES_002 = createKey("purple_wisteria_bees_002");
+		public static final ResourceKey<PlacedFeature> BLUE_WISTERIA_BEES_002 = createKey("blue_wisteria_bees_002");
+		public static final ResourceKey<PlacedFeature> TREES_WISTERIA = createKey("trees_wisteria");
 
-		public static final RegistryObject<PlacedFeature> TREES_WILLOW = register("trees_willow", EnvironmentalConfiguredFeatures.TREES_WILLOW, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> SWAMP_OAK = register("swamp_oak", EnvironmentalConfiguredFeatures.SWAMP_OAK, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+		public static final ResourceKey<PlacedFeature> TREES_WILLOW = createKey("trees_willow");
+		public static final ResourceKey<PlacedFeature> SWAMP_OAK = createKey("swamp_oak");
 
-		public static final RegistryObject<PlacedFeature> TREES_MARSH = register("trees_marsh", EnvironmentalConfiguredFeatures.MARSH_OAK, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.25F, 1)));
-		public static final RegistryObject<PlacedFeature> TREES_SWAMP = register("trees_swamp", EnvironmentalConfiguredFeatures.TREES_SWAMP, PlacementUtils.countExtra(2, 0.1F, 1), InSquarePlacement.spread(), SurfaceWaterDepthFilter.forMaxDepth(2), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome(), BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
-		public static final RegistryObject<PlacedFeature> HUGE_BROWN_MUSHROOM_MARSH = register("huge_brown_mushroom_marsh", EnvironmentalConfiguredFeatures.HUGE_BROWN_MUSHROOM, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.025F, 1)));
+		public static final ResourceKey<PlacedFeature> TREES_MARSH = createKey("trees_marsh");
+		public static final ResourceKey<PlacedFeature> TREES_SWAMP = createKey("trees_swamp");
+		public static final ResourceKey<PlacedFeature> HUGE_BROWN_MUSHROOM_MARSH = createKey("huge_brown_mushroom_marsh");
 
-		public static final RegistryObject<PlacedFeature> CHERRY_BEES_0002 = register("cherry_bees_0002", EnvironmentalConfiguredFeatures.CHERRY_BEES_0002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> CHEERFUL_CHERRY_BEES_0002 = register("cheerful_cherry_bees_0002", EnvironmentalConfiguredFeatures.CHEERFUL_CHERRY_BEES_0002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> MOODY_CHERRY_BEES_0002 = register("moody_cherry_bees_0002", EnvironmentalConfiguredFeatures.MOODY_CHERRY_BEES_0002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+		public static final ResourceKey<PlacedFeature> CHERRY_BEES_0002 = createKey("cherry_bees_0002");
+		public static final ResourceKey<PlacedFeature> CHEERFUL_CHERRY_BEES_0002 = createKey("cheerful_cherry_bees_0002");
+		public static final ResourceKey<PlacedFeature> MOODY_CHERRY_BEES_0002 = createKey("moody_cherry_bees_0002");
 
-		public static final RegistryObject<PlacedFeature> CHERRY_BEES_005 = register("cherry_bees_005", EnvironmentalConfiguredFeatures.CHERRY_BEES_005, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> CHEERFUL_CHERRY_BEES_005 = register("cheerful_cherry_bees_005", EnvironmentalConfiguredFeatures.CHEERFUL_CHERRY_BEES_005, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> MOODY_CHERRY_BEES_005 = register("moody_cherry_bees_005", EnvironmentalConfiguredFeatures.MOODY_CHERRY_BEES_005, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+		public static final ResourceKey<PlacedFeature> CHERRY_BEES_005 = createKey("cherry_bees_005");
+		public static final ResourceKey<PlacedFeature> CHEERFUL_CHERRY_BEES_005 = createKey("cheerful_cherry_bees_005");
+		public static final ResourceKey<PlacedFeature> MOODY_CHERRY_BEES_005 = createKey("moody_cherry_bees_005");
 
-		public static final RegistryObject<PlacedFeature> CHERRY_TREES_BLOSSOM_WOODS = register("cherry_tree_blossom_woods", EnvironmentalConfiguredFeatures.TREES_BLOSSOM_WOODS, VegetationPlacements.treePlacement(PlacementUtils.countExtra(12, 0.1F, 1), Blocks.BIRCH_SAPLING));
-		public static final RegistryObject<PlacedFeature> CHERRY_TREES_BLOSSOM_VALLEYS = register("cherry_tree_blossom_valleys", EnvironmentalConfiguredFeatures.TREES_BLOSSOM_VALLEYS, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1F, 3), Blocks.BIRCH_SAPLING));
-		public static final RegistryObject<PlacedFeature> PINE_TREES_BLOSSOM_WOODS = register("pine_trees_blossom_woods", EnvironmentalConfiguredFeatures.PINE_BEES_0002, VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.05F, 7), Blocks.BIRCH_SAPLING));
-		public static final RegistryObject<PlacedFeature> PINE_TREES_BLOSSOM_VALLEYS = register("pine_trees_blossom_valleys", EnvironmentalConfiguredFeatures.PINE_BEES_0002, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05F, 3), Blocks.BIRCH_SAPLING));
+		public static final ResourceKey<PlacedFeature> CHERRY_TREES_BLOSSOM_WOODS = createKey("cherry_tree_blossom_woods");
+		public static final ResourceKey<PlacedFeature> CHERRY_TREES_BLOSSOM_VALLEYS = createKey("cherry_tree_blossom_valleys");
+		public static final ResourceKey<PlacedFeature> PINE_TREES_BLOSSOM_WOODS = createKey("pine_trees_blossom_woods");
+		public static final ResourceKey<PlacedFeature> PINE_TREES_BLOSSOM_VALLEYS = createKey("pine_trees_blossom_valleys");
 
-		public static final RegistryObject<PlacedFeature> FALLEN_CHERRY_LEAVES_BLOSSOM_WOODS = register("fallen_cherry_leaves_blossom_woods", EnvironmentalConfiguredFeatures.FALLEN_CHERRY_LEAVES, CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FALLEN_CHERRY_LEAVES_BLOSSOM_VALLEYS = register("fallen_cherry_leaves_blossom_valleys", EnvironmentalConfiguredFeatures.FALLEN_CHERRY_LEAVES, RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> FALLEN_CHERRY_LEAVES_BLOSSOM_WOODS = createKey("fallen_cherry_leaves_blossom_woods");
+		public static final ResourceKey<PlacedFeature> FALLEN_CHERRY_LEAVES_BLOSSOM_VALLEYS = createKey("fallen_cherry_leaves_blossom_valleys");
 
-		public static final RegistryObject<PlacedFeature> BLOSSOM_WOODS_ROCK = register("blossom_woods_rock", EnvironmentalConfiguredFeatures.STONE_ROCK, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> BLOSSOM_WOODS_ROCK = createKey("blossom_woods_rock");
 
-		public static final RegistryObject<PlacedFeature> PINE = register("pine", EnvironmentalConfiguredFeatures.PINE, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> TALL_PINE_WITH_PODZOL = register("tall_pine_with_podzol", EnvironmentalConfiguredFeatures.TALL_PINE_WITH_PODZOL, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
-		public static final RegistryObject<PlacedFeature> TREES_PINE_BARRENS = register("trees_pine_barrens", EnvironmentalConfiguredFeatures.TREES_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(14, 0.1F, 1)));
-		public static final RegistryObject<PlacedFeature> TREES_OLD_GROWTH_PINE_BARRENS = register("trees_old_growth_pine_barrens", EnvironmentalConfiguredFeatures.TREES_OLD_GROWTH_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(22, 0.1F, 1)));
-		public static final RegistryObject<PlacedFeature> TREES_PINE_BARRENS_ON_STONE = register("trees_pine_barrens_on_stone", EnvironmentalConfiguredFeatures.PINE_ON_STONE, treePlacement(PlacementUtils.countExtra(3, 0.1F, 1), PINE_ON_STONE_PLACEMENT_FILTER));
-		public static final RegistryObject<PlacedFeature> TREES_PINE_SLOPES = register("trees_pine_slopes", EnvironmentalConfiguredFeatures.PINE_ON_STONE, treePlacement(PlacementUtils.countExtra(6, 0.1F, 1), PINE_ON_STONE_PLACEMENT_FILTER));
+		public static final ResourceKey<PlacedFeature> PINE = createKey("pine");
+		public static final ResourceKey<PlacedFeature> TALL_PINE_WITH_PODZOL = createKey("tall_pine_with_podzol");
+		public static final ResourceKey<PlacedFeature> TREES_PINE_BARRENS = createKey("trees_pine_barrens");
+		public static final ResourceKey<PlacedFeature> TREES_OLD_GROWTH_PINE_BARRENS = createKey("trees_old_growth_pine_barrens");
+		public static final ResourceKey<PlacedFeature> TREES_PINE_BARRENS_ON_STONE = createKey("trees_pine_barrens_on_stone");
+		public static final ResourceKey<PlacedFeature> TREES_PINE_SLOPES = createKey("trees_pine_slopes");
 
-		public static final RegistryObject<PlacedFeature> GRAINY_COARSE_DIRT = register("grainy_coarse_dirt", EnvironmentalConfiguredFeatures.GRAINY_COARSE_DIRT, CountPlacement.of(56), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> COARSE_DIRT_ON_STONE = register("coarse_dirt_on_stone", EnvironmentalConfiguredFeatures.COARSE_DIRT_ON_STONE, CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> SMALL_COARSE_DIRT_ON_STONE = register("small_coarse_dirt_on_stone", EnvironmentalConfiguredFeatures.SMALL_COARSE_DIRT_ON_STONE, CountPlacement.of(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> GRAINY_COARSE_DIRT = createKey("grainy_coarse_dirt");
+		public static final ResourceKey<PlacedFeature> COARSE_DIRT_ON_STONE = createKey("coarse_dirt_on_stone");
+		public static final ResourceKey<PlacedFeature> SMALL_COARSE_DIRT_ON_STONE = createKey("small_coarse_dirt_on_stone");
 
-		public static final RegistryObject<PlacedFeature> FALLEN_PINE_TREE = register("fallen_pine_tree", EnvironmentalConfiguredFeatures.FALLEN_PINE_TREE, RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> FALLEN_TALL_PINE_TREE = register("fallen_tall_pine_tree", EnvironmentalConfiguredFeatures.FALLEN_TALL_PINE_TREE, RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> FALLEN_PINE_TREE = createKey("fallen_pine_tree");
+		public static final ResourceKey<PlacedFeature> FALLEN_TALL_PINE_TREE = createKey("fallen_tall_pine_tree");
 
-		public static final RegistryObject<PlacedFeature> DWARF_SPRUCE = register("dwarf_spruce", EnvironmentalConfiguredFeatures.DWARF_SPRUCE, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> DWARF_SPRUCE_DENSE = register("dwarf_spruce_dense", EnvironmentalConfiguredFeatures.DWARF_SPRUCE_DENSE, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> DWARF_SPRUCE_TAIGA = register("dwarf_spruce_taiga", EnvironmentalConfiguredFeatures.DWARF_SPRUCE_TAIGA, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> DWARF_SPRUCE_TAIGA_DENSE = register("dwarf_spruce_taiga_dense", EnvironmentalConfiguredFeatures.DWARF_SPRUCE_DENSE, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> DWARF_SPRUCE = createKey("dwarf_spruce");
+		public static final ResourceKey<PlacedFeature> DWARF_SPRUCE_DENSE = createKey("dwarf_spruce_dense");
+		public static final ResourceKey<PlacedFeature> DWARF_SPRUCE_TAIGA = createKey("dwarf_spruce_taiga");
+		public static final ResourceKey<PlacedFeature> DWARF_SPRUCE_TAIGA_DENSE = createKey("dwarf_spruce_taiga_dense");
 
-		public static final RegistryObject<PlacedFeature> PATCH_CUP_LICHEN = register("patch_cup_lichen", EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_CUP_LICHEN_SMALL = register("patch_cup_lichen_small", EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN_SMALL, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_CUP_LICHEN_STONE = register("patch_cup_lichen_stone", EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN_STONE, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_CUP_LICHEN_NOISE = register("patch_cup_lichen_noise", EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN_NOISE, new BetterNoiseBasedCountPlacement(EnvironmentalNoiseParameters.NOISE_CUP_LICHEN.getHolder().orElseThrow(), 18, -0.6F), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> PATCH_CUP_LICHEN = createKey("patch_cup_lichen");
+		public static final ResourceKey<PlacedFeature> PATCH_CUP_LICHEN_SMALL = createKey("patch_cup_lichen_small");
+		public static final ResourceKey<PlacedFeature> PATCH_CUP_LICHEN_STONE = createKey("patch_cup_lichen_stone");
+		public static final ResourceKey<PlacedFeature> PATCH_CUP_LICHEN_NOISE = createKey("patch_cup_lichen_noise");
 
-		public static final RegistryObject<PlacedFeature> PINE_SLOPES_ROCK = register("pine_slopes_rock", EnvironmentalConfiguredFeatures.STONE_ROCK, CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PINE_SLOPES_BOULDER = register("pine_slopes_boulder", EnvironmentalConfiguredFeatures.PINE_SLOPES_BOULDER, CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> PINE_SLOPES_ROCK = createKey("pine_slopes_rock");
+		public static final ResourceKey<PlacedFeature> PINE_SLOPES_BOULDER = createKey("pine_slopes_boulder");
 
-		public static final RegistryObject<PlacedFeature> BAMBOO_BLOSSOM_WOODS = register("bamboo_blossom_woods", EnvironmentalConfiguredFeatures.BAMBOO_SHORT_PODZOL, NoiseBasedCountPlacement.of(11, 5.0D, 0.2D), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> BAMBOO_LIGHT_BLOSSOM_WOODS = register("bamboo_light_blossom_woods", EnvironmentalConfiguredFeatures.BAMBOO_SHORT_PODZOL, RarityFilter.onAverageOnceEvery(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> BAMBOO_BLOSSOM_VALLEYS = register("bamboo_blossom_valleys", EnvironmentalConfiguredFeatures.BAMBOO_SHORT, NoiseBasedCountPlacement.of(5, 5.0D, 0.2D), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> BAMBOO_LIGHT_BLOSSOM_VALLEYS = register("bamboo_light_blossom_valleys", EnvironmentalConfiguredFeatures.BAMBOO_SHORT, RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> BAMBOO_BLOSSOM_WOODS = createKey("bamboo_blossom_woods");
+		public static final ResourceKey<PlacedFeature> BAMBOO_LIGHT_BLOSSOM_WOODS = createKey("bamboo_light_blossom_woods");
+		public static final ResourceKey<PlacedFeature> BAMBOO_BLOSSOM_VALLEYS = createKey("bamboo_blossom_valleys");
+		public static final ResourceKey<PlacedFeature> BAMBOO_LIGHT_BLOSSOM_VALLEYS = createKey("bamboo_light_blossom_valleys");
 
-		public static final RegistryObject<PlacedFeature> PATCH_GRASS_MARSH = register("patch_grass_marsh", EnvironmentalConfiguredFeatures.PATCH_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(5));
-		public static final RegistryObject<PlacedFeature> PATCH_GRASS_BLOSSOM_WOODS = register("patch_grass_blossom_woods", EnvironmentalConfiguredFeatures.PATCH_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(12));
-		public static final RegistryObject<PlacedFeature> PATCH_MYCELIUM_SPROUTS = register("patch_mycelium_sprouts", EnvironmentalConfiguredFeatures.PATCH_MYCELIUM_SPROUTS, NoiseThresholdCountPlacement.of(-0.8D, 5, 10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_GRASS_PINE_BARRENS = register("patch_grass_pine_barrens", EnvironmentalConfiguredFeatures.PATCH_PINE_BARRENS_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(2));
-		public static final RegistryObject<PlacedFeature> PATCH_GRASS_SNOWY_PINE_BARRENS = register("patch_grass_snowy_pine_barrens", EnvironmentalConfiguredFeatures.PATCH_PINE_BARRENS_GRASS, InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_GRASS_OLD_GROWTH_PINE_BARRENS = register("patch_grass_old_growth_pine_barrens", EnvironmentalConfiguredFeatures.PATCH_PINE_BARRENS_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(8));
-		public static final RegistryObject<PlacedFeature> PATCH_GRASS_PINE_SLOPES = register("patch_grass_pine_slopes", EnvironmentalConfiguredFeatures.PATCH_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(26));
-		public static final RegistryObject<PlacedFeature> PATCH_LARGE_FERN_JUNGLE = register("patch_large_fern_jungle", EnvironmentalConfiguredFeatures.PATCH_JUNGLE_LARGE_FERN, RarityFilter.onAverageOnceEvery(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_LARGE_FERN_PINE_BARRENS = register("patch_large_fern_pine_barrens", EnvironmentalConfiguredFeatures.PATCH_JUNGLE_LARGE_FERN, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> PATCH_GRASS_MARSH = createKey("patch_grass_marsh");
+		public static final ResourceKey<PlacedFeature> PATCH_GRASS_BLOSSOM_WOODS = createKey("patch_grass_blossom_woods");
+		public static final ResourceKey<PlacedFeature> PATCH_MYCELIUM_SPROUTS = createKey("patch_mycelium_sprouts");
+		public static final ResourceKey<PlacedFeature> PATCH_GRASS_PINE_BARRENS = createKey("patch_grass_pine_barrens");
+		public static final ResourceKey<PlacedFeature> PATCH_GRASS_SNOWY_PINE_BARRENS = createKey("patch_grass_snowy_pine_barrens");
+		public static final ResourceKey<PlacedFeature> PATCH_GRASS_OLD_GROWTH_PINE_BARRENS = createKey("patch_grass_old_growth_pine_barrens");
+		public static final ResourceKey<PlacedFeature> PATCH_GRASS_PINE_SLOPES = createKey("patch_grass_pine_slopes");
+		public static final ResourceKey<PlacedFeature> PATCH_LARGE_FERN_JUNGLE = createKey("patch_large_fern_jungle");
+		public static final ResourceKey<PlacedFeature> PATCH_LARGE_FERN_PINE_BARRENS = createKey("patch_large_fern_pine_barrens");
 
-		public static final RegistryObject<PlacedFeature> PATCH_GIANT_TALL_GRASS_PLAINS = register("patch_giant_tall_grass_plains", EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_GIANT_TALL_GRASS_SAVANNA = register("patch_giant_tall_grass_savanna", EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_GIANT_TALL_GRASS_JUNGLE = register("patch_giant_tall_grass_jungle", EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_GIANT_TALL_GRASS_MARSH = register("patch_giant_tall_grass_marsh", EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, CountPlacement.of(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> PATCH_GIANT_TALL_GRASS_PLAINS = createKey("patch_giant_tall_grass_plains");
+		public static final ResourceKey<PlacedFeature> PATCH_GIANT_TALL_GRASS_SAVANNA = createKey("patch_giant_tall_grass_savanna");
+		public static final ResourceKey<PlacedFeature> PATCH_GIANT_TALL_GRASS_JUNGLE = createKey("patch_giant_tall_grass_jungle");
+		public static final ResourceKey<PlacedFeature> PATCH_GIANT_TALL_GRASS_MARSH = createKey("patch_giant_tall_grass_marsh");
 
-		public static final RegistryObject<PlacedFeature> CATTAILS = register("cattails", EnvironmentalConfiguredFeatures.CATTAILS, RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> CATTAILS_DENSE = register("cattails_dense", EnvironmentalConfiguredFeatures.CATTAILS_DENSE, RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
-		public static final RegistryObject<PlacedFeature> PATCH_SUGAR_CANE_BLOSSOM = register("patch_sugar_cane_blossom", EnvironmentalConfiguredFeatures.PATCH_SUGAR_CANE, RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		public static final ResourceKey<PlacedFeature> CATTAILS = createKey("cattails");
+		public static final ResourceKey<PlacedFeature> CATTAILS_DENSE = createKey("cattails_dense");
+		public static final ResourceKey<PlacedFeature> PATCH_SUGAR_CANE_BLOSSOM = createKey("patch_sugar_cane_blossom");
+
+
+		////
+
+		public static void bootstrap(BootstapContext<PlacedFeature> context) {
+			HolderGetter<NoiseParameters> noise = context.lookup(Registries.NOISE);
+
+			register(context, ORE_MUD, EnvironmentalConfiguredFeatures.ORE_MUD, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)), BiomeFilter.biome());
+			register(context, SEAGRASS_MARSH, EnvironmentalConfiguredFeatures.SEAGRASS_MID, InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, CountPlacement.of(128), BiomeFilter.biome());
+			register(context, PATCH_WATERLILY_MARSH, EnvironmentalConfiguredFeatures.PATCH_WATERLILY, VegetationPlacements.worldSurfaceSquaredWithCount(1));
+			register(context, PATCH_DUCKWEED, EnvironmentalConfiguredFeatures.PATCH_DUCKWEED, PlacementUtils.countExtra(0, 0.25F, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, PATCH_DUCKWEED_SWAMP, EnvironmentalConfiguredFeatures.PATCH_DUCKWEED, PlacementUtils.countExtra(0, 0.25F, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+
+			register(context, FLOWER_BLUE_ORCHID, EnvironmentalConfiguredFeatures.FLOWER_BLUE_ORCHID, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_CORNFLOWER, EnvironmentalConfiguredFeatures.FLOWER_CORNFLOWER, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_DIANTHUS, EnvironmentalConfiguredFeatures.FLOWER_DIANTHUS, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_BLUEBELL, EnvironmentalConfiguredFeatures.FLOWER_BLUEBELL, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_BLUEBELL_LARGE, EnvironmentalConfiguredFeatures.FLOWER_BLUEBELL_LARGE, RarityFilter.onAverageOnceEvery(256), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_VIOLET, EnvironmentalConfiguredFeatures.FLOWER_VIOLET, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_RED_LOTUS, EnvironmentalConfiguredFeatures.FLOWER_RED_LOTUS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_WHITE_LOTUS, EnvironmentalConfiguredFeatures.FLOWER_WHITE_LOTUS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FLOWER_BIRD_OF_PARADISE, EnvironmentalConfiguredFeatures.FLOWER_BIRD_OF_PARADISE, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_TULIPS, EnvironmentalConfiguredFeatures.PATCH_TULIPS, RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FOREST_FLOWERS, EnvironmentalConfiguredFeatures.FOREST_FLOWERS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, CountPlacement.of(ClampedInt.of(UniformInt.of(-3, 1), 0, 1)), BiomeFilter.biome());
+			register(context, PATCH_TASSELFLOWER, EnvironmentalConfiguredFeatures.PATCH_TASSELFLOWER, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_DELPHINIUMS, EnvironmentalConfiguredFeatures.PATCH_DELPHINIUMS, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, CountPlacement.of(ClampedInt.of(UniformInt.of(-3, 2), 0, 2)), BiomeFilter.biome());
+
+			register(context, FLOWER_CARTWHEEL, EnvironmentalConfiguredFeatures.FLOWER_CARTWHEEL, RarityFilter.onAverageOnceEvery(12), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+
+			register(context, ZEBRA_DAZZLE, EnvironmentalConfiguredFeatures.ZEBRA_DAZZLE, RarityFilter.onAverageOnceEvery(128), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, HIBISCUS_BUSH, EnvironmentalConfiguredFeatures.HIBISCUS_BUSH, RarityFilter.onAverageOnceEvery(256), CountPlacement.of(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, WHITE_WISTERIA_BEES_002, EnvironmentalConfiguredFeatures.WHITE_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, PINK_WISTERIA_BEES_002, EnvironmentalConfiguredFeatures.PINK_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, PURPLE_WISTERIA_BEES_002, EnvironmentalConfiguredFeatures.PURPLE_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, BLUE_WISTERIA_BEES_002, EnvironmentalConfiguredFeatures.BLUE_WISTERIA_BEES_002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, TREES_WISTERIA, EnvironmentalConfiguredFeatures.TREES_WISTERIA, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.25F, 2)));
+
+			register(context, TREES_WILLOW, EnvironmentalConfiguredFeatures.TREES_WILLOW, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, SWAMP_OAK, EnvironmentalConfiguredFeatures.SWAMP_OAK, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+
+			register(context, TREES_MARSH, EnvironmentalConfiguredFeatures.MARSH_OAK, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.25F, 1)));
+			register(context, TREES_SWAMP, EnvironmentalConfiguredFeatures.TREES_SWAMP, PlacementUtils.countExtra(2, 0.1F, 1), InSquarePlacement.spread(), SurfaceWaterDepthFilter.forMaxDepth(2), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome(), BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
+			register(context, HUGE_BROWN_MUSHROOM_MARSH, EnvironmentalConfiguredFeatures.HUGE_BROWN_MUSHROOM, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.025F, 1)));
+
+			register(context, CHERRY_BEES_0002, EnvironmentalConfiguredFeatures.CHERRY_BEES_0002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, CHEERFUL_CHERRY_BEES_0002, EnvironmentalConfiguredFeatures.CHEERFUL_CHERRY_BEES_0002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, MOODY_CHERRY_BEES_0002, EnvironmentalConfiguredFeatures.MOODY_CHERRY_BEES_0002, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+
+			register(context, CHERRY_BEES_005, EnvironmentalConfiguredFeatures.CHERRY_BEES_005, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, CHEERFUL_CHERRY_BEES_005, EnvironmentalConfiguredFeatures.CHEERFUL_CHERRY_BEES_005, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, MOODY_CHERRY_BEES_005, EnvironmentalConfiguredFeatures.MOODY_CHERRY_BEES_005, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+
+			register(context, CHERRY_TREES_BLOSSOM_WOODS, EnvironmentalConfiguredFeatures.TREES_BLOSSOM_WOODS, VegetationPlacements.treePlacement(PlacementUtils.countExtra(12, 0.1F, 1), Blocks.BIRCH_SAPLING));
+			register(context, CHERRY_TREES_BLOSSOM_VALLEYS, EnvironmentalConfiguredFeatures.TREES_BLOSSOM_VALLEYS, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1F, 3), Blocks.BIRCH_SAPLING));
+			register(context, PINE_TREES_BLOSSOM_WOODS, EnvironmentalConfiguredFeatures.PINE_BEES_0002, VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.05F, 7), Blocks.BIRCH_SAPLING));
+			register(context, PINE_TREES_BLOSSOM_VALLEYS, EnvironmentalConfiguredFeatures.PINE_BEES_0002, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05F, 3), Blocks.BIRCH_SAPLING));
+
+			register(context, FALLEN_CHERRY_LEAVES_BLOSSOM_WOODS, EnvironmentalConfiguredFeatures.FALLEN_CHERRY_LEAVES, CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, FALLEN_CHERRY_LEAVES_BLOSSOM_VALLEYS, EnvironmentalConfiguredFeatures.FALLEN_CHERRY_LEAVES, RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+
+			register(context, BLOSSOM_WOODS_ROCK, EnvironmentalConfiguredFeatures.STONE_ROCK, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, PINE, EnvironmentalConfiguredFeatures.PINE, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, TALL_PINE_WITH_PODZOL, EnvironmentalConfiguredFeatures.TALL_PINE_WITH_PODZOL, PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING));
+			register(context, TREES_PINE_BARRENS, EnvironmentalConfiguredFeatures.TREES_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(14, 0.1F, 1)));
+			register(context, TREES_OLD_GROWTH_PINE_BARRENS, EnvironmentalConfiguredFeatures.TREES_OLD_GROWTH_PINE_BARRENS, treePlacement(PlacementUtils.countExtra(22, 0.1F, 1)));
+			register(context, TREES_PINE_BARRENS_ON_STONE, EnvironmentalConfiguredFeatures.PINE_ON_STONE, treePlacement(PlacementUtils.countExtra(3, 0.1F, 1), PINE_ON_STONE_PLACEMENT_FILTER));
+			register(context, TREES_PINE_SLOPES, EnvironmentalConfiguredFeatures.PINE_ON_STONE, treePlacement(PlacementUtils.countExtra(6, 0.1F, 1), PINE_ON_STONE_PLACEMENT_FILTER));
+
+			register(context, GRAINY_COARSE_DIRT, EnvironmentalConfiguredFeatures.GRAINY_COARSE_DIRT, CountPlacement.of(56), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, COARSE_DIRT_ON_STONE, EnvironmentalConfiguredFeatures.COARSE_DIRT_ON_STONE, CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, SMALL_COARSE_DIRT_ON_STONE, EnvironmentalConfiguredFeatures.SMALL_COARSE_DIRT_ON_STONE, CountPlacement.of(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+
+			register(context, FALLEN_PINE_TREE, EnvironmentalConfiguredFeatures.FALLEN_PINE_TREE, RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, FALLEN_TALL_PINE_TREE, EnvironmentalConfiguredFeatures.FALLEN_TALL_PINE_TREE, RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, DWARF_SPRUCE, EnvironmentalConfiguredFeatures.DWARF_SPRUCE, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, DWARF_SPRUCE_DENSE, EnvironmentalConfiguredFeatures.DWARF_SPRUCE_DENSE, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, DWARF_SPRUCE_TAIGA, EnvironmentalConfiguredFeatures.DWARF_SPRUCE_TAIGA, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, DWARF_SPRUCE_TAIGA_DENSE, EnvironmentalConfiguredFeatures.DWARF_SPRUCE_DENSE, PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, PATCH_CUP_LICHEN, EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_CUP_LICHEN_SMALL, EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN_SMALL, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_CUP_LICHEN_STONE, EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN_STONE, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_CUP_LICHEN_NOISE, EnvironmentalConfiguredFeatures.PATCH_CUP_LICHEN_NOISE, new BetterNoiseBasedCountPlacement(noise.getOrThrow(EnvironmentalNoiseParameters.NOISE_CUP_LICHEN), 18, -0.6F), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, PINE_SLOPES_ROCK, EnvironmentalConfiguredFeatures.STONE_ROCK, CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, PINE_SLOPES_BOULDER, EnvironmentalConfiguredFeatures.PINE_SLOPES_BOULDER, CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+
+			register(context, BAMBOO_BLOSSOM_WOODS, EnvironmentalConfiguredFeatures.BAMBOO_SHORT_PODZOL, NoiseBasedCountPlacement.of(11, 5.0D, 0.2D), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, BAMBOO_LIGHT_BLOSSOM_WOODS, EnvironmentalConfiguredFeatures.BAMBOO_SHORT_PODZOL, RarityFilter.onAverageOnceEvery(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, BAMBOO_BLOSSOM_VALLEYS, EnvironmentalConfiguredFeatures.BAMBOO_SHORT, NoiseBasedCountPlacement.of(5, 5.0D, 0.2D), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, BAMBOO_LIGHT_BLOSSOM_VALLEYS, EnvironmentalConfiguredFeatures.BAMBOO_SHORT, RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, PATCH_GRASS_MARSH, EnvironmentalConfiguredFeatures.PATCH_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(5));
+			register(context, PATCH_GRASS_BLOSSOM_WOODS, EnvironmentalConfiguredFeatures.PATCH_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(12));
+			register(context, PATCH_MYCELIUM_SPROUTS, EnvironmentalConfiguredFeatures.PATCH_MYCELIUM_SPROUTS, NoiseThresholdCountPlacement.of(-0.8D, 5, 10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, PATCH_GRASS_PINE_BARRENS, EnvironmentalConfiguredFeatures.PATCH_PINE_BARRENS_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(2));
+			register(context, PATCH_GRASS_SNOWY_PINE_BARRENS, EnvironmentalConfiguredFeatures.PATCH_PINE_BARRENS_GRASS, InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+			register(context, PATCH_GRASS_OLD_GROWTH_PINE_BARRENS, EnvironmentalConfiguredFeatures.PATCH_PINE_BARRENS_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(8));
+			register(context, PATCH_GRASS_PINE_SLOPES, EnvironmentalConfiguredFeatures.PATCH_GRASS, VegetationPlacements.worldSurfaceSquaredWithCount(26));
+			register(context, PATCH_LARGE_FERN_JUNGLE, EnvironmentalConfiguredFeatures.PATCH_JUNGLE_LARGE_FERN, RarityFilter.onAverageOnceEvery(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_LARGE_FERN_PINE_BARRENS, EnvironmentalConfiguredFeatures.PATCH_JUNGLE_LARGE_FERN, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, PATCH_GIANT_TALL_GRASS_PLAINS, EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_GIANT_TALL_GRASS_SAVANNA, EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_GIANT_TALL_GRASS_JUNGLE, EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_GIANT_TALL_GRASS_MARSH, EnvironmentalConfiguredFeatures.PATCH_GIANT_TALL_GRASS, CountPlacement.of(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+			register(context, CATTAILS, EnvironmentalConfiguredFeatures.CATTAILS, RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, CATTAILS_DENSE, EnvironmentalConfiguredFeatures.CATTAILS_DENSE, RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+			register(context, PATCH_SUGAR_CANE_BLOSSOM, EnvironmentalConfiguredFeatures.PATCH_SUGAR_CANE, RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+		}
 
 		private static ImmutableList<PlacementModifier> treePlacement(PlacementModifier modifier, PlacementModifier... extraModifiers) {
-			return ImmutableList.<PlacementModifier>builder().add(modifier).add(InSquarePlacement.spread()).add(VegetationPlacements.TREE_THRESHOLD).add(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR).add(BiomeFilter.biome()).add(extraModifiers).build();
+			return ImmutableList.<PlacementModifier>builder().add(modifier).add(InSquarePlacement.spread()).add(SurfaceWaterDepthFilter.forMaxDepth(0)).add(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR).add(BiomeFilter.biome()).add(extraModifiers).build();
 		}
 
-		private static RegistryObject<PlacedFeature> register(String name, RegistryObject<? extends ConfiguredFeature<?, ?>> feature, PlacementModifier... placementModifiers) {
-			return register(name, feature, List.of(placementModifiers));
+		public static ResourceKey<PlacedFeature> createKey(String name) {
+			return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Environmental.MOD_ID, name));
 		}
 
-		@SuppressWarnings("unchecked")
-		private static RegistryObject<PlacedFeature> register(String name, RegistryObject<? extends ConfiguredFeature<?, ?>> feature, List<PlacementModifier> placementModifiers) {
-			return PLACED_FEATURES.register(name, () -> new PlacedFeature((Holder<ConfiguredFeature<?, ?>>) feature.getHolder().get(), ImmutableList.copyOf(placementModifiers)));
+		public static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> modifiers) {
+			context.register(key, new PlacedFeature(context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(feature), modifiers));
 		}
+
+		public static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, PlacementModifier... modifiers) {
+			register(context, key, feature, List.of(modifiers));
+		}
+
 	}
 }

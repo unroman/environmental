@@ -4,7 +4,7 @@
       "type": "criteria",
       "config": {
         "criteria": {
-          "environmental:blossom_valleys": {
+          "environmental:environmental:blossom_valleys": {
             "conditions": {
               "player": [
                 {
@@ -20,7 +20,7 @@
             },
             "trigger": "minecraft:location"
           },
-          "environmental:blossom_woods": {
+          "environmental:environmental:blossom_woods": {
             "conditions": {
               "player": [
                 {
@@ -36,7 +36,7 @@
             },
             "trigger": "minecraft:location"
           },
-          "environmental:marsh": {
+          "environmental:environmental:marsh": {
             "conditions": {
               "player": [
                 {
@@ -52,7 +52,7 @@
             },
             "trigger": "minecraft:location"
           },
-          "environmental:old_growth_pine_barrens": {
+          "environmental:environmental:old_growth_pine_barrens": {
             "conditions": {
               "player": [
                 {
@@ -68,7 +68,7 @@
             },
             "trigger": "minecraft:location"
           },
-          "environmental:pine_barrens": {
+          "environmental:environmental:pine_barrens": {
             "conditions": {
               "player": [
                 {
@@ -84,7 +84,7 @@
             },
             "trigger": "minecraft:location"
           },
-          "environmental:pine_slopes": {
+          "environmental:environmental:pine_slopes": {
             "conditions": {
               "player": [
                 {
@@ -100,7 +100,7 @@
             },
             "trigger": "minecraft:location"
           },
-          "environmental:snowy_old_growth_pine_barrens": {
+          "environmental:environmental:snowy_old_growth_pine_barrens": {
             "conditions": {
               "player": [
                 {
@@ -116,7 +116,7 @@
             },
             "trigger": "minecraft:location"
           },
-          "environmental:snowy_pine_barrens": {
+          "environmental:environmental:snowy_pine_barrens": {
             "conditions": {
               "player": [
                 {
@@ -135,28 +135,28 @@
         },
         "requirements": [
           [
-            "environmental:marsh"
+            "environmental:environmental:marsh"
           ],
           [
-            "environmental:blossom_woods"
+            "environmental:environmental:blossom_woods"
           ],
           [
-            "environmental:blossom_valleys"
+            "environmental:environmental:blossom_valleys"
           ],
           [
-            "environmental:pine_barrens"
+            "environmental:environmental:pine_barrens"
           ],
           [
-            "environmental:snowy_pine_barrens"
+            "environmental:environmental:snowy_pine_barrens"
           ],
           [
-            "environmental:old_growth_pine_barrens"
+            "environmental:environmental:old_growth_pine_barrens"
           ],
           [
-            "environmental:snowy_old_growth_pine_barrens"
+            "environmental:environmental:snowy_old_growth_pine_barrens"
           ],
           [
-            "environmental:pine_slopes"
+            "environmental:environmental:pine_slopes"
           ]
         ],
         "should_replace_requirements": false

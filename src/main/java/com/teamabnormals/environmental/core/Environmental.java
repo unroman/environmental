@@ -8,26 +8,27 @@ import com.teamabnormals.environmental.common.network.message.*;
 import com.teamabnormals.environmental.common.slabfish.SlabfishLoader;
 import com.teamabnormals.environmental.core.data.client.EnvironmentalBlockStateProvider;
 import com.teamabnormals.environmental.core.data.client.EnvironmentalItemModelProvider;
+import com.teamabnormals.environmental.core.data.client.EnvironmentalSpriteSourceProvider;
 import com.teamabnormals.environmental.core.data.server.EnvironmentalAdvancementProvider;
+import com.teamabnormals.environmental.core.data.server.EnvironmentalDatapackBuiltinEntriesProvider;
 import com.teamabnormals.environmental.core.data.server.EnvironmentalLootTableProvider;
 import com.teamabnormals.environmental.core.data.server.EnvironmentalRecipeProvider;
-import com.teamabnormals.environmental.core.data.server.modifiers.*;
+import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalAdvancementModifierProvider;
+import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalChunkGeneratorModifierProvider;
+import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalLootModifierProvider;
 import com.teamabnormals.environmental.core.data.server.tags.*;
 import com.teamabnormals.environmental.core.other.*;
 import com.teamabnormals.environmental.core.registry.*;
-import com.teamabnormals.environmental.core.registry.EnvironmentalFeatures.EnvironmentalConfiguredFeatures;
-import com.teamabnormals.environmental.core.registry.EnvironmentalFeatures.EnvironmentalPlacedFeatures;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -48,6 +49,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Mod(Environmental.MOD_ID)
 @EventBusSubscriber(modid = Environmental.MOD_ID)
@@ -70,9 +72,6 @@ public class Environmental {
 		EnvironmentalPaintingVariants.PAINTING_VARIANTS.register(bus);
 		EnvironmentalFeatures.FEATURES.register(bus);
 		EnvironmentalFeatures.TREE_DECORATORS.register(bus);
-		EnvironmentalConfiguredFeatures.CONFIGURED_FEATURES.register(bus);
-		EnvironmentalPlacedFeatures.PLACED_FEATURES.register(bus);
-		EnvironmentalNoiseParameters.NOISE_PARAMETERS.register(bus);
 		EnvironmentalPlacementModifierTypes.PLACEMENT_MODIFIER_TYPES.register(bus);
 		EnvironmentalAttributes.ATTRIBUTES.register(bus);
 		EnvironmentalMobEffects.MOB_EFFECTS.register(bus);
@@ -91,7 +90,6 @@ public class Environmental {
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			SlabfishSpriteUploader.init(bus);
-			bus.addListener(this::stitchTextures);
 			bus.addListener(this::registerLayerDefinitions);
 			bus.addListener(this::registerRenderers);
 		});
@@ -104,7 +102,6 @@ public class Environmental {
 			this.setupLoginMessages();
 			EnvironmentalCompat.registerCompat();
 			EnvironmentalVillagers.registerVillagerTypes();
-			EnvironmentalEntityTypes.registerSpawns();
 		});
 	}
 
@@ -116,30 +113,36 @@ public class Environmental {
 
 	private void dataSetup(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
+		PackOutput output = generator.getPackOutput();
+		CompletableFuture<Provider> provider = event.getLookupProvider();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
-		boolean includeServer = event.includeServer();
-		EnvironmentalBlockTagsProvider blockTags = new EnvironmentalBlockTagsProvider(generator, helper);
-		generator.addProvider(includeServer, blockTags);
-		generator.addProvider(includeServer, new EnvironmentalItemTagsProvider(generator, blockTags, helper));
-		generator.addProvider(includeServer, new EnvironmentalEntityTypeTagsProvider(generator, helper));
-		generator.addProvider(includeServer, new EnvironmentalStructureTagsProvider(generator, helper));
-		generator.addProvider(includeServer, new EnvironmentalBiomeTagsProvider(generator, helper));
-		generator.addProvider(includeServer, new EnvironmentalBannerPatternTagsProvider(generator, helper));
-		generator.addProvider(includeServer, new EnvironmentalPaintingVariantTagsProvider(generator, helper));
-		generator.addProvider(includeServer, new EnvironmentalRecipeProvider(generator));
-		generator.addProvider(includeServer, new EnvironmentalAdvancementProvider(generator, helper));
-		generator.addProvider(includeServer, new EnvironmentalAdvancementModifierProvider(generator));
-		generator.addProvider(includeServer, new EnvironmentalChunkGeneratorModifierProvider(generator));
-		generator.addProvider(includeServer, new EnvironmentalModdedBiomeSliceProvider(generator));
-		generator.addProvider(includeServer, new EnvironmentalLootTableProvider(generator));
-		generator.addProvider(includeServer, new EnvironmentalLootModifierProvider(generator));
-		generator.addProvider(includeServer, EnvironmentalBiomeModifierProvider.create(generator, helper));
+		boolean server = event.includeServer();
+
+		EnvironmentalDatapackBuiltinEntriesProvider datapackEntries = new EnvironmentalDatapackBuiltinEntriesProvider(output, provider);
+		generator.addProvider(server, datapackEntries);
+		provider = datapackEntries.getRegistryProvider();
+
+		EnvironmentalBlockTagsProvider blockTags = new EnvironmentalBlockTagsProvider(output, provider, helper);
+		generator.addProvider(server, blockTags);
+		generator.addProvider(server, new EnvironmentalItemTagsProvider(output, provider, blockTags.contentsGetter(), helper));
+		generator.addProvider(server, new EnvironmentalEntityTypeTagsProvider(output, provider, helper));
+		generator.addProvider(server, new EnvironmentalStructureTagsProvider(output, provider, helper));
+		generator.addProvider(server, new EnvironmentalBiomeTagsProvider(output, provider, helper));
+		generator.addProvider(server, new EnvironmentalBannerPatternTagsProvider(output, provider, helper));
+		generator.addProvider(server, new EnvironmentalPaintingVariantTagsProvider(output, provider, helper));
+		generator.addProvider(server, new EnvironmentalRecipeProvider(output));
+		generator.addProvider(server, EnvironmentalAdvancementProvider.create(output, provider, helper));
+		generator.addProvider(server, new EnvironmentalAdvancementModifierProvider(output, provider));
+		generator.addProvider(server, new EnvironmentalChunkGeneratorModifierProvider(output, provider));
+		generator.addProvider(server, new EnvironmentalLootTableProvider(output));
+		generator.addProvider(server, new EnvironmentalLootModifierProvider(output, provider));
 		//generator.addProvider(new SlabfishProvider(generator, MOD_ID, existingFileHelper));
 
-		boolean includeClient = event.includeClient();
-		generator.addProvider(includeClient, new EnvironmentalItemModelProvider(generator, helper));
-		generator.addProvider(includeClient, new EnvironmentalBlockStateProvider(generator, helper));
+		boolean client = event.includeClient();
+		generator.addProvider(client, new EnvironmentalItemModelProvider(output, helper));
+		generator.addProvider(client, new EnvironmentalBlockStateProvider(output, helper));
+		generator.addProvider(client, new EnvironmentalSpriteSourceProvider(output, helper));
 	}
 
 	private void setupPlayMessages() {
@@ -160,16 +163,6 @@ public class Environmental {
 	@SubscribeEvent
 	public void onEvent(AddReloadListenerEvent event) {
 		event.addListener(new SlabfishLoader());
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	private void stitchTextures(TextureStitchEvent.Pre event) {
-		TextureAtlas texture = event.getAtlas();
-		if (InventoryMenu.BLOCK_ATLAS.equals(texture.location())) {
-			event.addSprite(new ResourceLocation(Environmental.MOD_ID, "item/slabfish_sweater_slot"));
-			event.addSprite(new ResourceLocation(Environmental.MOD_ID, "item/slabfish_backpack_slot"));
-			event.addSprite(new ResourceLocation(Environmental.MOD_ID, "item/slabfish_backpack_type_slot"));
-		}
 	}
 
 	@OnlyIn(Dist.CLIENT)

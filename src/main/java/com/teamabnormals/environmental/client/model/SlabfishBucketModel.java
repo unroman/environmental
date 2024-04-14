@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
@@ -32,8 +31,8 @@ public class SlabfishBucketModel implements BakedModel {
 	private final BakedModel model;
 	private final ItemOverrides overrideList;
 
-	public SlabfishBucketModel(ModelManager modelManager) {
-		this.model = modelManager.getModel(new ResourceLocation(Environmental.MOD_ID, "models/item/slabfish_bucket/swamp"));
+	public SlabfishBucketModel(Map<ResourceLocation, BakedModel> modelManager) {
+		this.model = modelManager.get(new ResourceLocation(Environmental.MOD_ID, "models/item/slabfish_bucket/swamp"));
 		this.overrideList = new Overrides(modelManager);
 	}
 
@@ -73,14 +72,14 @@ public class SlabfishBucketModel implements BakedModel {
 	}
 
 	private static class Overrides extends ItemOverrides {
-		private final ModelManager modelManager;
+		private final Map<ResourceLocation, BakedModel> modelManager;
 		private final BakedModel model;
 		private final Map<String, ResourceLocation> locationCache;
 		private final Map<ResourceLocation, ResourceLocation> modelLocations;
 
-		private Overrides(ModelManager modelManager) {
+		private Overrides(Map<ResourceLocation, BakedModel> modelManager) {
 			this.modelManager = modelManager;
-			this.model = modelManager.getModel(new ResourceLocation(Environmental.MOD_ID, "item/slabfish_bucket/swamp"));
+			this.model = modelManager.get(new ResourceLocation(Environmental.MOD_ID, "item/slabfish_bucket/swamp"));
 			this.locationCache = new HashMap<>();
 			this.modelLocations = new HashMap<>();
 			for (ResourceLocation location : Minecraft.getInstance().getResourceManager().listResources("models/item/slabfish_bucket", s -> s.getPath().endsWith(".json")).keySet())
@@ -93,7 +92,7 @@ public class SlabfishBucketModel implements BakedModel {
 			if (stack.getTag() != null && stack.getTag().contains("SlabfishType", Tag.TAG_STRING)) {
 				ResourceLocation slabfishType = SlabfishManager.get(LogicalSide.CLIENT).getSlabfishType(this.locationCache.computeIfAbsent(stack.getTag().getString("SlabfishType"), ResourceLocation::new)).orElse(SlabfishManager.DEFAULT_SLABFISH).getRegistryName();
 				if (this.modelLocations.containsKey(slabfishType))
-					return this.modelManager.getModel(this.modelLocations.get(slabfishType));
+					return this.modelManager.get(this.modelLocations.get(slabfishType));
 			}
 			return this.model;
 		}

@@ -1,7 +1,6 @@
 package com.teamabnormals.environmental.core.data.server;
 
 import com.teamabnormals.environmental.common.advancement.UpgradeGearTrigger;
-import com.teamabnormals.environmental.common.block.CattailBlock;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalCriteriaTriggers;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags;
@@ -13,28 +12,31 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.advancements.AdvancementProvider;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
+import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenerator;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class EnvironmentalAdvancementProvider extends AdvancementProvider {
+public class EnvironmentalAdvancementProvider implements AdvancementGenerator {
 
-	public EnvironmentalAdvancementProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, existingFileHelper);
+	public static ForgeAdvancementProvider create(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper helper) {
+		return new ForgeAdvancementProvider(output, provider, helper, List.of(new EnvironmentalAdvancementProvider()));
 	}
 
 	@Override
-	protected void registerAdvancements(Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+	public void generate(Provider provider, Consumer<Advancement> consumer, ExistingFileHelper helper) {
 		Advancement explorerGear = createAdvancement("obtain_explorer_gear", "adventure", new ResourceLocation("adventure/root"), Items.RABBIT_HIDE, FrameType.TASK, true, true, false)
 				.requirements(RequirementsStrategy.OR)
 				.addCriterion("thief_hood", InventoryChangeTrigger.TriggerInstance.hasItems(EnvironmentalItems.THIEF_HOOD.get()))
@@ -66,7 +68,7 @@ public class EnvironmentalAdvancementProvider extends AdvancementProvider {
 		Advancement saddlePig = createAdvancement("saddle_pig", "husbandry", new ResourceLocation("husbandry/root"), Items.SADDLE, FrameType.TASK, true, true, false)
 				.addCriterion("saddle_pig", PlayerInteractTrigger.TriggerInstance.itemUsedOnEntity(
 						ItemPredicate.Builder.item().of(Items.SADDLE),
-						EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().of(EntityType.PIG).build())))
+						EntityPredicate.wrap(EntityPredicate.Builder.entity().of(EntityType.PIG).build())))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/saddle_pig");
 
 
@@ -76,19 +78,19 @@ public class EnvironmentalAdvancementProvider extends AdvancementProvider {
 
 		Advancement throwMud = createAdvancement("throw_mud_at_pig", "husbandry", saddlePig, EnvironmentalItems.MUD_BALL.get(), FrameType.TASK, true, true, false)
 				.addCriterion("throw_mud_at_pig", PlayerHurtEntityTrigger.TriggerInstance.playerHurtEntity(
-						DamagePredicate.Builder.damageInstance().type(DamageSourcePredicate.Builder.damageType().isProjectile(true).direct(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypes.MUD_BALL.get()))),
+						DamagePredicate.Builder.damageInstance().type(DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE)).direct(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypes.MUD_BALL.get()))),
 						EntityPredicate.Builder.entity().of(EntityType.PIG).build()))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/throw_mud_at_pig");
 		createAdvancement("plant_on_muddy_pig", "husbandry", throwMud, Items.RED_TULIP, FrameType.TASK, true, true, false)
 				.addCriterion("plant_on_muddy_pig", PlayerInteractTrigger.TriggerInstance.itemUsedOnEntity(
 						ItemPredicate.Builder.item().of(EnvironmentalItemTags.MUDDY_PIG_DECORATIONS),
-						EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().of(EntityType.PIG).build())))
+						EntityPredicate.wrap(EntityPredicate.Builder.entity().of(EntityType.PIG).build())))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/plant_on_muddy_pig");
 
 		Advancement feedPig = createAdvancement("truffle_shuffle", "husbandry", saddlePig, Items.GOLDEN_CARROT, FrameType.TASK, true, true, false)
 				.addCriterion("truffle_shuffle", PlayerInteractTrigger.TriggerInstance.itemUsedOnEntity(
 						ItemPredicate.Builder.item().of(Items.GOLDEN_CARROT),
-						EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().of(EntityType.PIG).build())))
+						EntityPredicate.wrap(EntityPredicate.Builder.entity().of(EntityType.PIG).build())))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/truffle_shuffle");
 		createAdvancement("find_truffle", "husbandry", feedPig, EnvironmentalItems.TRUFFLE.get(), FrameType.TASK, true, true, false)
 				.addCriterion("find_truffle", InventoryChangeTrigger.TriggerInstance.hasItems(EnvironmentalItems.TRUFFLE.get()))
@@ -96,13 +98,13 @@ public class EnvironmentalAdvancementProvider extends AdvancementProvider {
 
 		createAdvancement("shear_yak_with_pants", "husbandry", new ResourceLocation("husbandry/root"), EnvironmentalItems.YAK_PANTS.get(), FrameType.TASK, true, true, false)
 				.addCriterion("shear_yak_with_pants", PlayerInteractTrigger.TriggerInstance.itemUsedOnEntity(
-						EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().equipment(EntityEquipmentPredicate.Builder.equipment().legs(ItemPredicate.Builder.item().of(EnvironmentalItems.YAK_PANTS.get()).build()).build()).build()),
+						EntityPredicate.wrap(EntityPredicate.Builder.entity().equipment(EntityEquipmentPredicate.Builder.equipment().legs(ItemPredicate.Builder.item().of(EnvironmentalItems.YAK_PANTS.get()).build()).build()).build()),
 						ItemPredicate.Builder.item().of(Tags.Items.SHEARS),
-						EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypes.YAK.get()).build())))
+						EntityPredicate.wrap(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypes.YAK.get()).build())))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/shear_yak_with_pants");
 
 		createAdvancement("shear_cattail", "husbandry", new ResourceLocation("husbandry/root"), EnvironmentalItems.CATTAIL_FLUFF.get(), FrameType.TASK, true, true, false)
-				.addCriterion("shear_cattail", ItemInteractWithBlockTrigger.TriggerInstance.itemUsedOnBlock(
+				.addCriterion("shear_cattail", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
 						LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(EnvironmentalBlocks.CATTAIL.get()).build()),
 						ItemPredicate.Builder.item().of(Tags.Items.SHEARS)))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/shear_cattail");
@@ -110,7 +112,7 @@ public class EnvironmentalAdvancementProvider extends AdvancementProvider {
 		createAdvancement("feed_deer_flower", "husbandry", new ResourceLocation("husbandry/root"), Items.APPLE, FrameType.TASK, true, true, false)
 				.addCriterion("feed_deer_flower", PlayerInteractTrigger.TriggerInstance.itemUsedOnEntity(
 						ItemPredicate.Builder.item().of(EnvironmentalItemTags.DEER_PLANTABLES),
-						EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypeTags.DEER).build())))
+						EntityPredicate.wrap(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypeTags.DEER).build())))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/feed_deer_flower");
 	}
 

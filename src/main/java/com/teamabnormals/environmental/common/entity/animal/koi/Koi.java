@@ -10,7 +10,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -161,17 +160,17 @@ public class Koi extends AbstractFish {
 
 	@Override
 	public void aiStep() {
-		if (!this.isInWater() && this.onGround && this.verticalCollision) {
+		if (!this.isInWater() && this.onGround() && this.verticalCollision) {
 			this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F), 0.45F, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F)));
-			this.onGround = false;
+			this.setOnGround(false);
 			this.hasImpulse = true;
 			this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getVoicePitch());
 		}
-		if (level.getGameTime() % 20 == 0 && EnvironmentalConfig.COMMON.serenityEffect.get()) {
+		if (this.level().getGameTime() % 20 == 0 && EnvironmentalConfig.COMMON.serenityEffect.get()) {
 			int horizontalRange = EnvironmentalConfig.COMMON.koiHorizontalSerenityRange.get();
 			int verticalRange = EnvironmentalConfig.COMMON.koiVerticalSerenityRange.get();
-			for (Player player : level.getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(horizontalRange, verticalRange, horizontalRange))) {
-				if (!level.isClientSide())
+			for (Player player : this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(horizontalRange, verticalRange, horizontalRange))) {
+				if (!this.level().isClientSide())
 					player.addEffect(new MobEffectInstance(EnvironmentalMobEffects.SERENITY.get(), 100, 0, false, false));
 			}
 		}

@@ -7,6 +7,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class EnvironmentalVillagers {
 
 	public static void registerVillagerTypes() {
-		VillagerType.BY_BIOME.put(EnvironmentalBiomes.MARSH.getKey(), VillagerType.SWAMP);
+		VillagerType.BY_BIOME.put(EnvironmentalBiomes.MARSH, VillagerType.SWAMP);
 	}
 }

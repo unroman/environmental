@@ -2,7 +2,6 @@ package com.teamabnormals.environmental.common.levelgen.feature;
 
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
-import com.teamabnormals.blueprint.common.block.wood.LogBlock;
 import com.teamabnormals.blueprint.common.levelgen.feature.BlueprintTreeFeature;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import net.minecraft.core.BlockPos;
@@ -11,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -65,7 +65,7 @@ public class WeepingWillowTreeFeature extends BlueprintTreeFeature {
 		for (int i = 0; i < length; i++) {
 			if (i == offsetpos)
 				mutablepos.set(mutablepos.above());
-			this.addSpecialLog(mutablepos.set(mutablepos.relative(direction)), config.trunkProvider.getState(random, mutablepos).setValue(LogBlock.AXIS, direction.getAxis()));
+			this.addSpecialLog(mutablepos.set(mutablepos.relative(direction)), config.trunkProvider.getState(random, mutablepos).setValue(RotatedPillarBlock.AXIS, direction.getAxis()));
 		}
 
 		this.createBranchLeafBlob(mutablepos, random, direction, length <= 3);

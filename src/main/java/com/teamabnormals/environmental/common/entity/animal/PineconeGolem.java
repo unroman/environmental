@@ -109,27 +109,18 @@ public class PineconeGolem extends AbstractGolem {
         super.knockback(force, x, z);
         ItemStack itemstack = this.getMainHandItem();
         if (!itemstack.isEmpty()) {
-            ItemEntity itementity = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), itemstack);
+            ItemEntity itementity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), itemstack);
             itementity.setPickUpDelay(40);
             itementity.setThrower(this.getUUID());
-            this.level.addFreshEntity(itementity);
+            this.level().addFreshEntity(itementity);
             this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         }
     }
 
     @Override
-    public void calculateEntityAnimation(LivingEntity entity, boolean isFlying) {
-        entity.animationSpeedOld = entity.animationSpeed;
-        double d0 = entity.getX() - entity.xo;
-        double d1 = isFlying ? entity.getY() - entity.yo : 0.0D;
-        double d2 = entity.getZ() - entity.zo;
-        float f = (float) Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 16.0F;
-        if (f > 1.0F) {
-            f = 1.0F;
-        }
-
-        entity.animationSpeed += (f - entity.animationSpeed) * 0.4F;
-        entity.animationPosition += entity.animationSpeed;
+    protected void updateWalkAnimation(float p_268283_) {
+        float f = Math.min(p_268283_ * 16.0F, 1.0F);
+        this.walkAnimation.update(f, 0.4F);
     }
 
     @Override
@@ -143,8 +134,8 @@ public class PineconeGolem extends AbstractGolem {
         if (this.canHoldItem(itemstack)) {
             int i = itemstack.getCount();
             if (i > 1) {
-                ItemEntity itementity1 = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), itemstack.split(i - 1));
-                this.level.addFreshEntity(itementity1);
+                ItemEntity itementity1 = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), itemstack.split(i - 1));
+                this.level().addFreshEntity(itementity1);
             }
 
             this.onItemPickup(itementity);

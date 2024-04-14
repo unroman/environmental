@@ -1,0 +1,6 @@
+{
+  "type": "environmental:grainy_coarse_dirt",
+  "config": {
+    "probability": 0.1
+  }
+}

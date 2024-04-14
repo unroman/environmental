@@ -38,5 +38,6 @@
     [
       "plant_on_muddy_pig"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

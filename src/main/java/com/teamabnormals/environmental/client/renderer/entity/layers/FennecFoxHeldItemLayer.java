@@ -1,15 +1,15 @@
 package com.teamabnormals.environmental.client.renderer.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teamabnormals.environmental.client.model.FennecFoxModel;
 import com.teamabnormals.environmental.common.entity.animal.FennecFox;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class FennecFoxHeldItemLayer extends RenderLayer<FennecFox, FennecFoxModel<FennecFox>> {
@@ -31,9 +31,9 @@ public class FennecFoxHeldItemLayer extends RenderLayer<FennecFox, FennecFoxMode
 
 		stack.translate((this.getParentModel()).head.x / 16.0F, (this.getParentModel()).head.y / 16.0F, (this.getParentModel()).head.z / 16.0F);
 		float f1 = entity.getHeadRollAngle(partialTicks);
-		stack.mulPose(Vector3f.ZP.rotation(f1));
-		stack.mulPose(Vector3f.YP.rotationDegrees(netHeadYaw));
-		stack.mulPose(Vector3f.XP.rotationDegrees(headPitch));
+		stack.mulPose(Axis.ZP.rotation(f1));
+		stack.mulPose(Axis.YP.rotationDegrees(netHeadYaw));
+		stack.mulPose(Axis.XP.rotationDegrees(headPitch));
 		if (entity.isBaby()) {
 			if (sleeping) {
 				stack.translate(0.4F, 0.26F, 0.15F);
@@ -46,13 +46,13 @@ public class FennecFoxHeldItemLayer extends RenderLayer<FennecFox, FennecFoxMode
 			stack.translate(0.06F, 0.27F, -0.5D);
 		}
 
-		stack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+		stack.mulPose(Axis.XP.rotationDegrees(90.0F));
 		if (sleeping) {
-			stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+			stack.mulPose(Axis.ZP.rotationDegrees(90.0F));
 		}
 
 		ItemStack itemstack = entity.getItemBySlot(EquipmentSlot.MAINHAND);
-		itemInHandRenderer.renderItem(entity, itemstack, ItemTransforms.TransformType.GROUND, false, stack, buffer, packedLight);
+		itemInHandRenderer.renderItem(entity, itemstack, ItemDisplayContext.GROUND, false, stack, buffer, packedLight);
 		stack.popPose();
 	}
 }

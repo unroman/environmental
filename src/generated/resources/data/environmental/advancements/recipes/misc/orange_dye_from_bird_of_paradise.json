@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:orange_dye_from_bird_of_paradise"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

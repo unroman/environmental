@@ -4,8 +4,10 @@ import com.teamabnormals.blueprint.core.other.tags.BlueprintBiomeTags;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBiomeTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBiomes;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
@@ -14,43 +16,45 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import java.util.concurrent.CompletableFuture;
+
 public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 
-	public EnvironmentalBiomeTagsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, Environmental.MOD_ID, existingFileHelper);
+	public EnvironmentalBiomeTagsProvider(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper helper) {
+		super(output, provider, Environmental.MOD_ID, helper);
 	}
 
 	@Override
-	public void addTags() {
-		this.tag(EnvironmentalBiomes.MARSH.get(),
+	public void addTags(Provider provider) {
+		this.tag(EnvironmentalBiomes.MARSH,
 				BiomeTags.IS_OVERWORLD,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO, BiomeTags.HAS_RUINED_PORTAL_SWAMP, BiomeTags.HAS_SWAMP_HUT,
 				BiomeTags.HAS_CLOSER_WATER_FOG, BiomeTags.WATER_ON_MAP_OUTLINES,
 				Tags.Biomes.IS_WET_OVERWORLD, Tags.Biomes.IS_SWAMP,
-				EnvironmentalBiomeTags.ONLY_ALLOWS_MUDDY_RABBITS,
+				EnvironmentalBiomeTags.SPAWNS_MUDDY_RABBITS,
 				EnvironmentalBiomeTags.HAS_MUD_DISK
 		);
 
-		this.tag(EnvironmentalBiomes.BLOSSOM_WOODS.get(),
+		this.tag(EnvironmentalBiomes.BLOSSOM_WOODS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_FOREST,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				Tags.Biomes.IS_DENSE_OVERWORLD
 		);
 
-		this.tag(EnvironmentalBiomes.BLOSSOM_VALLEYS.get(),
+		this.tag(EnvironmentalBiomes.BLOSSOM_VALLEYS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_FOREST,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				BlueprintBiomeTags.IS_GRASSLAND, Tags.Biomes.IS_RARE, Tags.Biomes.IS_PLAINS
 		);
 
-		this.tag(EnvironmentalBiomes.PINE_BARRENS.get(),
+		this.tag(EnvironmentalBiomes.PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_CONIFEROUS,
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
-		this.tag(EnvironmentalBiomes.SNOWY_PINE_BARRENS.get(),
+		this.tag(EnvironmentalBiomes.SNOWY_PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				BiomeTags.SPAWNS_COLD_VARIANT_FROGS,
@@ -58,14 +62,14 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
-		this.tag(EnvironmentalBiomes.OLD_GROWTH_PINE_BARRENS.get(),
+		this.tag(EnvironmentalBiomes.OLD_GROWTH_PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_CONIFEROUS, Tags.Biomes.IS_DENSE_OVERWORLD, Tags.Biomes.IS_RARE,
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
-		this.tag(EnvironmentalBiomes.SNOWY_OLD_GROWTH_PINE_BARRENS.get(),
+		this.tag(EnvironmentalBiomes.SNOWY_OLD_GROWTH_PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				BiomeTags.SPAWNS_COLD_VARIANT_FROGS,
@@ -73,11 +77,11 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
-		this.tag(EnvironmentalBiomes.PINE_SLOPES.get(),
+		this.tag(EnvironmentalBiomes.PINE_SLOPES,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_MOUNTAIN,
 				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_CONIFEROUS, Tags.Biomes.IS_SLOPE,
-				EnvironmentalBiomeTags.ONLY_ALLOWS_GRAY_RABBITS
+				EnvironmentalBiomeTags.SPAWNS_GRAY_RABBITS
 		);
 
 		this.tag(EnvironmentalBiomeTags.HAS_SLABFISH).addTag(Tags.Biomes.IS_SWAMP);
@@ -108,7 +112,7 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 	}
 
 	@SafeVarargs
-	private void tag(Biome biome, TagKey<Biome>... tags) {
+	private void tag(ResourceKey<Biome> biome, TagKey<Biome>... tags) {
 		for (TagKey<Biome> key : tags) {
 			tag(key).add(biome);
 		}

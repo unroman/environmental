@@ -12,8 +12,6 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import java.util.stream.Stream;
-
 /**
  * <p>Manages all slabfish textures in the atlas.</p>
  *
@@ -25,13 +23,7 @@ public final class SlabfishSpriteUploader extends TextureAtlasHolder {
 	private static SlabfishSpriteUploader spriteUploader;
 
 	private SlabfishSpriteUploader(TextureManager textureManager) {
-		super(textureManager, ATLAS_LOCATION, "entity/slabfish");
-	}
-
-	@Override
-	protected Stream<ResourceLocation> getResourcesToLoad() {
-		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-		return resourceManager.listResources("textures/entity/slabfish", file -> file.getPath().endsWith(".png")).keySet().stream().map(location -> new ResourceLocation(location.getNamespace(), location.getPath().substring("textures/entity/slabfish/".length(), location.getPath().length() - 4)));
+		super(textureManager, ATLAS_LOCATION, new ResourceLocation(Environmental.MOD_ID, "slabfish"));
 	}
 
 	@Override

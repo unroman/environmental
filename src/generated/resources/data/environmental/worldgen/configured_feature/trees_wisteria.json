@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "environmental:white_wisteria_bees_002",
+    "features": [
+      {
+        "chance": 0.25,
+        "feature": "environmental:pink_wisteria_bees_002"
+      },
+      {
+        "chance": 0.25,
+        "feature": "environmental:blue_wisteria_bees_002"
+      },
+      {
+        "chance": 0.25,
+        "feature": "environmental:purple_wisteria_bees_002"
+      }
+    ]
+  }
+}

@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,10 +25,7 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingVisibilityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -38,7 +35,7 @@ public class ThiefHoodItem extends ExplorerArmorItem {
 	private static final String NBT_TAG = "ThiefHoodUses";
 
 	public ThiefHoodItem(Properties properties) {
-		super(EquipmentSlot.HEAD, properties);
+		super(ArmorItem.Type.HELMET, properties);
 	}
 
 	@Override
@@ -60,14 +57,14 @@ public class ThiefHoodItem extends ExplorerArmorItem {
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.putAll(super.getDefaultAttributeModifiers(this.getSlot()));
+		builder.putAll(super.getDefaultAttributeModifiers(this.getEquipmentSlot()));
 		UUID uuid = UUID.fromString("1D45B301-E65D-47A2-B63F-6EC5FCAC9316");
 
 		int uses = Math.round(stack.getOrCreateTag().getFloat(NBT_TAG));
 		double increase = 0.15D * getIncreaseForUses(uses);
 
 		builder.put(EnvironmentalAttributes.STEALTH.get(), new AttributeModifier(uuid, "Stealth", increase, AttributeModifier.Operation.ADDITION));
-		return slot == this.slot ? builder.build() : super.getDefaultAttributeModifiers(slot);
+		return slot == this.getEquipmentSlot() ? builder.build() : super.getDefaultAttributeModifiers(slot);
 	}
 
 	@SubscribeEvent

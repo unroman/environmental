@@ -21,5 +21,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "environmental:blocks/hanging_willow_leaves"
 }

@@ -53,7 +53,7 @@ public class SlabfishConditionContext {
 		this.event = event;
 		this.random = new LazyLoadedValue<>(world::getRandom);
 		this.name = new LazyLoadedValue<>(() -> slabfish.getDisplayName().getString().trim());
-		this.pos = new LazyLoadedValue<>(() -> new BlockPos(slabfish.position()));
+		this.pos = new LazyLoadedValue<>(() -> new BlockPos(slabfish.blockPosition()));
 		this.biome = new LazyLoadedValue<>(() -> world.getBiome(this.pos.get()));
 		this.inRaid = new LazyLoadedValue<>(() -> world.getRaidAt(this.pos.get()) != null);
 		this.inBlock = new LazyLoadedValue<>(() -> world.getBlockState(this.pos.get()));

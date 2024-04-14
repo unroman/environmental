@@ -3,16 +3,24 @@
   "criteria": {
     "shear_cattail": {
       "conditions": {
-        "item": {
-          "tag": "forge:shears"
-        },
-        "location": {
-          "block": {
-            "blocks": [
-              "environmental:cattail"
-            ]
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [
+                  "environmental:cattail"
+                ]
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "tag": "forge:shears"
+            }
           }
-        }
+        ]
       },
       "trigger": "minecraft:item_used_on_block"
     }
@@ -36,5 +44,6 @@
     [
       "shear_cattail"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

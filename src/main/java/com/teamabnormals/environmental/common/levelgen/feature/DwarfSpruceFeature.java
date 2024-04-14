@@ -9,6 +9,8 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalNoiseParameter
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
+import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters;
 
 public class DwarfSpruceFeature extends Feature<DwarfSpruceConfiguration> {
 	private volatile boolean initialized;
@@ -31,8 +34,9 @@ public class DwarfSpruceFeature extends Feature<DwarfSpruceConfiguration> {
 		if (!this.initialized) {
 			synchronized (this) {
 				if (!this.initialized) {
-					this.densityNoise = NormalNoise.create(WorldgenRandom.Algorithm.LEGACY.newInstance(context.level().getSeed()).forkPositional().fromHashOf(EnvironmentalNoiseParameters.DWARF_SPRUCE_DENSITY.getKey().location()), EnvironmentalNoiseParameters.DWARF_SPRUCE_DENSITY.get());
-					this.heightNoise = NormalNoise.create(WorldgenRandom.Algorithm.LEGACY.newInstance(context.level().getSeed()).forkPositional().fromHashOf(EnvironmentalNoiseParameters.DWARF_SPRUCE_HEIGHT_NOISE.getKey().location()), EnvironmentalNoiseParameters.DWARF_SPRUCE_HEIGHT_NOISE.get());
+					Registry<NoiseParameters> noise = context.level().registryAccess().registryOrThrow(Registries.NOISE);
+					this.densityNoise = NormalNoise.create(WorldgenRandom.Algorithm.LEGACY.newInstance(context.level().getSeed()).forkPositional().fromHashOf(EnvironmentalNoiseParameters.DWARF_SPRUCE_DENSITY.location()), noise.getOrThrow(EnvironmentalNoiseParameters.DWARF_SPRUCE_DENSITY));
+					this.heightNoise = NormalNoise.create(WorldgenRandom.Algorithm.LEGACY.newInstance(context.level().getSeed()).forkPositional().fromHashOf(EnvironmentalNoiseParameters.DWARF_SPRUCE_HEIGHT_NOISE.location()), noise.getOrThrow(EnvironmentalNoiseParameters.DWARF_SPRUCE_HEIGHT_NOISE));
 					this.initialized = true;
 				}
 			}

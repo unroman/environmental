@@ -3,7 +3,7 @@ package com.teamabnormals.environmental.common.slabfish.condition;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -37,7 +37,7 @@ public class SlabfishInBlockCondition implements SlabfishCondition {
 			throw new JsonSyntaxException("Either 'block' or 'tag' can be present.");
 		if (!json.has("block") && !json.has("tag"))
 			throw new JsonSyntaxException("Either 'block' or 'tag' must be present.");
-		return new SlabfishInBlockCondition(json.has("tag") ? null : ForgeRegistries.BLOCKS.getValue(new ResourceLocation(json.get("block").getAsString())), json.has("tag") ? TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(json.get("tag").getAsString())) : null);
+		return new SlabfishInBlockCondition(json.has("tag") ? null : ForgeRegistries.BLOCKS.getValue(new ResourceLocation(json.get("block").getAsString())), json.has("tag") ? TagKey.create(Registries.BLOCK, new ResourceLocation(json.get("tag").getAsString())) : null);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 public class HibiscusBlockItem extends StandingAndWallBlockItem {
 
 	public HibiscusBlockItem(Block block, Block wallBlock, Properties properties) {
-		super(block, wallBlock, properties);
+		super(block, wallBlock, properties, Direction.DOWN);
 	}
 
 	@Nullable

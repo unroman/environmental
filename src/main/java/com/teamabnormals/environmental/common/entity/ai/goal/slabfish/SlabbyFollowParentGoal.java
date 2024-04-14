@@ -25,7 +25,7 @@ public class SlabbyFollowParentGoal extends Goal {
 		} else if (this.childAnimal.isOrderedToSit()) {
 			return false;
 		} else {
-			List<? extends Slabfish> list = this.childAnimal.level.getEntitiesOfClass(this.childAnimal.getClass(), this.childAnimal.getBoundingBox().inflate(8.0D, 4.0D, 8.0D));
+			List<? extends Slabfish> list = this.childAnimal.level().getEntitiesOfClass(this.childAnimal.getClass(), this.childAnimal.getBoundingBox().inflate(8.0D, 4.0D, 8.0D));
 			Slabfish slabfish = null;
 			double d0 = Double.MAX_VALUE;
 

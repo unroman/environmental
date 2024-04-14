@@ -6,7 +6,12 @@
         "criteria": {
           "environmental:cattail_sprouts": {
             "conditions": {
-              "block": "environmental:cattail_sprout"
+              "location": [
+                {
+                  "block": "environmental:cattail_sprout",
+                  "condition": "minecraft:block_state_property"
+                }
+              ]
             },
             "trigger": "minecraft:placed_block"
           }

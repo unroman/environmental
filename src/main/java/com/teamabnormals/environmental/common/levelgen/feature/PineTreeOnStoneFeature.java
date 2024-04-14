@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.teamabnormals.environmental.core.registry.EnvironmentalFeatures.EnvironmentalConfiguredFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -48,7 +49,7 @@ public class PineTreeOnStoneFeature extends PineTreeFeature {
 					}
 				}
 			} else {
-				EnvironmentalConfiguredFeatures.COARSE_DIRT_ON_STONE.get().place(level, context.chunkGenerator(), random, origin);
+				level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getOrThrow(EnvironmentalConfiguredFeatures.COARSE_DIRT_ON_STONE).place(level, context.chunkGenerator(), random, origin);
 			}
 		}
 		return flag;

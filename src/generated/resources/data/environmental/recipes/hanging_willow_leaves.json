@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "environmental:willow_leaves"
@@ -13,5 +14,6 @@
   "result": {
     "count": 3,
     "item": "environmental:hanging_willow_leaves"
-  }
+  },
+  "show_notification": true
 }

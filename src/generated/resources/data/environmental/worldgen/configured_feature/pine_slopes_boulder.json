@@ -1,0 +1,8 @@
+{
+  "type": "environmental:pine_slopes_boulder",
+  "config": {
+    "state": {
+      "Name": "minecraft:stone"
+    }
+  }
+}

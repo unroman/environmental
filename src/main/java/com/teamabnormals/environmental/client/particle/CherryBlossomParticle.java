@@ -6,8 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -55,7 +53,7 @@ public class CherryBlossomParticle extends TextureSheetParticle {
 			this.oRoll = this.roll;
 
 			if (!this.isInWater) {
-				this.isInWater = this.level.getBlockState(new BlockPos(this.x, this.y, this.z)).getFluidState().is(FluidTags.WATER);
+				this.isInWater = this.level.getBlockState(BlockPos.containing(this.x, this.y, this.z)).getFluidState().is(FluidTags.WATER);
 			} else {
 				this.waterTicks++;
 			}
@@ -81,7 +79,7 @@ public class CherryBlossomParticle extends TextureSheetParticle {
 		public Particle createParticle(SimpleParticleType typeIn, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 			CherryBlossomParticle particle = new CherryBlossomParticle(level, x, y, z);
 			particle.pickSprite(this.spriteSet);
-			if (level.getBrightness(LightLayer.SKY, new BlockPos(x, y, z)) > 8) {
+			if (level.getBrightness(LightLayer.SKY, BlockPos.containing(x, y, z)) > 8) {
 				particle.rain = level.isRaining();
 				particle.thunder = level.isThundering();
 			}

@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:orange_dye_from_tasselflower"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -21,7 +21,7 @@ public class SlabfishNearbyCriterionTrigger extends SimpleCriterionTrigger<Slabf
 		return ID;
 	}
 
-	public SlabfishNearbyCriterionTrigger.Instance createInstance(JsonObject json, EntityPredicate.Composite predicate, DeserializationContext parser) {
+	public SlabfishNearbyCriterionTrigger.Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext parser) {
 		if (!json.has("slabfish") || !json.get("slabfish").isJsonPrimitive() || !json.get("slabfish").getAsJsonPrimitive().isString())
 			throw new JsonSyntaxException("'slabfish' required as string");
 		return new SlabfishNearbyCriterionTrigger.Instance(predicate, new ResourceLocation(json.get("slabfish").getAsString()));
@@ -34,7 +34,7 @@ public class SlabfishNearbyCriterionTrigger extends SimpleCriterionTrigger<Slabf
 	public static class Instance extends AbstractCriterionTriggerInstance {
 		private final ResourceLocation slabfishType;
 
-		public Instance(EntityPredicate.Composite predicate, ResourceLocation slabfishType) {
+		public Instance(ContextAwarePredicate predicate, ResourceLocation slabfishType) {
 			super(SlabfishNearbyCriterionTrigger.ID, predicate);
 			this.slabfishType = slabfishType;
 		}

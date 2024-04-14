@@ -1,14 +1,12 @@
 package com.teamabnormals.environmental.common.block;
 
-import com.teamabnormals.blueprint.common.block.BlueprintFlowerBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -16,7 +14,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 import java.util.function.Supplier;
 
-public class CartwheelBlock extends BlueprintFlowerBlock {
+public class CartwheelBlock extends FlowerBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
 	public CartwheelBlock(Supplier<MobEffect> effect, int effectDuration, Properties properties) {

@@ -40,7 +40,7 @@ public class DeerFrolicGoal extends Goal {
 		if (this.jumpCooldown > 0)
 			--this.jumpCooldown;
 
-		if (this.jumping && this.deer.isOnGround()) {
+		if (this.jumping && this.deer.onGround()) {
 			this.deer.spawnFlower();
 			this.jumpCooldown = Math.max(this.adjustedTickDelay(2), this.jumpCooldown);
 			this.jumping = false;
@@ -55,13 +55,13 @@ public class DeerFrolicGoal extends Goal {
 						this.frolicCooldown = this.adjustedTickDelay(20 + this.deer.getRandom().nextInt(20));
 				}
 			}
-		} else if (this.jumpCooldown <= 0 && this.deer.isOnGround()) {
+		} else if (this.jumpCooldown <= 0 && this.deer.onGround()) {
 			Path path = this.deer.getNavigation().getPath();
 			Vec3 vec3 = path.getNextEntityPos(this.deer);
 			Vec3 vec31 = vec3.subtract(this.deer.position());
 			Vec3 vec32 = vec31.normalize();
 
-			this.deer.level.broadcastEntityEvent(this.deer, (byte) 4);
+			this.deer.level().broadcastEntityEvent(this.deer, (byte) 4);
 			this.deer.setJumping(true);
 			this.deer.setDeltaMovement(this.deer.getDeltaMovement().add(vec32.x * 0.32D, 0.5D, vec32.z * 0.32D));
 			this.resetJumpCooldown();

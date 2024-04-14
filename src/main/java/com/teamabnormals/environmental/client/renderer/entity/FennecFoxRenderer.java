@@ -1,7 +1,7 @@
 package com.teamabnormals.environmental.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teamabnormals.environmental.client.model.FennecFoxModel;
 import com.teamabnormals.environmental.client.renderer.entity.layers.FennecFoxHeldItemLayer;
 import com.teamabnormals.environmental.common.entity.animal.FennecFox;
@@ -24,7 +24,7 @@ public class FennecFoxRenderer extends MobRenderer<FennecFox, FennecFoxModel<Fen
 		super.setupRotations(entity, stack, ageInTicks, rotationYaw, partialTicks);
 		if (entity.isPouncing() || entity.isFaceplanted()) {
 			float f = -Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
-			stack.mulPose(Vector3f.XP.rotationDegrees(f));
+			stack.mulPose(Axis.XP.rotationDegrees(f));
 		}
 
 	}

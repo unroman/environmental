@@ -28,7 +28,7 @@ public class PineconeGolemGrabSaplingGoal extends Goal {
         if (!this.golem.getMainHandItem().isEmpty()) {
             return false;
         } else {
-            List<ItemEntity> list = this.golem.getLevel().getEntitiesOfClass(ItemEntity.class, this.golem.getBoundingBox().inflate(12.0D, 4.0D, 12.0D), this.itemPredicate);
+            List<ItemEntity> list = this.golem.level().getEntitiesOfClass(ItemEntity.class, this.golem.getBoundingBox().inflate(12.0D, 4.0D, 12.0D), this.itemPredicate);
             ItemEntity entity = null;
             double d0 = Double.MAX_VALUE;
 

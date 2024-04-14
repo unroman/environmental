@@ -1,7 +1,7 @@
 package com.teamabnormals.environmental.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teamabnormals.environmental.client.model.KoiModel;
 import com.teamabnormals.environmental.common.entity.animal.koi.Koi;
 import com.teamabnormals.environmental.common.entity.animal.koi.KoiBreed;
@@ -29,10 +29,10 @@ public class KoiRenderer extends MobRenderer<Koi, KoiModel<Koi>> {
 	public void setupRotations(Koi koi, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
 		super.setupRotations(koi, poseStack, ageInTicks, rotationYaw, partialTicks);
 		if (koi.isInWater()) {
-			poseStack.mulPose(Vector3f.XP.rotationDegrees(Mth.lerp(partialTicks, koi.xRotO, koi.getXRot())));
+			poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, koi.xRotO, koi.getXRot())));
 		} else {
 			poseStack.translate(0.2F, 0.1F, 0.0D);
-			poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+			poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
 		}
 	}
 }

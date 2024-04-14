@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:dirt_bricks_from_dirt_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

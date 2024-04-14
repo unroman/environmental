@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:red_dye_from_red_hibiscus"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

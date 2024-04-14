@@ -1,6 +1,8 @@
 package com.teamabnormals.environmental.common.entity.animal.slabfish;
 
-import com.teamabnormals.environmental.common.entity.ai.goal.slabfish.*;
+import com.teamabnormals.environmental.common.entity.ai.goal.slabfish.SlabbyBreedGoal;
+import com.teamabnormals.environmental.common.entity.ai.goal.slabfish.SlabbyFollowParentGoal;
+import com.teamabnormals.environmental.common.entity.ai.goal.slabfish.SlabbyGrabItemGoal;
 import com.teamabnormals.environmental.common.inventory.SlabfishInventory;
 import com.teamabnormals.environmental.common.inventory.SlabfishInventoryMenu;
 import com.teamabnormals.environmental.common.network.message.SOpenSlabfishInventoryMessage;
@@ -63,10 +65,10 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -180,7 +182,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 		ItemStack stack = player.getItemInHand(hand);
 		Item item = stack.getItem();
 
-		SlabfishManager slabfishManager = SlabfishManager.get(this.level);
+		SlabfishManager slabfishManager = SlabfishManager.get(this.level());
 		SlabfishType slabfishType = slabfishManager.getSlabfishType(this.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH);
 
 		if (item == Items.WATER_BUCKET && this.isAlive() && !(this.isTame() && !player.isSecondaryUseActive())) {
@@ -199,11 +201,11 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 
 		if (this.isTame()) {
 			if (this.hasBackpack() && (slabfishType.getCustomBackpack() == null || !slabfishManager.getBackpackType(slabfishType.getCustomBackpack()).isPresent()) && slabfishManager.getBackpackType(stack).isPresent() && !slabfishManager.getBackpackType(stack).orElse(SlabfishManager.BROWN_BACKPACK).getRegistryName().equals(this.getBackpack())) {
-				if (!this.level.isClientSide()) {
+				if (!this.level().isClientSide()) {
 					ItemStack previousBackpack = this.slabfishBackpack.getItem(2);
 
 					if (!previousBackpack.isEmpty()) {
-						Containers.dropItemStack(this.level, this.getX(), this.getY(), this.getZ(), previousBackpack.copy());
+						Containers.dropItemStack(this.level(), this.getX(), this.getY(), this.getZ(), previousBackpack.copy());
 						this.slabfishBackpack.removeItemNoUpdate(2);
 					}
 
@@ -214,10 +216,10 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			}
 
 			if (slabfishManager.getSweaterType(stack).isPresent() && !player.isSecondaryUseActive() && (!this.hasSweater() || !slabfishManager.getSweaterType(stack).orElse(SlabfishManager.EMPTY_SWEATER).getRegistryName().equals(this.getSweater()))) {
-				if (!this.level.isClientSide()) {
+				if (!this.level().isClientSide()) {
 					ItemStack previousSweater = this.slabfishBackpack.getItem(0);
 					if (!previousSweater.isEmpty()) {
-						Containers.dropItemStack(this.level, this.getX(), this.getY(), this.getZ(), previousSweater.copy());
+						Containers.dropItemStack(this.level(), this.getX(), this.getY(), this.getZ(), previousSweater.copy());
 						this.slabfishBackpack.removeItemNoUpdate(0);
 					}
 					this.slabfishBackpack.setItem(0, new ItemStack(item));
@@ -227,7 +229,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			}
 
 			if (stack.is(Tags.Items.CHESTS_WOODEN) && !this.hasBackpack()) {
-				if (!this.level.isClientSide()) {
+				if (!this.level().isClientSide()) {
 					this.slabfishBackpack.setItem(1, new ItemStack(item));
 					this.usePlayerItem(player, hand, stack);
 					if (player instanceof ServerPlayer)
@@ -239,7 +241,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			if (item == Items.SHEARS && this.hasSweater() && !player.isSecondaryUseActive()) {
 				ItemStack previousSweater = this.slabfishBackpack.getItem(0);
 				if (!previousSweater.isEmpty()) {
-					Containers.dropItemStack(this.level, this.getX(), this.getY(), this.getZ(), previousSweater.copy());
+					Containers.dropItemStack(this.level(), this.getX(), this.getY(), this.getZ(), previousSweater.copy());
 					this.slabfishBackpack.removeItemNoUpdate(0);
 				}
 				return InteractionResult.SUCCESS;
@@ -252,22 +254,22 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 
 			if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
 				this.usePlayerItem(player, hand, stack);
-				level.playLocalSound(this.getX(), this.getY(), this.getZ(), EnvironmentalSoundEvents.SLABFISH_EAT.get(), SoundSource.NEUTRAL, 1F, 1F, true);
+				this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), EnvironmentalSoundEvents.SLABFISH_EAT.get(), SoundSource.NEUTRAL, 1F, 1F, true);
 				this.heal(item.getFoodProperties(stack, player).getNutrition());
 				this.particleCloud(ParticleTypes.COMPOSTER);
 				return InteractionResult.SUCCESS;
 			}
 
 			if (Ingredient.of(EnvironmentalItemTags.SLABFISH_SNACKS).test(stack)) {
-				stack.finishUsingItem(this.level, this);
+				stack.finishUsingItem(this.level(), this);
 				this.usePlayerItem(player, hand, stack);
-				level.playLocalSound(this.getX(), this.getY(), this.getZ(), EnvironmentalSoundEvents.SLABFISH_EAT.get(), SoundSource.NEUTRAL, 1F, 1F, true);
+				this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), EnvironmentalSoundEvents.SLABFISH_EAT.get(), SoundSource.NEUTRAL, 1F, 1F, true);
 				return InteractionResult.SUCCESS;
 			}
 
 			if (this.isFood(stack)) {
 				int i = this.getAge();
-				if (!this.level.isClientSide && i == 0 && this.canFallInLove()) {
+				if (!this.level().isClientSide && i == 0 && this.canFallInLove()) {
 					this.usePlayerItem(player, hand, stack);
 					this.setInLove(player);
 					return InteractionResult.SUCCESS;
@@ -276,29 +278,29 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 				if (this.isBaby()) {
 					this.usePlayerItem(player, hand, stack);
 					this.ageUp((int) ((float) (-i / 20) * 0.1F), true);
-					return InteractionResult.sidedSuccess(this.level.isClientSide);
+					return InteractionResult.sidedSuccess(this.level().isClientSide);
 				}
 
-				if (this.level.isClientSide) {
+				if (this.level().isClientSide) {
 					return InteractionResult.CONSUME;
 				}
 			}
 
 			if (!this.isOrderedToSit() && this.isOwnedBy(player) && player.isSecondaryUseActive() && !this.isInWater()) {
 				this.setOwnerUUID(player.getUUID());
-				if (!level.isClientSide())
+				if (!this.level().isClientSide())
 					this.setOrderedToSit(true);
 				return InteractionResult.SUCCESS;
 			}
 
 			if (this.isOrderedToSit() && this.isOwnedBy(player) && player.isSecondaryUseActive()) {
-				if (!level.isClientSide())
+				if (!this.level().isClientSide())
 					this.setOrderedToSit(false);
 				return InteractionResult.SUCCESS;
 			}
 
 			if (!player.isSecondaryUseActive()) {
-				if (!level.isClientSide()) {
+				if (!this.level().isClientSide()) {
 					openGui((ServerPlayer) player);
 				}
 				return InteractionResult.SUCCESS;
@@ -312,9 +314,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			if (this.random.nextInt(3) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
 				this.tame(player);
 				this.setOrderedToSit(true);
-				this.level.broadcastEntityEvent(this, (byte) 7);
+				this.level().broadcastEntityEvent(this, (byte) 7);
 			} else {
-				this.level.broadcastEntityEvent(this, (byte) 6);
+				this.level().broadcastEntityEvent(this, (byte) 6);
 			}
 
 			return InteractionResult.SUCCESS;
@@ -335,34 +337,35 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 		return this.isPartying;
 	}
 
-	public void die(DamageSource cause) {
-		if (ForgeHooks.onLivingDeath(this, cause))
-			return;
-		if (!this.isRemoved() && !this.dead) {
-			Entity entity = cause.getEntity();
-			LivingEntity livingentity = this.getKillCredit();
-			if (this.deathScore >= 0 && livingentity != null) {
-				livingentity.awardKillScore(this, this.deathScore, cause);
-			}
-
-			if (this.isSleeping()) {
-				this.stopSleeping();
-			}
-
-			this.dead = true;
-			this.getCombatTracker().recheckStatus();
-			if (this.level instanceof ServerLevel serverLevel) {
-				if (entity == null || entity.wasKilled(serverLevel, this)) {
-					this.gameEvent(GameEvent.ENTITY_DIE);
-					this.dropAllDeathLoot(cause);
-					this.createWitherRose(livingentity);
-				}
-
-				this.level.broadcastEntityEvent(this, (byte) 3);
-			}
-			this.setPose(Pose.DYING);
-		}
-	}
+	// TODO: Check if removing this was a problem
+//	public void die(DamageSource cause) {
+//		if (ForgeHooks.onLivingDeath(this, cause))
+//			return;
+//		if (!this.isRemoved() && !this.dead) {
+//			Entity entity = cause.getEntity();
+//			LivingEntity livingentity = this.getKillCredit();
+//			if (this.deathScore >= 0 && livingentity != null) {
+//				livingentity.awardKillScore(this, this.deathScore, cause);
+//			}
+//
+//			if (this.isSleeping()) {
+//				this.stopSleeping();
+//			}
+//
+//			this.dead = true;
+//			this.getCombatTracker().recheckStatus();
+//			if (this.level() instanceof ServerLevel serverLevel) {
+//				if (entity == null || entity.killedEntity(serverLevel, this)) {
+//					this.gameEvent(GameEvent.ENTITY_DIE);
+//					this.dropAllDeathLoot(cause);
+//					this.createWitherRose(livingentity);
+//				}
+//
+//				this.level().broadcastEntityEvent(this, (byte) 3);
+//			}
+//			this.setPose(Pose.DYING);
+//		}
+//	}
 
 	@Override
 	public void setRecordPlayingNearby(BlockPos pos, boolean isPartying) {
@@ -374,7 +377,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	public void aiStep() {
 		super.aiStep();
 
-		if (this.jukeboxPosition == null || !this.jukeboxPosition.closerThan(this.blockPosition(), 3.46D) || this.level.getBlockState(jukeboxPosition).getBlock() != Blocks.JUKEBOX) {
+		if (this.jukeboxPosition == null || !this.jukeboxPosition.closerThan(this.blockPosition(), 3.46D) || this.level().getBlockState(jukeboxPosition).getBlock() != Blocks.JUKEBOX) {
 			this.isPartying = false;
 			this.jukeboxPosition = null;
 		}
@@ -389,21 +392,21 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 				double d0 = this.random.nextGaussian() * 0.02D;
 				double d1 = this.random.nextGaussian() * 0.02D;
 				double d2 = this.random.nextGaussian() * 0.02D;
-				this.level.addParticle(ParticleTypes.CLOUD, this.getRandomX(0.5D), this.getY() + 0.2D, this.getRandomZ(0.5D), d0, d1, d2);
+				this.level().addParticle(ParticleTypes.CLOUD, this.getRandomX(0.5D), this.getY() + 0.2D, this.getRandomZ(0.5D), d0, d1, d2);
 			}
 		}
 
 		if (this.random.nextFloat() < 0.1F && this.getSlabfishOverlay() == SlabfishOverlay.MUDDY) {
 			for (int i = 0; i < this.random.nextInt(2) + 1; ++i) {
-				this.doParticle(this.level, this.getX() - (double) 0.3F, this.getX() + (double) 0.3F, this.getZ() - (double) 0.3F, this.getZ() + (double) 0.3F, this.getY(0.5D), new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(EnvironmentalItems.MUD_BALL.get())));
+				this.doParticle(this.level(), this.getX() - (double) 0.3F, this.getX() + (double) 0.3F, this.getZ() - (double) 0.3F, this.getZ() + (double) 0.3F, this.getY(0.5D), new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(EnvironmentalItems.MUD_BALL.get())));
 			}
 		}
 
-		List<Player> playerList = this.level.getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(5.0D, 5.0D, 5.0D));
+		List<Player> playerList = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(5.0D, 5.0D, 5.0D));
 
 		for (Player player : playerList) {
 			if (player instanceof ServerPlayer serverPlayer) {
-				if (!this.level.isClientSide()) {
+				if (!this.level().isClientSide()) {
 					EnvironmentalCriteriaTriggers.SLABFISH.trigger(serverPlayer, this);
 				}
 			}
@@ -414,9 +417,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 
 		this.oFlap = this.wingRotation;
 		this.oFlapSpeed = this.destPos;
-		this.destPos = (float) ((double) this.destPos + (double) (this.onGround ? -1 : 4) * 0.3D);
+		this.destPos = (float) ((double) this.destPos + (double) (this.onGround() ? -1 : 4) * 0.3D);
 		this.destPos = Mth.clamp(this.destPos, 0.0F, 1.0F);
-		if (!this.onGround) {
+		if (!this.onGround()) {
 			if (!this.isInWater() && this.getDeltaMovement().y < 0)
 				this.setDeltaMovement(this.getDeltaMovement().multiply(1, 0.6, 1));
 			if (this.wingRotDelta < 1.0F)
@@ -499,7 +502,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			double d0 = this.random.nextGaussian() * 0.02D;
 			double d1 = this.random.nextGaussian() * 0.02D;
 			double d2 = this.random.nextGaussian() * 0.02D;
-			this.level.addParticle(particle, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+			this.level().addParticle(particle, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
 		}
 	}
 
@@ -571,9 +574,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	@Override
 	public void setCustomName(@Nullable Component name) {
 		super.setCustomName(name);
-		if (!this.level.isClientSide() && name != null && !this.getSlabfishType().equals(SlabfishManager.GHOST)) {
+		if (!this.level().isClientSide() && name != null && !this.getSlabfishType().equals(SlabfishManager.GHOST)) {
 			super.setCustomName(name);
-			SlabfishManager slabfishManager = SlabfishManager.get(this.level);
+			SlabfishManager slabfishManager = SlabfishManager.get(this.level());
 			SlabfishType currentType = slabfishManager.getSlabfishType(this.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH);
 			slabfishManager.getSlabfishType(SlabfishConditionContext.rename(this)).ifPresent(newType -> {
 				if (!currentType.isTradable() && newType.isTradable())
@@ -683,9 +686,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			this.updateSweater();
 			this.updateBackpack();
 		} else {
-			SlabfishManager slabfishManager = SlabfishManager.get(this.level);
-			SlabfishRarity rarity = SlabfishRarity.byChance(this.level.getRandom().nextFloat());
-			Optional<SlabfishType> type = slabfishManager.getRandomSlabfishType(s -> s.isModLoaded() && s.isTradable() && s.getRarity() == rarity, this.level.getRandom());
+			SlabfishManager slabfishManager = SlabfishManager.get(this.level());
+			SlabfishRarity rarity = SlabfishRarity.byChance(this.level().getRandom().nextFloat());
+			Optional<SlabfishType> type = slabfishManager.getRandomSlabfishType(s -> s.isModLoaded() && s.isTradable() && s.getRarity() == rarity, this.level().getRandom());
 
 			this.setSlabfishType(type.orElse(SlabfishManager.DEFAULT_SLABFISH).getRegistryName());
 		}
@@ -726,9 +729,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	// DATA //
 
 	private void updateSweater() {
-		if (!this.level.isClientSide()) {
+		if (!this.level().isClientSide()) {
 			ItemStack sweaterStack = this.slabfishBackpack.getItem(0);
-			SweaterType sweaterType = SlabfishManager.get(this.level).getSweaterType(sweaterStack).orElse(SlabfishManager.EMPTY_SWEATER);
+			SweaterType sweaterType = SlabfishManager.get(this.level()).getSweaterType(sweaterStack).orElse(SlabfishManager.EMPTY_SWEATER);
 			if (!sweaterType.isEmpty()) {
 				this.setSweater(sweaterType.getRegistryName());
 			} else {
@@ -738,8 +741,8 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	}
 
 	private void updateBackpack() {
-		if (!this.level.isClientSide()) {
-			SlabfishManager slabfishManager = SlabfishManager.get(this.level);
+		if (!this.level().isClientSide()) {
+			SlabfishManager slabfishManager = SlabfishManager.get(this.level());
 			SlabfishType slabfishType = slabfishManager.getSlabfishType(this.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH);
 			ResourceLocation backpackType = slabfishType.getCustomBackpack();
 
@@ -749,7 +752,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 					this.spawnAtLocation(this.slabfishBackpack.removeItemNoUpdate(2));
 			} else {
 				ItemStack backpackColorStack = this.slabfishBackpack.getItem(2);
-				this.setBackpack(SlabfishManager.get(this.level).getBackpackType(backpackColorStack).orElse(SlabfishManager.BROWN_BACKPACK).getRegistryName());
+				this.setBackpack(SlabfishManager.get(this.level()).getBackpackType(backpackColorStack).orElse(SlabfishManager.BROWN_BACKPACK).getRegistryName());
 			}
 		}
 	}
@@ -838,7 +841,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 
 	@Override
 	protected void pickUpItem(ItemEntity itemEntity) {
-		if (itemEntity.getThrower() == this.getUUID())
+		if (itemEntity.getOwner() == this)
 			return;
 
 		ItemStack itemstack = itemEntity.getItem();
@@ -897,7 +900,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (this.isAlive() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && itemHandler != null)
+		if (this.isAlive() && capability == ForgeCapabilities.ITEM_HANDLER && itemHandler != null)
 			return itemHandler.cast();
 		return super.getCapability(capability, facing);
 	}

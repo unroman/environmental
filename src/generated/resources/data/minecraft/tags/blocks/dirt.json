@@ -4,11 +4,9 @@
     "environmental:dirt_brick_stairs",
     "environmental:dirt_brick_slab",
     "environmental:dirt_brick_wall",
-    "environmental:dirt_brick_vertical_slab",
     "environmental:dirt_tiles",
     "environmental:dirt_tile_stairs",
     "environmental:dirt_tile_slab",
-    "environmental:dirt_tile_wall",
-    "environmental:dirt_tile_vertical_slab"
+    "environmental:dirt_tile_wall"
   ]
 }

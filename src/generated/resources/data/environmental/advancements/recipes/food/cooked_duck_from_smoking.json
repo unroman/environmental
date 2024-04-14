@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:cooked_duck_from_smoking"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

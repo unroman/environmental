@@ -35,7 +35,7 @@ public class SlabbyBreedGoal extends Goal {
 
 	public SlabbyBreedGoal(Slabfish p_i47306_1_, double p_i47306_2_, Class<? extends Slabfish> p_i47306_4_) {
 		this.animal = p_i47306_1_;
-		this.world = p_i47306_1_.level;
+		this.world = p_i47306_1_.level();
 		this.mateClass = p_i47306_4_;
 		this.moveSpeed = p_i47306_2_;
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));

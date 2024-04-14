@@ -7,24 +7,24 @@ import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.registry.*;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.concurrent.CompletableFuture;
+
 public class EnvironmentalAdvancementModifierProvider extends AdvancementModifierProvider {
 	private static final EntityType<?>[] BREEDABLE_ANIMALS = new EntityType[]{EnvironmentalEntityTypes.SLABFISH.get(), EnvironmentalEntityTypes.DUCK.get(), EnvironmentalEntityTypes.DEER.get(), EnvironmentalEntityTypes.REINDEER.get(), EnvironmentalEntityTypes.YAK.get(), EnvironmentalEntityTypes.TAPIR.get(), EnvironmentalEntityTypes.ZEBRA.get()};
 
-	public EnvironmentalAdvancementModifierProvider(DataGenerator generator) {
-		super(generator, Environmental.MOD_ID);
+	public EnvironmentalAdvancementModifierProvider(PackOutput output, CompletableFuture<Provider> provider) {
+		super(Environmental.MOD_ID, output, provider);
 	}
 
 	@Override
-	protected void registerEntries() {
+	protected void registerEntries(Provider provider) {
 		this.entry("nether/all_effects").selects("nether/all_effects").addModifier(new EffectsChangedModifier("all_effects", false, MobEffectsPredicate.effects().and(MobEffects.HEALTH_BOOST).and(EnvironmentalMobEffects.PANIC.get()).and(EnvironmentalMobEffects.SERENITY.get())));
 		this.entry("nether/all_potions").selects("nether/all_potions").addModifier(new EffectsChangedModifier("all_effects", false, MobEffectsPredicate.effects().and(MobEffects.HEALTH_BOOST)));
 
@@ -44,9 +44,9 @@ public class EnvironmentalAdvancementModifierProvider extends AdvancementModifie
 		this.entry("husbandry/bred_all_animals").selects("husbandry/bred_all_animals").addModifier(breedAllAnimals.requirements(RequirementsStrategy.AND).build());
 
 		CriteriaModifier.Builder adventuringTime = CriteriaModifier.builder(this.modId);
-		EnvironmentalBiomes.HELPER.getDeferredRegister().getEntries().forEach(biome -> {
-			ResourceLocation key = ForgeRegistries.BIOMES.getKey(biome.get());
-			adventuringTime.addCriterion(key.getPath(), PlayerTrigger.TriggerInstance.located(LocationPredicate.inBiome(ResourceKey.create(Registry.BIOME_REGISTRY, key))));
+
+		EnvironmentalBiomes.NATURAL_BIOMES.forEach(biome -> {
+			adventuringTime.addCriterion(biome.location().toString(), PlayerTrigger.TriggerInstance.located(LocationPredicate.inBiome(biome)));
 		});
 		this.entry("adventure/adventuring_time").selects("adventure/adventuring_time").addModifier(adventuringTime.requirements(RequirementsStrategy.AND).build());
 
@@ -57,7 +57,7 @@ public class EnvironmentalAdvancementModifierProvider extends AdvancementModifie
 				.addIndexedRequirements(0, false, "koi_bucket", "slabfish_bucket").build());
 
 		this.entry("husbandry/plant_seed").selects("husbandry/plant_seed").addModifier(CriteriaModifier.builder(this.modId)
-				.addCriterion("cattail_sprouts", PlacedBlockTrigger.TriggerInstance.placedBlock(EnvironmentalBlocks.CATTAIL_SPROUT.get()))
+				.addCriterion("cattail_sprouts", ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(EnvironmentalBlocks.CATTAIL_SPROUT.get()))
 				.addIndexedRequirements(0, false, "cattail_sprouts").build());
 	}
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "environmental:yak_pants"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

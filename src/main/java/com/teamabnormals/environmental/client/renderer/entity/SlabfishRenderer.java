@@ -1,7 +1,7 @@
 package com.teamabnormals.environmental.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teamabnormals.environmental.client.model.SlabfishModel;
 import com.teamabnormals.environmental.client.renderer.entity.layers.BackpackOverlayRenderLayer;
 import com.teamabnormals.environmental.client.renderer.entity.layers.BackpackRenderLayer;
@@ -41,7 +41,7 @@ public class SlabfishRenderer extends MobRenderer<Slabfish, SlabfishModel<Slabfi
 		if (p_230496_3_) {
 			return RenderType.itemEntityTranslucentCull(texture);
 		} else if (p_230496_2_) {
-			return SlabfishManager.get(slabby.level).getSlabfishType(slabby.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH).isTranslucent() ? RenderType.entityTranslucent(texture) : this.model.renderType(texture);
+			return SlabfishManager.get(slabby.level()).getSlabfishType(slabby.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH).isTranslucent() ? RenderType.entityTranslucent(texture) : this.model.renderType(texture);
 		} else {
 			return p_230496_4_ ? RenderType.outline(texture) : null;
 		}
@@ -55,12 +55,12 @@ public class SlabfishRenderer extends MobRenderer<Slabfish, SlabfishModel<Slabfi
 
 	@Override
 	protected void scale(Slabfish slabfish, PoseStack matrixStack, float partialTickTime) {
-		this.model.sprite = SlabfishSpriteUploader.instance().getSprite(SlabfishManager.get(slabfish.level).getSlabfishType(slabfish.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH).getTextureLocation());
+		this.model.sprite = SlabfishSpriteUploader.instance().getSprite(SlabfishManager.get(slabfish.level()).getSlabfishType(slabfish.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH).getTextureLocation());
 		if (slabfish.isInSittingPose() || slabfish.getVehicle() != null)
 			matrixStack.translate(0F, slabfish.isBaby() ? 0.15625F : 0.3125F, 0F);
 		if (slabfish.isInWater()) {
 			matrixStack.translate(0F, -0.35, slabfish.isBaby() ? 0.25F : 0.5F);
-			matrixStack.mulPose(Vector3f.XP.rotation((float) (Math.PI / 2)));
+			matrixStack.mulPose(Axis.XP.rotation((float) (Math.PI / 2)));
 		}
 	}
 }

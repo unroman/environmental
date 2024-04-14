@@ -10,6 +10,7 @@
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
+        "category": "misc",
         "key": {
           "#": {
             "item": "environmental:duck_egg"
@@ -22,7 +23,8 @@
         ],
         "result": {
           "item": "environmental:duck_egg_crate"
-        }
+        },
+        "show_notification": true
       }
     }
   ]

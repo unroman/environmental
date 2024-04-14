@@ -31,7 +31,8 @@
           "recipes": [
             "environmental:wisteria_furnace_boat"
           ]
-        }
+        },
+        "sends_telemetry_event": false
       },
       "conditions": [
         {

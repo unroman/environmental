@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "environmental:cherry_bees_005",
+    "features": [
+      {
+        "chance": 0.05,
+        "feature": "minecraft:oak_bees_002"
+      },
+      {
+        "chance": 0.3,
+        "feature": "environmental:cheerful_cherry_bees_005"
+      },
+      {
+        "chance": 0.3,
+        "feature": "environmental:moody_cherry_bees_005"
+      }
+    ]
+  }
+}

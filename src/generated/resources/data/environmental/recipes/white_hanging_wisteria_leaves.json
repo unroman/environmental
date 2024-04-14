@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "environmental:white_wisteria_leaves"
@@ -13,5 +14,6 @@
   "result": {
     "count": 3,
     "item": "environmental:white_hanging_wisteria_leaves"
-  }
+  },
+  "show_notification": true
 }

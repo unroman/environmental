@@ -28,5 +28,6 @@
     "recipes": [
       "environmental:pine_planks"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

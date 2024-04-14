@@ -2,6 +2,7 @@ package com.teamabnormals.environmental.common.slabfish;
 
 import com.google.gson.*;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -124,7 +125,7 @@ public class BackpackType implements Predicate<ItemStack> {
 
 			Component displayName = jsonObject.has("displayName") ? context.deserialize(jsonObject.get("displayName"), Component.class) : null;
 			Item item = jsonObject.has("item") && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(jsonObject.get("item").getAsString())) ? ForgeRegistries.ITEMS.getValue(new ResourceLocation(jsonObject.get("item").getAsString())) : null;
-			TagKey<Item> tag = jsonObject.has("tag") ? TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(jsonObject.get("tag").getAsString())) : null;
+			TagKey<Item> tag = jsonObject.has("tag") ? TagKey.create(Registries.ITEM, new ResourceLocation(jsonObject.get("tag").getAsString())) : null;
 			Ingredient ingredient = item != null ? Ingredient.of(item) : tag != null ? Ingredient.of(tag) : null;
 
 			return new BackpackType(displayName, ingredient);

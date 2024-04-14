@@ -31,7 +31,8 @@
           "recipes": [
             "environmental:pine_furnace_boat"
           ]
-        }
+        },
+        "sends_telemetry_event": false
       },
       "conditions": [
         {

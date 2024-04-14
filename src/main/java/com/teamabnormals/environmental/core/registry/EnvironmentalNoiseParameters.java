@@ -1,16 +1,27 @@
 package com.teamabnormals.environmental.core.registry;
 
 import com.teamabnormals.environmental.core.Environmental;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters;
 
 public class EnvironmentalNoiseParameters {
-    public static final DeferredRegister<NormalNoise.NoiseParameters> NOISE_PARAMETERS = DeferredRegister.create(Registry.NOISE_REGISTRY, Environmental.MOD_ID);
+	public static final ResourceKey<NoiseParameters> PINE_BARRENS_STONE = createKey("pine_barrens_stone");
+	public static final ResourceKey<NoiseParameters> NOISE_CUP_LICHEN = createKey("noise_cup_lichen");
+	public static final ResourceKey<NoiseParameters> DWARF_SPRUCE_DENSITY = createKey("dwarf_spruce_density");
+	public static final ResourceKey<NoiseParameters> DWARF_SPRUCE_HEIGHT_NOISE = createKey("dwarf_spruce_height_noise");
 
-    public static final RegistryObject<NormalNoise.NoiseParameters> PINE_BARRENS_STONE = NOISE_PARAMETERS.register("pine_barrens_stone", () -> new NormalNoise.NoiseParameters(-4, 1.0D));
-    public static final RegistryObject<NormalNoise.NoiseParameters> NOISE_CUP_LICHEN = NOISE_PARAMETERS.register("noise_cup_lichen", () -> new NormalNoise.NoiseParameters(-7, 1.0D));
-    public static final RegistryObject<NormalNoise.NoiseParameters> DWARF_SPRUCE_DENSITY = NOISE_PARAMETERS.register("dwarf_spruce_density", () -> new NormalNoise.NoiseParameters(-7, 1.0D));
-    public static final RegistryObject<NormalNoise.NoiseParameters> DWARF_SPRUCE_HEIGHT_NOISE = NOISE_PARAMETERS.register("dwarf_spruce_height_noise", () -> new NormalNoise.NoiseParameters(-8, 1.0D, 1.0D));
+	public static void bootstrap(BootstapContext<NoiseParameters> context) {
+		context.register(PINE_BARRENS_STONE, new NormalNoise.NoiseParameters(-4, 1.0D));
+		context.register(NOISE_CUP_LICHEN, new NormalNoise.NoiseParameters(-7, 1.0D));
+		context.register(DWARF_SPRUCE_DENSITY, new NormalNoise.NoiseParameters(-7, 1.0D));
+		context.register(DWARF_SPRUCE_HEIGHT_NOISE, new NormalNoise.NoiseParameters(-8, 1.0D, 1.0D));
+	}
+
+	public static ResourceKey<NoiseParameters> createKey(String name) {
+		return ResourceKey.create(Registries.NOISE, new ResourceLocation(Environmental.MOD_ID, name));
+	}
 }

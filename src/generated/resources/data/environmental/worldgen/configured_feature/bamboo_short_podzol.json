@@ -1,0 +1,6 @@
+{
+  "type": "environmental:short_bamboo",
+  "config": {
+    "probability": 0.2
+  }
+}

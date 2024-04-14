@@ -15,7 +15,7 @@ public class UpgradeGearTrigger extends SimpleCriterionTrigger<TriggerInstance> 
 		return ID;
 	}
 
-	public TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite predicate, DeserializationContext parser) {
+	public TriggerInstance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext parser) {
 		ItemPredicate itempredicate = ItemPredicate.fromJson(json.get("item"));
 		return new TriggerInstance(predicate, itempredicate);
 	}
@@ -27,13 +27,13 @@ public class UpgradeGearTrigger extends SimpleCriterionTrigger<TriggerInstance> 
 	public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 		private final ItemPredicate item;
 
-		public TriggerInstance(EntityPredicate.Composite p_i231560_1_, ItemPredicate item) {
+		public TriggerInstance(ContextAwarePredicate p_i231560_1_, ItemPredicate item) {
 			super(UpgradeGearTrigger.ID, p_i231560_1_);
 			this.item = item;
 		}
 
 		public static TriggerInstance upgradeGear(ItemPredicate.Builder builder) {
-			return new TriggerInstance(EntityPredicate.Composite.ANY, builder.build());
+			return new TriggerInstance(ContextAwarePredicate.ANY, builder.build());
 		}
 
 		@Override

@@ -10,7 +10,7 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,7 +48,7 @@ public class ThrownMudBall extends ThrowableItemProjectile {
 	public void handleEntityEvent(byte id) {
 		if (id == 3) {
 			for (int i = 0; i < 8; ++i) {
-				this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}
@@ -57,7 +57,7 @@ public class ThrownMudBall extends ThrowableItemProjectile {
 	protected void onHit(HitResult result) {
 		if (result.getType() == HitResult.Type.ENTITY) {
 			Entity entity = ((EntityHitResult) result).getEntity();
-			entity.hurt(DamageSource.thrown(this, this.getOwner()), (float) 0);
+			entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float) 0);
 			if (entity instanceof Slabfish slabby) {
 				if (slabby.getSlabfishOverlay() != SlabfishOverlay.MUDDY)
 					slabby.setSlabfishOverlay(SlabfishOverlay.MUDDY);
@@ -70,8 +70,8 @@ public class ThrownMudBall extends ThrowableItemProjectile {
 			}
 		}
 
-		if (!this.level.isClientSide) {
-			this.level.broadcastEntityEvent(this, (byte) 3);
+		if (!this.level().isClientSide) {
+			this.level().broadcastEntityEvent(this, (byte) 3);
 			this.discard();
 		}
 
@@ -88,7 +88,7 @@ public class ThrownMudBall extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

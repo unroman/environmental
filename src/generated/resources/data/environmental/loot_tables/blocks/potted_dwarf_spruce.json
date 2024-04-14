@@ -31,5 +31,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "environmental:blocks/potted_dwarf_spruce"
 }

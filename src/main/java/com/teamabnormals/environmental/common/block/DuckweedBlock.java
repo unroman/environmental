@@ -1,15 +1,11 @@
 package com.teamabnormals.environmental.common.block;
 
-import com.teamabnormals.blueprint.core.util.item.filling.TargetedItemCategoryFiller;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
@@ -22,7 +18,6 @@ import net.minecraftforge.common.PlantType;
 
 public class DuckweedBlock extends BushBlock implements BonemealableBlock {
 	protected static final VoxelShape DUCKWEED_AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 1.5D, 15.0D);
-	private static final TargetedItemCategoryFiller FILLER = new TargetedItemCategoryFiller(() -> Items.LILY_PAD);
 
 	public DuckweedBlock(Block.Properties builder) {
 		super(builder);
@@ -43,7 +38,7 @@ public class DuckweedBlock extends BushBlock implements BonemealableBlock {
 		return PlantType.WATER;
 	}
 
-	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return worldIn.getBlockState(pos.above()).isAir();
 	}
 
@@ -63,10 +58,5 @@ public class DuckweedBlock extends BushBlock implements BonemealableBlock {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		FILLER.fillItem(this.asItem(), group, items);
 	}
 }

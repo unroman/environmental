@@ -1,16 +1,16 @@
 package com.teamabnormals.environmental.common.block;
 
-import com.teamabnormals.blueprint.common.block.wood.BlueprintLeavesBlock;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class CherryLeavesBlock extends BlueprintLeavesBlock {
+public class CherryLeavesBlock extends LeavesBlock {
 
 	public CherryLeavesBlock(Properties properties) {
 		super(properties);
