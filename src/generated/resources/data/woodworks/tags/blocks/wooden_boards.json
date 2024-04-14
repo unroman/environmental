@@ -1,0 +1,8 @@
+{
+  "values": [
+    "environmental:willow_boards",
+    "environmental:pine_boards",
+    "environmental:wisteria_boards",
+    "environmental:plum_boards"
+  ]
+}
