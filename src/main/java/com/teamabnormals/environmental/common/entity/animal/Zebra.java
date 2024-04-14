@@ -50,6 +50,7 @@ import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.IntUnaryOperator;
 import java.util.function.Predicate;
 
 public class Zebra extends AbstractHorse implements NeutralMob {
@@ -73,6 +74,9 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 
 	private float frontKickAnim;
 	private float frontKickAnimO;
+
+	private static final float MIN_DAMAGE = generateAttackDamage(value -> 0);
+	private static final float MAX_DAMAGE = generateAttackDamage(value -> value - 1);
 
 	public Zebra(EntityType<? extends AbstractHorse> entityType, Level level) {
 		super(entityType, level);
@@ -126,7 +130,7 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateMaxHealth(random::nextInt));
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateSpeed(random::nextDouble));
 		this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(generateJumpStrength(random::nextDouble));
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(this.generateRandomAttackDamage(random));
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(generateAttackDamage(random::nextInt));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -452,8 +456,8 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 		}
 	}
 
-	protected double generateRandomAttackDamage(RandomSource random) {
-		return 1.0F + random.nextInt(2) + random.nextInt(2) + random.nextInt(2);
+	protected static float generateAttackDamage(IntUnaryOperator random) {
+		return 1.0F + random.applyAsInt(2) + random.applyAsInt(2) + random.applyAsInt(2);
 	}
 
 	@Override
@@ -630,15 +634,16 @@ public class Zebra extends AbstractHorse implements NeutralMob {
 	}
 
 	@Override
-	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob mob) {
-		return EnvironmentalEntityTypes.ZEBRA.get().create(level);
+	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+		Zebra zebra = EnvironmentalEntityTypes.ZEBRA.get().create(level);
+		this.setOffspringAttributes(otherParent, zebra);
+		return zebra;
 	}
 
 	@Override
-	protected void setOffspringAttributes(AgeableMob parentA, AbstractHorse parentB) {
-		super.setOffspringAttributes(parentA, parentB);
-		double d0 = this.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) + parentA.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) + this.generateRandomAttackDamage(this.random);
-		parentB.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(d0 / 3.0D);
+	protected void setOffspringAttributes(AgeableMob otherParent, AbstractHorse child) {
+		super.setOffspringAttributes(otherParent, child);
+		this.setOffspringAttribute(otherParent, child, Attributes.ATTACK_DAMAGE, MIN_DAMAGE, MAX_DAMAGE);
 	}
 
 	@Override
