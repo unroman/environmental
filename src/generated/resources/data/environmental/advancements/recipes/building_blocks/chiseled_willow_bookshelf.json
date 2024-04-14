@@ -18,7 +18,7 @@
           },
           "has_the_recipe": {
             "conditions": {
-              "recipe": "environmental:acacia_stairs"
+              "recipe": "environmental:chiseled_willow_bookshelf"
             },
             "trigger": "minecraft:recipe_unlocked"
           }
@@ -31,7 +31,7 @@
         ],
         "rewards": {
           "recipes": [
-            "environmental:acacia_stairs"
+            "environmental:chiseled_willow_bookshelf"
           ]
         },
         "sends_telemetry_event": false

@@ -124,7 +124,7 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HANGING_WILLOW_LEAVES.get(), 3).define('#', WILLOW_LEAVES.get()).pattern("#").pattern("#").pattern("#").unlockedBy(getHasName(WILLOW_LEAVES.get()), has(WILLOW_LEAVES.get())).save(consumer);
 		WoodworksRecipeProvider.leafPileRecipes(consumer, WILLOW_LEAVES.get(), WILLOW_LEAF_PILE.get(), Environmental.MOD_ID);
 		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.WILLOW);
-		WoodworksRecipeProvider.baseRecipes(consumer, WILLOW_PLANKS.get(), WILLOW_SLAB.get(), WILLOW_BOARDS.get(), WILLOW_BOOKSHELF.get(), Blocks.ACACIA_STAIRS, WILLOW_LADDER.get(), WILLOW_BEEHIVE.get(), WILLOW_CHEST.get(), TRAPPED_WILLOW_CHEST.get(), Environmental.MOD_ID);
+		WoodworksRecipeProvider.baseRecipes(consumer, WILLOW_PLANKS.get(), WILLOW_SLAB.get(), WILLOW_BOARDS.get(), WILLOW_BOOKSHELF.get(), CHISELED_WILLOW_BOOKSHELF.get(), WILLOW_LADDER.get(), WILLOW_BEEHIVE.get(), WILLOW_CHEST.get(), TRAPPED_WILLOW_CHEST.get(), Environmental.MOD_ID);
 		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.WILLOW_PLANKS_FAMILY, EnvironmentalItemTags.WILLOW_LOGS, WILLOW_BOARDS.get(), WILLOW_LADDER.get(), Environmental.MOD_ID);
 
 		generateRecipes(consumer, EnvironmentalBlockFamilies.PINE_PLANKS_FAMILY);

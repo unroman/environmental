@@ -37,6 +37,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.leavesBlocks(WILLOW_LEAVES, WILLOW_LEAF_PILE);
 		this.crossBlockWithPot(WILLOW_SAPLING, POTTED_WILLOW_SAPLING);
 		this.woodworksBlocks(WILLOW_PLANKS, WILLOW_BOARDS, WILLOW_LADDER, WILLOW_BOOKSHELF, WILLOW_BEEHIVE, WILLOW_CHEST, TRAPPED_WILLOW_CHEST);
+		this.chiseledBookshelfBlock(CHISELED_WILLOW_BOOKSHELF, DEFAULT_BOOKSHELF_POSITIONS);
 
 		this.blockFamily(EnvironmentalBlockFamilies.PINE_PLANKS_FAMILY);
 		this.logBlocks(PINE_LOG, PINE_WOOD);

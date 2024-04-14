@@ -219,6 +219,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(WILLOW_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(TRAPPED_WILLOW_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(WILLOW_BOOKSHELF.get(), (block) -> createSingleItemTableWithSilkTouch(block, Items.BOOK, ConstantValue.exactly(3.0F)));
+			this.dropWhenSilkTouch(CHISELED_WILLOW_BOOKSHELF.get());
 			this.add(WILLOW_LEAVES.get(), (block) -> createLeavesDrops(block, WILLOW_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 			this.add(HANGING_WILLOW_LEAVES.get(), BlockLootSubProvider::createShearsOnlyDrop);
 

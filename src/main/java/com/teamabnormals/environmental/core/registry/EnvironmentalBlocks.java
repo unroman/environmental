@@ -189,6 +189,7 @@ public class EnvironmentalBlocks {
 
 	public static final RegistryObject<Block> WILLOW_BOARDS = HELPER.createFuelBlock("willow_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.WILLOW.planks()), 300);
 	public static final RegistryObject<Block> WILLOW_BOOKSHELF = HELPER.createFuelBlock("willow_bookshelf", () -> new Block(EnvironmentalProperties.WILLOW.bookshelf()), 300);
+	public static final RegistryObject<Block> CHISELED_WILLOW_BOOKSHELF = HELPER.createFuelBlock("chiseled_willow_bookshelf", () -> new ChiseledWillowBookShelfBlock(EnvironmentalProperties.WILLOW.chiseledBookshelf()), 300);
 	public static final RegistryObject<Block> WILLOW_LADDER = HELPER.createFuelBlock("willow_ladder", () -> new LadderBlock(EnvironmentalProperties.WILLOW.ladder()), 300);
 	public static final RegistryObject<Block> WILLOW_BEEHIVE = HELPER.createBlock("willow_beehive", () -> new BlueprintBeehiveBlock(EnvironmentalProperties.WILLOW.beehive()));
 	public static final RegistryObject<Block> WILLOW_LEAF_PILE = HELPER.createBlock("willow_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.WILLOW.leafPile()));

@@ -1,0 +1,6 @@
+{
+  "parent": "environmental:block/chiseled_willow_bookshelf_slot_bottom_mid",
+  "textures": {
+    "texture": "environmental:block/chiseled_willow_bookshelf_empty"
+  }
+}
