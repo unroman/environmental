@@ -262,7 +262,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> POTTED_MOODY_PLUM_SAPLING = HELPER.createBlockNoItem("potted_moody_plum_sapling", () -> new FlowerPotBlock(MOODY_PLUM_SAPLING.get(), PropertyUtil.flowerPot()));
 	public static final RegistryObject<Block> MOODY_PLUM_LEAF_PILE = HELPER.createBlock("moody_plum_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.PLUM.leafPile()));
 
-	public static final RegistryObject<Block> PLUM_CRATE = HELPER.createBlock("plum_crate", () -> new BlueprintDirectionalBlock(Block.Properties.of().mapColor(MapColor.COLOR_RED).strength(1.5F).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> CHERRY_CRATE = HELPER.createBlock("cherry_crate", () -> new BlueprintDirectionalBlock(Block.Properties.of().mapColor(MapColor.COLOR_RED).strength(1.5F).sound(SoundType.WOOD)));
 
 	// Wisteria //
 

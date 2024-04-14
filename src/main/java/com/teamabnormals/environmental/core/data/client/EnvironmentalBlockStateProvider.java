@@ -77,9 +77,20 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.block(CATTAIL_FLUFF_BLOCK);
 		this.cattail(CATTAIL_SPROUT, CATTAIL, CATTAIL_STALK);
 
-		this.directionalBlock(PLUM_CRATE);
+		this.block(BURIED_TRUFFLE);
+		this.block(CHISELED_MUD_BRICKS);
+		this.directionalBlock(CHERRY_CRATE);
+		this.cubeBottomTopBlock(DUCK_EGG_CRATE);
 
+		this.crossBlock(MYCELIUM_SPROUTS);
 		this.cactusBobble(CACTUS_BOBBLE);
+
+		this.crossBlockWithPot(BLUEBELL, POTTED_BLUEBELL);
+		this.crossBlockWithPot(DIANTHUS, POTTED_DIANTHUS);
+		this.crossBlockWithPot(VIOLET, POTTED_VIOLET);
+		this.crossBlockWithPot(TASSELFLOWER, POTTED_TASSELFLOWER);
+		this.crossBlockWithPot(WHITE_LOTUS_FLOWER, POTTED_WHITE_LOTUS_FLOWER);
+		this.crossBlockWithPot(RED_LOTUS_FLOWER, POTTED_RED_LOTUS_FLOWER);
 	}
 
 	public void cubeColumnBlock(RegistryObject<Block> block) {

@@ -16,7 +16,6 @@ import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.flag.FeatureFlags;
@@ -189,7 +188,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(DWARF_SPRUCE_PLANT_CUPRIC_TORCH.get(), (block) -> createDwarfSpruceDrops(block, false));
 
 			this.dropSelf(CATTAIL_FLUFF_BLOCK.get());
-			this.dropSelf(PLUM_CRATE.get());
+			this.dropSelf(CHERRY_CRATE.get());
 			this.dropSelf(DUCK_EGG_CRATE.get());
 			this.dropSelf(YAK_HAIR_BLOCK.get());
 			this.dropSelf(YAK_HAIR_RUG.get());

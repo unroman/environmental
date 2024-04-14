@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "environmental:block/duck_egg_crate"
+    }
+  }
+}

@@ -1,7 +1,6 @@
 package com.teamabnormals.environmental.core.data.server.tags;
 
 import com.teamabnormals.blueprint.core.data.server.tags.BlueprintItemTagsProvider;
-import com.teamabnormals.blueprint.core.other.tags.BlueprintBlockTags;
 import com.teamabnormals.blueprint.core.other.tags.BlueprintItemTags;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBlockTags;
@@ -10,7 +9,6 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -38,7 +36,7 @@ public class EnvironmentalItemTagsProvider extends BlueprintItemTagsProvider {
 		this.copy(EnvironmentalBlockTags.WISTERIA_LOGS, EnvironmentalItemTags.WISTERIA_LOGS);
 		this.copy(EnvironmentalBlockTags.PLUM_LOGS, EnvironmentalItemTags.PLUM_LOGS);
 		this.tag(EnvironmentalItemTags.DUCK_FOOD).add(Items.SEAGRASS, EnvironmentalItems.DUCKWEED.get()).addOptionalTag(new ResourceLocation("forge", "crops/rice"));
-		this.tag(EnvironmentalItemTags.DEER_FOOD).add(Items.SWEET_BERRIES).addTag(EnvironmentalItemTags.FRUITS_PLUM).addOptionalTag(new ResourceLocation("forge", "fruits/strawberry"));
+		this.tag(EnvironmentalItemTags.DEER_FOOD).add(Items.SWEET_BERRIES).addTag(EnvironmentalItemTags.FRUITS_CHERRY).addOptionalTag(new ResourceLocation("forge", "fruits/strawberry"));
 		this.tag(EnvironmentalItemTags.DEER_PLANTABLES).addTag(ItemTags.SMALL_FLOWERS).addTag(ItemTags.TALL_FLOWERS);
 		this.tag(EnvironmentalItemTags.DEER_TEMPT_ITEMS).addTag(EnvironmentalItemTags.DEER_FOOD).addTag(EnvironmentalItemTags.DEER_PLANTABLES).addTag(EnvironmentalItemTags.DEER_FLOWER_ITEMS);
 		this.tag(EnvironmentalItemTags.REINDEER_FOOD).add(EnvironmentalBlocks.CUP_LICHEN.get().asItem(), Items.CARROT);
@@ -77,8 +75,8 @@ public class EnvironmentalItemTagsProvider extends BlueprintItemTagsProvider {
 		this.tag(ItemTags.FISHES).add(KOI.get());
 		this.copy(BlockTags.DIRT, ItemTags.DIRT);
 
-		this.tag(EnvironmentalItemTags.FRUITS).addTag(EnvironmentalItemTags.FRUITS_PLUM);
-		this.tag(EnvironmentalItemTags.FRUITS_PLUM).add(CHERRIES.get());
+		this.tag(EnvironmentalItemTags.FRUITS).addTag(EnvironmentalItemTags.FRUITS_CHERRY);
+		this.tag(EnvironmentalItemTags.FRUITS_CHERRY).add(CHERRIES.get());
 		this.tag(EnvironmentalItemTags.RAW_DUCK).add(DUCK.get());
 		this.tag(EnvironmentalItemTags.COOKED_DUCK).add(COOKED_DUCK.get());
 		this.tag(EnvironmentalItemTags.RAW_VENISON).add(VENISON.get());

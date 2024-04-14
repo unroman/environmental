@@ -12,6 +12,7 @@ public class EnvironmentalItemTags {
 	public static final TagKey<Item> PLUM_LOGS = itemTag("plum_logs");
 
 	public static final TagKey<Item> FRUITS = TagUtil.itemTag("forge", "fruits");
+	public static final TagKey<Item> FRUITS_CHERRY = TagUtil.itemTag("forge", "fruits/cherry");
 	public static final TagKey<Item> FRUITS_PLUM = TagUtil.itemTag("forge", "fruits/plum");
 
 	public static final TagKey<Item> RAW_DUCK = TagUtil.itemTag("forge", "raw_duck");

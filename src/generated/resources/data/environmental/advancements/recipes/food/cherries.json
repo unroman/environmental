@@ -4,12 +4,12 @@
       "advancement": {
         "parent": "minecraft:recipes/root",
         "criteria": {
-          "has_plum_crate": {
+          "has_cherry_crate": {
             "conditions": {
               "items": [
                 {
                   "items": [
-                    "environmental:plum_crate"
+                    "environmental:cherry_crate"
                   ]
                 }
               ]
@@ -25,7 +25,7 @@
         },
         "requirements": [
           [
-            "has_plum_crate",
+            "has_cherry_crate",
             "has_the_recipe"
           ]
         ],

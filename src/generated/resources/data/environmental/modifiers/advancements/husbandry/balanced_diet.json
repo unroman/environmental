@@ -14,6 +14,16 @@
             },
             "trigger": "minecraft:consume_item"
           },
+          "environmental:cherry_pie": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "environmental:cherry_pie"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
           "environmental:cooked_duck": {
             "conditions": {
               "item": {
@@ -54,16 +64,6 @@
             },
             "trigger": "minecraft:consume_item"
           },
-          "environmental:plum_pie": {
-            "conditions": {
-              "item": {
-                "items": [
-                  "environmental:plum_pie"
-                ]
-              }
-            },
-            "trigger": "minecraft:consume_item"
-          },
           "environmental:truffle": {
             "conditions": {
               "item": {
@@ -90,7 +90,7 @@
             "environmental:cherries"
           ],
           [
-            "environmental:plum_pie"
+            "environmental:cherry_pie"
           ],
           [
             "environmental:venison"

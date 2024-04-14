@@ -69,7 +69,7 @@ public class EnvironmentalTrades {
 	public static void onVillagerTradesEvent(VillagerTradesEvent event) {
 		TradeUtil.addVillagerTrades(event, VillagerProfession.FARMER, TradeUtil.APPRENTICE,
 				new BlueprintTrade(1, EnvironmentalItems.CHERRIES.get(), 6, 16, 5),
-				new BlueprintTrade(1, EnvironmentalItems.PLUM_PIE.get(), 6, 12, 5)
+				new BlueprintTrade(1, EnvironmentalItems.CHERRY_PIE.get(), 6, 12, 5)
 		);
 
 		TradeUtil.addVillagerTrades(event, VillagerProfession.MASON, TradeUtil.MASTER,

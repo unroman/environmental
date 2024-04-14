@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/cherry"
+    },
+    {
+      "tag": "forge:fruits/cherry"
+    },
+    {
+      "tag": "forge:fruits/cherry"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "forge:eggs"
+    }
+  ],
+  "result": {
+    "item": "environmental:cherry_pie"
+  }
+}

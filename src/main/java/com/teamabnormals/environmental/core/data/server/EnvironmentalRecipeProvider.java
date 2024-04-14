@@ -60,11 +60,11 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		foodCookingRecipes(consumer, EnvironmentalItems.DUCK.get(), EnvironmentalItems.COOKED_DUCK.get());
 		foodCookingRecipes(consumer, EnvironmentalItems.VENISON.get(), EnvironmentalItems.COOKED_VENISON.get());
 		conditionalNineBlockStorageRecipes(consumer, INCUBATION_LOADED, RecipeCategory.MISC, EnvironmentalItems.DUCK_EGG.get(), RecipeCategory.DECORATIONS, EnvironmentalBlocks.DUCK_EGG_CRATE.get());
-		conditionalNineBlockStorageRecipes(consumer, BERRY_GOOD_LOADED, RecipeCategory.FOOD, EnvironmentalItems.CHERRIES.get(), RecipeCategory.DECORATIONS, EnvironmentalBlocks.PLUM_CRATE.get());
+		conditionalNineBlockStorageRecipes(consumer, BERRY_GOOD_LOADED, RecipeCategory.FOOD, EnvironmentalItems.CHERRIES.get(), RecipeCategory.DECORATIONS, EnvironmentalBlocks.CHERRY_CRATE.get());
 		nineBlockStorageRecipes(consumer, RecipeCategory.MISC, EnvironmentalItems.CATTAIL_FLUFF.get(), RecipeCategory.BUILDING_BLOCKS, EnvironmentalBlocks.CATTAIL_FLUFF_BLOCK.get());
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STRING).requires(EnvironmentalItems.CATTAIL_FLUFF.get(), 7).unlockedBy("has_cattail_seeds", has(EnvironmentalItems.CATTAIL_FLUFF.get())).save(consumer, getModConversionRecipeName(Items.STRING, EnvironmentalItems.CATTAIL_FLUFF.get()));
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, EnvironmentalItems.PLUM_PIE.get()).requires(Ingredient.of(EnvironmentalItemTags.FRUITS_PLUM), 3).requires(Items.SUGAR).requires(Tags.Items.EGGS).unlockedBy("has_plum", has(EnvironmentalItemTags.FRUITS_PLUM)).save(consumer);
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, EnvironmentalItems.CHERRY_PIE.get()).requires(Ingredient.of(EnvironmentalItemTags.FRUITS_CHERRY), 3).requires(Items.SUGAR).requires(Tags.Items.EGGS).unlockedBy("has_plum", has(EnvironmentalItemTags.FRUITS_CHERRY)).save(consumer);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, EnvironmentalBlocks.GRASS_THATCH.get(), 4).define('W', Items.WHEAT).define('G', Blocks.GRASS).pattern("WG").pattern("GW").group("grass_thatch").unlockedBy("has_grass", has(Blocks.GRASS)).save(consumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, EnvironmentalBlocks.GRASS_THATCH.get(), 6).define('W', Items.WHEAT).define('G', Blocks.TALL_GRASS).pattern("WG").pattern("GW").group("grass_thatch").unlockedBy("has_tall_grass", has(Blocks.TALL_GRASS)).save(consumer, getModConversionRecipeName(EnvironmentalBlocks.GRASS_THATCH.get(), Blocks.GRASS));
