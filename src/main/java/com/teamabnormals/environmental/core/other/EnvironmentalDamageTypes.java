@@ -20,7 +20,6 @@ public class EnvironmentalDamageTypes {
 		register(context, RIDING_ZEBRA, "ridingZebra", 0.1F);
 	}
 
-	// TODO: make sure damage is appliedp roperly
 	public static DamageSource ridingZebra(Level level, Entity mount, @Nullable Entity rider) {
 		return level.damageSources().source(RIDING_ZEBRA, mount, rider);
 	}

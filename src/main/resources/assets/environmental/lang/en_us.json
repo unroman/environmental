@@ -311,7 +311,7 @@
   "block.minecraft.banner.environmental.lumberer.red": "Red Lumberer",
   "block.minecraft.banner.environmental.lumberer.white": "White Lumberer",
   "block.minecraft.banner.environmental.lumberer.yellow": "Yellow Lumberer",
-  "death.attack.ridingZebra": "%1$s was slain by %2$s using the hooves of %3$s",
+  "death.attack.environmental.ridingZebra": "%1$s was slain by %2$s using the hooves of %3$s",
   "effect.environmental.panic": "Panic",
   "effect.environmental.serenity": "Serenity",
   "entity.environmental.deer": "Deer",
