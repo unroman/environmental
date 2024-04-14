@@ -54,18 +54,18 @@ public class EnvironmentalCompat {
 
 		DataUtil.registerCompostable(EnvironmentalBlocks.PINECONE.get(), 0.85F);
 
-		DataUtil.registerCompostable(EnvironmentalBlocks.CHERRY_LEAVES.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.CHERRY_SAPLING.get(), 0.30F);
+		DataUtil.registerCompostable(EnvironmentalBlocks.PLUM_LEAVES.get(), 0.30F);
+		DataUtil.registerCompostable(EnvironmentalBlocks.PLUM_SAPLING.get(), 0.30F);
 
-		DataUtil.registerCompostable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAVES.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.CHEERFUL_CHERRY_SAPLING.get(), 0.30F);
+		DataUtil.registerCompostable(EnvironmentalBlocks.CHEERFUL_PLUM_LEAVES.get(), 0.30F);
+		DataUtil.registerCompostable(EnvironmentalBlocks.CHEERFUL_PLUM_SAPLING.get(), 0.30F);
 
-		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_CHERRY_LEAVES.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_CHERRY_SAPLING.get(), 0.30F);
+		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_PLUM_LEAVES.get(), 0.30F);
+		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_PLUM_SAPLING.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalItems.CHERRIES.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalItems.CHERRY_PIE.get(), 1.0F);
-		DataUtil.registerCompostable(EnvironmentalBlocks.CHERRY_CRATE.get(), 1.0F);
+		DataUtil.registerCompostable(EnvironmentalItems.PLUM_PIE.get(), 1.0F);
+		DataUtil.registerCompostable(EnvironmentalBlocks.PLUM_CRATE.get(), 1.0F);
 
 		DataUtil.registerCompostable(EnvironmentalItems.CATTAIL_FLUFF.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.CATTAIL_FLUFF_BLOCK.get(), 1.0F);
@@ -184,27 +184,27 @@ public class EnvironmentalCompat {
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINE_BOARDS.get(), 5, 20);
 		DataUtil.registerFlammable(EnvironmentalBlocks.PINECONE.get(), 5, 20);
 
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_LEAVES.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_LOG.get(), 5, 5);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_WOOD.get(), 5, 5);
-		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_CHERRY_LOG.get(), 5, 5);
-		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_CHERRY_WOOD.get(), 5, 5);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_PLANKS.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_SLAB.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_STAIRS.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_FENCE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_FENCE_GATE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_BOOKSHELF.get(), 30, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_CRATE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_BEEHIVE.get(), 5, 20);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_LEAF_PILE.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHERRY_BOARDS.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_LEAVES.get(), 30, 60);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_LOG.get(), 5, 5);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_WOOD.get(), 5, 5);
+		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_PLUM_LOG.get(), 5, 5);
+		DataUtil.registerFlammable(EnvironmentalBlocks.STRIPPED_PLUM_WOOD.get(), 5, 5);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_PLANKS.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_SLAB.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_STAIRS.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_FENCE.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_FENCE_GATE.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_BOOKSHELF.get(), 30, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_CRATE.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_BEEHIVE.get(), 5, 20);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_LEAF_PILE.get(), 30, 60);
+		DataUtil.registerFlammable(EnvironmentalBlocks.PLUM_BOARDS.get(), 5, 20);
 
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAVES.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_CHERRY_LEAF_PILE.get(), 30, 60);
+		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_PLUM_LEAVES.get(), 30, 60);
+		DataUtil.registerFlammable(EnvironmentalBlocks.CHEERFUL_PLUM_LEAF_PILE.get(), 30, 60);
 
-		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_CHERRY_LEAVES.get(), 30, 60);
-		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_CHERRY_LEAF_PILE.get(), 30, 60);
+		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_PLUM_LEAVES.get(), 30, 60);
+		DataUtil.registerFlammable(EnvironmentalBlocks.MOODY_PLUM_LEAF_PILE.get(), 30, 60);
 
 		DataUtil.registerFlammable(EnvironmentalBlocks.GIANT_TALL_GRASS.get(), 60, 100);
 		DataUtil.registerFlammable(EnvironmentalBlocks.MYCELIUM_SPROUTS.get(), 60, 100);

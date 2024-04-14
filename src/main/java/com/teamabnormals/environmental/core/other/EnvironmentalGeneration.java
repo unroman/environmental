@@ -46,15 +46,15 @@ public class EnvironmentalGeneration {
 
 		if (!valley) {
 			generation.addFeature(Decoration.VEGETAL_DECORATION, PINE_TREES_BLOSSOM_WOODS);
-			generation.addFeature(Decoration.VEGETAL_DECORATION, CHERRY_TREES_BLOSSOM_WOODS);
-			generation.addFeature(Decoration.VEGETAL_DECORATION, FALLEN_CHERRY_LEAVES_BLOSSOM_WOODS);
+			generation.addFeature(Decoration.VEGETAL_DECORATION, PLUM_TREES_BLOSSOM_WOODS);
+			generation.addFeature(Decoration.VEGETAL_DECORATION, FALLEN_PLUM_LEAVES_BLOSSOM_WOODS);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, BAMBOO_BLOSSOM_WOODS);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, BAMBOO_LIGHT_BLOSSOM_WOODS);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, FLOWER_RED_LOTUS);
 		} else {
 			generation.addFeature(Decoration.VEGETAL_DECORATION, PINE_TREES_BLOSSOM_VALLEYS);
-			generation.addFeature(Decoration.VEGETAL_DECORATION, CHERRY_TREES_BLOSSOM_VALLEYS);
-			generation.addFeature(Decoration.VEGETAL_DECORATION, FALLEN_CHERRY_LEAVES_BLOSSOM_VALLEYS);
+			generation.addFeature(Decoration.VEGETAL_DECORATION, PLUM_TREES_BLOSSOM_VALLEYS);
+			generation.addFeature(Decoration.VEGETAL_DECORATION, FALLEN_PLUM_LEAVES_BLOSSOM_VALLEYS);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, BAMBOO_BLOSSOM_VALLEYS);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, BAMBOO_LIGHT_BLOSSOM_VALLEYS);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, FLOWER_WHITE_LOTUS);

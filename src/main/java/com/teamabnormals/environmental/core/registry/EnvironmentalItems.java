@@ -31,7 +31,7 @@ public class EnvironmentalItems {
 	public static final RegistryObject<Item> WANDERER_BOOTS = HELPER.createItem("wanderer_boots", () -> new WandererBootsItem(new Item.Properties().stacksTo(1)));
 
 	public static final RegistryObject<Item> CHERRIES = HELPER.createItem("cherries", () -> new Item(new Item.Properties().food(EnvironmentalFoods.CHERRIES)));
-	public static final RegistryObject<Item> CHERRY_PIE = HELPER.createItem("cherry_pie", () -> new Item(new Item.Properties().food(EnvironmentalFoods.CHERRY_PIE)));
+	public static final RegistryObject<Item> PLUM_PIE = HELPER.createItem("plum_pie", () -> new Item(new Item.Properties().food(EnvironmentalFoods.PLUM_PIE)));
 	public static final RegistryObject<Item> VENISON = HELPER.createItem("venison", () -> new Item(new Item.Properties().food(EnvironmentalFoods.VENISON)));
 	public static final RegistryObject<Item> COOKED_VENISON = HELPER.createItem("cooked_venison", () -> new Item(new Item.Properties().food(EnvironmentalFoods.COOKED_VENISON)));
 
@@ -60,9 +60,9 @@ public class EnvironmentalItems {
 	public static final RegistryObject<Item> WISTERIA_FURNACE_BOAT = HELPER.createItem("wisteria_furnace_boat", ModList.get().isLoaded("boatload") ? EnvironmentalBoatTypes.WISTERIA_FURNACE_BOAT : () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> LARGE_WISTERIA_BOAT = HELPER.createItem("large_wisteria_boat", ModList.get().isLoaded("boatload") ? EnvironmentalBoatTypes.LARGE_WISTERIA_BOAT : () -> new Item(new Item.Properties()));
 
-	public static final Pair<RegistryObject<Item>, RegistryObject<Item>> CHERRY_BOAT = HELPER.createBoatAndChestBoatItem("cherry", EnvironmentalBlocks.CHERRY_PLANKS);
-	public static final RegistryObject<Item> CHERRY_FURNACE_BOAT = HELPER.createItem("cherry_furnace_boat", ModList.get().isLoaded("boatload") ? EnvironmentalBoatTypes.CHERRY_FURNACE_BOAT : () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> LARGE_CHERRY_BOAT = HELPER.createItem("large_cherry_boat", ModList.get().isLoaded("boatload") ? EnvironmentalBoatTypes.LARGE_CHERRY_BOAT : () -> new Item(new Item.Properties()));
+	public static final Pair<RegistryObject<Item>, RegistryObject<Item>> PLUM_BOAT = HELPER.createBoatAndChestBoatItem("plum", EnvironmentalBlocks.PLUM_PLANKS);
+	public static final RegistryObject<Item> PLUM_FURNACE_BOAT = HELPER.createItem("plum_furnace_boat", ModList.get().isLoaded("boatload") ? EnvironmentalBoatTypes.PLUM_FURNACE_BOAT : () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> LARGE_PLUM_BOAT = HELPER.createItem("large_plum_boat", ModList.get().isLoaded("boatload") ? EnvironmentalBoatTypes.LARGE_PLUM_BOAT : () -> new Item(new Item.Properties()));
 
 	public static final RegistryObject<Item> CATTAIL_FLUFF = HELPER.createItem("cattail_fluff", () -> new ItemNameBlockItem(EnvironmentalBlocks.CATTAIL_SPROUT.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUCKWEED = HELPER.createItem("duckweed", () -> new PlaceOnWaterBlockItem(EnvironmentalBlocks.DUCKWEED.get(), new Item.Properties()));
@@ -96,7 +96,7 @@ public class EnvironmentalItems {
 
 	public static final class EnvironmentalFoods {
 		public static final FoodProperties CHERRIES = new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).fast().build();
-		public static final FoodProperties CHERRY_PIE = new FoodProperties.Builder().nutrition(6).saturationMod(0.3F).build();
+		public static final FoodProperties PLUM_PIE = new FoodProperties.Builder().nutrition(6).saturationMod(0.3F).build();
 
 		public static final FoodProperties VENISON = (new FoodProperties.Builder()).nutrition(2).saturationMod(0.3F).meat().build();
 		public static final FoodProperties COOKED_VENISON = (new FoodProperties.Builder()).nutrition(6).saturationMod(0.8F).meat().build();

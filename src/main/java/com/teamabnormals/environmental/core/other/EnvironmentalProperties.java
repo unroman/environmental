@@ -15,17 +15,17 @@ import net.minecraft.world.level.material.MapColor;
 public class EnvironmentalProperties {
 	public static final BlockSetType WILLOW_BLOCK_SET = blockSetType("willow");
 	public static final BlockSetType PINE_BLOCK_SET = blockSetType("pine");
-	public static final BlockSetType CHERRY_BLOCK_SET = blockSetType("cherry");
+	public static final BlockSetType PLUM_BLOCK_SET = blockSetType("plum");
 	public static final BlockSetType WISTERIA_BLOCK_SET = blockSetType("wisteria");
 
 	public static final WoodType WILLOW_WOOD_TYPE = woodSetType(WILLOW_BLOCK_SET);
 	public static final WoodType PINE_WOOD_TYPE = woodSetType(PINE_BLOCK_SET);
-	public static final WoodType CHERRY_WOOD_TYPE = woodSetType(CHERRY_BLOCK_SET);
+	public static final WoodType PLUM_WOOD_TYPE = woodSetType(PLUM_BLOCK_SET);
 	public static final WoodType WISTERIA_WOOD_TYPE = woodSetType(WISTERIA_BLOCK_SET);
 
 	public static final WoodSetProperties WILLOW = WoodSetProperties.builder(MapColor.TERRACOTTA_GREEN, MapColor.WOOD).build();
 	public static final WoodSetProperties PINE = WoodSetProperties.builder(MapColor.TERRACOTTA_LIGHT_GRAY, MapColor.WOOD).build();
-	public static final WoodSetProperties CHERRY = WoodSetProperties.builder(MapColor.TERRACOTTA_RED, MapColor.WOOD).leavesColor(MapColor.COLOR_PINK).build();
+	public static final WoodSetProperties PLUM = WoodSetProperties.builder(MapColor.TERRACOTTA_RED, MapColor.WOOD).leavesColor(MapColor.COLOR_PINK).build();
 	public static final WoodSetProperties WISTERIA = WoodSetProperties.builder(MapColor.TERRACOTTA_WHITE, MapColor.TERRACOTTA_CYAN).leavesColor(MapColor.SNOW).build();
 	public static final WoodSetProperties PINK_WISTERIA = WoodSetProperties.builder(MapColor.TERRACOTTA_WHITE, MapColor.TERRACOTTA_CYAN).leavesColor(MapColor.COLOR_PINK).build();
 	public static final WoodSetProperties BLUE_WISTERIA = WoodSetProperties.builder(MapColor.TERRACOTTA_WHITE, MapColor.TERRACOTTA_CYAN).leavesColor(MapColor.COLOR_LIGHT_BLUE).build();

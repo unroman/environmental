@@ -40,16 +40,16 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.cubeColumnBlock(PINECONE);
 		this.cubeColumnBlock(WAXED_PINECONE, PINECONE);
 
-		this.leavesBlocks(CHEERFUL_CHERRY_LEAVES, CHEERFUL_CHERRY_LEAF_PILE);
-		this.crossBlockWithPot(CHEERFUL_CHERRY_SAPLING, POTTED_CHEERFUL_CHERRY_SAPLING);
+		this.leavesBlocks(CHEERFUL_PLUM_LEAVES, CHEERFUL_PLUM_LEAF_PILE);
+		this.crossBlockWithPot(CHEERFUL_PLUM_SAPLING, POTTED_CHEERFUL_PLUM_SAPLING);
 
-		this.leavesBlocks(MOODY_CHERRY_LEAVES, MOODY_CHERRY_LEAF_PILE);
-		this.crossBlockWithPot(MOODY_CHERRY_SAPLING, POTTED_MOODY_CHERRY_SAPLING);
+		this.leavesBlocks(MOODY_PLUM_LEAVES, MOODY_PLUM_LEAF_PILE);
+		this.crossBlockWithPot(MOODY_PLUM_SAPLING, POTTED_MOODY_PLUM_SAPLING);
 
 		this.block(CATTAIL_FLUFF_BLOCK);
 		this.cattail(CATTAIL_SPROUT, CATTAIL, CATTAIL_STALK);
 
-		this.directionalBlock(CHERRY_CRATE);
+		this.directionalBlock(PLUM_CRATE);
 
 		this.cactusBobble(CACTUS_BOBBLE);
 	}

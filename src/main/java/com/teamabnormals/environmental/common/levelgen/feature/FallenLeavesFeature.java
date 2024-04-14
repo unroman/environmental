@@ -25,7 +25,7 @@ public class FallenLeavesFeature extends Feature<NoneFeatureConfiguration> {
 		BlockPos pos = context.origin();
 
 		float chance = random.nextFloat();
-		BlockState state = (chance < 0.3F ? EnvironmentalBlocks.CHEERFUL_CHERRY_LEAF_PILE.get() : chance < 0.6F ? EnvironmentalBlocks.MOODY_CHERRY_LEAF_PILE.get() : EnvironmentalBlocks.CHERRY_LEAF_PILE.get()).defaultBlockState();
+		BlockState state = (chance < 0.3F ? EnvironmentalBlocks.CHEERFUL_PLUM_LEAF_PILE.get() : chance < 0.6F ? EnvironmentalBlocks.MOODY_PLUM_LEAF_PILE.get() : EnvironmentalBlocks.PLUM_LEAF_PILE.get()).defaultBlockState();
 		int i = 0;
 
 		for (int x = -3; x <= 3; ++x) {
@@ -34,7 +34,7 @@ public class FallenLeavesFeature extends Feature<NoneFeatureConfiguration> {
 					for (int y = -3; y <= 3; ++y) {
 						BlockPos blockpos = pos.offset(x, y, z);
 						BlockState onState = level.getBlockState(blockpos.below());
-						if (random.nextInt(3) > 0 && level.isEmptyBlock(blockpos) && blockpos.getY() < level.getMaxBuildHeight() && (onState.is(BlockTags.DIRT) || onState.is(EnvironmentalBlocks.CHERRY_LOG.get()))) {
+						if (random.nextInt(3) > 0 && level.isEmptyBlock(blockpos) && blockpos.getY() < level.getMaxBuildHeight() && (onState.is(BlockTags.DIRT) || onState.is(EnvironmentalBlocks.PLUM_LOG.get()))) {
 							level.setBlock(blockpos, state
 									.setValue(PipeBlock.UP, false)
 									.setValue(PipeBlock.DOWN, true)

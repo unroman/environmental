@@ -1,7 +1,7 @@
 {
   "values": [
     "minecraft:sweet_berries",
-    "#forge:fruits/cherry",
+    "#forge:fruits/plum",
     {
       "id": "#forge:fruits/strawberry",
       "required": false

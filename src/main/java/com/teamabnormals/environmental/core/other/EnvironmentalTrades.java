@@ -31,9 +31,9 @@ public class EnvironmentalTrades {
 				new BlueprintTrade(1, EnvironmentalItems.DUCKWEED.get(), 2, 6, 1),
 
 				new BlueprintTrade(5, EnvironmentalBlocks.WILLOW_SAPLING.get().asItem(), 1, 8, 1),
-				new BlueprintTrade(5, EnvironmentalBlocks.CHERRY_SAPLING.get().asItem(), 1, 8, 1),
-				new BlueprintTrade(5, EnvironmentalBlocks.CHEERFUL_CHERRY_SAPLING.get().asItem(), 1, 8, 1),
-				new BlueprintTrade(5, EnvironmentalBlocks.MOODY_CHERRY_SAPLING.get().asItem(), 1, 8, 1),
+				new BlueprintTrade(5, EnvironmentalBlocks.PLUM_SAPLING.get().asItem(), 1, 8, 1),
+				new BlueprintTrade(5, EnvironmentalBlocks.CHEERFUL_PLUM_SAPLING.get().asItem(), 1, 8, 1),
+				new BlueprintTrade(5, EnvironmentalBlocks.MOODY_PLUM_SAPLING.get().asItem(), 1, 8, 1),
 				new BlueprintTrade(5, EnvironmentalBlocks.BLUE_WISTERIA_SAPLING.get().asItem(), 1, 8, 1),
 				new BlueprintTrade(5, EnvironmentalBlocks.PINK_WISTERIA_SAPLING.get().asItem(), 1, 8, 1),
 				new BlueprintTrade(5, EnvironmentalBlocks.PURPLE_WISTERIA_SAPLING.get().asItem(), 1, 8, 1),
@@ -69,7 +69,7 @@ public class EnvironmentalTrades {
 	public static void onVillagerTradesEvent(VillagerTradesEvent event) {
 		TradeUtil.addVillagerTrades(event, VillagerProfession.FARMER, TradeUtil.APPRENTICE,
 				new BlueprintTrade(1, EnvironmentalItems.CHERRIES.get(), 6, 16, 5),
-				new BlueprintTrade(1, EnvironmentalItems.CHERRY_PIE.get(), 6, 12, 5)
+				new BlueprintTrade(1, EnvironmentalItems.PLUM_PIE.get(), 6, 12, 5)
 		);
 
 		TradeUtil.addVillagerTrades(event, VillagerProfession.MASON, TradeUtil.MASTER,

@@ -1,6 +1,0 @@
-{
-  "parent": "blueprint:block/template_boards",
-  "textures": {
-    "all": "environmental:block/cherry_boards"
-  }
-}

@@ -1,7 +1,7 @@
 {
   "type": "minecraft:random_selector",
   "config": {
-    "default": "environmental:cherry_bees_0002",
+    "default": "environmental:plum_bees_0002",
     "features": [
       {
         "chance": 0.05,
@@ -9,11 +9,11 @@
       },
       {
         "chance": 0.3,
-        "feature": "environmental:cheerful_cherry_bees_0002"
+        "feature": "environmental:cheerful_plum_bees_0002"
       },
       {
         "chance": 0.3,
-        "feature": "environmental:moody_cherry_bees_0002"
+        "feature": "environmental:moody_plum_bees_0002"
       }
     ]
   }

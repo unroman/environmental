@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "environmental:block/plum_planks",
+        "top": "environmental:block/plum_planks",
+        "side": "environmental:block/plum_planks"
+    }
+}

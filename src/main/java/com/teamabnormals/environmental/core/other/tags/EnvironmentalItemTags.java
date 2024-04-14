@@ -9,10 +9,10 @@ public class EnvironmentalItemTags {
 	public static final TagKey<Item> WILLOW_LOGS = itemTag("willow_logs");
 	public static final TagKey<Item> PINE_LOGS = itemTag("pine_logs");
 	public static final TagKey<Item> WISTERIA_LOGS = itemTag("wisteria_logs");
-	public static final TagKey<Item> CHERRY_LOGS = itemTag("cherry_logs");
+	public static final TagKey<Item> PLUM_LOGS = itemTag("plum_logs");
 
 	public static final TagKey<Item> FRUITS = TagUtil.itemTag("forge", "fruits");
-	public static final TagKey<Item> FRUITS_CHERRY = TagUtil.itemTag("forge", "fruits/cherry");
+	public static final TagKey<Item> FRUITS_PLUM = TagUtil.itemTag("forge", "fruits/plum");
 
 	public static final TagKey<Item> RAW_DUCK = TagUtil.itemTag("forge", "raw_duck");
 	public static final TagKey<Item> RAW_VENISON = TagUtil.itemTag("forge", "raw_venison");

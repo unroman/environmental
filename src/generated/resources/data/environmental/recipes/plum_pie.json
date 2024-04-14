@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/plum"
+    },
+    {
+      "tag": "forge:fruits/plum"
+    },
+    {
+      "tag": "forge:fruits/plum"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "forge:eggs"
+    }
+  ],
+  "result": {
+    "item": "environmental:plum_pie"
+  }
+}

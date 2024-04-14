@@ -20,7 +20,7 @@ public class EnvironmentalBlockTags {
 	public static final TagKey<Block> WILLOW_LOGS = blockTag("willow_logs");
 	public static final TagKey<Block> PINE_LOGS = blockTag("pine_logs");
 	public static final TagKey<Block> WISTERIA_LOGS = blockTag("wisteria_logs");
-	public static final TagKey<Block> CHERRY_LOGS = blockTag("cherry_logs");
+	public static final TagKey<Block> PLUM_LOGS = blockTag("plum_logs");
 
 	private static TagKey<Block> blockTag(String tagName) {
 		return TagUtil.blockTag(Environmental.MOD_ID, tagName);

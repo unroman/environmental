@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/leaves",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "all": "environmental:block/moody_cherry_leaves"
-  }
-}

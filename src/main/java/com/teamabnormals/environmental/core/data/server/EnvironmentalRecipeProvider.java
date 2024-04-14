@@ -60,11 +60,11 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		foodCookingRecipes(consumer, EnvironmentalItems.DUCK.get(), EnvironmentalItems.COOKED_DUCK.get());
 		foodCookingRecipes(consumer, EnvironmentalItems.VENISON.get(), EnvironmentalItems.COOKED_VENISON.get());
 		conditionalNineBlockStorageRecipes(consumer, INCUBATION_LOADED, RecipeCategory.MISC, EnvironmentalItems.DUCK_EGG.get(), RecipeCategory.DECORATIONS, EnvironmentalBlocks.DUCK_EGG_CRATE.get());
-		conditionalNineBlockStorageRecipes(consumer, BERRY_GOOD_LOADED, RecipeCategory.FOOD, EnvironmentalItems.CHERRIES.get(), RecipeCategory.DECORATIONS, EnvironmentalBlocks.CHERRY_CRATE.get());
+		conditionalNineBlockStorageRecipes(consumer, BERRY_GOOD_LOADED, RecipeCategory.FOOD, EnvironmentalItems.CHERRIES.get(), RecipeCategory.DECORATIONS, EnvironmentalBlocks.PLUM_CRATE.get());
 		nineBlockStorageRecipes(consumer, RecipeCategory.MISC, EnvironmentalItems.CATTAIL_FLUFF.get(), RecipeCategory.BUILDING_BLOCKS, EnvironmentalBlocks.CATTAIL_FLUFF_BLOCK.get());
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STRING).requires(EnvironmentalItems.CATTAIL_FLUFF.get(), 7).unlockedBy("has_cattail_seeds", has(EnvironmentalItems.CATTAIL_FLUFF.get())).save(consumer, getModConversionRecipeName(Items.STRING, EnvironmentalItems.CATTAIL_FLUFF.get()));
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, EnvironmentalItems.CHERRY_PIE.get()).requires(Ingredient.of(EnvironmentalItemTags.FRUITS_CHERRY), 3).requires(Items.SUGAR).requires(Tags.Items.EGGS).unlockedBy("has_cherry", has(EnvironmentalItemTags.FRUITS_CHERRY)).save(consumer);
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, EnvironmentalItems.PLUM_PIE.get()).requires(Ingredient.of(EnvironmentalItemTags.FRUITS_PLUM), 3).requires(Items.SUGAR).requires(Tags.Items.EGGS).unlockedBy("has_plum", has(EnvironmentalItemTags.FRUITS_PLUM)).save(consumer);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, EnvironmentalBlocks.GRASS_THATCH.get(), 4).define('W', Items.WHEAT).define('G', Blocks.GRASS).pattern("WG").pattern("GW").group("grass_thatch").unlockedBy("has_grass", has(Blocks.GRASS)).save(consumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, EnvironmentalBlocks.GRASS_THATCH.get(), 6).define('W', Items.WHEAT).define('G', Blocks.TALL_GRASS).pattern("WG").pattern("GW").group("grass_thatch").unlockedBy("has_tall_grass", has(Blocks.TALL_GRASS)).save(consumer, getModConversionRecipeName(EnvironmentalBlocks.GRASS_THATCH.get(), Blocks.GRASS));
@@ -154,16 +154,16 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		WoodworksRecipeProvider.baseRecipes(consumer, WISTERIA_PLANKS.get(), WISTERIA_SLAB.get(), WISTERIA_BOARDS.get(), WISTERIA_BOOKSHELF.get(), Blocks.BAMBOO_STAIRS, WISTERIA_LADDER.get(), WISTERIA_BEEHIVE.get(), WISTERIA_CHEST.get(), TRAPPED_WISTERIA_CHEST.get(), Environmental.MOD_ID);
 		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.WISTERIA_PLANKS_FAMILY, EnvironmentalItemTags.WISTERIA_LOGS, WISTERIA_BOARDS.get(), WISTERIA_LADDER.get(), Environmental.MOD_ID);
 
-		generateRecipes(consumer, EnvironmentalBlockFamilies.CHERRY_PLANKS_FAMILY);
-		planksFromLogs(consumer, EnvironmentalBlocks.CHERRY_PLANKS.get(), EnvironmentalItemTags.CHERRY_LOGS, 4);
-		woodFromLogs(consumer, EnvironmentalBlocks.CHERRY_WOOD.get(), EnvironmentalBlocks.CHERRY_LOG.get());
-		woodFromLogs(consumer, EnvironmentalBlocks.STRIPPED_CHERRY_WOOD.get(), EnvironmentalBlocks.STRIPPED_CHERRY_LOG.get());
-		leafPileRecipes(consumer, EnvironmentalBlocks.CHERRY_LEAVES.get(), EnvironmentalBlocks.CHERRY_LEAF_PILE.get());
-		leafPileRecipes(consumer, EnvironmentalBlocks.CHEERFUL_CHERRY_LEAVES.get(), EnvironmentalBlocks.CHEERFUL_CHERRY_LEAF_PILE.get());
-		leafPileRecipes(consumer, EnvironmentalBlocks.MOODY_CHERRY_LEAVES.get(), EnvironmentalBlocks.MOODY_CHERRY_LEAF_PILE.get());
-		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.CHERRY);
-		WoodworksRecipeProvider.baseRecipes(consumer, CHERRY_PLANKS.get(), CHERRY_SLAB.get(), CHERRY_BOARDS.get(), CHERRY_BOOKSHELF.get(), Blocks.BIRCH_STAIRS, CHERRY_LADDER.get(), CHERRY_BEEHIVE.get(), CHERRY_CHEST.get(), TRAPPED_CHERRY_CHEST.get(), Environmental.MOD_ID);
-		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.CHERRY_PLANKS_FAMILY, EnvironmentalItemTags.CHERRY_LOGS, CHERRY_BOARDS.get(), CHERRY_LADDER.get(), Environmental.MOD_ID);
+		generateRecipes(consumer, EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY);
+		planksFromLogs(consumer, EnvironmentalBlocks.PLUM_PLANKS.get(), EnvironmentalItemTags.PLUM_LOGS, 4);
+		woodFromLogs(consumer, EnvironmentalBlocks.PLUM_WOOD.get(), EnvironmentalBlocks.PLUM_LOG.get());
+		woodFromLogs(consumer, EnvironmentalBlocks.STRIPPED_PLUM_WOOD.get(), EnvironmentalBlocks.STRIPPED_PLUM_LOG.get());
+		leafPileRecipes(consumer, EnvironmentalBlocks.PLUM_LEAVES.get(), EnvironmentalBlocks.PLUM_LEAF_PILE.get());
+		leafPileRecipes(consumer, EnvironmentalBlocks.CHEERFUL_PLUM_LEAVES.get(), EnvironmentalBlocks.CHEERFUL_PLUM_LEAF_PILE.get());
+		leafPileRecipes(consumer, EnvironmentalBlocks.MOODY_PLUM_LEAVES.get(), EnvironmentalBlocks.MOODY_PLUM_LEAF_PILE.get());
+		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.PLUM);
+		WoodworksRecipeProvider.baseRecipes(consumer, PLUM_PLANKS.get(), PLUM_SLAB.get(), PLUM_BOARDS.get(), PLUM_BOOKSHELF.get(), Blocks.BIRCH_STAIRS, PLUM_LADDER.get(), PLUM_BEEHIVE.get(), PLUM_CHEST.get(), TRAPPED_PLUM_CHEST.get(), Environmental.MOD_ID);
+		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY, EnvironmentalItemTags.PLUM_LOGS, PLUM_BOARDS.get(), PLUM_LADDER.get(), Environmental.MOD_ID);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE).define('A', BlueprintItemTags.BUCKETS_MILK).define('B', Items.SUGAR).define('C', Items.WHEAT).define('E', Tags.Items.EGGS).pattern("AAA").pattern("BEB").pattern("CCC").unlockedBy("has_egg", has(Items.EGG)).save(consumer);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.PUMPKIN_PIE).requires(BlueprintItemTags.PUMPKINS).requires(Items.SUGAR).requires(Tags.Items.EGGS).unlockedBy("has_carved_pumpkin", has(Blocks.CARVED_PUMPKIN)).unlockedBy("has_pumpkin", has(BlueprintItemTags.PUMPKINS)).save(consumer);

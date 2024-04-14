@@ -189,7 +189,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(DWARF_SPRUCE_PLANT_CUPRIC_TORCH.get(), (block) -> createDwarfSpruceDrops(block, false));
 
 			this.dropSelf(CATTAIL_FLUFF_BLOCK.get());
-			this.dropSelf(CHERRY_CRATE.get());
+			this.dropSelf(PLUM_CRATE.get());
 			this.dropSelf(DUCK_EGG_CRATE.get());
 			this.dropSelf(YAK_HAIR_BLOCK.get());
 			this.dropSelf(YAK_HAIR_RUG.get());
@@ -247,41 +247,41 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(PINE_BOOKSHELF.get(), (block) -> createSingleItemTableWithSilkTouch(block, Items.BOOK, ConstantValue.exactly(3.0F)));
 			this.add(PINE_LEAVES.get(), (block) -> createLeavesDrops(block, PINE_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
-			this.dropSelf(CHERRY_PLANKS.get());
-			this.dropSelf(CHERRY_LOG.get());
-			this.dropSelf(CHERRY_WOOD.get());
-			this.dropSelf(STRIPPED_CHERRY_LOG.get());
-			this.dropSelf(STRIPPED_CHERRY_WOOD.get());
-			this.dropSelf(CHERRY_SIGNS.getFirst().get());
-			this.dropSelf(CHERRY_PRESSURE_PLATE.get());
-			this.dropSelf(CHERRY_TRAPDOOR.get());
-			this.dropSelf(CHERRY_BUTTON.get());
-			this.dropSelf(CHERRY_STAIRS.get());
-			this.dropSelf(CHERRY_FENCE.get());
-			this.dropSelf(CHERRY_FENCE_GATE.get());
-			this.dropSelf(CHERRY_BOARDS.get());
-			this.dropSelf(CHERRY_LADDER.get());
-			this.add(CHERRY_SLAB.get(), this::createSlabItemTable);
-			this.add(CHERRY_DOOR.get(), this::createDoorTable);
-			this.add(CHERRY_BEEHIVE.get(), BlockLootSubProvider::createBeeHiveDrop);
-			this.add(CHERRY_CHEST.get(), this::createNameableBlockEntityTable);
-			this.add(TRAPPED_CHERRY_CHEST.get(), this::createNameableBlockEntityTable);
-			this.add(CHERRY_BOOKSHELF.get(), (block) -> createSingleItemTableWithSilkTouch(block, Items.BOOK, ConstantValue.exactly(3.0F)));
+			this.dropSelf(PLUM_PLANKS.get());
+			this.dropSelf(PLUM_LOG.get());
+			this.dropSelf(PLUM_WOOD.get());
+			this.dropSelf(STRIPPED_PLUM_LOG.get());
+			this.dropSelf(STRIPPED_PLUM_WOOD.get());
+			this.dropSelf(PLUM_SIGNS.getFirst().get());
+			this.dropSelf(PLUM_PRESSURE_PLATE.get());
+			this.dropSelf(PLUM_TRAPDOOR.get());
+			this.dropSelf(PLUM_BUTTON.get());
+			this.dropSelf(PLUM_STAIRS.get());
+			this.dropSelf(PLUM_FENCE.get());
+			this.dropSelf(PLUM_FENCE_GATE.get());
+			this.dropSelf(PLUM_BOARDS.get());
+			this.dropSelf(PLUM_LADDER.get());
+			this.add(PLUM_SLAB.get(), this::createSlabItemTable);
+			this.add(PLUM_DOOR.get(), this::createDoorTable);
+			this.add(PLUM_BEEHIVE.get(), BlockLootSubProvider::createBeeHiveDrop);
+			this.add(PLUM_CHEST.get(), this::createNameableBlockEntityTable);
+			this.add(TRAPPED_PLUM_CHEST.get(), this::createNameableBlockEntityTable);
+			this.add(PLUM_BOOKSHELF.get(), (block) -> createSingleItemTableWithSilkTouch(block, Items.BOOK, ConstantValue.exactly(3.0F)));
 
-			this.add(CHERRY_LEAVES.get(), (block) -> createCherryLeavesDrops(block, CHERRY_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-			this.add(CHERRY_LEAF_PILE.get(), this::createLeafPileDrops);
-			this.dropSelf(CHERRY_SAPLING.get());
-			this.dropPottedContents(POTTED_CHERRY_SAPLING.get());
+			this.add(PLUM_LEAVES.get(), (block) -> createPlumLeavesDrops(block, PLUM_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+			this.add(PLUM_LEAF_PILE.get(), this::createLeafPileDrops);
+			this.dropSelf(PLUM_SAPLING.get());
+			this.dropPottedContents(POTTED_PLUM_SAPLING.get());
 
-			this.add(CHEERFUL_CHERRY_LEAVES.get(), (block) -> createCherryLeavesDrops(block, CHEERFUL_CHERRY_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-			this.add(CHEERFUL_CHERRY_LEAF_PILE.get(), this::createLeafPileDrops);
-			this.dropSelf(CHEERFUL_CHERRY_SAPLING.get());
-			this.dropPottedContents(POTTED_CHEERFUL_CHERRY_SAPLING.get());
+			this.add(CHEERFUL_PLUM_LEAVES.get(), (block) -> createPlumLeavesDrops(block, CHEERFUL_PLUM_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+			this.add(CHEERFUL_PLUM_LEAF_PILE.get(), this::createLeafPileDrops);
+			this.dropSelf(CHEERFUL_PLUM_SAPLING.get());
+			this.dropPottedContents(POTTED_CHEERFUL_PLUM_SAPLING.get());
 
-			this.add(MOODY_CHERRY_LEAVES.get(), (block) -> createCherryLeavesDrops(block, MOODY_CHERRY_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-			this.add(MOODY_CHERRY_LEAF_PILE.get(), this::createLeafPileDrops);
-			this.dropSelf(MOODY_CHERRY_SAPLING.get());
-			this.dropPottedContents(POTTED_MOODY_CHERRY_SAPLING.get());
+			this.add(MOODY_PLUM_LEAVES.get(), (block) -> createPlumLeavesDrops(block, MOODY_PLUM_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+			this.add(MOODY_PLUM_LEAF_PILE.get(), this::createLeafPileDrops);
+			this.dropSelf(MOODY_PLUM_SAPLING.get());
+			this.dropPottedContents(POTTED_MOODY_PLUM_SAPLING.get());
 
 			this.dropSelf(WISTERIA_PLANKS.get());
 			this.dropSelf(WISTERIA_LOG.get());
@@ -352,7 +352,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			}))));
 		}
 
-		protected LootTable.Builder createCherryLeavesDrops(Block block, Block sapling, float... saplingChances) {
+		protected LootTable.Builder createPlumLeavesDrops(Block block, Block sapling, float... saplingChances) {
 			return createLeavesDrops(block, sapling, saplingChances).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(HAS_NO_SHEARS_OR_SILK_TOUCH).add(applyExplosionDecay(block, LootItem.lootTableItem(EnvironmentalItems.CHERRIES.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.055555557F, 0.0625F, 0.08333334F, 0.25F))));
 		}
 

@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "environmental:block/plum_ladder" },
+        "facing=east":  { "model": "environmental:block/plum_ladder", "y": 90 },
+        "facing=south": { "model": "environmental:block/plum_ladder", "y": 180 },
+        "facing=west":  { "model": "environmental:block/plum_ladder", "y": 270 }
+    }
+}

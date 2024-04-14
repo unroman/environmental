@@ -22,10 +22,10 @@
         "category": "building",
         "key": {
           "#": {
-            "item": "environmental:cherry_planks"
+            "item": "environmental:plum_planks"
           },
           "X": {
-            "item": "environmental:cherry_slab"
+            "item": "environmental:plum_slab"
           }
         },
         "pattern": [

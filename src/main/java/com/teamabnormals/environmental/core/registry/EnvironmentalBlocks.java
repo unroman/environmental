@@ -11,7 +11,7 @@ import com.teamabnormals.blueprint.common.block.thatch.ThatchSlabBlock;
 import com.teamabnormals.blueprint.common.block.thatch.ThatchStairBlock;
 import com.teamabnormals.blueprint.core.util.PropertyUtil;
 import com.teamabnormals.blueprint.core.util.registry.BlockSubRegistryHelper;
-import com.teamabnormals.environmental.common.block.CherryLeavesBlock;
+import com.teamabnormals.environmental.common.block.PlumLeavesBlock;
 import com.teamabnormals.environmental.common.block.*;
 import com.teamabnormals.environmental.common.block.grower.*;
 import com.teamabnormals.environmental.common.levelgen.util.WisteriaColor;
@@ -223,46 +223,46 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> PINECONE = HELPER.createBlock("pinecone", () -> new PineconeBlock(EnvironmentalProperties.PINECONE.randomTicks()));
 	public static final RegistryObject<Block> WAXED_PINECONE = HELPER.createBlock("waxed_pinecone", () -> new WaxedPineconeBlock(EnvironmentalProperties.PINECONE));
 
-	// Cherry //
+	// Plum //
 
-	public static final RegistryObject<Block> STRIPPED_CHERRY_LOG = HELPER.createBlock("stripped_cherry_log", () -> new RotatedPillarBlock(EnvironmentalProperties.CHERRY.log()));
-	public static final RegistryObject<Block> STRIPPED_CHERRY_WOOD = HELPER.createBlock("stripped_cherry_wood", () -> new RotatedPillarBlock(EnvironmentalProperties.CHERRY.log()));
-	public static final RegistryObject<Block> CHERRY_LOG = HELPER.createBlock("cherry_log", () -> new LogBlock(STRIPPED_CHERRY_LOG, EnvironmentalProperties.CHERRY.log()));
-	public static final RegistryObject<Block> CHERRY_WOOD = HELPER.createBlock("cherry_wood", () -> new WoodBlock(STRIPPED_CHERRY_WOOD, EnvironmentalProperties.CHERRY.log()));
-	public static final RegistryObject<Block> CHERRY_PLANKS = HELPER.createBlock("cherry_planks", () -> new Block(EnvironmentalProperties.CHERRY.planks()));
-	public static final RegistryObject<Block> CHERRY_STAIRS = HELPER.createBlock("cherry_stairs", () -> new StairBlock(() -> CHERRY_PLANKS.get().defaultBlockState(), EnvironmentalProperties.CHERRY.planks()));
-	public static final RegistryObject<Block> CHERRY_SLAB = HELPER.createBlock("cherry_slab", () -> new SlabBlock(EnvironmentalProperties.CHERRY.planks()));
-	public static final RegistryObject<Block> CHERRY_PRESSURE_PLATE = HELPER.createBlock("cherry_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, EnvironmentalProperties.CHERRY.pressurePlate(), EnvironmentalProperties.CHERRY_BLOCK_SET));
-	public static final RegistryObject<Block> CHERRY_BUTTON = HELPER.createBlock("cherry_button", () -> new ButtonBlock(EnvironmentalProperties.CHERRY.button(), EnvironmentalProperties.CHERRY_BLOCK_SET, 30, true));
-	public static final RegistryObject<Block> CHERRY_FENCE = HELPER.createFuelBlock("cherry_fence", () -> new FenceBlock(EnvironmentalProperties.CHERRY.planks()), 300);
-	public static final RegistryObject<Block> CHERRY_FENCE_GATE = HELPER.createFuelBlock("cherry_fence_gate", () -> new FenceGateBlock(EnvironmentalProperties.CHERRY.planks(), EnvironmentalProperties.CHERRY_WOOD_TYPE), 300);
-	public static final RegistryObject<Block> CHERRY_DOOR = HELPER.createBlock("cherry_door", () -> new DoorBlock(EnvironmentalProperties.CHERRY.door(), EnvironmentalProperties.CHERRY_BLOCK_SET));
-	public static final RegistryObject<Block> CHERRY_TRAPDOOR = HELPER.createBlock("cherry_trapdoor", () -> new TrapDoorBlock(EnvironmentalProperties.CHERRY.trapdoor(), EnvironmentalProperties.CHERRY_BLOCK_SET));
-	public static final Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> CHERRY_SIGNS = HELPER.createSignBlock("cherry", EnvironmentalProperties.CHERRY_WOOD_TYPE, EnvironmentalProperties.CHERRY.sign());
+	public static final RegistryObject<Block> STRIPPED_PLUM_LOG = HELPER.createBlock("stripped_plum_log", () -> new RotatedPillarBlock(EnvironmentalProperties.PLUM.log()));
+	public static final RegistryObject<Block> STRIPPED_PLUM_WOOD = HELPER.createBlock("stripped_plum_wood", () -> new RotatedPillarBlock(EnvironmentalProperties.PLUM.log()));
+	public static final RegistryObject<Block> PLUM_LOG = HELPER.createBlock("plum_log", () -> new LogBlock(STRIPPED_PLUM_LOG, EnvironmentalProperties.PLUM.log()));
+	public static final RegistryObject<Block> PLUM_WOOD = HELPER.createBlock("plum_wood", () -> new WoodBlock(STRIPPED_PLUM_WOOD, EnvironmentalProperties.PLUM.log()));
+	public static final RegistryObject<Block> PLUM_PLANKS = HELPER.createBlock("plum_planks", () -> new Block(EnvironmentalProperties.PLUM.planks()));
+	public static final RegistryObject<Block> PLUM_STAIRS = HELPER.createBlock("plum_stairs", () -> new StairBlock(() -> PLUM_PLANKS.get().defaultBlockState(), EnvironmentalProperties.PLUM.planks()));
+	public static final RegistryObject<Block> PLUM_SLAB = HELPER.createBlock("plum_slab", () -> new SlabBlock(EnvironmentalProperties.PLUM.planks()));
+	public static final RegistryObject<Block> PLUM_PRESSURE_PLATE = HELPER.createBlock("plum_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, EnvironmentalProperties.PLUM.pressurePlate(), EnvironmentalProperties.PLUM_BLOCK_SET));
+	public static final RegistryObject<Block> PLUM_BUTTON = HELPER.createBlock("plum_button", () -> new ButtonBlock(EnvironmentalProperties.PLUM.button(), EnvironmentalProperties.PLUM_BLOCK_SET, 30, true));
+	public static final RegistryObject<Block> PLUM_FENCE = HELPER.createFuelBlock("plum_fence", () -> new FenceBlock(EnvironmentalProperties.PLUM.planks()), 300);
+	public static final RegistryObject<Block> PLUM_FENCE_GATE = HELPER.createFuelBlock("plum_fence_gate", () -> new FenceGateBlock(EnvironmentalProperties.PLUM.planks(), EnvironmentalProperties.PLUM_WOOD_TYPE), 300);
+	public static final RegistryObject<Block> PLUM_DOOR = HELPER.createBlock("plum_door", () -> new DoorBlock(EnvironmentalProperties.PLUM.door(), EnvironmentalProperties.PLUM_BLOCK_SET));
+	public static final RegistryObject<Block> PLUM_TRAPDOOR = HELPER.createBlock("plum_trapdoor", () -> new TrapDoorBlock(EnvironmentalProperties.PLUM.trapdoor(), EnvironmentalProperties.PLUM_BLOCK_SET));
+	public static final Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> PLUM_SIGNS = HELPER.createSignBlock("plum", EnvironmentalProperties.PLUM_WOOD_TYPE, EnvironmentalProperties.PLUM.sign());
 
-	public static final RegistryObject<Block> CHERRY_BOARDS = HELPER.createFuelBlock("cherry_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.CHERRY.planks()), 300);
-	public static final RegistryObject<Block> CHERRY_BOOKSHELF = HELPER.createFuelBlock("cherry_bookshelf", () -> new Block(EnvironmentalProperties.CHERRY.bookshelf()), 300);
-	public static final RegistryObject<Block> CHERRY_LADDER = HELPER.createFuelBlock("cherry_ladder", () -> new LadderBlock(EnvironmentalProperties.CHERRY.ladder()), 300);
-	public static final RegistryObject<Block> CHERRY_BEEHIVE = HELPER.createBlock("cherry_beehive", () -> new BlueprintBeehiveBlock(EnvironmentalProperties.CHERRY.beehive()));
-	public static final RegistryObject<BlueprintChestBlock> CHERRY_CHEST = HELPER.createChestBlock("cherry", EnvironmentalProperties.CHERRY.chest());
-	public static final RegistryObject<BlueprintTrappedChestBlock> TRAPPED_CHERRY_CHEST = HELPER.createTrappedChestBlockNamed("cherry", EnvironmentalProperties.CHERRY.chest());
+	public static final RegistryObject<Block> PLUM_BOARDS = HELPER.createFuelBlock("plum_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.PLUM.planks()), 300);
+	public static final RegistryObject<Block> PLUM_BOOKSHELF = HELPER.createFuelBlock("plum_bookshelf", () -> new Block(EnvironmentalProperties.PLUM.bookshelf()), 300);
+	public static final RegistryObject<Block> PLUM_LADDER = HELPER.createFuelBlock("plum_ladder", () -> new LadderBlock(EnvironmentalProperties.PLUM.ladder()), 300);
+	public static final RegistryObject<Block> PLUM_BEEHIVE = HELPER.createBlock("plum_beehive", () -> new BlueprintBeehiveBlock(EnvironmentalProperties.PLUM.beehive()));
+	public static final RegistryObject<BlueprintChestBlock> PLUM_CHEST = HELPER.createChestBlock("plum", EnvironmentalProperties.PLUM.chest());
+	public static final RegistryObject<BlueprintTrappedChestBlock> TRAPPED_PLUM_CHEST = HELPER.createTrappedChestBlockNamed("plum", EnvironmentalProperties.PLUM.chest());
 
-	public static final RegistryObject<Block> CHERRY_LEAVES = HELPER.createBlock("cherry_leaves", () -> new CherryLeavesBlock(EnvironmentalProperties.CHERRY.leaves()));
-	public static final RegistryObject<Block> CHERRY_SAPLING = HELPER.createBlock("cherry_sapling", () -> new SaplingBlock(new CherryTreeGrower(), EnvironmentalProperties.CHERRY.sapling()));
-	public static final RegistryObject<Block> POTTED_CHERRY_SAPLING = HELPER.createBlockNoItem("potted_cherry_sapling", () -> new FlowerPotBlock(CHERRY_SAPLING.get(), PropertyUtil.flowerPot()));
-	public static final RegistryObject<Block> CHERRY_LEAF_PILE = HELPER.createBlock("cherry_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.CHERRY.leafPile()));
+	public static final RegistryObject<Block> PLUM_LEAVES = HELPER.createBlock("plum_leaves", () -> new PlumLeavesBlock(EnvironmentalProperties.PLUM.leaves()));
+	public static final RegistryObject<Block> PLUM_SAPLING = HELPER.createBlock("plum_sapling", () -> new SaplingBlock(new PlumTreeGrower(), EnvironmentalProperties.PLUM.sapling()));
+	public static final RegistryObject<Block> POTTED_PLUM_SAPLING = HELPER.createBlockNoItem("potted_plum_sapling", () -> new FlowerPotBlock(PLUM_SAPLING.get(), PropertyUtil.flowerPot()));
+	public static final RegistryObject<Block> PLUM_LEAF_PILE = HELPER.createBlock("plum_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.PLUM.leafPile()));
 
-	public static final RegistryObject<Block> CHEERFUL_CHERRY_LEAVES = HELPER.createBlock("cheerful_cherry_leaves", () -> new CherryLeavesBlock(EnvironmentalProperties.CHERRY.leaves()));
-	public static final RegistryObject<Block> CHEERFUL_CHERRY_SAPLING = HELPER.createBlock("cheerful_cherry_sapling", () -> new SaplingBlock(new CheerfulCherryTreeGrower(), EnvironmentalProperties.CHERRY.sapling()));
-	public static final RegistryObject<Block> POTTED_CHEERFUL_CHERRY_SAPLING = HELPER.createBlockNoItem("potted_cheerful_cherry_sapling", () -> new FlowerPotBlock(CHEERFUL_CHERRY_SAPLING.get(), PropertyUtil.flowerPot()));
-	public static final RegistryObject<Block> CHEERFUL_CHERRY_LEAF_PILE = HELPER.createBlock("cheerful_cherry_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.CHERRY.leafPile()));
+	public static final RegistryObject<Block> CHEERFUL_PLUM_LEAVES = HELPER.createBlock("cheerful_plum_leaves", () -> new PlumLeavesBlock(EnvironmentalProperties.PLUM.leaves()));
+	public static final RegistryObject<Block> CHEERFUL_PLUM_SAPLING = HELPER.createBlock("cheerful_plum_sapling", () -> new SaplingBlock(new CheerfulPlumTreeGrower(), EnvironmentalProperties.PLUM.sapling()));
+	public static final RegistryObject<Block> POTTED_CHEERFUL_PLUM_SAPLING = HELPER.createBlockNoItem("potted_cheerful_plum_sapling", () -> new FlowerPotBlock(CHEERFUL_PLUM_SAPLING.get(), PropertyUtil.flowerPot()));
+	public static final RegistryObject<Block> CHEERFUL_PLUM_LEAF_PILE = HELPER.createBlock("cheerful_plum_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.PLUM.leafPile()));
 
-	public static final RegistryObject<Block> MOODY_CHERRY_LEAVES = HELPER.createBlock("moody_cherry_leaves", () -> new CherryLeavesBlock(EnvironmentalProperties.CHERRY.leaves()));
-	public static final RegistryObject<Block> MOODY_CHERRY_SAPLING = HELPER.createBlock("moody_cherry_sapling", () -> new SaplingBlock(new MoodyCherryTreeGrower(), EnvironmentalProperties.CHERRY.sapling()));
-	public static final RegistryObject<Block> POTTED_MOODY_CHERRY_SAPLING = HELPER.createBlockNoItem("potted_moody_cherry_sapling", () -> new FlowerPotBlock(MOODY_CHERRY_SAPLING.get(), PropertyUtil.flowerPot()));
-	public static final RegistryObject<Block> MOODY_CHERRY_LEAF_PILE = HELPER.createBlock("moody_cherry_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.CHERRY.leafPile()));
+	public static final RegistryObject<Block> MOODY_PLUM_LEAVES = HELPER.createBlock("moody_plum_leaves", () -> new PlumLeavesBlock(EnvironmentalProperties.PLUM.leaves()));
+	public static final RegistryObject<Block> MOODY_PLUM_SAPLING = HELPER.createBlock("moody_plum_sapling", () -> new SaplingBlock(new MoodyPlumTreeGrower(), EnvironmentalProperties.PLUM.sapling()));
+	public static final RegistryObject<Block> POTTED_MOODY_PLUM_SAPLING = HELPER.createBlockNoItem("potted_moody_plum_sapling", () -> new FlowerPotBlock(MOODY_PLUM_SAPLING.get(), PropertyUtil.flowerPot()));
+	public static final RegistryObject<Block> MOODY_PLUM_LEAF_PILE = HELPER.createBlock("moody_plum_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.PLUM.leafPile()));
 
-	public static final RegistryObject<Block> CHERRY_CRATE = HELPER.createBlock("cherry_crate", () -> new BlueprintDirectionalBlock(Block.Properties.of().mapColor(MapColor.COLOR_RED).strength(1.5F).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> PLUM_CRATE = HELPER.createBlock("plum_crate", () -> new BlueprintDirectionalBlock(Block.Properties.of().mapColor(MapColor.COLOR_RED).strength(1.5F).sound(SoundType.WOOD)));
 
 	// Wisteria //
 
