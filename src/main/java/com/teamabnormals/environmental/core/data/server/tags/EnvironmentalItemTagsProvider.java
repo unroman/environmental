@@ -58,6 +58,7 @@ public class EnvironmentalItemTagsProvider extends ItemTagsProvider {
 		this.tag(Tags.Items.ARMORS_CHESTPLATES).add(HEALER_POUCH.get());
 		this.tag(Tags.Items.ARMORS_LEGGINGS).add(ARCHITECT_BELT.get(), YAK_PANTS.get());
 		this.tag(Tags.Items.ARMORS_BOOTS).add(WANDERER_BOOTS.get());
+		this.tag(ItemTags.TRIMMABLE_ARMOR).add(YAK_PANTS.get());
 
 		this.copy(BlockTags.PLANKS, ItemTags.PLANKS);
 		this.copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
