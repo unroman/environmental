@@ -1,8 +1,0 @@
-{
-    "parent": "block/ladder",
-    "ambientocclusion": false,
-    "textures": {
-        "particle": "environmental:block/wisteria_ladder",
-        "texture": "environmental:block/wisteria_ladder"
-    }
-}

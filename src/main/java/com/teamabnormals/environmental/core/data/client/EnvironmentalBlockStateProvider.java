@@ -30,6 +30,13 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.blockFamily(EnvironmentalBlockFamilies.DIRT_BRICK_FAMILY);
 		this.blockFamily(EnvironmentalBlockFamilies.DIRT_TILE_FAMILY);
 
+		this.blockFamily(EnvironmentalBlockFamilies.WILLOW_PLANKS_FAMILY);
+		this.logBlocks(WILLOW_LOG, WILLOW_WOOD);
+		this.logBlocks(STRIPPED_WILLOW_LOG, STRIPPED_WILLOW_WOOD);
+		this.leavesBlocks(WILLOW_LEAVES, WILLOW_LEAF_PILE);
+		this.crossBlockWithPot(WILLOW_SAPLING, POTTED_WILLOW_SAPLING);
+		this.woodworksBlocks(WILLOW_PLANKS, WILLOW_BOARDS, WILLOW_LADDER, WILLOW_BOOKSHELF, WILLOW_BEEHIVE, WILLOW_CHEST, TRAPPED_WILLOW_CHEST);
+
 		this.blockFamily(EnvironmentalBlockFamilies.PINE_PLANKS_FAMILY);
 		this.logBlocks(PINE_LOG, PINE_WOOD);
 		this.logBlocks(STRIPPED_PINE_LOG, STRIPPED_PINE_WOOD);
@@ -39,12 +46,33 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 
 		this.cubeColumnBlock(PINECONE);
 		this.cubeColumnBlock(WAXED_PINECONE, PINECONE);
+		
+		this.blockFamily(EnvironmentalBlockFamilies.WISTERIA_PLANKS_FAMILY);
+		this.logBlocks(WISTERIA_LOG, WISTERIA_WOOD);
+		this.logBlocks(STRIPPED_WISTERIA_LOG, STRIPPED_WISTERIA_WOOD);
+		this.leavesBlocks(WISTERIA_LEAVES, WISTERIA_LEAF_PILE);
+		this.crossBlockWithPot(PINK_WISTERIA_SAPLING, POTTED_PINK_WISTERIA_SAPLING);
+		this.crossBlockWithPot(BLUE_WISTERIA_SAPLING, POTTED_BLUE_WISTERIA_SAPLING);
+		this.crossBlockWithPot(PURPLE_WISTERIA_SAPLING, POTTED_PURPLE_WISTERIA_SAPLING);
+		this.crossBlockWithPot(WHITE_WISTERIA_SAPLING, POTTED_WHITE_WISTERIA_SAPLING);
+		this.woodworksBlocks(WISTERIA_PLANKS, WISTERIA_BOARDS, WISTERIA_LADDER, WISTERIA_BOOKSHELF, WISTERIA_BEEHIVE, WISTERIA_CHEST, TRAPPED_WISTERIA_CHEST);
+		this.leafPileBlock(PINK_WISTERIA_LEAVES, PINK_WISTERIA_LEAF_PILE);
+		this.leafPileBlock(BLUE_WISTERIA_LEAVES, BLUE_WISTERIA_LEAF_PILE);
+		this.leafPileBlock(PURPLE_WISTERIA_LEAVES, PURPLE_WISTERIA_LEAF_PILE);
+		this.leafPileBlock(WHITE_WISTERIA_LEAVES, WHITE_WISTERIA_LEAF_PILE);
 
+		this.blockFamily(EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY);
+		this.logBlocks(PLUM_LOG, PLUM_WOOD);
+		this.logBlocks(STRIPPED_PLUM_LOG, STRIPPED_PLUM_WOOD);
+		this.leavesBlocks(PLUM_LEAVES, PLUM_LEAF_PILE);
 		this.leavesBlocks(CHEERFUL_PLUM_LEAVES, CHEERFUL_PLUM_LEAF_PILE);
-		this.crossBlockWithPot(CHEERFUL_PLUM_SAPLING, POTTED_CHEERFUL_PLUM_SAPLING);
-
 		this.leavesBlocks(MOODY_PLUM_LEAVES, MOODY_PLUM_LEAF_PILE);
+		this.crossBlockWithPot(PLUM_SAPLING, POTTED_PLUM_SAPLING);
+		this.crossBlockWithPot(CHEERFUL_PLUM_SAPLING, POTTED_CHEERFUL_PLUM_SAPLING);
 		this.crossBlockWithPot(MOODY_PLUM_SAPLING, POTTED_MOODY_PLUM_SAPLING);
+		this.woodworksBlocks(PLUM_PLANKS, PLUM_BOARDS, PLUM_LADDER, PLUM_BOOKSHELF, PLUM_BEEHIVE, PLUM_CHEST, TRAPPED_PLUM_CHEST);
+
+		this.leavesBlocks(HIBISCUS_LEAVES, HIBISCUS_LEAF_PILE);
 
 		this.block(CATTAIL_FLUFF_BLOCK);
 		this.cattail(CATTAIL_SPROUT, CATTAIL, CATTAIL_STALK);

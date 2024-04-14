@@ -3,8 +3,8 @@
 	"ambientocclusion": false,
 	"textures": {
 		"particle": "environmental:block/slabfish_effigy",
-		"base": "environmental:block/slabfish_effigy",
-		"slabfish": "environmental:entity/slabfish/type/golem"
+		"base": "environmental:block/slabfish_effigy_base",
+		"slabfish": "environmental:block/slabfish_effigy"
 	},
 	"elements": [
 		{

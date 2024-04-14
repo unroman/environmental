@@ -1,7 +1,0 @@
-{
-  "parent": "blueprint:block/thatch/thatch_vertical_slab",
-  "textures": {
-    "thatch": "environmental:block/cattail_thatch",
-    "extrudes": "environmental:block/cattail_thatch_extrudes"
-  }
-}

@@ -7,6 +7,8 @@ import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
+import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -23,17 +25,27 @@ public class EnvironmentalItemModelProvider extends BlueprintItemModelProvider {
 	@Override
 	protected void registerModels() {
 		this.generatedItem(
+				WILLOW_BOAT.getFirst(), WILLOW_BOAT.getSecond(), WILLOW_FURNACE_BOAT, LARGE_WILLOW_BOAT,
 				PINE_BOAT.getFirst(), PINE_BOAT.getSecond(), PINE_FURNACE_BOAT, LARGE_PINE_BOAT,
-				CATTAIL_FLUFF, EnvironmentalBlocks.CATTAIL
+				WISTERIA_BOAT.getFirst(), WISTERIA_BOAT.getSecond(), WISTERIA_FURNACE_BOAT, LARGE_WISTERIA_BOAT,
+				PLUM_BOAT.getFirst(), PLUM_BOAT.getSecond(), PLUM_FURNACE_BOAT, LARGE_PLUM_BOAT,
+				LUMBERER_BANNER_PATTERN,
+				CATTAIL_FLUFF, EnvironmentalBlocks.CATTAIL,
+				KOI, DUCK_EGG, DUCK, COOKED_DUCK, VENISON, COOKED_VENISON, CHERRIES, MUD_BALL
 		);
+
+		this.spawnEggItem(SLABFISH_SPAWN_EGG, DUCK_SPAWN_EGG, DEER_SPAWN_EGG, REINDEER_SPAWN_EGG, YAK_SPAWN_EGG, KOI_SPAWN_EGG, TAPIR_SPAWN_EGG, ZEBRA_SPAWN_EGG);
 
 		this.koiBuckets();
 	}
 
 	private void koiBuckets() {
+		String path = ForgeRegistries.ITEMS.getKey(EnvironmentalItems.KOI_BUCKET.get()).getPath();
+		ItemModelBuilder model =  this.withExistingParent(path, "item/generated").texture("layer0", new ResourceLocation(this.modid, "item/" + path + "/" + KoiBreed.KOHAKU.name().toLowerCase(Locale.ROOT)));
 		for (KoiBreed breed : KoiBreed.values()) {
-			String path = "item/" + ForgeRegistries.ITEMS.getKey(EnvironmentalItems.KOI_BUCKET.get()).getPath() + "/" + breed.name().toLowerCase(Locale.ROOT);
-			this.withExistingParent(path, "item/generated").texture("layer0", new ResourceLocation(this.modid, path));
+			ResourceLocation name = new ResourceLocation(this.modid, "item/" + path + "/" + breed.name().toLowerCase(Locale.ROOT));
+			model.override().model(new UncheckedModelFile(name)).predicate(new ResourceLocation(this.modid, "variant"), breed.getId());
+			this.withExistingParent(name.getPath(), "item/generated").texture("layer0", name);
 		}
 	}
 }

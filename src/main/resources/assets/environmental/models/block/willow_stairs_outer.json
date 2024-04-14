@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "environmental:block/willow_planks",
-        "top": "environmental:block/willow_planks",
-        "side": "environmental:block/willow_planks"
-    }
-}

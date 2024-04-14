@@ -1,7 +1,0 @@
-{
-  "parent": "blueprint:block/thatch/thatch_vertical_slab",
-  "textures": {
-    "thatch": "environmental:block/duckweed_thatch",
-    "extrudes": "environmental:block/duckweed_thatch_extrudes"
-  }
-}

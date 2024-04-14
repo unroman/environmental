@@ -1,8 +1,0 @@
-{
-    "parent": "block/slab",
-    "textures": {
-        "bottom": "environmental:block/plum_planks",
-        "top": "environmental:block/plum_planks",
-        "side": "environmental:block/plum_planks"
-    }
-}

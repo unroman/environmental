@@ -1,5 +1,5 @@
 {
-  "parent": "blueprint:block/thatch/thatch",
+  "parent": "blueprint:block/template_thatch",
   "textures": {
     "thatch": "environmental:block/cattail_thatch",
     "extrudes": "environmental:block/cattail_thatch_extrudes"

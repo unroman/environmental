@@ -1,8 +1,0 @@
-{
-    "parent": "blueprint:block/vertical_slab",
-    "textures": {
-        "side": "environmental:block/wisteria_planks",
-        "top": "environmental:block/wisteria_planks",
-        "bottom": "environmental:block/wisteria_planks"
-    }
-}
