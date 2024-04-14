@@ -50,7 +50,7 @@ public class SlabfishLoader extends SimpleJsonResourceReloadListener implements 
 	private final Map<ResourceLocation, BackpackType> backpackTypes;
 
 	public SlabfishLoader() {
-		super(GSON, "slabfish");
+		super(GSON, "environmental/slabfish");
 		this.slabfishTypes = new HashMap<>();
 		this.sweaterTypes = new HashMap<>();
 		this.backpackTypes = new HashMap<>();

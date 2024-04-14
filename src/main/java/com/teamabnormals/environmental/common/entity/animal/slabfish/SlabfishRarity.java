@@ -1,16 +1,22 @@
 package com.teamabnormals.environmental.common.entity.animal.slabfish;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.ChatFormatting;
+import net.minecraft.util.StringRepresentable;
+
+import java.util.Locale;
 
 /**
  * <p>Determines the different rarity types for slabfish.</p>
  */
-public enum SlabfishRarity {
+public enum SlabfishRarity implements StringRepresentable {
 	COMMON(ChatFormatting.GRAY, 1.0f),
 	UNCOMMON(ChatFormatting.GREEN, 0.55f),
 	RARE(ChatFormatting.AQUA, 0.15f),
 	EPIC(ChatFormatting.LIGHT_PURPLE, 0.08f),
 	LEGENDARY(ChatFormatting.GOLD, 0.02f);
+
+	public static final Codec<SlabfishRarity> CODEC = StringRepresentable.fromEnum(SlabfishRarity::values);
 
 	private final ChatFormatting color;
 	private final float chance;
@@ -21,7 +27,7 @@ public enum SlabfishRarity {
 	}
 
 	/**
-	 * @return The {@link TextFormatting} that should be used when displaying this rarity
+	 * @return The {@link ChatFormatting} that should be used when displaying this rarity
 	 */
 	public ChatFormatting getFormatting() {
 		return color;
@@ -57,5 +63,10 @@ public enum SlabfishRarity {
 		if (id < 0 || id >= values().length)
 			return COMMON;
 		return values()[id];
+	}
+
+	@Override
+	public String getSerializedName() {
+		return this.name().toLowerCase(Locale.ROOT);
 	}
 }

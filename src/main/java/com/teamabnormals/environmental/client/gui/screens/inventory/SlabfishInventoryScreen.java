@@ -44,7 +44,7 @@ public class SlabfishInventoryScreen extends AbstractContainerScreen<SlabfishInv
 				guiGraphics.blit(SLABFISH_GUI_TEXTURE, i + 7, j + 53, 0, 220, 18, 18);
 		}
 
-		InventoryScreen.renderEntityInInventoryFollowsAngle(guiGraphics, i + 51, j + 60, 32, i + 51 - mouseX, j + 25 - mouseY, this.slabfish);
+		InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, i + 51, j + 60, 32, i + 51 - mouseX, j + 25 - mouseY, this.slabfish);
 	}
 
 	@Override

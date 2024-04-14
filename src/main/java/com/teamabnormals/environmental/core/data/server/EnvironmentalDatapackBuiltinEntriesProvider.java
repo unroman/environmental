@@ -5,6 +5,9 @@ import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalBiomeModifiers;
 import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalBiomeSlices;
 import com.teamabnormals.environmental.core.other.EnvironmentalDamageTypes;
+import com.teamabnormals.environmental.core.other.SlabfishTypeRework.EnvironmentalDataPackRegistries;
+import com.teamabnormals.environmental.core.other.SlabfishTypeRework.EnvironmentalSlabfishSweaters;
+import com.teamabnormals.environmental.core.other.SlabfishTypeRework.EnvironmentalSlabfishTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBiomes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalFeatures.EnvironmentalConfiguredFeatures;
 import com.teamabnormals.environmental.core.registry.EnvironmentalFeatures.EnvironmentalPlacedFeatures;
@@ -28,7 +31,9 @@ public class EnvironmentalDatapackBuiltinEntriesProvider extends DatapackBuiltin
 			.add(Registries.BIOME, EnvironmentalBiomes::bootstrap)
 			.add(Registries.DAMAGE_TYPE, EnvironmentalDamageTypes::bootstrap)
 			.add(BlueprintDataPackRegistries.MODDED_BIOME_SLICES, EnvironmentalBiomeSlices::bootstrap)
-			.add(ForgeRegistries.Keys.BIOME_MODIFIERS, EnvironmentalBiomeModifiers::bootstrap);
+			.add(ForgeRegistries.Keys.BIOME_MODIFIERS, EnvironmentalBiomeModifiers::bootstrap)
+			//.add(EnvironmentalDataPackRegistries.SLABFISH_TYPE, EnvironmentalSlabfishTypes::bootstrap)
+			.add(EnvironmentalDataPackRegistries.SLABFISH_SWEATER, EnvironmentalSlabfishSweaters::bootstrap);
 
 	public EnvironmentalDatapackBuiltinEntriesProvider(PackOutput output, CompletableFuture<Provider> provider) {
 		super(output, provider, BUILDER, Set.of(Environmental.MOD_ID));

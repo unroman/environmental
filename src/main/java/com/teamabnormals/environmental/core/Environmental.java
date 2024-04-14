@@ -18,6 +18,7 @@ import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalC
 import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalLootModifierProvider;
 import com.teamabnormals.environmental.core.data.server.tags.*;
 import com.teamabnormals.environmental.core.other.*;
+import com.teamabnormals.environmental.core.other.SlabfishTypeRework.EnvironmentalDataPackRegistries;
 import com.teamabnormals.environmental.core.registry.*;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -83,6 +84,8 @@ public class Environmental {
 		EnvironmentalBannerPatterns.BANNER_PATTERNS.register(bus);
 
 		MinecraftForge.EVENT_BUS.register(this);
+
+		bus.addListener(EnvironmentalDataPackRegistries::registerRegistries);
 
 		bus.addListener(this::commonSetup);
 		bus.addListener(this::clientSetup);
