@@ -49,14 +49,14 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 
 		this.tag(EnvironmentalBiomes.PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
-				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
+				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO, BiomeTags.HAS_TRAIL_RUINS,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_CONIFEROUS,
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
 		this.tag(EnvironmentalBiomes.SNOWY_PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
-				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
+				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO, BiomeTags.HAS_TRAIL_RUINS,
 				BiomeTags.SPAWNS_COLD_VARIANT_FROGS,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_SNOWY, Tags.Biomes.IS_CONIFEROUS,
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
@@ -64,14 +64,14 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 
 		this.tag(EnvironmentalBiomes.OLD_GROWTH_PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
-				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
+				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO, BiomeTags.HAS_TRAIL_RUINS,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_CONIFEROUS, Tags.Biomes.IS_DENSE_OVERWORLD, Tags.Biomes.IS_RARE,
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
 		);
 
 		this.tag(EnvironmentalBiomes.SNOWY_OLD_GROWTH_PINE_BARRENS,
 				BiomeTags.IS_OVERWORLD, BiomeTags.IS_TAIGA,
-				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO,
+				BiomeTags.HAS_MINESHAFT, BiomeTags.STRONGHOLD_BIASED_TO, BiomeTags.HAS_TRAIL_RUINS,
 				BiomeTags.SPAWNS_COLD_VARIANT_FROGS,
 				Tags.Biomes.IS_COLD_OVERWORLD, Tags.Biomes.IS_SNOWY, Tags.Biomes.IS_CONIFEROUS, Tags.Biomes.IS_DENSE_OVERWORLD, Tags.Biomes.IS_RARE,
 				EnvironmentalBiomeTags.IS_PINE_BARRENS, EnvironmentalBiomeTags.HAS_LOG_CABIN
