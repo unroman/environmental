@@ -33,6 +33,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.blockFamily(EnvironmentalBlockFamilies.WILLOW_PLANKS_FAMILY);
 		this.logBlocks(WILLOW_LOG, WILLOW_WOOD);
 		this.logBlocks(STRIPPED_WILLOW_LOG, STRIPPED_WILLOW_WOOD);
+		this.hangingSignBlocks(STRIPPED_WILLOW_LOG, WILLOW_HANGING_SIGNS);
 		this.leavesBlocks(WILLOW_LEAVES, WILLOW_LEAF_PILE);
 		this.crossBlockWithPot(WILLOW_SAPLING, POTTED_WILLOW_SAPLING);
 		this.woodworksBlocks(WILLOW_PLANKS, WILLOW_BOARDS, WILLOW_LADDER, WILLOW_BOOKSHELF, WILLOW_BEEHIVE, WILLOW_CHEST, TRAPPED_WILLOW_CHEST);

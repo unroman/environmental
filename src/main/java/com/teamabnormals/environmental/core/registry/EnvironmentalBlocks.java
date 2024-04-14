@@ -4,7 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import com.teamabnormals.blueprint.common.block.*;
 import com.teamabnormals.blueprint.common.block.chest.BlueprintChestBlock;
 import com.teamabnormals.blueprint.common.block.chest.BlueprintTrappedChestBlock;
+import com.teamabnormals.blueprint.common.block.sign.BlueprintCeilingHangingSignBlock;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintStandingSignBlock;
+import com.teamabnormals.blueprint.common.block.sign.BlueprintWallHangingSignBlock;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintWallSignBlock;
 import com.teamabnormals.blueprint.common.block.thatch.ThatchBlock;
 import com.teamabnormals.blueprint.common.block.thatch.ThatchSlabBlock;
@@ -183,6 +185,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> WILLOW_DOOR = HELPER.createBlock("willow_door", () -> new DoorBlock(EnvironmentalProperties.WILLOW.door(), EnvironmentalProperties.WILLOW_BLOCK_SET));
 	public static final RegistryObject<Block> WILLOW_TRAPDOOR = HELPER.createBlock("willow_trapdoor", () -> new TrapDoorBlock(EnvironmentalProperties.WILLOW.trapdoor(), EnvironmentalProperties.WILLOW_BLOCK_SET));
 	public static final Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> WILLOW_SIGNS = HELPER.createSignBlock("willow", EnvironmentalProperties.WILLOW_WOOD_TYPE, EnvironmentalProperties.WILLOW.sign());
+	public static final Pair<RegistryObject<BlueprintCeilingHangingSignBlock>, RegistryObject<BlueprintWallHangingSignBlock>> WILLOW_HANGING_SIGNS = HELPER.createHangingSignBlock("willow", EnvironmentalProperties.WILLOW_WOOD_TYPE, EnvironmentalProperties.WILLOW.hangingSign());
 
 	public static final RegistryObject<Block> WILLOW_BOARDS = HELPER.createFuelBlock("willow_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.WILLOW.planks()), 300);
 	public static final RegistryObject<Block> WILLOW_BOOKSHELF = HELPER.createFuelBlock("willow_bookshelf", () -> new Block(EnvironmentalProperties.WILLOW.bookshelf()), 300);

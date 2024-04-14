@@ -201,6 +201,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.dropSelf(STRIPPED_WILLOW_LOG.get());
 			this.dropSelf(STRIPPED_WILLOW_WOOD.get());
 			this.dropSelf(WILLOW_SIGNS.getFirst().get());
+			this.dropSelf(WILLOW_HANGING_SIGNS.getFirst().get());
 			this.dropSelf(WILLOW_PRESSURE_PLATE.get());
 			this.dropSelf(WILLOW_TRAPDOOR.get());
 			this.dropSelf(WILLOW_BUTTON.get());
