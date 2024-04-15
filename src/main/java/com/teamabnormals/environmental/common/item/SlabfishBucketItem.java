@@ -6,6 +6,7 @@ import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +49,7 @@ public class SlabfishBucketItem extends MobBucketItem {
 				Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(worldIn);
 
 				SlabfishType slabfishType = registry.get(LOCATION_CACHE.computeIfAbsent(tag.getString("SlabfishType"), ResourceLocation::new));
-				if (!registry.getKey(slabfishType).equals(SlabfishManager.SWAMP))
+				if (!registry.getKey(slabfishType).equals(EnvironmentalSlabfishTypes.SWAMP.location()))
 					tooltip.add(slabfishType.displayName().copy().withStyle(ChatFormatting.ITALIC, SlabfishType.RARITIES.get(slabfishType.getRarity(worldIn)).getSecond()));
 			}
 			if (tag.contains("Age", Tag.TAG_ANY_NUMERIC) && tag.getInt("Age") < 0) {

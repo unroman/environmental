@@ -7,6 +7,7 @@ import com.teamabnormals.environmental.common.network.message.SSyncBackpackTypeM
 import com.teamabnormals.environmental.common.network.message.SSyncSweaterTypeMessage;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
@@ -109,7 +110,7 @@ public class SlabfishLoader extends SimpleJsonResourceReloadListener implements 
 
 	@Override
 	public Optional<SlabfishType> getSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, SlabfishConditionContext context) {
-		return registry.stream().filter(slabfishType -> !registry.getKey(slabfishType).equals(SlabfishManager.SWAMP) && predicate.test(slabfishType) && slabfishType.test(context)).max(Comparator.comparingInt(SlabfishType::priority));
+		return registry.stream().filter(slabfishType -> !registry.getKey(slabfishType).equals(EnvironmentalSlabfishTypes.SWAMP.location()) && predicate.test(slabfishType) && slabfishType.test(context)).max(Comparator.comparingInt(SlabfishType::priority));
 	}
 
 	@Override

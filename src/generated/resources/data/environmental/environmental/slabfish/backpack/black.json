@@ -2,5 +2,6 @@
   "displayName": {
     "translate": "slabfish.backpack.environmental.black"
   },
-  "tag": "forge:dyes/black"
+  "tag": "forge:dyes/black",
+  "texture": "environmental:backpack/black"
 }

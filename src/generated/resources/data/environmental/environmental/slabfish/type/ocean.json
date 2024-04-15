@@ -14,5 +14,6 @@
   ],
   "displayName": {
     "translate": "slabfish.type.environmental.ocean"
-  }
+  },
+  "texture": "environmental:type/ocean"
 }

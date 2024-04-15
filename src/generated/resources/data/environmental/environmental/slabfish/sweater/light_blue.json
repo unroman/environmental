@@ -2,5 +2,6 @@
   "displayName": {
     "translate": "slabfish.sweater.environmental.light_blue"
   },
-  "item": "minecraft:light_blue_wool"
+  "item": "minecraft:light_blue_wool",
+  "texture": "environmental:sweater/light_blue"
 }

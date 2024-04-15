@@ -2,5 +2,6 @@
   "displayName": {
     "translate": "slabfish.backpack.environmental.pink"
   },
-  "tag": "forge:dyes/pink"
+  "tag": "forge:dyes/pink",
+  "texture": "environmental:backpack/pink"
 }

@@ -2,5 +2,6 @@
   "displayName": {
     "translate": "slabfish.sweater.environmental.pink"
   },
-  "item": "minecraft:pink_wool"
+  "item": "minecraft:pink_wool",
+  "texture": "environmental:sweater/pink"
 }

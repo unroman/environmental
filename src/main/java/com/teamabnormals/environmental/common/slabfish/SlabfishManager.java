@@ -19,8 +19,6 @@ import java.util.function.Predicate;
  * @author Ocelot
  */
 public interface SlabfishManager {
-	ResourceLocation SWAMP = new ResourceLocation(Environmental.MOD_ID, "swamp");
-
 	/**
 	 * The default sweater that exists if there are no other sweater types to choose from.
 	 */
@@ -30,11 +28,6 @@ public interface SlabfishManager {
 	 * The default backpack that exists if there are no other backpack types to choose from.
 	 */
 	BackpackType BROWN_BACKPACK = new BackpackType(null, Ingredient.EMPTY).setRegistryName(new ResourceLocation(Environmental.MOD_ID, "brown"));
-
-	/**
-	 * The id for the ghost slabfish. Used for custom functionality.
-	 */
-	ResourceLocation GHOST = new ResourceLocation(Environmental.MOD_ID, "ghost");
 
 	/**
 	 * Fetches the slabfish manager for the specified side.

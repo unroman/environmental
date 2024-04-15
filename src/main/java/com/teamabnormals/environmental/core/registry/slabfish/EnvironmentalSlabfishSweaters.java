@@ -16,7 +16,10 @@ public class EnvironmentalSlabfishSweaters {
 	public static void bootstrap(BootstapContext<SlabfishCosmeticEntry> context) {
 		for (DyeColor color : DyeColor.values()) {
 			ResourceKey<SlabfishCosmeticEntry> key = createKey(color.getName());
-			context.register(key, SlabfishCosmeticEntry.create(Component.translatable(Util.makeDescriptionId("slabfish.sweater", key.location())), Sheep.ITEM_BY_DYE.get(color).asItem()));
+			context.register(key, SlabfishCosmeticEntry.create(
+					Component.translatable(Util.makeDescriptionId("slabfish.sweater", key.location())),
+					new ResourceLocation(key.location().getNamespace(), "sweater/" + key.location().getPath()),
+					Sheep.ITEM_BY_DYE.get(color).asItem()));
 		}
 	}
 

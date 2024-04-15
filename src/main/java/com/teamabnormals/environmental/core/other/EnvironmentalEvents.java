@@ -18,6 +18,7 @@ import com.teamabnormals.environmental.core.other.tags.EnvironmentalBlockTags;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
 import com.teamabnormals.environmental.core.registry.*;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -342,7 +343,7 @@ public class EnvironmentalEvents {
 
 		if (entity instanceof Slabfish slabfish) {
 			if (world.getBiome(entity.blockPosition()).is(Biomes.SOUL_SAND_VALLEY)) {
-				if (!slabfish.getSlabfishType().equals(SlabfishManager.GHOST)) {
+				if (!slabfish.getSlabfishType().equals(EnvironmentalSlabfishTypes.GHOST.location())) {
 					if (world.isClientSide()) {
 						for (int i = 0; i < 7; ++i) {
 							double d0 = rand.nextGaussian() * 0.02D;
@@ -364,7 +365,7 @@ public class EnvironmentalEvents {
 						ghost.moveTo(slabfish.getX(), slabfish.getY(), slabfish.getZ(), slabfish.getYRot(), slabfish.getXRot());
 						ghost.setNoAi(slabfish.isNoAi());
 						ghost.setAge(slabfish.getAge());
-						ghost.setSlabfishType(SlabfishManager.GHOST);
+						ghost.setSlabfishType(EnvironmentalSlabfishTypes.GHOST.location());
 						ghost.setSecondsOnFire(0);
 						if (slabfish.hasCustomName()) {
 							ghost.setCustomName(entity.getCustomName());

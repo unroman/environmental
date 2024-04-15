@@ -2,5 +2,6 @@
   "displayName": {
     "translate": "slabfish.backpack.environmental.lime"
   },
-  "tag": "forge:dyes/lime"
+  "tag": "forge:dyes/lime",
+  "texture": "environmental:backpack/lime"
 }

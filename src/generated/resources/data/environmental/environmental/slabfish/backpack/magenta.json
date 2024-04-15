@@ -2,5 +2,6 @@
   "displayName": {
     "translate": "slabfish.backpack.environmental.magenta"
   },
-  "tag": "forge:dyes/magenta"
+  "tag": "forge:dyes/magenta",
+  "texture": "environmental:backpack/magenta"
 }

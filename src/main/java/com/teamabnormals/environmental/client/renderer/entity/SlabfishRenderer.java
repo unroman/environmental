@@ -34,7 +34,7 @@ public class SlabfishRenderer extends MobRenderer<Slabfish, SlabfishModel<Slabfi
 
 	@Override
 	public ResourceLocation getTextureLocation(Slabfish slabby) {
-		return SlabfishSpriteUploader.ATLAS_LOCATION;
+		return SlabfishSpriteUploader.ATLAS_LOCATION; // EnvironmentalRegistries.registryAccess(slabby.level()).get(slabby.getSlabfishType()).fullTexture();
 	}
 
 	@Override

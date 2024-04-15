@@ -43,7 +43,7 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	public static final Codec<SlabfishType> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
 				ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
-				ResourceLocation.CODEC.optionalFieldOf("texture", new ResourceLocation(Environmental.MOD_ID, "type/ocean")).forGetter(entry -> entry.texture),
+				ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture),
 				ResourceLocation.CODEC.optionalFieldOf("backpack").forGetter(entry -> entry.backpack),
 				Codec.INT.optionalFieldOf("priority", 0).forGetter(entry -> entry.priority),
 				SlabfishCondition.CODEC.listOf().xmap(list -> list.toArray(SlabfishCondition[]::new), Arrays::asList).fieldOf("conditions").forGetter(entry -> entry.conditions)
@@ -53,6 +53,10 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	public static final Codec<SlabfishType> NETWORK_CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			ResourceLocation.CODEC.optionalFieldOf("backpack").forGetter(entry -> entry.backpack)
 	).apply(instance, (backpack) -> new SlabfishType(Component.empty(), new ResourceLocation(Environmental.MOD_ID, "entity/slabfish/type/swamp"), backpack, 0, new SlabfishCondition[0])));
+
+	public ResourceLocation fullTexture() {
+		return this.texture.withPath(string -> "textures/" + string + ".png");
+	}
 
 	@Override
 	public boolean test(SlabfishConditionContext slabfishEntity) {

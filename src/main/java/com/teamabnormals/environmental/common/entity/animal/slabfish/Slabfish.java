@@ -18,6 +18,7 @@ import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -136,7 +137,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.getEntityData().define(SLABFISH_TYPE, SlabfishManager.SWAMP);
+		this.getEntityData().define(SLABFISH_TYPE, EnvironmentalSlabfishTypes.SWAMP.location());
 		this.getEntityData().define(SLABFISH_OVERLAY, 0);
 		this.getEntityData().define(FROM_BUCKET, false);
 
@@ -575,7 +576,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	@Override
 	public void setCustomName(@Nullable Component name) {
 		super.setCustomName(name);
-		if (!this.level().isClientSide() && name != null && !this.getSlabfishType().equals(SlabfishManager.GHOST)) {
+		if (!this.level().isClientSide() && name != null && !this.getSlabfishType().equals(EnvironmentalSlabfishTypes.GHOST.location())) {
 			super.setCustomName(name);
 			SlabfishManager slabfishManager = SlabfishManager.get(this.level());
 			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.level());
@@ -597,7 +598,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	@Override
 	public void thunderHit(ServerLevel world, LightningBolt lightningBolt) {
 		UUID uuid = lightningBolt.getUUID();
-		if (!world.isClientSide() && !uuid.equals(this.lightningUUID) && !this.getSlabfishType().equals(SlabfishManager.GHOST)) {
+		if (!world.isClientSide() && !uuid.equals(this.lightningUUID) && !this.getSlabfishType().equals(EnvironmentalSlabfishTypes.GHOST.location())) {
 			SlabfishManager slabfishManager = SlabfishManager.get(world);
 			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(world);
 			SlabfishType currentType = registry.get(this.getSlabfishType());
