@@ -1,12 +1,11 @@
 package com.teamabnormals.environmental.common.item;
 
 import com.teamabnormals.environmental.common.slabfish.BackpackType;
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
+import com.teamabnormals.environmental.common.slabfish.SlabfishLoader;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.SweaterType;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
-import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishBackpacks;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishSweaters;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.ChatFormatting;
@@ -15,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
@@ -46,8 +44,6 @@ public class SlabfishBucketItem extends MobBucketItem {
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		CompoundTag tag = stack.getTag();
 		if (tag != null) {
-			SlabfishManager slabfishManager = SlabfishManager.get(worldIn);
-
 			if (tag.contains("SlabfishType", Tag.TAG_STRING)) {
 				Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(worldIn);
 
@@ -76,7 +72,7 @@ public class SlabfishBucketItem extends MobBucketItem {
 					int index = slotNbt.getByte("Slot") & 255;
 					if (index == 0) {
 						ItemStack slotStack = ItemStack.of(slotNbt);
-						SWEATER_TYPE_CACHE.setRight(sweaters.getKey(slabfishManager.getSweaterType(sweaters, slotStack).get()));
+						SWEATER_TYPE_CACHE.setRight(sweaters.getKey(SlabfishLoader.getSweaterType(sweaters, slotStack).get()));
 						break;
 					}
 				}

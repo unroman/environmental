@@ -2,7 +2,7 @@ package com.teamabnormals.environmental.common.inventory;
 
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
 import com.teamabnormals.environmental.common.slabfish.DynamicInventory;
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
+import com.teamabnormals.environmental.common.slabfish.SlabfishLoader;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.world.entity.player.Player;
@@ -25,12 +25,11 @@ public class SlabfishInventory extends DynamicInventory {
 	public boolean canPlaceItem(int index, ItemStack stack) {
 		switch (index) {
 			case 0:
-				return SlabfishManager.get(this.slabfish.getCommandSenderWorld()).getSweaterType(EnvironmentalRegistries.slabfishSweaters(this.slabfish.getCommandSenderWorld()), stack).isPresent();
+				return SlabfishLoader.getSweaterType(EnvironmentalRegistries.slabfishSweaters(this.slabfish.getCommandSenderWorld()), stack).isPresent();
 			case 1:
 				return stack.is(Tags.Items.CHESTS_WOODEN);
 			case 2:
-				SlabfishManager slabfishManager = SlabfishManager.get(this.slabfish.getCommandSenderWorld());
-				if (slabfishManager.getBackpackType(EnvironmentalRegistries.slabfishBackpacks(this.slabfish.getCommandSenderWorld()), stack).isEmpty())
+				if (SlabfishLoader.getBackpackType(EnvironmentalRegistries.slabfishBackpacks(this.slabfish.getCommandSenderWorld()), stack).isEmpty())
 					return false;
 				SlabfishType slabfishType = this.slabfish.getSlabfishType();
 				return this.slabfish.hasBackpack() && (slabfishType.isBackpackEmpty(this.slabfish.getCommandSenderWorld()));

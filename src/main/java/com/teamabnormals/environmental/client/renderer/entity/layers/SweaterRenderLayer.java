@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.teamabnormals.environmental.client.model.SlabfishModel;
 import com.teamabnormals.environmental.client.resources.SlabfishSpriteUploader;
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

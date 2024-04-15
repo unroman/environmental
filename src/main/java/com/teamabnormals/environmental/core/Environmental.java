@@ -8,7 +8,6 @@ import com.teamabnormals.environmental.common.network.message.C2SZebraJumpMessag
 import com.teamabnormals.environmental.common.network.message.CAcknowledgeEnvironmentalMessage;
 import com.teamabnormals.environmental.common.network.message.EnvironmentalLoginMessage;
 import com.teamabnormals.environmental.common.network.message.SOpenSlabfishInventoryMessage;
-import com.teamabnormals.environmental.common.slabfish.SlabfishLoader;
 import com.teamabnormals.environmental.core.data.client.EnvironmentalBlockStateProvider;
 import com.teamabnormals.environmental.core.data.client.EnvironmentalItemModelProvider;
 import com.teamabnormals.environmental.core.data.client.EnvironmentalSpriteSourceProvider;
@@ -35,9 +34,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -148,11 +145,6 @@ public class Environmental {
 		generator.addProvider(client, new EnvironmentalItemModelProvider(output, helper));
 		generator.addProvider(client, new EnvironmentalBlockStateProvider(output, helper));
 		generator.addProvider(client, new EnvironmentalSpriteSourceProvider(output, helper));
-	}
-
-	@SubscribeEvent
-	public void onEvent(AddReloadListenerEvent event) {
-		event.addListener(new SlabfishLoader());
 	}
 
 	private void setupPlayMessages() {

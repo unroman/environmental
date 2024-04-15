@@ -1,7 +1,7 @@
 package com.teamabnormals.environmental.common.entity.ai.goal.slabfish;
 
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
+import com.teamabnormals.environmental.common.slabfish.SlabfishLoader;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
 import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
@@ -120,7 +120,7 @@ public class SlabbyBreedGoal extends Goal {
 			slabby.moveTo(this.animal.getX(), this.animal.getY(), this.animal.getZ(), 0.0F, 0.0F);
 
 			Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(this.animal.level());
-			SlabfishType slabfishType = SlabfishManager.get(this.world).getSlabfishType(registry, SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).get();
+			SlabfishType slabfishType = SlabfishLoader.getSlabfishType(registry, SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).get();
 			slabby.setSlabfishType(slabfishType);
 
 			if (player != null) {

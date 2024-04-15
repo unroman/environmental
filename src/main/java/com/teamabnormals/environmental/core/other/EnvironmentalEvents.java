@@ -10,7 +10,6 @@ import com.teamabnormals.environmental.common.entity.ai.goal.HuntTruffleGoal;
 import com.teamabnormals.environmental.common.entity.animal.koi.Koi;
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
 import com.teamabnormals.environmental.common.entity.animal.slabfish.SlabfishOverlay;
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.EnvironmentalConfig;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBiomeTags;
