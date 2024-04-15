@@ -13,10 +13,10 @@ import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditi
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalCriteriaTriggers;
 import com.teamabnormals.environmental.core.other.EnvironmentalDataSerializers;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.core.BlockPos;
@@ -166,7 +166,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		this.setSlabfishType(new ResourceLocation(compound.getString("SlabfishType")));
+		this.setSlabfishTypeFromLocation(new ResourceLocation(compound.getString("SlabfishType")));
 		this.setSlabfishOverlay(SlabfishOverlay.byId(compound.getInt("SlabfishOverlay")));
 		this.setBackpack(compound.contains("BackpackType", Tag.TAG_STRING) ? new ResourceLocation(compound.getString("BackpackType")) : SlabfishManager.BROWN_BACKPACK.getRegistryName());
 		this.setFromBucket(compound.getBoolean("FromBucket"));
@@ -185,7 +185,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 		Item item = stack.getItem();
 
 		SlabfishManager slabfishManager = SlabfishManager.get(this.level());
-		SlabfishType slabfishType = EnvironmentalRegistries.registryAccess(this.level()).get(this.getSlabfishType());
+		SlabfishType slabfishType = this.getSlabfishType();
 
 		if (item == Items.WATER_BUCKET && this.isAlive() && !(this.isTame() && !player.isSecondaryUseActive())) {
 			if (this.hasBackpack())
@@ -580,12 +580,12 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			super.setCustomName(name);
 			SlabfishManager slabfishManager = SlabfishManager.get(this.level());
 			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.level());
-			SlabfishType currentType = registry.get(this.getSlabfishType());
+			SlabfishType currentType = this.getSlabfishType();
 			slabfishManager.getSlabfishType(registry, SlabfishConditionContext.rename(this)).ifPresent(newType -> {
 				if (!currentType.canBeSold(this.level()) && newType.canBeSold(this.level()))
 					return;
-				if (registry.getKey(newType) != this.getSlabfishType())
-					this.setSlabfishType(registry.getKey(newType));
+				if (registry.getKey(newType) != this.getSlabfishTypeLocation())
+					this.setSlabfishType(newType);
 			});
 		}
 	}
@@ -601,22 +601,32 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 		if (!world.isClientSide() && !uuid.equals(this.lightningUUID) && !this.getSlabfishType().equals(EnvironmentalSlabfishTypes.GHOST.location())) {
 			SlabfishManager slabfishManager = SlabfishManager.get(world);
 			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(world);
-			SlabfishType currentType = registry.get(this.getSlabfishType());
+			SlabfishType currentType = this.getSlabfishType();
 			slabfishManager.getSlabfishType(registry, SlabfishConditionContext.lightning(this)).ifPresent(newType -> {
 				if (!currentType.canBeSold(world) && newType.canBeSold(world))
 					return;
-				this.setSlabfishType(registry.getKey(newType));
+				this.setSlabfishType(newType);
 				this.lightningUUID = uuid;
 				this.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 2.0F, 1.0F);
 			});
 		}
 	}
 
-	public ResourceLocation getSlabfishType() {
+	public SlabfishType getSlabfishType() {
+		return EnvironmentalRegistries.registryAccess(this.level()).get(this.getSlabfishTypeLocation());
+	}
+
+
+	public ResourceLocation getSlabfishTypeLocation() {
 		return this.entityData.get(SLABFISH_TYPE);
 	}
 
-	public void setSlabfishType(ResourceLocation type) {
+	public void setSlabfishType(SlabfishType type) {
+		this.setSlabfishTypeFromLocation(EnvironmentalRegistries.registryAccess(this.level()).getKey(type));
+	}
+
+
+	public void setSlabfishTypeFromLocation(ResourceLocation type) {
 		this.entityData.set(SLABFISH_TYPE, type);
 		this.updateBackpack();
 	}
@@ -635,17 +645,17 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 				Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.level());
 				SlabfishType type = slabfishManager.getSlabfishType(registry, SlabfishConditionContext.spawned(this)).get();
 
-				spawnDataIn = new SlabfishData(registry.getKey(type));
-				this.setSlabfishType(registry.getKey(type));
+				spawnDataIn = new SlabfishData(type);
+				this.setSlabfishType(type);
 				return super.finalizeSpawn(world, difficulty, reason, spawnDataIn, dataTag);
 			}
 		}
 	}
 
 	public static class SlabfishData extends AgeableMobGroupData implements SpawnGroupData {
-		public final ResourceLocation type;
+		public final SlabfishType type;
 
-		public SlabfishData(ResourceLocation type) {
+		public SlabfishData(SlabfishType type) {
 			super(true);
 			this.type = type;
 		}
@@ -679,7 +689,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 				this.setTame(true);
 				this.setOwnerUUID(tag.getUUID("Owner"));
 			}
-			this.setSlabfishType(new ResourceLocation(tag.getString("SlabfishType")));
+			this.setSlabfishTypeFromLocation(new ResourceLocation(tag.getString("SlabfishType")));
 
 			if (tag.contains("BackpackType", Tag.TAG_STRING))
 				this.setBackpack(new ResourceLocation(tag.getString("BackpackType")));
@@ -695,8 +705,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			TagKey<SlabfishType> rarity = SlabfishType.getRandomRarity(this.level().getRandom().nextFloat());
 			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.level());
 			SlabfishType type = slabfishManager.getRandomSlabfishType(registry, s -> s.canBeSold(this.level()) && s.is(this.level(), rarity), this.level().getRandom()).get();
-
-			this.setSlabfishType(registry.getKey(type));
+			this.setSlabfishType(type);
 		}
 	}
 
@@ -749,8 +758,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	private void updateBackpack() {
 		if (!this.level().isClientSide()) {
 			SlabfishManager slabfishManager = SlabfishManager.get(this.level());
-			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.level());
-			SlabfishType slabfishType = registry.get(this.getSlabfishType());
+			SlabfishType slabfishType = this.getSlabfishType();
 			Optional<ResourceLocation> backpackType = slabfishType.backpack();
 
 			if (backpackType.isPresent() && slabfishManager.getBackpackType(backpackType.get()).isPresent()) {

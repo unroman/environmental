@@ -365,7 +365,7 @@ public class EnvironmentalEvents {
 						ghost.moveTo(slabfish.getX(), slabfish.getY(), slabfish.getZ(), slabfish.getYRot(), slabfish.getXRot());
 						ghost.setNoAi(slabfish.isNoAi());
 						ghost.setAge(slabfish.getAge());
-						ghost.setSlabfishType(EnvironmentalSlabfishTypes.GHOST.location());
+						ghost.setSlabfishTypeFromLocation(EnvironmentalSlabfishTypes.GHOST.location());
 						ghost.setSecondsOnFire(0);
 						if (slabfish.hasCustomName()) {
 							ghost.setCustomName(entity.getCustomName());

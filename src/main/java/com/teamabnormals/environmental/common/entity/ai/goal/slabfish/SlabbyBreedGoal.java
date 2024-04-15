@@ -121,7 +121,7 @@ public class SlabbyBreedGoal extends Goal {
 
 			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.animal.level());
 			SlabfishType slabfishType = SlabfishManager.get(this.world).getSlabfishType(registry, SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).get();
-			slabby.setSlabfishType(slabby.level().registryAccess().registry(EnvironmentalRegistries.SLABFISH_TYPE).get().getKey(slabfishType));
+			slabby.setSlabfishType(slabfishType);
 
 			if (player != null) {
 				player.awardStat(Stats.ANIMALS_BRED);

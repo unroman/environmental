@@ -67,9 +67,9 @@ public class SlabfishConditionContext {
 		for (LightLayer lightType : LightLayer.values())
 			this.lightTypes.put(lightType, Suppliers.memoize(() -> level.getBrightness(lightType, this.pos.get())));
 		this.dimension = Suppliers.memoize(() -> level.dimension().location());
-		this.slabfishType = Suppliers.memoize(slabfish::getSlabfishType);
+		this.slabfishType = Suppliers.memoize(slabfish::getSlabfishTypeLocation);
 		this.breederInsomnia = Suppliers.memoize(() -> breeder != null && breeder.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)) >= 72000 && level.isNight());
-		this.parents = parent1 != null && parent2 != null ? new ImmutablePair<>(parent1.getSlabfishType(), parent2.getSlabfishType()) : null;
+		this.parents = parent1 != null && parent2 != null ? new ImmutablePair<>(parent1.getSlabfishTypeLocation(), parent2.getSlabfishTypeLocation()) : null;
 	}
 
 	/**

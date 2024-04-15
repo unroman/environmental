@@ -52,8 +52,7 @@ public class SlabfishInventoryMenu extends AbstractContainerMenu {
 						if (this.getSlotIndex() != 2)
 							return true;
 						SlabfishManager slabfishManager = SlabfishManager.get(slabfish.getCommandSenderWorld());
-						Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(slabfish.level());
-						SlabfishType slabfishType = registry.get(slabfish.getSlabfishType());
+						SlabfishType slabfishType = slabfish.getSlabfishType();
 						return slabfish.hasBackpack() && (slabfishType.backpack().isEmpty() || slabfishManager.getBackpackType(slabfishType.backpack().get()).isEmpty());
 					}
 				}).setBackground(InventoryMenu.BLOCK_ATLAS, SLOT_INDEX_NAMES[i]);

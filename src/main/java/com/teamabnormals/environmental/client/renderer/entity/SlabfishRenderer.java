@@ -43,8 +43,7 @@ public class SlabfishRenderer extends MobRenderer<Slabfish, SlabfishModel<Slabfi
 		if (p_230496_3_) {
 			return RenderType.itemEntityTranslucentCull(texture);
 		} else if (p_230496_2_) {
-			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(slabby.level());
-			return registry.get(slabby.getSlabfishType()).translucent(slabby.level()) ? RenderType.entityTranslucent(texture) : this.model.renderType(texture);
+			return slabby.getSlabfishType().translucent(slabby.level()) ? RenderType.entityTranslucent(texture) : this.model.renderType(texture);
 		} else {
 			return p_230496_4_ ? RenderType.outline(texture) : null;
 		}
@@ -58,8 +57,7 @@ public class SlabfishRenderer extends MobRenderer<Slabfish, SlabfishModel<Slabfi
 
 	@Override
 	protected void scale(Slabfish slabfish, PoseStack matrixStack, float partialTickTime) {
-		Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(slabfish.level());
-		this.model.sprite = SlabfishSpriteUploader.instance().getSprite(registry.get(slabfish.getSlabfishType()).texture());
+		this.model.sprite = SlabfishSpriteUploader.instance().getSprite(slabfish.getSlabfishType().texture());
 		if (slabfish.isInSittingPose() || slabfish.getVehicle() != null)
 			matrixStack.translate(0F, slabfish.isBaby() ? 0.15625F : 0.3125F, 0F);
 		if (slabfish.isInWater()) {

@@ -41,8 +41,7 @@ public class SlabfishInventoryScreen extends AbstractContainerScreen<SlabfishInv
 		if (this.slabfish.hasBackpack()) {
 			guiGraphics.blit(SLABFISH_GUI_TEXTURE, i + 79, j + 17, 0, this.imageHeight, 5 * 18, 54);
 
-			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.slabfish.level());
-			SlabfishType slabfishType = registry.get(this.slabfish.getSlabfishType());
+			SlabfishType slabfishType = this.slabfish.getSlabfishType();
 			if (slabfishType.backpack().isEmpty() || this.slabfishManager.getBackpackType(slabfishType.backpack().get()).isEmpty())
 				guiGraphics.blit(SLABFISH_GUI_TEXTURE, i + 7, j + 53, 0, 220, 18, 18);
 		}
