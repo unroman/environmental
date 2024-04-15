@@ -10,7 +10,6 @@ import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabf
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,16 +22,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class SlabfishBucketItem extends MobBucketItem {
-	private static final Map<String, ResourceLocation> LOCATION_CACHE = new HashMap<>();
-	private static final MutablePair<CompoundTag, ResourceLocation> SWEATER_TYPE_CACHE = new MutablePair<>(null, EnvironmentalSlabfishSweaters.EMPTY.location());
+	private static final Map<String, ResourceLocation> TYPE_CACHE = new HashMap<>();
+	private static final Map<String, ResourceLocation> BACKPACK_CACHE = new HashMap<>();
+	private static final Map<String, ResourceLocation> SWEATER_CACHE = new HashMap<>();
 
 	public SlabfishBucketItem(Item.Properties builder) {
 		super(EnvironmentalEntityTypes.SLABFISH::get, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, builder);
@@ -46,42 +44,30 @@ public class SlabfishBucketItem extends MobBucketItem {
 		if (tag != null) {
 			if (tag.contains("SlabfishType", Tag.TAG_STRING)) {
 				Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(worldIn);
-
-				SlabfishType slabfishType = registry.get(LOCATION_CACHE.computeIfAbsent(tag.getString("SlabfishType"), ResourceLocation::new));
+				SlabfishType slabfishType = registry.get(TYPE_CACHE.computeIfAbsent(tag.getString("SlabfishType"), ResourceLocation::new));
 				if (slabfishType != null && !registry.getKey(slabfishType).equals(EnvironmentalSlabfishTypes.SWAMP.location()))
 					tooltip.add(slabfishType.displayName().copy().withStyle(ChatFormatting.ITALIC, SlabfishType.RARITIES.get(slabfishType.getRarity(worldIn)).getSecond()));
 			}
+
 			if (tag.contains("Age", Tag.TAG_ANY_NUMERIC) && tag.getInt("Age") < 0) {
-				tooltip.add((Component.translatable("entity.environmental.slabfish.baby").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
+				tooltip.add(Component.translatable("entity.environmental.slabfish.baby").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 			}
+
 			if (tag.contains("BackpackType", Tag.TAG_STRING)) {
 				Registry<BackpackType> registry = SlabfishHelper.slabfishBackpacks(worldIn);
-				BackpackType backpackType = registry.get(LOCATION_CACHE.computeIfAbsent(tag.getString("BackpackType"), ResourceLocation::new));
+				BackpackType backpackType = registry.get(BACKPACK_CACHE.computeIfAbsent(tag.getString("BackpackType"), ResourceLocation::new));
 				if (backpackType != null) {
 					tooltip.add(backpackType.displayName().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 				}
 			}
 
-			Registry<SweaterType> sweaters = SlabfishHelper.slabfishSweaters(worldIn);
-			if (!tag.equals(SWEATER_TYPE_CACHE.getLeft())) {
-				SWEATER_TYPE_CACHE.setLeft(tag);
-				SWEATER_TYPE_CACHE.setRight(EnvironmentalSlabfishSweaters.EMPTY.location());
-
-				ListTag list = tag.getList("Items", Tag.TAG_COMPOUND);
-				for (int i = 0; i < list.size(); i++) {
-					CompoundTag slotNbt = list.getCompound(i);
-					int index = slotNbt.getByte("Slot") & 255;
-					if (index == 0) {
-						ItemStack slotStack = ItemStack.of(slotNbt);
-						Optional<SweaterType> sweater = SlabfishHelper.getSweaterType(sweaters, slotStack);
-						SWEATER_TYPE_CACHE.setRight(sweater.isPresent() ? sweaters.getKey(sweater.get()) : EnvironmentalSlabfishSweaters.EMPTY.location());
-						break;
-					}
+			if (tag.contains("SweaterType", Tag.TAG_STRING)) {
+				Registry<SweaterType> registry = SlabfishHelper.slabfishSweaters(worldIn);
+				SweaterType sweaterType = registry.get(SWEATER_CACHE.computeIfAbsent(tag.getString("SweaterType"), ResourceLocation::new));
+				if (sweaterType != null && sweaterType.displayName().isPresent() && !registry.getKey(sweaterType).equals(EnvironmentalSlabfishSweaters.EMPTY.location())) {
+					tooltip.add(sweaterType.displayName().get().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 				}
 			}
-			SweaterType type = sweaters.get(SWEATER_TYPE_CACHE.getRight());
-			if (type != null && type.displayName().isPresent() && !EnvironmentalSlabfishSweaters.EMPTY.location().equals(SWEATER_TYPE_CACHE.getRight()))
-				tooltip.add(type.displayName().get().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 		}
 	}
 }
