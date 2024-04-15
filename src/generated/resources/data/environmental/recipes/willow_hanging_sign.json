@@ -4,7 +4,7 @@
   "group": "hanging_sign",
   "key": {
     "#": {
-      "item": "environmental:willow_hanging_sign"
+      "item": "environmental:stripped_willow_log"
     },
     "X": {
       "item": "minecraft:chain"
@@ -17,7 +17,7 @@
   ],
   "result": {
     "count": 6,
-    "item": "environmental:stripped_willow_log"
+    "item": "environmental:willow_hanging_sign"
   },
   "show_notification": true
 }

@@ -42,6 +42,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.blockFamily(EnvironmentalBlockFamilies.PINE_PLANKS_FAMILY);
 		this.logBlocks(PINE_LOG, PINE_WOOD);
 		this.logBlocks(STRIPPED_PINE_LOG, STRIPPED_PINE_WOOD);
+		this.hangingSignBlocks(STRIPPED_PINE_LOG, PINE_HANGING_SIGNS);
 		this.leavesBlocks(PINE_LEAVES, PINE_LEAF_PILE);
 		this.crossBlockWithPot(PINE_SAPLING, POTTED_PINE_SAPLING);
 		this.woodworksBlocks(PINE_PLANKS, PINE_BOARDS, PINE_LADDER, PINE_BOOKSHELF, PINE_BEEHIVE, PINE_CHEST, TRAPPED_PINE_CHEST);
@@ -52,6 +53,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.blockFamily(EnvironmentalBlockFamilies.WISTERIA_PLANKS_FAMILY);
 		this.logBlocks(WISTERIA_LOG, WISTERIA_WOOD);
 		this.logBlocks(STRIPPED_WISTERIA_LOG, STRIPPED_WISTERIA_WOOD);
+		this.hangingSignBlocks(STRIPPED_WISTERIA_LOG, WISTERIA_HANGING_SIGNS);
 		this.leavesBlocks(WISTERIA_LEAVES, WISTERIA_LEAF_PILE);
 		this.crossBlockWithPot(PINK_WISTERIA_SAPLING, POTTED_PINK_WISTERIA_SAPLING);
 		this.crossBlockWithPot(BLUE_WISTERIA_SAPLING, POTTED_BLUE_WISTERIA_SAPLING);

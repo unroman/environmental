@@ -200,7 +200,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> STRIPPED_PINE_LOG = HELPER.createBlock("stripped_pine_log", () -> new RotatedPillarBlock(EnvironmentalProperties.PINE.log()));
 	public static final RegistryObject<Block> STRIPPED_PINE_WOOD = HELPER.createBlock("stripped_pine_wood", () -> new RotatedPillarBlock(EnvironmentalProperties.PINE.log()));
 	public static final RegistryObject<Block> PINE_LOG = HELPER.createBlock("pine_log", () -> new LogBlock(STRIPPED_PINE_LOG, EnvironmentalProperties.PINE.log()));
-	public static final RegistryObject<Block> PINE_WOOD = HELPER.createBlock("pine_wood", () -> new WoodBlock(STRIPPED_PINE_WOOD, EnvironmentalProperties.PINE.log()));
+	public static final RegistryObject<Block> PINE_WOOD = HELPER.createBlock("pine_wood", () -> new LogBlock(STRIPPED_PINE_WOOD, EnvironmentalProperties.PINE.log()));
 	public static final RegistryObject<Block> PINE_LEAVES = HELPER.createBlock("pine_leaves", () -> new LeavesBlock(EnvironmentalProperties.PINE.leaves()));
 	public static final RegistryObject<Block> PINE_SAPLING = HELPER.createBlock("pine_sapling", () -> new SaplingBlock(new PineTreeGrower(), EnvironmentalProperties.PINE.sapling()));
 	public static final RegistryObject<Block> POTTED_PINE_SAPLING = HELPER.createBlockNoItem("potted_pine_sapling", () -> new FlowerPotBlock(PINE_SAPLING.get(), PropertyUtil.flowerPot()));
@@ -214,6 +214,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> PINE_DOOR = HELPER.createBlock("pine_door", () -> new DoorBlock(EnvironmentalProperties.PINE.door(), EnvironmentalProperties.PINE_BLOCK_SET));
 	public static final RegistryObject<Block> PINE_TRAPDOOR = HELPER.createBlock("pine_trapdoor", () -> new TrapDoorBlock(EnvironmentalProperties.PINE.trapdoor(), EnvironmentalProperties.PINE_BLOCK_SET));
 	public static final Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> PINE_SIGNS = HELPER.createSignBlock("pine", EnvironmentalProperties.PINE_WOOD_TYPE, EnvironmentalProperties.PINE.sign());
+	public static final Pair<RegistryObject<BlueprintCeilingHangingSignBlock>, RegistryObject<BlueprintWallHangingSignBlock>> PINE_HANGING_SIGNS = HELPER.createHangingSignBlock("pine", EnvironmentalProperties.PINE_WOOD_TYPE, EnvironmentalProperties.PINE.hangingSign());
 
 	public static final RegistryObject<Block> PINE_BOARDS = HELPER.createFuelBlock("pine_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.PINE.planks()), 300);
 	public static final RegistryObject<Block> PINE_BOOKSHELF = HELPER.createFuelBlock("pine_bookshelf", () -> new Block(EnvironmentalProperties.PINE.bookshelf()), 300);
@@ -231,7 +232,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> STRIPPED_PLUM_LOG = HELPER.createBlock("stripped_plum_log", () -> new RotatedPillarBlock(EnvironmentalProperties.PLUM.log()));
 	public static final RegistryObject<Block> STRIPPED_PLUM_WOOD = HELPER.createBlock("stripped_plum_wood", () -> new RotatedPillarBlock(EnvironmentalProperties.PLUM.log()));
 	public static final RegistryObject<Block> PLUM_LOG = HELPER.createBlock("plum_log", () -> new LogBlock(STRIPPED_PLUM_LOG, EnvironmentalProperties.PLUM.log()));
-	public static final RegistryObject<Block> PLUM_WOOD = HELPER.createBlock("plum_wood", () -> new WoodBlock(STRIPPED_PLUM_WOOD, EnvironmentalProperties.PLUM.log()));
+	public static final RegistryObject<Block> PLUM_WOOD = HELPER.createBlock("plum_wood", () -> new LogBlock(STRIPPED_PLUM_WOOD, EnvironmentalProperties.PLUM.log()));
 	public static final RegistryObject<Block> PLUM_PLANKS = HELPER.createBlock("plum_planks", () -> new Block(EnvironmentalProperties.PLUM.planks()));
 	public static final RegistryObject<Block> PLUM_STAIRS = HELPER.createBlock("plum_stairs", () -> new StairBlock(() -> PLUM_PLANKS.get().defaultBlockState(), EnvironmentalProperties.PLUM.planks()));
 	public static final RegistryObject<Block> PLUM_SLAB = HELPER.createBlock("plum_slab", () -> new SlabBlock(EnvironmentalProperties.PLUM.planks()));
@@ -272,7 +273,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> STRIPPED_WISTERIA_LOG = HELPER.createBlock("stripped_wisteria_log", () -> new RotatedPillarBlock(EnvironmentalProperties.WISTERIA.log()));
 	public static final RegistryObject<Block> STRIPPED_WISTERIA_WOOD = HELPER.createBlock("stripped_wisteria_wood", () -> new RotatedPillarBlock(EnvironmentalProperties.WISTERIA.log()));
 	public static final RegistryObject<Block> WISTERIA_LOG = HELPER.createBlock("wisteria_log", () -> new LogBlock(STRIPPED_WISTERIA_LOG, EnvironmentalProperties.WISTERIA.log()));
-	public static final RegistryObject<Block> WISTERIA_WOOD = HELPER.createBlock("wisteria_wood", () -> new WoodBlock(STRIPPED_WISTERIA_WOOD, EnvironmentalProperties.WISTERIA.log()));
+	public static final RegistryObject<Block> WISTERIA_WOOD = HELPER.createBlock("wisteria_wood", () -> new LogBlock(STRIPPED_WISTERIA_WOOD, EnvironmentalProperties.WISTERIA.log()));
 	public static final RegistryObject<Block> WISTERIA_PLANKS = HELPER.createBlock("wisteria_planks", () -> new Block(EnvironmentalProperties.WISTERIA.planks()));
 	public static final RegistryObject<Block> WISTERIA_STAIRS = HELPER.createBlock("wisteria_stairs", () -> new StairBlock(() -> WISTERIA_PLANKS.get().defaultBlockState(), EnvironmentalProperties.WISTERIA.planks()));
 	public static final RegistryObject<Block> WISTERIA_SLAB = HELPER.createBlock("wisteria_slab", () -> new SlabBlock(EnvironmentalProperties.WISTERIA.planks()));
@@ -283,6 +284,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> WISTERIA_DOOR = HELPER.createBlock("wisteria_door", () -> new DoorBlock(EnvironmentalProperties.WISTERIA.door(), EnvironmentalProperties.WISTERIA_BLOCK_SET));
 	public static final RegistryObject<Block> WISTERIA_TRAPDOOR = HELPER.createBlock("wisteria_trapdoor", () -> new TrapDoorBlock(EnvironmentalProperties.WISTERIA.trapdoor(), EnvironmentalProperties.WISTERIA_BLOCK_SET));
 	public static final Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> WISTERIA_SIGNS = HELPER.createSignBlock("wisteria", EnvironmentalProperties.WISTERIA_WOOD_TYPE, EnvironmentalProperties.WISTERIA.sign());
+	public static final Pair<RegistryObject<BlueprintCeilingHangingSignBlock>, RegistryObject<BlueprintWallHangingSignBlock>> WISTERIA_HANGING_SIGNS = HELPER.createHangingSignBlock("wisteria", EnvironmentalProperties.WISTERIA_WOOD_TYPE, EnvironmentalProperties.WISTERIA.hangingSign());
 
 	public static final RegistryObject<Block> WISTERIA_LEAVES = HELPER.createBlock("wisteria_leaves", () -> new WisteriaLeavesBlock(EnvironmentalProperties.WISTERIA.leaves()));
 	public static final RegistryObject<Block> WISTERIA_LEAF_PILE = HELPER.createBlock("wisteria_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.WISTERIA.leaves()));

@@ -229,6 +229,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.dropSelf(STRIPPED_PINE_LOG.get());
 			this.dropSelf(STRIPPED_PINE_WOOD.get());
 			this.dropSelf(PINE_SIGNS.getFirst().get());
+			this.dropSelf(PINE_HANGING_SIGNS.getFirst().get());
 			this.dropSelf(PINE_PRESSURE_PLATE.get());
 			this.dropSelf(PINE_TRAPDOOR.get());
 			this.dropSelf(PINE_BUTTON.get());
@@ -290,6 +291,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.dropSelf(STRIPPED_WISTERIA_LOG.get());
 			this.dropSelf(STRIPPED_WISTERIA_WOOD.get());
 			this.dropSelf(WISTERIA_SIGNS.getFirst().get());
+			this.dropSelf(WISTERIA_HANGING_SIGNS.getFirst().get());
 			this.dropSelf(WISTERIA_PRESSURE_PLATE.get());
 			this.dropSelf(WISTERIA_TRAPDOOR.get());
 			this.dropSelf(WISTERIA_BUTTON.get());

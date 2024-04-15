@@ -119,7 +119,7 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		planksFromLogs(consumer, WILLOW_PLANKS.get(), EnvironmentalItemTags.WILLOW_LOGS, 4);
 		woodFromLogs(consumer, WILLOW_WOOD.get(), WILLOW_LOG.get());
 		woodFromLogs(consumer, STRIPPED_WILLOW_WOOD.get(), STRIPPED_WILLOW_LOG.get());
-		hangingSign(consumer, STRIPPED_WILLOW_LOG.get(), WILLOW_HANGING_SIGNS.getFirst().get());
+		hangingSign(consumer, WILLOW_HANGING_SIGNS.getFirst().get(), STRIPPED_WILLOW_LOG.get());
 		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HANGING_WILLOW_LEAVES.get(), 3).define('#', WILLOW_LEAVES.get()).pattern("#").pattern("#").pattern("#").unlockedBy(getHasName(WILLOW_LEAVES.get()), has(WILLOW_LEAVES.get())).save(consumer);
 		WoodworksRecipeProvider.leafPileRecipes(consumer, WILLOW_LEAVES.get(), WILLOW_LEAF_PILE.get(), Environmental.MOD_ID);
 		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.WILLOW);
@@ -130,6 +130,7 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		planksFromLogs(consumer, PINE_PLANKS.get(), EnvironmentalItemTags.PINE_LOGS, 4);
 		woodFromLogs(consumer, PINE_WOOD.get(), PINE_LOG.get());
 		woodFromLogs(consumer, STRIPPED_PINE_WOOD.get(), STRIPPED_PINE_LOG.get());
+		hangingSign(consumer, PINE_HANGING_SIGNS.getFirst().get(), STRIPPED_PINE_LOG.get());
 		WoodworksRecipeProvider.leafPileRecipes(consumer, PINE_LEAVES.get(), PINE_LEAF_PILE.get(), Environmental.MOD_ID);
 		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.PINE);
 		WoodworksRecipeProvider.baseRecipes(consumer, PINE_PLANKS.get(), PINE_SLAB.get(), PINE_BOARDS.get(), PINE_BOOKSHELF.get(), Blocks.DARK_OAK_STAIRS, PINE_LADDER.get(), PINE_BEEHIVE.get(), PINE_CHEST.get(), TRAPPED_PINE_CHEST.get(), Environmental.MOD_ID);
@@ -141,6 +142,7 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		planksFromLogs(consumer, WISTERIA_PLANKS.get(), EnvironmentalItemTags.WISTERIA_LOGS, 4);
 		woodFromLogs(consumer, WISTERIA_WOOD.get(), WISTERIA_LOG.get());
 		woodFromLogs(consumer, STRIPPED_WISTERIA_WOOD.get(), STRIPPED_WISTERIA_LOG.get());
+		hangingSign(consumer, WISTERIA_HANGING_SIGNS.getFirst().get(), STRIPPED_WISTERIA_LOG.get());
 		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, PINK_HANGING_WISTERIA_LEAVES.get(), 3).define('#', PINK_WISTERIA_LEAVES.get()).pattern("#").pattern("#").pattern("#").unlockedBy(getHasName(PINK_WISTERIA_LEAVES.get()), has(PINK_WISTERIA_LEAVES.get())).save(consumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BLUE_HANGING_WISTERIA_LEAVES.get(), 3).define('#', BLUE_WISTERIA_LEAVES.get()).pattern("#").pattern("#").pattern("#").unlockedBy(getHasName(BLUE_WISTERIA_LEAVES.get()), has(BLUE_WISTERIA_LEAVES.get())).save(consumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, PURPLE_HANGING_WISTERIA_LEAVES.get(), 3).define('#', PURPLE_WISTERIA_LEAVES.get()).pattern("#").pattern("#").pattern("#").unlockedBy(getHasName(PURPLE_WISTERIA_LEAVES.get()), has(PURPLE_WISTERIA_LEAVES.get())).save(consumer);
