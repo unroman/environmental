@@ -119,7 +119,7 @@ public class SlabbyBreedGoal extends Goal {
 			slabby.setAge(-24000);
 			slabby.moveTo(this.animal.getX(), this.animal.getY(), this.animal.getZ(), 0.0F, 0.0F);
 
-			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.animal.level());
+			Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(this.animal.level());
 			SlabfishType slabfishType = SlabfishManager.get(this.world).getSlabfishType(registry, SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).get();
 			slabby.setSlabfishType(slabfishType);
 

@@ -6,6 +6,7 @@ import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishSweaters;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
@@ -31,7 +33,7 @@ import java.util.Map;
 
 public class SlabfishBucketItem extends MobBucketItem {
 	private static final Map<String, ResourceLocation> LOCATION_CACHE = new HashMap<>();
-	private static final MutablePair<CompoundTag, SweaterType> SWEATER_TYPE_CACHE = new MutablePair<>(null, SlabfishManager.EMPTY_SWEATER);
+	private static final MutablePair<CompoundTag, ResourceLocation> SWEATER_TYPE_CACHE = new MutablePair<>(null, EnvironmentalSlabfishSweaters.EMPTY.location());
 
 	public SlabfishBucketItem(Item.Properties builder) {
 		super(EnvironmentalEntityTypes.SLABFISH::get, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, builder);
@@ -46,7 +48,7 @@ public class SlabfishBucketItem extends MobBucketItem {
 			SlabfishManager slabfishManager = SlabfishManager.get(worldIn);
 
 			if (tag.contains("SlabfishType", Tag.TAG_STRING)) {
-				Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(worldIn);
+				Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(worldIn);
 
 				SlabfishType slabfishType = registry.get(LOCATION_CACHE.computeIfAbsent(tag.getString("SlabfishType"), ResourceLocation::new));
 				if (!registry.getKey(slabfishType).equals(EnvironmentalSlabfishTypes.SWAMP.location()))
@@ -60,9 +62,11 @@ public class SlabfishBucketItem extends MobBucketItem {
 				tooltip.add(backpackType.getDisplayName().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 			}
 
+			Registry<SweaterType> sweaters = EnvironmentalRegistries.slabfishSweaters(worldIn);
+
 			if (!tag.equals(SWEATER_TYPE_CACHE.getLeft())) {
 				SWEATER_TYPE_CACHE.setLeft(tag);
-				SWEATER_TYPE_CACHE.setRight(SlabfishManager.EMPTY_SWEATER);
+				SWEATER_TYPE_CACHE.setRight(EnvironmentalSlabfishSweaters.EMPTY.location());
 
 				ListTag list = tag.getList("Items", Tag.TAG_COMPOUND);
 				for (int i = 0; i < list.size(); i++) {
@@ -70,14 +74,14 @@ public class SlabfishBucketItem extends MobBucketItem {
 					int index = slotNbt.getByte("Slot") & 255;
 					if (index == 0) {
 						ItemStack slotStack = ItemStack.of(slotNbt);
-						SWEATER_TYPE_CACHE.setRight(slabfishManager.getSweaterType(slotStack).orElse(SlabfishManager.EMPTY_SWEATER));
+						SWEATER_TYPE_CACHE.setRight(sweaters.getKey(slabfishManager.getSweaterType(sweaters, slotStack).get()));
 						break;
 					}
 				}
 			}
 
-			if (!SlabfishManager.EMPTY_SWEATER.equals(SWEATER_TYPE_CACHE.getRight()))
-				tooltip.add(SWEATER_TYPE_CACHE.getRight().getDisplayName().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+			if (!EnvironmentalSlabfishSweaters.EMPTY.location().equals(SWEATER_TYPE_CACHE.getRight()))
+				tooltip.add(sweaters.get(SWEATER_TYPE_CACHE.getRight()).displayName().get().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 		}
 	}
 }

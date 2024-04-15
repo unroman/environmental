@@ -15,21 +15,21 @@ import net.minecraft.world.level.ItemLike;
 
 import java.util.Optional;
 
-public record SlabfishCosmeticEntry(Component displayName, ResourceLocation texture, Optional<Holder<Item>> item, Optional<TagKey<Item>> tagKey) {
+public record SlabfishCosmeticEntry(Component displayName, Optional<ResourceLocation> texture, Optional<Holder<Item>> item, Optional<TagKey<Item>> tagKey) {
 	public static final Codec<SlabfishCosmeticEntry> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
 				ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
-				ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture),
+				ResourceLocation.CODEC.optionalFieldOf("texture").forGetter(entry -> entry.texture),
 				RegistryFixedCodec.create(Registries.ITEM).optionalFieldOf("item").forGetter(entry -> entry.item),
 				TagKey.codec(Registries.ITEM).optionalFieldOf("tag").forGetter(entry -> entry.tagKey)
 		).apply(instance, SlabfishCosmeticEntry::new);
 	});
 
 	public static SlabfishCosmeticEntry create(Component displayName, ResourceLocation texture, ItemLike item) {
-		return new SlabfishCosmeticEntry(displayName, texture, Optional.of(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem())), java.util.Optional.empty());
+		return new SlabfishCosmeticEntry(displayName, Optional.of(texture), Optional.of(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem())), java.util.Optional.empty());
 	}
 
 	public static SlabfishCosmeticEntry create(Component displayName, ResourceLocation texture, TagKey<Item> tag) {
-		return new SlabfishCosmeticEntry(displayName, texture, Optional.empty(), Optional.of(tag));
+		return new SlabfishCosmeticEntry(displayName, Optional.of(texture), Optional.empty(), Optional.of(tag));
 	}
 }

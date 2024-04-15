@@ -153,7 +153,6 @@ public class Environmental {
 	}
 
 	private void setupPlayMessages() {
-		PLAY.registerMessage(1, SSyncSweaterTypeMessage.class, SSyncSweaterTypeMessage::encode, SSyncSweaterTypeMessage::decode, SSyncSweaterTypeMessage::handlePlay, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		PLAY.registerMessage(2, SSyncBackpackTypeMessage.class, SSyncBackpackTypeMessage::encode, SSyncBackpackTypeMessage::decode, SSyncBackpackTypeMessage::handlePlay, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		PLAY.registerMessage(3, SOpenSlabfishInventoryMessage.class, SOpenSlabfishInventoryMessage::serialize, SOpenSlabfishInventoryMessage::deserialize, SOpenSlabfishInventoryMessage::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		PLAY.registerMessage(4, C2SZebraJumpMessage.class, C2SZebraJumpMessage::serialize, C2SZebraJumpMessage::deserialize, C2SZebraJumpMessage::handle);
@@ -161,7 +160,6 @@ public class Environmental {
 
 	private void setupLoginMessages() {
 		LOGIN.messageBuilder(CAcknowledgeEnvironmentalMessage.class, 99, NetworkDirection.LOGIN_TO_SERVER).loginIndex(EnvironmentalLoginMessage::getLoginIndex, EnvironmentalLoginMessage::setLoginIndex).encoder(CAcknowledgeEnvironmentalMessage::encode).decoder(CAcknowledgeEnvironmentalMessage::decode).consumerNetworkThread(HandshakeHandler.indexFirst(CAcknowledgeEnvironmentalMessage::handle)).add();
-		LOGIN.messageBuilder(SSyncSweaterTypeMessage.class, 1, NetworkDirection.LOGIN_TO_CLIENT).loginIndex(EnvironmentalLoginMessage::getLoginIndex, EnvironmentalLoginMessage::setLoginIndex).encoder(SSyncSweaterTypeMessage::encode).decoder(SSyncSweaterTypeMessage::decode).markAsLoginPacket().consumerMainThread(HandshakeHandler.biConsumerFor((__, msg, ctx) -> SSyncSweaterTypeMessage.handleLogin(msg, ctx))).add();
 		LOGIN.messageBuilder(SSyncBackpackTypeMessage.class, 2, NetworkDirection.LOGIN_TO_CLIENT).loginIndex(EnvironmentalLoginMessage::getLoginIndex, EnvironmentalLoginMessage::setLoginIndex).encoder(SSyncBackpackTypeMessage::encode).decoder(SSyncBackpackTypeMessage::decode).markAsLoginPacket().consumerMainThread(HandshakeHandler.biConsumerFor((__, msg, ctx) -> SSyncBackpackTypeMessage.handleLogin(msg, ctx))).add();
 	}
 

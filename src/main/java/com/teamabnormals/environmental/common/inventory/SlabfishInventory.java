@@ -4,6 +4,7 @@ import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
 import com.teamabnormals.environmental.common.slabfish.DynamicInventory;
 import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.Tags;
@@ -24,7 +25,7 @@ public class SlabfishInventory extends DynamicInventory {
 	public boolean canPlaceItem(int index, ItemStack stack) {
 		switch (index) {
 			case 0:
-				return SlabfishManager.get(this.slabfish.getCommandSenderWorld()).getSweaterType(stack).isPresent();
+				return SlabfishManager.get(this.slabfish.getCommandSenderWorld()).getSweaterType(EnvironmentalRegistries.slabfishSweaters(this.slabfish.getCommandSenderWorld()), stack).isPresent();
 			case 1:
 				return stack.is(Tags.Items.CHESTS_WOODEN);
 			case 2:

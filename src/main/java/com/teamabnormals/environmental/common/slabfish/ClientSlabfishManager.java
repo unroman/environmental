@@ -1,7 +1,6 @@
 package com.teamabnormals.environmental.common.slabfish;
 
 import com.teamabnormals.environmental.common.network.message.SSyncBackpackTypeMessage;
-import com.teamabnormals.environmental.common.network.message.SSyncSweaterTypeMessage;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -23,22 +22,10 @@ import java.util.stream.Collectors;
 public final class ClientSlabfishManager implements SlabfishManager {
 	static final ClientSlabfishManager INSTANCE = new ClientSlabfishManager();
 
-	private final Map<ResourceLocation, SweaterType> sweaterTypes;
 	private final Map<ResourceLocation, BackpackType> backpackTypes;
 
 	private ClientSlabfishManager() {
-		this.sweaterTypes = new HashMap<>();
 		this.backpackTypes = new HashMap<>();
-	}
-
-	/**
-	 * Receives the sweater types from the server.
-	 *
-	 * @param msg The message containing the new types
-	 */
-	public static void receive(SSyncSweaterTypeMessage msg) {
-		INSTANCE.sweaterTypes.clear();
-		INSTANCE.sweaterTypes.putAll(Arrays.stream(msg.getSweaterTypes()).collect(Collectors.toMap(SweaterType::getRegistryName, sweaterType -> sweaterType)));
 	}
 
 	/**
@@ -52,11 +39,6 @@ public final class ClientSlabfishManager implements SlabfishManager {
 	}
 
 	@Override
-	public Optional<SweaterType> getSweaterType(ResourceLocation registryName) {
-		return Optional.ofNullable(this.sweaterTypes.get(registryName));
-	}
-
-	@Override
 	public Optional<BackpackType> getBackpackType(ResourceLocation registryName) {
 		return Optional.ofNullable(this.backpackTypes.get(registryName));
 	}
@@ -67,8 +49,8 @@ public final class ClientSlabfishManager implements SlabfishManager {
 	}
 
 	@Override
-	public Optional<SweaterType> getSweaterType(ItemStack stack) {
-		return this.sweaterTypes.values().stream().filter(sweaterType -> sweaterType.test(stack)).findFirst();
+	public Optional<SweaterType> getSweaterType(Registry<SweaterType> registry, ItemStack stack) {
+		return registry.stream().filter(sweaterType -> sweaterType.test(stack)).findFirst();
 	}
 
 	@Override
@@ -79,11 +61,6 @@ public final class ClientSlabfishManager implements SlabfishManager {
 	@Override
 	public Optional<SlabfishType> getRandomSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, RandomSource random) {
 		throw new UnsupportedOperationException("Client does not have access to select random slabfish");
-	}
-
-	@Override
-	public SweaterType[] getAllSweaterTypes() {
-		return this.sweaterTypes.values().toArray(new SweaterType[0]);
 	}
 
 	@Override

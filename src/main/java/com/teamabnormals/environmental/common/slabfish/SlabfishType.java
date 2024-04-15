@@ -52,7 +52,7 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 
 	public static final Codec<SlabfishType> NETWORK_CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			ResourceLocation.CODEC.optionalFieldOf("backpack").forGetter(entry -> entry.backpack)
-	).apply(instance, (backpack) -> new SlabfishType(Component.empty(), new ResourceLocation(Environmental.MOD_ID, "entity/slabfish/type/swamp"), backpack, 0, new SlabfishCondition[0])));
+	).apply(instance, (backpack) -> new SlabfishType(Component.empty(), new ResourceLocation(Environmental.MOD_ID, "entity/slabfish/type/swamp"), backpack, -1, new SlabfishCondition[0])));
 
 	public ResourceLocation fullTexture() {
 		return this.texture.withPath(string -> "textures/" + string + ".png");
@@ -77,12 +77,12 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	}
 
 	public Holder<SlabfishType> holder(Level level) {
-		Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(level);
+		Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(level);
 		return registry.getHolderOrThrow(registry.getResourceKey(this).get());
 	}
 
 	public boolean is(Level level, TagKey<SlabfishType> tag) {
-		Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(level);
+		Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(level);
 		Optional<HolderSet.Named<SlabfishType>> set = registry.getTag(tag);
 		if (set.isEmpty())
 			return false;

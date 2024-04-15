@@ -20,11 +20,6 @@ import java.util.function.Predicate;
  */
 public interface SlabfishManager {
 	/**
-	 * The default sweater that exists if there are no other sweater types to choose from.
-	 */
-	SweaterType EMPTY_SWEATER = new SweaterType(null, Ingredient.EMPTY).setRegistryName(new ResourceLocation(Environmental.MOD_ID, "empty"));
-
-	/**
 	 * The default backpack that exists if there are no other backpack types to choose from.
 	 */
 	BackpackType BROWN_BACKPACK = new BackpackType(null, Ingredient.EMPTY).setRegistryName(new ResourceLocation(Environmental.MOD_ID, "brown"));
@@ -48,14 +43,6 @@ public interface SlabfishManager {
 	static SlabfishManager get(LevelReader world) {
 		return world.isClientSide() ? ClientSlabfishManager.INSTANCE : SlabfishLoader.instance;
 	}
-
-	/**
-	 * Checks the sweater types for a sweater of the specified name.
-	 *
-	 * @param registryName The name of the sweater to search for
-	 * @return The sweater type by that name or {@link #EMPTY_SWEATER} for no sweater under that name
-	 */
-	Optional<SweaterType> getSweaterType(ResourceLocation registryName);
 
 	/**
 	 * Checks the backpack types for a backpack of the specified name.
@@ -90,7 +77,7 @@ public interface SlabfishManager {
 	 * @param stack The stack to test against the sweater types
 	 * @return The sweater type using that stack or {@link #EMPTY_SWEATER} if that item has no sweater type
 	 */
-	Optional<SweaterType> getSweaterType(ItemStack stack);
+	Optional<SweaterType> getSweaterType(Registry<SweaterType> registry, ItemStack stack);
 
 	/**
 	 * Checks the backpack types for a backpack using the specified stack.
@@ -108,11 +95,6 @@ public interface SlabfishManager {
 	 * @return A random slabfish type by that rarity or {@link #DEFAULT_SLABFISH} if there were no results
 	 */
 	Optional<SlabfishType> getRandomSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, RandomSource random);
-
-	/**
-	 * @return All registered sweater types
-	 */
-	SweaterType[] getAllSweaterTypes();
 
 	/**
 	 * @return All registered backpack types

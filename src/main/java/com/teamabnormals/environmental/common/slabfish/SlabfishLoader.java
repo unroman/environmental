@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.teamabnormals.environmental.common.network.message.SSyncBackpackTypeMessage;
-import com.teamabnormals.environmental.common.network.message.SSyncSweaterTypeMessage;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishSweaters;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
@@ -39,25 +39,21 @@ public class SlabfishLoader extends SimpleJsonResourceReloadListener implements 
 	private static final Gson GSON = new GsonBuilder()
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
 			.registerTypeAdapter(Component.class, new Component.Serializer())
-			.registerTypeAdapter(SweaterType.class, new SweaterType.Deserializer())
 			.registerTypeAdapter(BackpackType.class, new BackpackType.Deserializer())
 			.create();
 
 	static SlabfishLoader instance;
 
-	private final Map<ResourceLocation, SweaterType> sweaterTypes;
 	private final Map<ResourceLocation, BackpackType> backpackTypes;
 
 	public SlabfishLoader() {
 		super(GSON, "environmental/slabfish");
-		this.sweaterTypes = new HashMap<>();
 		this.backpackTypes = new HashMap<>();
 		instance = this;
 	}
 
 	@Override
 	protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
-		Map<ResourceLocation, SweaterType> parsedSweaterTypes = new HashMap<>();
 		Map<ResourceLocation, BackpackType> parsedBackpackTypes = new HashMap<>();
 
 		// Force this to exist if there is no overriding JSON
@@ -65,14 +61,7 @@ public class SlabfishLoader extends SimpleJsonResourceReloadListener implements 
 
 		object.forEach(((location, json) ->
 		{
-			if (location.getPath().startsWith("sweater")) {
-				ResourceLocation registryName = new ResourceLocation(location.getNamespace(), location.getPath().substring("sweater/".length()));
-				try {
-					parsedSweaterTypes.put(registryName, GSON.fromJson(json, SweaterType.class).setRegistryName(registryName));
-				} catch (Exception e) {
-					LOGGER.error("Parsing error loading custom sweater " + registryName, e);
-				}
-			} else if (location.getPath().startsWith("backpack")) {
+			if (location.getPath().startsWith("backpack")) {
 				ResourceLocation registryName = new ResourceLocation(location.getNamespace(), location.getPath().substring("backpack/".length()));
 				try {
 					parsedBackpackTypes.put(registryName, GSON.fromJson(json, BackpackType.class).setRegistryName(registryName));
@@ -82,25 +71,14 @@ public class SlabfishLoader extends SimpleJsonResourceReloadListener implements 
 			}
 		}));
 
-		LOGGER.info("Loaded " + parsedSweaterTypes.size() + " Sweater Types");
 		LOGGER.info("Loaded " + parsedBackpackTypes.size() + " Backpack Types");
-
-		this.sweaterTypes.clear();
-		this.sweaterTypes.put(EMPTY_SWEATER.getRegistryName(), EMPTY_SWEATER);
-		this.sweaterTypes.putAll(parsedSweaterTypes);
 
 		this.backpackTypes.clear();
 		this.backpackTypes.putAll(parsedBackpackTypes);
 
 		if (EffectiveSide.get().isServer()) {
-			Environmental.PLAY.send(PacketDistributor.ALL.noArg(), new SSyncSweaterTypeMessage());
 			Environmental.PLAY.send(PacketDistributor.ALL.noArg(), new SSyncBackpackTypeMessage());
 		}
-	}
-
-	@Override
-	public Optional<SweaterType> getSweaterType(ResourceLocation registryName) {
-		return Optional.ofNullable(this.sweaterTypes.get(registryName));
 	}
 
 	@Override
@@ -114,8 +92,8 @@ public class SlabfishLoader extends SimpleJsonResourceReloadListener implements 
 	}
 
 	@Override
-	public Optional<SweaterType> getSweaterType(ItemStack stack) {
-		return this.sweaterTypes.values().stream().filter(sweaterType -> sweaterType != EMPTY_SWEATER && sweaterType.test(stack)).findFirst();
+	public Optional<SweaterType> getSweaterType(Registry<SweaterType> registry, ItemStack stack) {
+		return registry.stream().filter(sweaterType -> sweaterType != registry.get(EnvironmentalSlabfishSweaters.EMPTY) && sweaterType.test(stack)).findFirst();
 	}
 
 	@Override
@@ -128,10 +106,6 @@ public class SlabfishLoader extends SimpleJsonResourceReloadListener implements 
 		return Util.getRandomSafe(registry.stream().filter(predicate).collect(Collectors.toList()), random);
 	}
 
-	@Override
-	public SweaterType[] getAllSweaterTypes() {
-		return this.sweaterTypes.values().toArray(new SweaterType[0]);
-	}
 
 	@Override
 	public BackpackType[] getAllBackpackTypes() {
