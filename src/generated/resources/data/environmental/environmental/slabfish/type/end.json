@@ -12,7 +12,7 @@
       "dimension": "minecraft:the_end"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.end"
   },
   "texture": "environmental:type/end"

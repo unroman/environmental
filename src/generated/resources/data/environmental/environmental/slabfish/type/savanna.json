@@ -12,7 +12,7 @@
       "biomes": "#minecraft:is_savanna"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.savanna"
   },
   "texture": "environmental:type/savanna"

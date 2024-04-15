@@ -16,7 +16,7 @@
       "biomes": "#forge:is_snowy"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.stray"
   },
   "priority": 2,

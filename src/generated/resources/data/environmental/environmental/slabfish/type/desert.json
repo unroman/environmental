@@ -12,7 +12,7 @@
       "biomes": "minecraft:desert"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.desert"
   },
   "texture": "environmental:type/desert"

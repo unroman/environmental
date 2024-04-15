@@ -12,7 +12,7 @@
       "dimension": "minecraft:the_nether"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.nether"
   },
   "texture": "environmental:type/nether"

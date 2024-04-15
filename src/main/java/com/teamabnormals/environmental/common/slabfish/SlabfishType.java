@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishCondition;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalSlabfishTypeTags;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -36,7 +35,7 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 
 	public static final Codec<SlabfishType> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
-				ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
+				ExtraCodecs.COMPONENT.fieldOf("description").forGetter(entry -> entry.displayName),
 				ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture),
 				ResourceLocation.CODEC.optionalFieldOf("backpack").forGetter(entry -> entry.backpack),
 				Codec.INT.optionalFieldOf("priority", 0).forGetter(entry -> entry.priority),
@@ -45,7 +44,7 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	});
 
 	public static final Codec<SlabfishType> NETWORK_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
+			ExtraCodecs.COMPONENT.fieldOf("description").forGetter(entry -> entry.displayName),
 			ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture),
 			ResourceLocation.CODEC.optionalFieldOf("backpack").forGetter(entry -> entry.backpack)
 	).apply(instance, (displayName, texture, backpack) -> new SlabfishType(displayName, texture, backpack, -1, new SlabfishCondition[0])));
@@ -69,12 +68,12 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	}
 
 	public Holder<SlabfishType> holder(Level level) {
-		Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(level);
+		Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(level);
 		return registry.getHolderOrThrow(registry.getResourceKey(this).get());
 	}
 
 	public boolean is(Level level, TagKey<SlabfishType> tag) {
-		Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(level);
+		Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(level);
 		Optional<HolderSet.Named<SlabfishType>> set = registry.getTag(tag);
 		if (set.isEmpty())
 			return false;
@@ -109,6 +108,6 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	}
 
 	public boolean isBackpackEmpty(Level level) {
-		return this.backpack().isEmpty() || EnvironmentalRegistries.slabfishBackpacks(level).get(this.backpack().get()) == null;
+		return this.backpack().isEmpty() || SlabfishHelper.slabfishBackpacks(level).get(this.backpack().get()) == null;
 	}
 }

@@ -12,7 +12,7 @@
       "biomes": "minecraft:mangrove_swamp"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.mangrove"
   },
   "priority": 1,

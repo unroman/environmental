@@ -11,7 +11,7 @@
       "type": "environmental:raid"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.totem"
   },
   "priority": 2,

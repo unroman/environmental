@@ -12,7 +12,7 @@
       "biomes": "environmental:marsh"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.marsh"
   },
   "priority": 1,

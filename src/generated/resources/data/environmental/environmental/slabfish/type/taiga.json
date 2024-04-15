@@ -12,7 +12,7 @@
       "biomes": "#minecraft:is_taiga"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.taiga"
   },
   "texture": "environmental:type/taiga"

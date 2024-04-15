@@ -13,7 +13,7 @@
       ]
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.brown_mushroom"
   },
   "priority": 2,

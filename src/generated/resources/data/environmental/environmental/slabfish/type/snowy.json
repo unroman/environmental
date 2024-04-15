@@ -12,7 +12,7 @@
       "biomes": "#forge:is_snowy"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.snowy"
   },
   "priority": 1,

@@ -1,6 +1,7 @@
 package com.teamabnormals.environmental.common.inventory;
 
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
+import com.teamabnormals.environmental.common.slabfish.SlabfishHelper;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.registry.EnvironmentalMenuTypes;
@@ -50,7 +51,7 @@ public class SlabfishInventoryMenu extends AbstractContainerMenu {
 						if (this.getSlotIndex() != 2)
 							return true;
 						SlabfishType slabfishType = slabfish.getSlabfishType();
-						return slabfish.hasBackpack() && (slabfishType.backpack().isEmpty() || EnvironmentalRegistries.slabfishBackpacks(slabfish.level()).get(slabfishType.backpack().get()) == null);
+						return slabfish.hasBackpack() && slabfishType.isBackpackEmpty(slabfish.level());
 					}
 				}).setBackground(InventoryMenu.BLOCK_ATLAS, SLOT_INDEX_NAMES[i]);
 			}

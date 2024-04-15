@@ -12,7 +12,7 @@
       "biomes": "#minecraft:is_forest"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.forest"
   },
   "texture": "environmental:type/forest"

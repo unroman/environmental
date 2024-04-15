@@ -3,9 +3,9 @@ package com.teamabnormals.environmental.client.gui.screens.inventory;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
 import com.teamabnormals.environmental.common.inventory.SlabfishInventoryMenu;
+import com.teamabnormals.environmental.common.slabfish.SlabfishHelper;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -38,7 +38,7 @@ public class SlabfishInventoryScreen extends AbstractContainerScreen<SlabfishInv
 			guiGraphics.blit(SLABFISH_GUI_TEXTURE, i + 79, j + 17, 0, this.imageHeight, 5 * 18, 54);
 
 			SlabfishType slabfishType = this.slabfish.getSlabfishType();
-			if (slabfishType.backpack().isEmpty() || EnvironmentalRegistries.slabfishBackpacks(this.slabfish.level()).get(slabfishType.backpack().get()) == null)
+			if (slabfishType.backpack().isEmpty() || SlabfishHelper.slabfishBackpacks(this.slabfish.level()).get(slabfishType.backpack().get()) == null)
 				guiGraphics.blit(SLABFISH_GUI_TEXTURE, i + 7, j + 53, 0, 220, 18, 18);
 		}
 

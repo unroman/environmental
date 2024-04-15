@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 public record SweaterType(Optional<Component> displayName, Optional<ResourceLocation> texture, Optional<Holder<Item>> item, Optional<TagKey<Item>> tagKey) implements Predicate<ItemStack> {
 	public static final Codec<SweaterType> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
-				ExtraCodecs.COMPONENT.optionalFieldOf("displayName").forGetter(entry -> entry.displayName),
+				ExtraCodecs.COMPONENT.optionalFieldOf("description").forGetter(entry -> entry.displayName),
 				ResourceLocation.CODEC.optionalFieldOf("texture").forGetter(entry -> entry.texture),
 				RegistryFixedCodec.create(Registries.ITEM).optionalFieldOf("item").forGetter(entry -> entry.item),
 				TagKey.codec(Registries.ITEM).optionalFieldOf("tag").forGetter(entry -> entry.tagKey)

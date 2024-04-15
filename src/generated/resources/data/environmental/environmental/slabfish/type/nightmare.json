@@ -15,7 +15,7 @@
       "time": "night"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.nightmare"
   },
   "priority": 2,

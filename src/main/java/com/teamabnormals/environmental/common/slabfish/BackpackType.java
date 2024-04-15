@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 public record BackpackType(Component displayName, ResourceLocation texture, Optional<Holder<Item>> item, Optional<TagKey<Item>> tagKey) implements Predicate<ItemStack> {
 	public static final Codec<BackpackType> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
-				ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
+				ExtraCodecs.COMPONENT.fieldOf("description").forGetter(entry -> entry.displayName),
 				ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture),
 				RegistryFixedCodec.create(Registries.ITEM).optionalFieldOf("item").forGetter(entry -> entry.item),
 				TagKey.codec(Registries.ITEM).optionalFieldOf("tag").forGetter(entry -> entry.tagKey)
@@ -30,7 +30,7 @@ public record BackpackType(Component displayName, ResourceLocation texture, Opti
 
 	public static final Codec<BackpackType> NETWORK_CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
-				ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
+				ExtraCodecs.COMPONENT.fieldOf("description").forGetter(entry -> entry.displayName),
 				ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture)
 		).apply(instance, (component, texture) -> new BackpackType(component, texture, Optional.empty(), Optional.empty()));
 	});

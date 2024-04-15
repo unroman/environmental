@@ -1,5 +1,5 @@
 {
-  "displayName": {
+  "description": {
     "translate": "slabfish.backpack.environmental.red"
   },
   "tag": "forge:dyes/red",

@@ -4,7 +4,7 @@
       "type": "environmental:impossible"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.ghost"
   },
   "texture": "environmental:type/ghost"

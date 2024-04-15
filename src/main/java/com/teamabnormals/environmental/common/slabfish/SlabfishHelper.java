@@ -1,19 +1,33 @@
 package com.teamabnormals.environmental.common.slabfish;
 
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishSweaters;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class SlabfishLoader {
+public class SlabfishHelper {
+
+	public static Registry<SlabfishType> slabfishTypes(Level level) {
+		return level.registryAccess().registryOrThrow(EnvironmentalRegistries.SLABFISH_TYPE);
+	}
+
+	public static Registry<SweaterType> slabfishSweaters(Level level) {
+		return level.registryAccess().registryOrThrow(EnvironmentalRegistries.SLABFISH_SWEATER);
+	}
+
+	public static Registry<BackpackType> slabfishBackpacks(Level level) {
+		return level.registryAccess().registryOrThrow(EnvironmentalRegistries.SLABFISH_BACKPACK);
+	}
 
 	public static Optional<SlabfishType> getSlabfishType(Registry<SlabfishType> registry, SlabfishConditionContext context) {
 		return getSlabfishType(registry, __ -> true, context);

@@ -12,7 +12,7 @@
       "biomes": "#forge:is_outer_end"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.chorus"
   },
   "priority": 1,

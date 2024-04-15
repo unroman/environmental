@@ -21,7 +21,7 @@
       ]
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.blossom"
   },
   "priority": 1,

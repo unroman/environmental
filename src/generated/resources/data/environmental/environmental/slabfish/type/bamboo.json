@@ -12,7 +12,7 @@
       "biomes": "minecraft:bamboo_jungle"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.bamboo"
   },
   "priority": 1,

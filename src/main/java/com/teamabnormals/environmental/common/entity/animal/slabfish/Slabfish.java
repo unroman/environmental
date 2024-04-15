@@ -7,9 +7,9 @@ import com.teamabnormals.environmental.common.inventory.SlabfishInventory;
 import com.teamabnormals.environmental.common.inventory.SlabfishInventoryMenu;
 import com.teamabnormals.environmental.common.network.message.SOpenSlabfishInventoryMessage;
 import com.teamabnormals.environmental.common.slabfish.BackpackType;
-import com.teamabnormals.environmental.common.slabfish.SlabfishLoader;
-import com.teamabnormals.environmental.common.slabfish.SlabfishType;
+import com.teamabnormals.environmental.common.slabfish.SlabfishHelper;
 import com.teamabnormals.environmental.common.slabfish.SweaterType;
+import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalCriteriaTriggers;
@@ -17,7 +17,6 @@ import com.teamabnormals.environmental.core.other.EnvironmentalDataSerializers;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalSoundEvents;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishBackpacks;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishSweaters;
@@ -204,8 +203,8 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 		}
 
 		if (this.isTame()) {
-			Registry<BackpackType> backpacks = EnvironmentalRegistries.slabfishBackpacks(this.level());
-			if (this.hasBackpack() && slabfishType.isBackpackEmpty(this.level()) && SlabfishLoader.getBackpackType(backpacks, stack).isPresent() && !backpacks.getKey(SlabfishLoader.getBackpackType(backpacks, stack).get()).equals(this.getBackpackLocation())) {
+			Registry<BackpackType> backpacks = SlabfishHelper.slabfishBackpacks(this.level());
+			if (this.hasBackpack() && slabfishType.isBackpackEmpty(this.level()) && SlabfishHelper.getBackpackType(backpacks, stack).isPresent() && !backpacks.getKey(SlabfishHelper.getBackpackType(backpacks, stack).get()).equals(this.getBackpackLocation())) {
 				if (!this.level().isClientSide()) {
 					ItemStack previousBackpack = this.slabfishBackpack.getItem(2);
 
@@ -220,8 +219,8 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 				return InteractionResult.SUCCESS;
 			}
 
-			Registry<SweaterType> sweaters = EnvironmentalRegistries.slabfishSweaters(this.level());
-			if (SlabfishLoader.getSweaterType(sweaters, stack).isPresent() && !player.isSecondaryUseActive() && (!this.hasSweater() || !sweaters.getKey(SlabfishLoader.getSweaterType(sweaters, stack).get()).equals(this.getSweaterLocation()))) {
+			Registry<SweaterType> sweaters = SlabfishHelper.slabfishSweaters(this.level());
+			if (SlabfishHelper.getSweaterType(sweaters, stack).isPresent() && !player.isSecondaryUseActive() && (!this.hasSweater() || !sweaters.getKey(SlabfishHelper.getSweaterType(sweaters, stack).get()).equals(this.getSweaterLocation()))) {
 				if (!this.level().isClientSide()) {
 					ItemStack previousSweater = this.slabfishBackpack.getItem(0);
 					if (!previousSweater.isEmpty()) {
@@ -582,9 +581,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 		super.setCustomName(name);
 		if (!this.level().isClientSide() && name != null && !this.getSlabfishTypeLocation().equals(EnvironmentalSlabfishTypes.GHOST.location())) {
 			super.setCustomName(name);
-			Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(this.level());
+			Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(this.level());
 			SlabfishType currentType = this.getSlabfishType();
-			SlabfishLoader.getSlabfishType(registry, SlabfishConditionContext.rename(this)).ifPresent(newType -> {
+			SlabfishHelper.getSlabfishType(registry, SlabfishConditionContext.rename(this)).ifPresent(newType -> {
 				if (!currentType.canBeSold(this.level()) && newType.canBeSold(this.level()))
 					return;
 				if (registry.getKey(newType) != this.getSlabfishTypeLocation())
@@ -602,9 +601,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	public void thunderHit(ServerLevel world, LightningBolt lightningBolt) {
 		UUID uuid = lightningBolt.getUUID();
 		if (!world.isClientSide() && !uuid.equals(this.lightningUUID) && !this.getSlabfishTypeLocation().equals(EnvironmentalSlabfishTypes.GHOST.location())) {
-			Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(world);
+			Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(world);
 			SlabfishType currentType = this.getSlabfishType();
-			SlabfishLoader.getSlabfishType(registry, SlabfishConditionContext.lightning(this)).ifPresent(newType -> {
+			SlabfishHelper.getSlabfishType(registry, SlabfishConditionContext.lightning(this)).ifPresent(newType -> {
 				if (!currentType.canBeSold(world) && newType.canBeSold(world))
 					return;
 				this.setSlabfishType(newType);
@@ -615,7 +614,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	}
 
 	public SlabfishType getSlabfishType() {
-		return EnvironmentalRegistries.slabfishTypes(this.level()).get(this.getSlabfishTypeLocation());
+		return SlabfishHelper.slabfishTypes(this.level()).get(this.getSlabfishTypeLocation());
 	}
 
 	public ResourceLocation getSlabfishTypeLocation() {
@@ -623,7 +622,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	}
 
 	public void setSlabfishType(SlabfishType type) {
-		this.setSlabfishTypeFromLocation(EnvironmentalRegistries.slabfishTypes(this.level()).getKey(type));
+		this.setSlabfishTypeFromLocation(SlabfishHelper.slabfishTypes(this.level()).getKey(type));
 	}
 
 	public void setSlabfishTypeFromLocation(ResourceLocation type) {
@@ -641,8 +640,8 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 				this.setSlabfishType(((Slabfish.SlabfishData) spawnDataIn).type);
 				return spawnDataIn;
 			} else {
-				Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(this.level());
-				SlabfishType type = SlabfishLoader.getSlabfishType(registry, SlabfishConditionContext.spawned(this)).get();
+				Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(this.level());
+				SlabfishType type = SlabfishHelper.getSlabfishType(registry, SlabfishConditionContext.spawned(this)).get();
 
 				spawnDataIn = new SlabfishData(type);
 				this.setSlabfishType(type);
@@ -701,8 +700,8 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 			this.updateBackpack();
 		} else {
 			TagKey<SlabfishType> rarity = SlabfishType.getRandomRarity(this.level().getRandom().nextFloat());
-			Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(this.level());
-			SlabfishType type = SlabfishLoader.getRandomSlabfishType(registry, s -> s.canBeSold(this.level()) && s.is(this.level(), rarity), this.level().getRandom()).get();
+			Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(this.level());
+			SlabfishType type = SlabfishHelper.getRandomSlabfishType(registry, s -> s.canBeSold(this.level()) && s.is(this.level(), rarity), this.level().getRandom()).get();
 			this.setSlabfishType(type);
 		}
 	}
@@ -744,9 +743,9 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	private void updateSweater() {
 		if (!this.level().isClientSide()) {
 			ItemStack sweaterStack = this.slabfishBackpack.getItem(0);
-			Registry<SweaterType> sweaters = EnvironmentalRegistries.slabfishSweaters(this.level());
+			Registry<SweaterType> sweaters = SlabfishHelper.slabfishSweaters(this.level());
 
-			SweaterType sweaterType = SlabfishLoader.getSweaterType(sweaters, sweaterStack).orElse(sweaters.get(EnvironmentalSlabfishSweaters.EMPTY));
+			SweaterType sweaterType = SlabfishHelper.getSweaterType(sweaters, sweaterStack).orElse(sweaters.get(EnvironmentalSlabfishSweaters.EMPTY));
 			if (!sweaterType.isEmpty()) {
 				this.setSweater(sweaters.getKey(sweaterType));
 			} else {
@@ -759,7 +758,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 		if (!this.level().isClientSide()) {
 			SlabfishType slabfishType = this.getSlabfishType();
 			Optional<ResourceLocation> backpackType = slabfishType.backpack();
-			Registry<BackpackType> registry = EnvironmentalRegistries.slabfishBackpacks(this.level());
+			Registry<BackpackType> registry = SlabfishHelper.slabfishBackpacks(this.level());
 
 			if (!slabfishType.isBackpackEmpty(this.level())) {
 				this.setBackpack(backpackType.get());
@@ -767,7 +766,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 					this.spawnAtLocation(this.slabfishBackpack.removeItemNoUpdate(2));
 			} else {
 				ItemStack backpackColorStack = this.slabfishBackpack.getItem(2);
-				this.setBackpack(registry.getKey(SlabfishLoader.getBackpackType(registry, backpackColorStack).orElse(registry.get(EnvironmentalSlabfishBackpacks.BROWN))));
+				this.setBackpack(registry.getKey(SlabfishHelper.getBackpackType(registry, backpackColorStack).orElse(registry.get(EnvironmentalSlabfishBackpacks.BROWN))));
 			}
 		}
 	}
@@ -801,7 +800,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	}
 
 	public SweaterType getSweater() {
-		return EnvironmentalRegistries.slabfishSweaters(this.level()).get(this.getSweaterLocation());
+		return SlabfishHelper.slabfishSweaters(this.level()).get(this.getSweaterLocation());
 	}
 
 	public SlabfishOverlay getSlabfishOverlay() {

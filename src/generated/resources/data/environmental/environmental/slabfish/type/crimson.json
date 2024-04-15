@@ -12,7 +12,7 @@
       "biomes": "minecraft:crimson_forest"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.crimson"
   },
   "priority": 1,

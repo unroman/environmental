@@ -12,7 +12,7 @@
       "biomes": "#minecraft:is_jungle"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.jungle"
   },
   "texture": "environmental:type/jungle"

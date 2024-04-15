@@ -1,10 +1,9 @@
 package com.teamabnormals.environmental.common.entity.ai.goal.slabfish;
 
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
-import com.teamabnormals.environmental.common.slabfish.SlabfishLoader;
+import com.teamabnormals.environmental.common.slabfish.SlabfishHelper;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
@@ -119,8 +118,8 @@ public class SlabbyBreedGoal extends Goal {
 			slabby.setAge(-24000);
 			slabby.moveTo(this.animal.getX(), this.animal.getY(), this.animal.getZ(), 0.0F, 0.0F);
 
-			Registry<SlabfishType> registry = EnvironmentalRegistries.slabfishTypes(this.animal.level());
-			SlabfishType slabfishType = SlabfishLoader.getSlabfishType(registry, SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).get();
+			Registry<SlabfishType> registry = SlabfishHelper.slabfishTypes(this.animal.level());
+			SlabfishType slabfishType = SlabfishHelper.getSlabfishType(registry, SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).get();
 			slabby.setSlabfishType(slabfishType);
 
 			if (player != null) {

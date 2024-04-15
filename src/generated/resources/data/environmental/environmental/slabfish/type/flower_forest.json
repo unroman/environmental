@@ -12,7 +12,7 @@
       "biomes": "minecraft:flower_forest"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.flower_forest"
   },
   "priority": 1,

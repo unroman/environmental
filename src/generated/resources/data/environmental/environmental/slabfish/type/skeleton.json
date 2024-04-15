@@ -7,7 +7,7 @@
       ]
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.skeleton"
   },
   "priority": 2,

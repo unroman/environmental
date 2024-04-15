@@ -12,7 +12,7 @@
       "biomes": "#minecraft:is_river"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.river"
   },
   "texture": "environmental:type/river"

@@ -12,7 +12,7 @@
       "biomes": "minecraft:soul_sand_valley"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.soul_sand_valley"
   },
   "priority": 1,

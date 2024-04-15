@@ -23,7 +23,7 @@
       "fluids": "#minecraft:water"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.drowned"
   },
   "priority": 2,

@@ -6,7 +6,7 @@ import com.teamabnormals.environmental.client.model.SlabfishModel;
 import com.teamabnormals.environmental.client.resources.SlabfishSpriteUploader;
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
 import com.teamabnormals.environmental.common.slabfish.BackpackType;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
+import com.teamabnormals.environmental.common.slabfish.SlabfishHelper;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -27,7 +27,7 @@ public class BackpackRenderLayer<E extends Slabfish, M extends SlabfishModel<E>>
 	public void render(PoseStack matrixStack, MultiBufferSource buffer, int packedLightIn, E slabby, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (!slabby.hasBackpack()) return;
 
-		Registry<BackpackType> backpacks = EnvironmentalRegistries.slabfishBackpacks(slabby.level());
+		Registry<BackpackType> backpacks = SlabfishHelper.slabfishBackpacks(slabby.level());
 		BackpackType backpackType = backpacks.get(slabby.getBackpackLocation());
 		VertexConsumer builder = buffer.getBuffer(RenderType.entityCutoutNoCull(SlabfishSpriteUploader.ATLAS_LOCATION));
 		this.getParentModel().sprite = SlabfishSpriteUploader.instance().getSprite(backpackType.texture());

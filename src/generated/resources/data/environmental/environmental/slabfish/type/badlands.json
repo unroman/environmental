@@ -12,7 +12,7 @@
       "biomes": "#minecraft:is_badlands"
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.badlands"
   },
   "texture": "environmental:type/badlands"

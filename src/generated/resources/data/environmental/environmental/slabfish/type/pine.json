@@ -21,7 +21,7 @@
       ]
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.pine"
   },
   "priority": 1,

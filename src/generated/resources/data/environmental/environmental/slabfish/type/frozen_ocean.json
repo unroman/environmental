@@ -21,7 +21,7 @@
       ]
     }
   ],
-  "displayName": {
+  "description": {
     "translate": "slabfish.type.environmental.frozen_ocean"
   },
   "priority": 2,

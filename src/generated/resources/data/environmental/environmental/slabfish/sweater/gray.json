@@ -1,5 +1,5 @@
 {
-  "displayName": {
+  "description": {
     "translate": "slabfish.sweater.environmental.gray"
   },
   "item": "minecraft:gray_wool",
