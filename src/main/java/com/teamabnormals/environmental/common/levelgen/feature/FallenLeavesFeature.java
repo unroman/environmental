@@ -1,7 +1,6 @@
 package com.teamabnormals.environmental.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
-import com.teamabnormals.environmental.core.registry.EnvironmentalBiomes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;

@@ -128,10 +128,10 @@ public class CatLeapAtDwarfSpruceGoal extends Goal {
 		BlockPos blockpos = this.cat.blockPosition();
 		MutableBlockPos mutable = new MutableBlockPos();
 
-		for(int y = 0; y <= 1; y = y > 0 ? -y : 1 - y) {
-			for(int r = 0; r < 6; ++r) {
-				for(int x = 0; x <= r; x = x > 0 ? -x : 1 - x) {
-					for(int z = x < r && x > -r ? r : 0; z <= r; z = z > 0 ? -z : 1 - z) {
+		for (int y = 0; y <= 1; y = y > 0 ? -y : 1 - y) {
+			for (int r = 0; r < 6; ++r) {
+				for (int x = 0; x <= r; x = x > 0 ? -x : 1 - x) {
+					for (int z = x < r && x > -r ? r : 0; z <= r; z = z > 0 ? -z : 1 - z) {
 						mutable.setWithOffset(blockpos, x, y, z);
 						if (this.isSpruceBottom(this.cat.level(), mutable)) {
 							List<BlockPos> treepositions = new ArrayList<>();

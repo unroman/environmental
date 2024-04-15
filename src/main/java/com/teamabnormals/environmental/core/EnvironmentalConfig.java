@@ -21,7 +21,7 @@ public class EnvironmentalConfig {
 		public final BooleanValue largerPigLitters;
 		public final IntValue minimumAdditionalPiglets;
 		public final IntValue maximumAdditionalPiglets;
-		
+
 		public final BooleanValue largerHoglinLitters;
 		public final IntValue minimumAdditionalHoglets;
 		public final IntValue maximumAdditionalHoglets;

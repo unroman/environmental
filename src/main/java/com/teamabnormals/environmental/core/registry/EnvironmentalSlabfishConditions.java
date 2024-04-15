@@ -1,8 +1,8 @@
 package com.teamabnormals.environmental.core.registry;
 
+import com.teamabnormals.environmental.common.slabfish.SlabfishConditionType;
 import com.teamabnormals.environmental.common.slabfish.condition.*;
 import com.teamabnormals.environmental.core.Environmental;
-import com.teamabnormals.environmental.common.slabfish.SlabfishConditionType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;

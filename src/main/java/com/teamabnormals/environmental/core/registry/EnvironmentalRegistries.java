@@ -1,8 +1,8 @@
 package com.teamabnormals.environmental.core.registry;
 
 import com.teamabnormals.environmental.common.slabfish.BackpackType;
-import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
+import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import com.teamabnormals.environmental.core.Environmental;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

@@ -5,7 +5,6 @@ import com.teamabnormals.boatload.core.data.server.BoatloadRecipeProvider;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalBlockFamilies;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
-import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
 import com.teamabnormals.environmental.integration.boatload.EnvironmentalBoatTypes;
 import com.teamabnormals.woodworks.core.data.server.WoodworksRecipeProvider;

@@ -46,7 +46,7 @@ public class EnvironmentalItemModelProvider extends BlueprintItemModelProvider {
 
 	private void koiBuckets() {
 		String path = ForgeRegistries.ITEMS.getKey(EnvironmentalItems.KOI_BUCKET.get()).getPath();
-		ItemModelBuilder model =  this.withExistingParent(path, "item/generated").texture("layer0", new ResourceLocation(this.modid, "item/" + path + "/" + KoiBreed.KOHAKU.name().toLowerCase(Locale.ROOT)));
+		ItemModelBuilder model = this.withExistingParent(path, "item/generated").texture("layer0", new ResourceLocation(this.modid, "item/" + path + "/" + KoiBreed.KOHAKU.name().toLowerCase(Locale.ROOT)));
 		for (KoiBreed breed : KoiBreed.values()) {
 			ResourceLocation name = new ResourceLocation(this.modid, "item/" + path + "/" + breed.name().toLowerCase(Locale.ROOT));
 			model.override().model(new UncheckedModelFile(name)).predicate(new ResourceLocation(this.modid, "variant"), breed.getId());

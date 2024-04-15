@@ -2,8 +2,8 @@ package com.teamabnormals.environmental.common.item;
 
 import com.teamabnormals.environmental.common.slabfish.BackpackType;
 import com.teamabnormals.environmental.common.slabfish.SlabfishHelper;
-import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
+import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishSweaters;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;

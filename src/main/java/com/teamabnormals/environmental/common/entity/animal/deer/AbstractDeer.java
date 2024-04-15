@@ -174,6 +174,7 @@ public abstract class AbstractDeer extends Animal {
 			}
 		}
 	}
+
 	@Override
 	public void tick() {
 		super.tick();

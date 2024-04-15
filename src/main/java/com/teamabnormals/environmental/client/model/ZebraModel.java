@@ -206,7 +206,7 @@ public class ZebraModel<T extends Zebra> extends AgeableListModel<T> {
 		this.rightFrontLeg.z = this.leftFrontLeg.z;
 		this.leftFrontLeg.xRot += (-Mth.PI * 0.55F + standswing * 0.3F) * frontkicklegrot;
 		this.rightFrontLeg.xRot += (-Mth.PI * 0.55F - standswing * 0.3F) * frontkicklegrot;
-		
+
 		if (movingtail) {
 			this.tail.yRot = Mth.cos(ageinticks * 0.7F);
 		} else {
@@ -225,9 +225,9 @@ public class ZebraModel<T extends Zebra> extends AgeableListModel<T> {
 		this.leftFrontBabyLeg.y = this.leftFrontLeg.y;
 		this.leftFrontBabyLeg.z = this.leftFrontLeg.z;
 		this.leftFrontBabyLeg.xRot = this.leftFrontLeg.xRot;
-		
+
 		boolean isbaby = zebra.isBaby();
-		
+
 		this.rightHindLeg.visible = !isbaby;
 		this.leftHindLeg.visible = !isbaby;
 		this.rightFrontLeg.visible = !isbaby;

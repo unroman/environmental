@@ -24,7 +24,7 @@ public class ZebraRunAroundLikeCrazyGoal extends RunAroundLikeCrazyGoal {
 			if (entity instanceof Player) {
 				int i = this.zebra.getTemper();
 				int j = this.zebra.getMaxTemper();
-				if (j > 0 && this.zebra.getRandom().nextInt(j) < i && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this.zebra, (Player)entity)) {
+				if (j > 0 && this.zebra.getRandom().nextInt(j) < i && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this.zebra, (Player) entity)) {
 					this.zebra.tameWithName((Player) entity);
 					this.zebra.stopBeingAngry();
 					return;
@@ -37,7 +37,7 @@ public class ZebraRunAroundLikeCrazyGoal extends RunAroundLikeCrazyGoal {
 			this.zebra.kick(backfling);
 			this.zebra.flingPassengers(backfling);
 			this.zebra.playAngrySound();
-			this.zebra.level().broadcastEntityEvent(this.zebra, (byte)6);
+			this.zebra.level().broadcastEntityEvent(this.zebra, (byte) 6);
 		}
 
 		if (entity instanceof LivingEntity)

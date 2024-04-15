@@ -13,7 +13,6 @@ import com.teamabnormals.blueprint.common.block.thatch.ThatchSlabBlock;
 import com.teamabnormals.blueprint.common.block.thatch.ThatchStairBlock;
 import com.teamabnormals.blueprint.core.util.PropertyUtil;
 import com.teamabnormals.blueprint.core.util.registry.BlockSubRegistryHelper;
-import com.teamabnormals.environmental.common.block.PlumLeavesBlock;
 import com.teamabnormals.environmental.common.block.*;
 import com.teamabnormals.environmental.common.block.grower.*;
 import com.teamabnormals.environmental.common.levelgen.util.WisteriaColor;

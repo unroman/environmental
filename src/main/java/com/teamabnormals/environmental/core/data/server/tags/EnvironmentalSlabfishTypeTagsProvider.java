@@ -2,8 +2,8 @@ package com.teamabnormals.environmental.core.data.server.tags;
 
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalSlabfishTypeTags;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;

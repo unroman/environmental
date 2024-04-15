@@ -1,9 +1,9 @@
 package com.teamabnormals.environmental.core.registry;
 
 import com.teamabnormals.environmental.client.particle.CattailFluffParticle;
-import com.teamabnormals.environmental.client.particle.PlumBlossomParticle;
 import com.teamabnormals.environmental.client.particle.LotusBlossomParticle;
 import com.teamabnormals.environmental.client.particle.PigFindsTruffleParticle;
+import com.teamabnormals.environmental.client.particle.PlumBlossomParticle;
 import com.teamabnormals.environmental.core.Environmental;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;

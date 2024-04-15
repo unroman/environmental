@@ -2,7 +2,6 @@ package com.teamabnormals.environmental.core.registry;
 
 import com.teamabnormals.environmental.common.levelgen.placement.BetterNoiseBasedCountPlacement;
 import com.teamabnormals.environmental.core.Environmental;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraftforge.registries.DeferredRegister;

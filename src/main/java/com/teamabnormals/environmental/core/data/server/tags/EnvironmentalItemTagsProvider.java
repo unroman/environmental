@@ -20,7 +20,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-import static com.teamabnormals.environmental.core.registry.EnvironmentalBlocks.*;
+import static com.teamabnormals.environmental.core.registry.EnvironmentalBlocks.CATTAIL;
+import static com.teamabnormals.environmental.core.registry.EnvironmentalBlocks.DIANTHUS;
 import static com.teamabnormals.environmental.core.registry.EnvironmentalItems.*;
 
 public class EnvironmentalItemTagsProvider extends BlueprintItemTagsProvider {

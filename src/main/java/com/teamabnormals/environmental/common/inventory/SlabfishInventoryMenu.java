@@ -1,11 +1,9 @@
 package com.teamabnormals.environmental.common.inventory;
 
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
-import com.teamabnormals.environmental.common.slabfish.SlabfishHelper;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.registry.EnvironmentalMenuTypes;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;

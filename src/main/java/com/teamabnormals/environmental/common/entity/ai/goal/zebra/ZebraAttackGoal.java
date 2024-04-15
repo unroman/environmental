@@ -59,7 +59,7 @@ public class ZebraAttackGoal extends MeleeAttackGoal {
 			this.resetAttackCooldown();
 			double x = target.getX() - this.mob.getX();
 			double y = target.getZ() - this.mob.getZ();
-			float f = (float)(Mth.atan2(y, x) * Mth.RAD_TO_DEG) - 90.0F;
+			float f = (float) (Mth.atan2(y, x) * Mth.RAD_TO_DEG) - 90.0F;
 			this.mob.setYRot(f);
 			this.mob.yRotO = this.mob.getYRot();
 			this.mob.yBodyRot = this.mob.getYRot();

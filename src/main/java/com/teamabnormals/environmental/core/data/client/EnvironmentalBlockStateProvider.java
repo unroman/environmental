@@ -48,7 +48,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 
 		this.cubeColumnBlock(PINECONE);
 		this.cubeColumnBlock(WAXED_PINECONE, PINECONE);
-		
+
 		this.blockFamily(EnvironmentalBlockFamilies.WISTERIA_PLANKS_FAMILY);
 		this.logBlocks(WISTERIA_LOG, WISTERIA_WOOD);
 		this.logBlocks(STRIPPED_WISTERIA_LOG, STRIPPED_WISTERIA_WOOD);
