@@ -18,7 +18,7 @@ public final class EnvironmentalRegistries {
 	public static void registerRegistries(DataPackRegistryEvent.NewRegistry event) {
 		event.dataPackRegistry(SLABFISH_TYPE, SlabfishType.CODEC, SlabfishType.NETWORK_CODEC);
 		event.dataPackRegistry(SLABFISH_BACKPACK, BackpackType.CODEC, BackpackType.NETWORK_CODEC);
-		event.dataPackRegistry(SLABFISH_SWEATER, SweaterType.CODEC, SweaterType.NETWORK_CODEC);
+		event.dataPackRegistry(SLABFISH_SWEATER, SweaterType.CODEC, SweaterType.CODEC);
 	}
 
 	private static <T> ResourceKey<Registry<T>> key(String name) {

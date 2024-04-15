@@ -29,6 +29,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class SlabfishBucketItem extends MobBucketItem {
 	private static final Map<String, ResourceLocation> LOCATION_CACHE = new HashMap<>();
@@ -57,7 +58,7 @@ public class SlabfishBucketItem extends MobBucketItem {
 			if (tag.contains("BackpackType", Tag.TAG_STRING)) {
 				Registry<BackpackType> registry = EnvironmentalRegistries.slabfishBackpacks(worldIn);
 				BackpackType backpackType = registry.get(LOCATION_CACHE.computeIfAbsent(tag.getString("BackpackType"), ResourceLocation::new));
-				tooltip.add(backpackType.displayName().get().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+				tooltip.add(backpackType.displayName().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 			}
 
 			Registry<SweaterType> sweaters = EnvironmentalRegistries.slabfishSweaters(worldIn);
@@ -72,14 +73,16 @@ public class SlabfishBucketItem extends MobBucketItem {
 					int index = slotNbt.getByte("Slot") & 255;
 					if (index == 0) {
 						ItemStack slotStack = ItemStack.of(slotNbt);
-						SWEATER_TYPE_CACHE.setRight(sweaters.getKey(SlabfishLoader.getSweaterType(sweaters, slotStack).get()));
+						Optional<SweaterType> sweater = SlabfishLoader.getSweaterType(sweaters, slotStack);
+						SWEATER_TYPE_CACHE.setRight(sweater.isPresent() ? sweaters.getKey(sweater.get()) : EnvironmentalSlabfishSweaters.EMPTY.location());
 						break;
 					}
 				}
 			}
 
-			if (!EnvironmentalSlabfishSweaters.EMPTY.location().equals(SWEATER_TYPE_CACHE.getRight()))
-				tooltip.add(sweaters.get(SWEATER_TYPE_CACHE.getRight()).displayName().get().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+			SweaterType type = sweaters.get(SWEATER_TYPE_CACHE.getRight());
+			if (type != null && type.displayName().isPresent() && !EnvironmentalSlabfishSweaters.EMPTY.location().equals(SWEATER_TYPE_CACHE.getRight()))
+				tooltip.add(type.displayName().get().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 		}
 	}
 }

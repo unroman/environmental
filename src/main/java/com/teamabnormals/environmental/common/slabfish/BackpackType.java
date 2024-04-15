@@ -18,11 +18,11 @@ import net.minecraft.world.level.ItemLike;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public record BackpackType(Optional<Component> displayName, Optional<ResourceLocation> texture, Optional<Holder<Item>> item, Optional<TagKey<Item>> tagKey) implements Predicate<ItemStack> {
+public record BackpackType(Component displayName, ResourceLocation texture, Optional<Holder<Item>> item, Optional<TagKey<Item>> tagKey) implements Predicate<ItemStack> {
 	public static final Codec<BackpackType> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
-				ExtraCodecs.COMPONENT.optionalFieldOf("displayName").forGetter(entry -> entry.displayName),
-				ResourceLocation.CODEC.optionalFieldOf("texture").forGetter(entry -> entry.texture),
+				ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
+				ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture),
 				RegistryFixedCodec.create(Registries.ITEM).optionalFieldOf("item").forGetter(entry -> entry.item),
 				TagKey.codec(Registries.ITEM).optionalFieldOf("tag").forGetter(entry -> entry.tagKey)
 		).apply(instance, BackpackType::new);
@@ -30,17 +30,17 @@ public record BackpackType(Optional<Component> displayName, Optional<ResourceLoc
 
 	public static final Codec<BackpackType> NETWORK_CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
-				ExtraCodecs.COMPONENT.optionalFieldOf("displayName").forGetter(entry -> entry.displayName),
-				ResourceLocation.CODEC.optionalFieldOf("texture").forGetter(entry -> entry.texture)
+				ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
+				ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture)
 		).apply(instance, (component, texture) -> new BackpackType(component, texture, Optional.empty(), Optional.empty()));
 	});
 
 	public static BackpackType create(Component displayName, ResourceLocation texture, ItemLike item) {
-		return new BackpackType(Optional.of(displayName), Optional.of(texture), Optional.of(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem())), java.util.Optional.empty());
+		return new BackpackType(displayName, texture, Optional.of(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem())), java.util.Optional.empty());
 	}
 
 	public static BackpackType create(Component displayName, ResourceLocation texture, TagKey<Item> tag) {
-		return new BackpackType(Optional.of(displayName), Optional.of(texture), Optional.empty(), Optional.of(tag));
+		return new BackpackType(displayName, texture, Optional.empty(), Optional.of(tag));
 	}
 
 	@Override

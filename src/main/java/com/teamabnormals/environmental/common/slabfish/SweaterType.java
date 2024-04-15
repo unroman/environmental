@@ -28,13 +28,6 @@ public record SweaterType(Optional<Component> displayName, Optional<ResourceLoca
 		).apply(instance, SweaterType::new);
 	});
 
-	public static final Codec<SweaterType> NETWORK_CODEC = RecordCodecBuilder.create(instance -> {
-		return instance.group(
-				ExtraCodecs.COMPONENT.optionalFieldOf("displayName").forGetter(entry -> entry.displayName),
-				ResourceLocation.CODEC.optionalFieldOf("texture").forGetter(entry -> entry.texture)
-		).apply(instance, (component, texture) -> new SweaterType(component, texture, Optional.empty(), Optional.empty()));
-	});
-
 	public static SweaterType create(Component displayName, ResourceLocation texture, ItemLike item) {
 		return new SweaterType(Optional.of(displayName), Optional.of(texture), Optional.of(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem())), java.util.Optional.empty());
 	}

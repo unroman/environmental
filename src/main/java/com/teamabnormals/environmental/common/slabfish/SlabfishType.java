@@ -5,9 +5,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishCondition;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
-import com.teamabnormals.environmental.core.Environmental;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalSlabfishTypeTags;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -46,12 +45,10 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	});
 
 	public static final Codec<SlabfishType> NETWORK_CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			ExtraCodecs.COMPONENT.fieldOf("displayName").forGetter(entry -> entry.displayName),
+			ResourceLocation.CODEC.fieldOf("texture").forGetter(entry -> entry.texture),
 			ResourceLocation.CODEC.optionalFieldOf("backpack").forGetter(entry -> entry.backpack)
-	).apply(instance, (backpack) -> new SlabfishType(Component.empty(), new ResourceLocation(Environmental.MOD_ID, "entity/slabfish/type/swamp"), backpack, -1, new SlabfishCondition[0])));
-
-	public ResourceLocation fullTexture() {
-		return this.texture.withPath(string -> "textures/" + string + ".png");
-	}
+	).apply(instance, (displayName, texture, backpack) -> new SlabfishType(displayName, texture, backpack, -1, new SlabfishCondition[0])));
 
 	@Override
 	public boolean test(SlabfishConditionContext slabfishEntity) {

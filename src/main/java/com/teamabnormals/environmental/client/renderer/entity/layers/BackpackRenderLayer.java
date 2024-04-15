@@ -30,7 +30,7 @@ public class BackpackRenderLayer<E extends Slabfish, M extends SlabfishModel<E>>
 		Registry<BackpackType> backpacks = EnvironmentalRegistries.slabfishBackpacks(slabby.level());
 		BackpackType backpackType = backpacks.get(slabby.getBackpackLocation());
 		VertexConsumer builder = buffer.getBuffer(RenderType.entityCutoutNoCull(SlabfishSpriteUploader.ATLAS_LOCATION));
-		this.getParentModel().sprite = SlabfishSpriteUploader.instance().getSprite(backpackType.texture().get());
+		this.getParentModel().sprite = SlabfishSpriteUploader.instance().getSprite(backpackType.texture());
 		this.getParentModel().setupAnim(slabby, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		this.getParentModel().renderToBuffer(matrixStack, builder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 	}
