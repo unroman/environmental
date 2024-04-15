@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "#minecraft:is_badlands"
+    }
+  ],
+  "displayName": {
+    "translate": "slabfish.type.environmental.badlands"
+  },
+  "texture": "environmental:type/badlands"
+}

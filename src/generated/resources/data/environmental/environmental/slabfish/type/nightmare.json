@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:insomnia"
+    },
+    {
+      "type": "environmental:time",
+      "time": "night"
+    }
+  ],
+  "displayName": {
+    "translate": "slabfish.type.environmental.nightmare"
+  },
+  "priority": 2,
+  "texture": "environmental:type/nightmare"
+}

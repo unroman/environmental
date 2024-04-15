@@ -6,10 +6,12 @@ import com.teamabnormals.environmental.common.inventory.SlabfishInventoryMenu;
 import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,8 +41,9 @@ public class SlabfishInventoryScreen extends AbstractContainerScreen<SlabfishInv
 		if (this.slabfish.hasBackpack()) {
 			guiGraphics.blit(SLABFISH_GUI_TEXTURE, i + 79, j + 17, 0, this.imageHeight, 5 * 18, 54);
 
-			SlabfishType slabfishType = this.slabfishManager.getSlabfishType(this.slabfish.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH);
-			if (slabfishType.getCustomBackpack() == null || !this.slabfishManager.getBackpackType(slabfishType.getCustomBackpack()).isPresent())
+			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.slabfish.level());
+			SlabfishType slabfishType = registry.get(this.slabfish.getSlabfishType());
+			if (slabfishType.backpack().isEmpty() || this.slabfishManager.getBackpackType(slabfishType.backpack().get()).isEmpty())
 				guiGraphics.blit(SLABFISH_GUI_TEXTURE, i + 7, j + 53, 0, 220, 18, 18);
 		}
 

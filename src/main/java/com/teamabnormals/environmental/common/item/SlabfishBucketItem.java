@@ -4,8 +4,10 @@ import com.teamabnormals.environmental.common.slabfish.BackpackType;
 import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.SweaterType;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -43,9 +45,11 @@ public class SlabfishBucketItem extends MobBucketItem {
 			SlabfishManager slabfishManager = SlabfishManager.get(worldIn);
 
 			if (tag.contains("SlabfishType", Tag.TAG_STRING)) {
-				SlabfishType slabfishType = slabfishManager.getSlabfishType(LOCATION_CACHE.computeIfAbsent(tag.getString("SlabfishType"), ResourceLocation::new)).orElse(SlabfishManager.DEFAULT_SLABFISH);
-				if (slabfishType != SlabfishManager.DEFAULT_SLABFISH)
-					tooltip.add(slabfishType.getDisplayName().copy().withStyle(ChatFormatting.ITALIC, slabfishType.getRarity().getFormatting()));
+				Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(worldIn);
+
+				SlabfishType slabfishType = registry.get(LOCATION_CACHE.computeIfAbsent(tag.getString("SlabfishType"), ResourceLocation::new));
+				if (!registry.getKey(slabfishType).equals(SlabfishManager.SWAMP))
+					tooltip.add(slabfishType.displayName().copy().withStyle(ChatFormatting.ITALIC, SlabfishType.RARITIES.get(slabfishType.getRarity(worldIn)).getSecond()));
 			}
 			if (tag.contains("Age", Tag.TAG_ANY_NUMERIC) && tag.getInt("Age") < 0) {
 				tooltip.add((Component.translatable("entity.environmental.slabfish.baby").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));

@@ -1,17 +1,16 @@
 package com.teamabnormals.environmental.common.slabfish.condition;
 
+import com.google.common.base.Suppliers;
+import com.mojang.serialization.Codec;
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
-import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.TagKey;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -22,8 +21,12 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * <p>A context used for determining what kinds of slabfish can be spawned.</p>
@@ -31,44 +34,42 @@ import java.util.Map;
  * @author Ocelot
  */
 public class SlabfishConditionContext {
+	private final ServerLevel level;
 	private final Event event;
-	private final LazyLoadedValue<RandomSource> random;
-	private final LazyLoadedValue<String> name;
-	private final LazyLoadedValue<BlockPos> pos;
-	private final LazyLoadedValue<Holder<Biome>> biome;
-	private final LazyLoadedValue<Boolean> inRaid;
-	private final LazyLoadedValue<BlockState> inBlock;
-	private final LazyLoadedValue<FluidState> inFluid;
-	private final LazyLoadedValue<Boolean> dayTime;
-	private final LazyLoadedValue<Boolean> nightTime;
-	private final LazyLoadedValue<Integer> light;
-	private final Map<LightLayer, LazyLoadedValue<Integer>> lightTypes;
-	private final LazyLoadedValue<ResourceLocation> dimension;
-	private final LazyLoadedValue<ResourceLocation> slabfishType;
-	private final LazyLoadedValue<Boolean> breederInsomnia;
-	private final Pair<SlabfishType, SlabfishType> parents;
+	private final Supplier<RandomSource> random;
+	private final Supplier<String> name;
+	private final Supplier<BlockPos> pos;
+	private final Supplier<Holder<Biome>> biome;
+	private final Supplier<Boolean> inRaid;
+	private final Supplier<BlockState> inBlock;
+	private final Supplier<FluidState> inFluid;
+	private final Supplier<Time> time;
+	private final Supplier<Integer> light;
+	private final Map<LightLayer, Supplier<Integer>> lightTypes;
+	private final Supplier<ResourceLocation> dimension;
+	private final Supplier<ResourceLocation> slabfishType;
+	private final Supplier<Boolean> breederInsomnia;
+	private final Pair<ResourceLocation, ResourceLocation> parents;
 
 	private SlabfishConditionContext(Slabfish slabfish, Event event, @Nullable ServerPlayer breeder, @Nullable Slabfish parent1, @Nullable Slabfish parent2) {
-		ServerLevel world = (ServerLevel) slabfish.getCommandSenderWorld();
+		this.level = (ServerLevel) slabfish.getCommandSenderWorld();
 		this.event = event;
-		this.random = new LazyLoadedValue<>(world::getRandom);
-		this.name = new LazyLoadedValue<>(() -> slabfish.getDisplayName().getString().trim());
-		this.pos = new LazyLoadedValue<>(() -> new BlockPos(slabfish.blockPosition()));
-		this.biome = new LazyLoadedValue<>(() -> world.getBiome(this.pos.get()));
-		this.inRaid = new LazyLoadedValue<>(() -> world.getRaidAt(this.pos.get()) != null);
-		this.inBlock = new LazyLoadedValue<>(() -> world.getBlockState(this.pos.get()));
-		this.inFluid = new LazyLoadedValue<>(() -> world.getFluidState(this.pos.get()));
-		this.dayTime = new LazyLoadedValue<>(world::isDay);
-		this.nightTime = new LazyLoadedValue<>(world::isNight);
-		this.light = new LazyLoadedValue<>(() -> world.getMaxLocalRawBrightness(this.pos.get()));
+		this.random = Suppliers.memoize(level::getRandom);
+		this.name = Suppliers.memoize(() -> slabfish.getDisplayName().getString().trim());
+		this.pos = Suppliers.memoize(() -> new BlockPos(slabfish.blockPosition()));
+		this.biome = Suppliers.memoize(() -> level.getBiome(this.pos.get()));
+		this.inRaid = Suppliers.memoize(() -> level.getRaidAt(this.pos.get()) != null);
+		this.inBlock = Suppliers.memoize(() -> level.getBlockState(this.pos.get()));
+		this.inFluid = Suppliers.memoize(() -> level.getFluidState(this.pos.get()));
+		this.time = Suppliers.memoize(() -> level.isDay() ? Time.DAY : Time.NIGHT);
+		this.light = Suppliers.memoize(() -> level.getMaxLocalRawBrightness(this.pos.get()));
 		this.lightTypes = new HashMap<>();
 		for (LightLayer lightType : LightLayer.values())
-			this.lightTypes.put(lightType, new LazyLoadedValue<>(() -> world.getBrightness(lightType, this.pos.get())));
-		this.dimension = new LazyLoadedValue<>(() -> world.dimension().location());
-		this.slabfishType = new LazyLoadedValue<>(slabfish::getSlabfishType);
-		this.breederInsomnia = new LazyLoadedValue<>(() -> breeder != null && breeder.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)) >= 72000 && world.isNight());
-		SlabfishManager slabfishManager = SlabfishManager.get(world);
-		this.parents = parent1 != null && parent2 != null ? new ImmutablePair<>(slabfishManager.getSlabfishType(parent1.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH), slabfishManager.getSlabfishType(parent2.getSlabfishType()).orElse(SlabfishManager.DEFAULT_SLABFISH)) : null;
+			this.lightTypes.put(lightType, Suppliers.memoize(() -> level.getBrightness(lightType, this.pos.get())));
+		this.dimension = Suppliers.memoize(() -> level.dimension().location());
+		this.slabfishType = Suppliers.memoize(slabfish::getSlabfishType);
+		this.breederInsomnia = Suppliers.memoize(() -> breeder != null && breeder.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)) >= 72000 && level.isNight());
+		this.parents = parent1 != null && parent2 != null ? new ImmutablePair<>(parent1.getSlabfishType(), parent2.getSlabfishType()) : null;
 	}
 
 	/**
@@ -150,17 +151,10 @@ public class SlabfishConditionContext {
 	}
 
 	/**
-	 * @return Whether or not it is currently day
+	 * @return The time
 	 */
-	public boolean isDay() {
-		return this.dayTime.get();
-	}
-
-	/**
-	 * @return Whether or not it is currently night
-	 */
-	public boolean isNight() {
-		return this.nightTime.get();
+	public Time getTime() {
+		return this.time.get();
 	}
 
 	/**
@@ -171,24 +165,17 @@ public class SlabfishConditionContext {
 	}
 
 	/**
-	 * @return Whether or not the slabfish is currently in water
+	 * @return Whether or not the slabfish is currently in that tag
 	 */
-	public boolean isInBlock(Block block) {
-		return this.inBlock.get().is(block);
+	public Holder<Block> getBlock() {
+		return this.inBlock.get().getBlockHolder();
 	}
 
 	/**
 	 * @return Whether or not the slabfish is currently in that tag
 	 */
-	public boolean isInBlock(TagKey<Block> tag) {
-		return this.inBlock.get().is(tag);
-	}
-
-	/**
-	 * @return Whether or not the slabfish is currently in that tag
-	 */
-	public boolean isInFluid(TagKey<Fluid> tag) {
-		return this.inFluid.get().is(tag);
+	public Holder<Fluid> getFluid() {
+		return this.inFluid.get().holder();
 	}
 
 	/**
@@ -233,14 +220,60 @@ public class SlabfishConditionContext {
 	 * @return The types of slabfish the parents were or null if there are no parents
 	 */
 	@Nullable
-	public Pair<SlabfishType, SlabfishType> getParentTypes() {
+	public Pair<ResourceLocation, ResourceLocation> getParentTypes() {
 		return this.parents;
 	}
 
 	/**
 	 * The type a context can be fired under.
 	 */
-	public enum Event {
-		SPAWN, RENAME, LIGHTNING, BREED
+	public enum Event implements StringRepresentable {
+		SPAWN("spawn"),
+		RENAME("rename"),
+		LIGHTNING("lightning"),
+		BREED("breed");
+
+		private static final Map<String, Event> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(Event::getSerializedName, Function.identity()));
+		public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
+
+		private final String name;
+
+		Event(String name) {
+			this.name = name;
+		}
+
+		@Nullable
+		public static Event byName(String name) {
+			return BY_NAME.get(name);
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.name;
+		}
+	}
+
+	public enum Time implements StringRepresentable {
+		DAY("day"),
+		NIGHT("night");
+
+		private static final Map<String, Time> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(Time::getSerializedName, Function.identity()));
+		public static final Codec<Time> CODEC = StringRepresentable.fromEnum(Time::values);
+
+		private final String name;
+
+		Time(String name) {
+			this.name = name;
+		}
+
+		@Nullable
+		public static Time byName(String name) {
+			return BY_NAME.get(name);
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.name;
+		}
 	}
 }

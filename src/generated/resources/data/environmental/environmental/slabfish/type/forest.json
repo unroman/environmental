@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "#minecraft:is_forest"
+    }
+  ],
+  "displayName": {
+    "translate": "slabfish.type.environmental.forest"
+  },
+  "texture": "environmental:type/forest"
+}

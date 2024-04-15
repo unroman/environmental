@@ -1,0 +1,20 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "minecraft:basalt_deltas"
+    }
+  ],
+  "displayName": {
+    "translate": "slabfish.type.environmental.basalt_deltas"
+  },
+  "priority": 1,
+  "texture": "environmental:type/basalt_deltas"
+}

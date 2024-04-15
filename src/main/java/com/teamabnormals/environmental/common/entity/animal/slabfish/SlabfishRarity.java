@@ -4,24 +4,24 @@ import com.mojang.serialization.Codec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.StringRepresentable;
 
-import java.util.Locale;
-
 /**
  * <p>Determines the different rarity types for slabfish.</p>
  */
 public enum SlabfishRarity implements StringRepresentable {
-	COMMON(ChatFormatting.GRAY, 1.0f),
-	UNCOMMON(ChatFormatting.GREEN, 0.55f),
-	RARE(ChatFormatting.AQUA, 0.15f),
-	EPIC(ChatFormatting.LIGHT_PURPLE, 0.08f),
-	LEGENDARY(ChatFormatting.GOLD, 0.02f);
+	COMMON("common", ChatFormatting.GRAY, 1.0F),
+	UNCOMMON("uncommon", ChatFormatting.GREEN, 0.55F),
+	RARE("rare", ChatFormatting.AQUA, 0.15F),
+	EPIC("epic", ChatFormatting.LIGHT_PURPLE, 0.08F),
+	LEGENDARY("legendary", ChatFormatting.GOLD, 0.02F);
 
 	public static final Codec<SlabfishRarity> CODEC = StringRepresentable.fromEnum(SlabfishRarity::values);
 
+	private final String serializationKey;
 	private final ChatFormatting color;
 	private final float chance;
 
-	SlabfishRarity(ChatFormatting color, float chance) {
+	SlabfishRarity(String key, ChatFormatting color, float chance) {
+		this.serializationKey = key;
 		this.color = color;
 		this.chance = chance;
 	}
@@ -65,8 +65,12 @@ public enum SlabfishRarity implements StringRepresentable {
 		return values()[id];
 	}
 
+	public String getSerializationKey() {
+		return this.serializationKey;
+	}
+
 	@Override
 	public String getSerializedName() {
-		return this.name().toLowerCase(Locale.ROOT);
+		return this.getSerializationKey();
 	}
 }

@@ -1,0 +1,18 @@
+{
+  "values": [
+    "environmental:mushroom",
+    "environmental:deep_dark",
+    "environmental:ice_spikes",
+    "environmental:bamboo",
+    "environmental:skeleton",
+    "environmental:drowned",
+    "environmental:nightmare",
+    "environmental:totem",
+    "environmental:crimson",
+    "environmental:warped",
+    "environmental:soul_sand_valley",
+    "environmental:basalt_deltas",
+    "environmental:end",
+    "environmental:chorus"
+  ]
+}

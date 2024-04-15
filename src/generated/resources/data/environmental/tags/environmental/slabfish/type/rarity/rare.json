@@ -1,0 +1,15 @@
+{
+  "values": [
+    "environmental:dark_forest",
+    "environmental:flower_forest",
+    "environmental:jungle",
+    "environmental:badlands",
+    "environmental:mountain",
+    "environmental:warm_ocean",
+    "environmental:frozen_ocean",
+    "environmental:deepslate",
+    "environmental:lush_caves",
+    "environmental:dripstone_caves",
+    "environmental:nether"
+  ]
+}

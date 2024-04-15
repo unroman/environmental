@@ -1,0 +1,20 @@
+{
+  "rarity": "rare",
+  "displayName": {
+    "translate": "entity.environmental.slabfish.type.dunes"
+  },
+  "mod": "atmospheric",
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "#atmospheric:is_dunes"
+    }
+  ]
+}

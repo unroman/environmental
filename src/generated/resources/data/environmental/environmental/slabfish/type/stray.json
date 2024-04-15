@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:breed",
+      "parent": "environmental:skeleton",
+      "partner": "environmental:skeleton"
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "#forge:is_snowy"
+    }
+  ],
+  "displayName": {
+    "translate": "slabfish.type.environmental.stray"
+  },
+  "priority": 2,
+  "texture": "environmental:type/stray"
+}

@@ -1,6 +1,5 @@
 package com.teamabnormals.environmental.client.model;
 
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.core.Environmental;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -15,7 +14,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fml.LogicalSide;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -90,7 +88,7 @@ public class SlabfishBucketModel implements BakedModel {
 		@Override
 		public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int p_173469_) {
 			if (stack.getTag() != null && stack.getTag().contains("SlabfishType", Tag.TAG_STRING)) {
-				ResourceLocation slabfishType = SlabfishManager.get(LogicalSide.CLIENT).getSlabfishType(this.locationCache.computeIfAbsent(stack.getTag().getString("SlabfishType"), ResourceLocation::new)).orElse(SlabfishManager.DEFAULT_SLABFISH).getRegistryName();
+				ResourceLocation slabfishType = this.locationCache.computeIfAbsent(stack.getTag().getString("SlabfishType"), ResourceLocation::new);
 				if (this.modelLocations.containsKey(slabfishType))
 					return this.modelManager.get(this.modelLocations.get(slabfishType));
 			}

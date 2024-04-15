@@ -18,7 +18,7 @@ import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalC
 import com.teamabnormals.environmental.core.data.server.modifiers.EnvironmentalLootModifierProvider;
 import com.teamabnormals.environmental.core.data.server.tags.*;
 import com.teamabnormals.environmental.core.other.*;
-import com.teamabnormals.environmental.core.other.SlabfishTypeRework.EnvironmentalDataPackRegistries;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.*;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -85,7 +85,7 @@ public class Environmental {
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		bus.addListener(EnvironmentalDataPackRegistries::registerRegistries);
+		bus.addListener(EnvironmentalRegistries::registerRegistries);
 
 		bus.addListener(this::commonSetup);
 		bus.addListener(this::clientSetup);
@@ -134,13 +134,13 @@ public class Environmental {
 		generator.addProvider(server, new EnvironmentalBiomeTagsProvider(output, provider, helper));
 		generator.addProvider(server, new EnvironmentalBannerPatternTagsProvider(output, provider, helper));
 		generator.addProvider(server, new EnvironmentalPaintingVariantTagsProvider(output, provider, helper));
+		generator.addProvider(server, new EnvironmentalSlabfishTypeTagsProvider(output, provider, helper));
 		generator.addProvider(server, new EnvironmentalRecipeProvider(output));
 		generator.addProvider(server, EnvironmentalAdvancementProvider.create(output, provider, helper));
 		generator.addProvider(server, new EnvironmentalAdvancementModifierProvider(output, provider));
 		generator.addProvider(server, new EnvironmentalChunkGeneratorModifierProvider(output, provider));
 		generator.addProvider(server, new EnvironmentalLootTableProvider(output));
 		generator.addProvider(server, new EnvironmentalLootModifierProvider(output, provider));
-		//generator.addProvider(new SlabfishProvider(generator, MOD_ID, existingFileHelper));
 
 		boolean client = event.includeClient();
 		generator.addProvider(client, new EnvironmentalItemModelProvider(output, helper));
@@ -148,8 +148,12 @@ public class Environmental {
 		generator.addProvider(client, new EnvironmentalSpriteSourceProvider(output, helper));
 	}
 
+	@SubscribeEvent
+	public void onEvent(AddReloadListenerEvent event) {
+		event.addListener(new SlabfishLoader());
+	}
+
 	private void setupPlayMessages() {
-		PLAY.registerMessage(0, SSyncSlabfishTypeMessage.class, SSyncSlabfishTypeMessage::encode, SSyncSlabfishTypeMessage::decode, SSyncSlabfishTypeMessage::handlePlay, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		PLAY.registerMessage(1, SSyncSweaterTypeMessage.class, SSyncSweaterTypeMessage::encode, SSyncSweaterTypeMessage::decode, SSyncSweaterTypeMessage::handlePlay, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		PLAY.registerMessage(2, SSyncBackpackTypeMessage.class, SSyncBackpackTypeMessage::encode, SSyncBackpackTypeMessage::decode, SSyncBackpackTypeMessage::handlePlay, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		PLAY.registerMessage(3, SOpenSlabfishInventoryMessage.class, SOpenSlabfishInventoryMessage::serialize, SOpenSlabfishInventoryMessage::deserialize, SOpenSlabfishInventoryMessage::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
@@ -158,14 +162,8 @@ public class Environmental {
 
 	private void setupLoginMessages() {
 		LOGIN.messageBuilder(CAcknowledgeEnvironmentalMessage.class, 99, NetworkDirection.LOGIN_TO_SERVER).loginIndex(EnvironmentalLoginMessage::getLoginIndex, EnvironmentalLoginMessage::setLoginIndex).encoder(CAcknowledgeEnvironmentalMessage::encode).decoder(CAcknowledgeEnvironmentalMessage::decode).consumerNetworkThread(HandshakeHandler.indexFirst(CAcknowledgeEnvironmentalMessage::handle)).add();
-		LOGIN.messageBuilder(SSyncSlabfishTypeMessage.class, 0, NetworkDirection.LOGIN_TO_CLIENT).loginIndex(EnvironmentalLoginMessage::getLoginIndex, EnvironmentalLoginMessage::setLoginIndex).encoder(SSyncSlabfishTypeMessage::encode).decoder(SSyncSlabfishTypeMessage::decode).markAsLoginPacket().consumerMainThread(HandshakeHandler.biConsumerFor((__, msg, ctx) -> SSyncSlabfishTypeMessage.handleLogin(msg, ctx))).add();
 		LOGIN.messageBuilder(SSyncSweaterTypeMessage.class, 1, NetworkDirection.LOGIN_TO_CLIENT).loginIndex(EnvironmentalLoginMessage::getLoginIndex, EnvironmentalLoginMessage::setLoginIndex).encoder(SSyncSweaterTypeMessage::encode).decoder(SSyncSweaterTypeMessage::decode).markAsLoginPacket().consumerMainThread(HandshakeHandler.biConsumerFor((__, msg, ctx) -> SSyncSweaterTypeMessage.handleLogin(msg, ctx))).add();
 		LOGIN.messageBuilder(SSyncBackpackTypeMessage.class, 2, NetworkDirection.LOGIN_TO_CLIENT).loginIndex(EnvironmentalLoginMessage::getLoginIndex, EnvironmentalLoginMessage::setLoginIndex).encoder(SSyncBackpackTypeMessage::encode).decoder(SSyncBackpackTypeMessage::decode).markAsLoginPacket().consumerMainThread(HandshakeHandler.biConsumerFor((__, msg, ctx) -> SSyncBackpackTypeMessage.handleLogin(msg, ctx))).add();
-	}
-
-	@SubscribeEvent
-	public void onEvent(AddReloadListenerEvent event) {
-		event.addListener(new SlabfishLoader());
 	}
 
 	@OnlyIn(Dist.CLIENT)

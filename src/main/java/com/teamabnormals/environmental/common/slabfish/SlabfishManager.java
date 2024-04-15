@@ -1,10 +1,8 @@
 package com.teamabnormals.environmental.common.slabfish;
 
-import com.teamabnormals.environmental.common.entity.animal.slabfish.SlabfishRarity;
-import com.teamabnormals.environmental.common.slabfish.condition.SlabfishCondition;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
 import com.teamabnormals.environmental.core.Environmental;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -21,10 +19,7 @@ import java.util.function.Predicate;
  * @author Ocelot
  */
 public interface SlabfishManager {
-	/**
-	 * The default slabfish that exists if there are no other slabfish types to choose from.
-	 */
-	SlabfishType DEFAULT_SLABFISH = new SlabfishType(new ResourceLocation(Environmental.MOD_ID, "swamp"), SlabfishRarity.COMMON, Component.translatable("entity." + Environmental.MOD_ID + ".slabfish.type.swamp"), null, false, true, true, -1, new SlabfishCondition[0]);
+	ResourceLocation SWAMP = new ResourceLocation(Environmental.MOD_ID, "swamp");
 
 	/**
 	 * The default sweater that exists if there are no other sweater types to choose from.
@@ -62,14 +57,6 @@ public interface SlabfishManager {
 	}
 
 	/**
-	 * Checks the slabfish types for a slabfish of the specified name.
-	 *
-	 * @param registryName The name of the slabfish to search for
-	 * @return The slabfish type by that name or {@link #DEFAULT_SLABFISH} for no slabfish under that name
-	 */
-	Optional<SlabfishType> getSlabfishType(ResourceLocation registryName);
-
-	/**
 	 * Checks the sweater types for a sweater of the specified name.
 	 *
 	 * @param registryName The name of the sweater to search for
@@ -91,8 +78,8 @@ public interface SlabfishManager {
 	 * @param context The context of the slabfish
 	 * @return The slabfish that that was selected to be the best fit for the context
 	 */
-	default Optional<SlabfishType> getSlabfishType(SlabfishConditionContext context) {
-		return this.getSlabfishType(__ -> true, context);
+	default Optional<SlabfishType> getSlabfishType(Registry<SlabfishType> registry, SlabfishConditionContext context) {
+		return this.getSlabfishType(registry, __ -> true, context);
 	}
 
 	/**
@@ -102,7 +89,7 @@ public interface SlabfishManager {
 	 * @param context   The context of the slabfish
 	 * @return The slabfish that that was selected to be the best fit for the context
 	 */
-	Optional<SlabfishType> getSlabfishType(Predicate<SlabfishType> predicate, SlabfishConditionContext context);
+	Optional<SlabfishType> getSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, SlabfishConditionContext context);
 
 	/**
 	 * Checks the sweater types for a sweater using the specified stack.
@@ -127,44 +114,7 @@ public interface SlabfishManager {
 	 * @param random    The random to use for the index
 	 * @return A random slabfish type by that rarity or {@link #DEFAULT_SLABFISH} if there were no results
 	 */
-	Optional<SlabfishType> getRandomSlabfishType(Predicate<SlabfishType> predicate, RandomSource random);
-
-//    /**
-//     * Checks the sweater types for a sweater under the specified registry name.
-//     *
-//     * @param registryName The stack to test against the sweater types
-//     * @return Whether or not there is a sweater for the specified stack
-//     */
-//    boolean hasSweaterType(ResourceLocation registryName);
-//
-//    /**
-//     * Checks the backpack types for a backpack under the specified registry name.
-//     *
-//     * @param registryName The registry name of the backpack type
-//     * @return Whether or not there is a backpack for the specified registry name
-//     */
-//    boolean hasBackpackType(ResourceLocation registryName);
-//
-//    /**
-//     * Checks the sweater types for a sweater using the specified stack.
-//     *
-//     * @param stack The registry name of the sweater types
-//     * @return Whether or not there is a sweater for the specified registry name
-//     */
-//    boolean hasSweaterType(ItemStack stack);
-//
-//    /**
-//     * Checks the backpack types for a backpack using the specified stack.
-//     *
-//     * @param stack The stack to test against the backpack types
-//     * @return Whether or not there is a backpack for the specified stack
-//     */
-//    boolean hasBackpackType(ItemStack stack);
-
-	/**
-	 * @return All registered slabfish types
-	 */
-	SlabfishType[] getAllSlabfishTypes();
+	Optional<SlabfishType> getRandomSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, RandomSource random);
 
 	/**
 	 * @return All registered sweater types

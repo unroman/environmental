@@ -1,0 +1,8 @@
+{
+  "conditions": [],
+  "displayName": {
+    "translate": "slabfish.type.environmental.swamp"
+  },
+  "priority": -1,
+  "texture": "environmental:type/swamp"
+}

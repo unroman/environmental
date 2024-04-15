@@ -1,7 +1,8 @@
 package com.teamabnormals.environmental.common.slabfish.condition;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.teamabnormals.environmental.common.slabfish.SlabfishConditionType;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSlabfishConditions;
 
 /**
  * <p>A {@link SlabfishCondition} that returns <code>true</code> if the player that bred two slabfish together has insomnia.</p>
@@ -9,22 +10,18 @@ import com.google.gson.JsonObject;
  * @author Ocelot
  */
 public class SlabfishInsomniaCondition implements SlabfishCondition {
-	private SlabfishInsomniaCondition() {
-	}
+	public static final Codec<SlabfishInsomniaCondition> CODEC = Codec.unit(SlabfishInsomniaCondition::new);
 
-	/**
-	 * Creates a new {@link SlabfishInsomniaCondition} from the specified json.
-	 *
-	 * @param json    The json to deserialize
-	 * @param context The context of the json deserialization
-	 * @return A new slabfish condition from that json
-	 */
-	public static SlabfishCondition deserialize(JsonObject json, JsonDeserializationContext context) {
-		return new SlabfishInsomniaCondition();
+	public SlabfishInsomniaCondition() {
 	}
 
 	@Override
 	public boolean test(SlabfishConditionContext context) {
 		return context.isBreederInsomnia();
+	}
+
+	@Override
+	public SlabfishConditionType getType() {
+		return EnvironmentalSlabfishConditions.INSOMNIA.get();
 	}
 }

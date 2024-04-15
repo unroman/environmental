@@ -1,0 +1,18 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "#minecraft:is_ocean"
+    }
+  ],
+  "displayName": {
+    "translate": "slabfish.type.environmental.ocean"
+  }
+}

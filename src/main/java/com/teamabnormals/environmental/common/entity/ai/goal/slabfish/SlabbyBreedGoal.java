@@ -4,7 +4,9 @@ import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
 import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -117,8 +119,9 @@ public class SlabbyBreedGoal extends Goal {
 			slabby.setAge(-24000);
 			slabby.moveTo(this.animal.getX(), this.animal.getY(), this.animal.getZ(), 0.0F, 0.0F);
 
-			SlabfishType slabfishType = SlabfishManager.get(this.world).getSlabfishType(SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).orElse(SlabfishManager.DEFAULT_SLABFISH);
-			slabby.setSlabfishType(slabfishType.getRegistryName());
+			Registry<SlabfishType> registry = EnvironmentalRegistries.registryAccess(this.animal.level());
+			SlabfishType slabfishType = SlabfishManager.get(this.world).getSlabfishType(registry, SlabfishConditionContext.breeding(slabby, this.animal.getLoveCause(), this.animal, this.targetMate)).get();
+			slabby.setSlabfishType(slabby.level().registryAccess().registry(EnvironmentalRegistries.SLABFISH_TYPE).get().getKey(slabfishType));
 
 			if (player != null) {
 				player.awardStat(Stats.ANIMALS_BRED);

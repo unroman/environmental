@@ -1,0 +1,20 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "minecraft:crimson_forest"
+    }
+  ],
+  "displayName": {
+    "translate": "slabfish.type.environmental.crimson"
+  },
+  "priority": 1,
+  "texture": "environmental:type/crimson"
+}

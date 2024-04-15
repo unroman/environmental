@@ -1,15 +1,13 @@
 package com.teamabnormals.environmental.common.slabfish.condition;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import net.minecraft.core.Registry;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.teamabnormals.environmental.common.slabfish.SlabfishConditionType;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSlabfishConditions;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
-
-import javax.annotation.Nullable;
 
 /**
  * <p>A {@link SlabfishCondition} that returns <code>true</code> if the slabfish is inside of the specified block or block tag.</p>
@@ -17,27 +15,23 @@ import javax.annotation.Nullable;
  * @author Ocelot
  */
 public class SlabfishInFluidCondition implements SlabfishCondition {
-	private final TagKey<Fluid> tag;
+	public static final Codec<SlabfishInFluidCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			RegistryCodecs.homogeneousList(Registries.FLUID).fieldOf("fluids").forGetter(entry -> entry.fluids)
+	).apply(instance, SlabfishInFluidCondition::new));
 
-	private SlabfishInFluidCondition(@Nullable TagKey<Fluid> tag) {
-		this.tag = tag;
-	}
+	private final HolderSet<Fluid> fluids;
 
-	/**
-	 * Creates a new {@link SlabfishInFluidCondition} from the specified json.
-	 *
-	 * @param json    The json to deserialize
-	 * @param context The context of the json deserialization
-	 * @return A new slabfish condition from that json
-	 */
-	public static SlabfishCondition deserialize(JsonObject json, JsonDeserializationContext context) {
-		if (!json.has("tag"))
-			throw new JsonSyntaxException("'tag' must be present.");
-		return new SlabfishInFluidCondition(TagKey.create(Registries.FLUID, new ResourceLocation(json.get("tag").getAsString())));
+	public SlabfishInFluidCondition(HolderSet<Fluid> fluids) {
+		this.fluids = fluids;
 	}
 
 	@Override
 	public boolean test(SlabfishConditionContext context) {
-		return context.isInFluid(this.tag);
+		return this.fluids.contains(context.getFluid());
+	}
+
+	@Override
+	public SlabfishConditionType getType() {
+		return EnvironmentalSlabfishConditions.IN_FLUID.get();
 	}
 }

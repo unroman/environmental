@@ -1,9 +1,9 @@
 package com.teamabnormals.environmental.common.slabfish;
 
 import com.teamabnormals.environmental.common.network.message.SSyncBackpackTypeMessage;
-import com.teamabnormals.environmental.common.network.message.SSyncSlabfishTypeMessage;
 import com.teamabnormals.environmental.common.network.message.SSyncSweaterTypeMessage;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -23,24 +23,12 @@ import java.util.stream.Collectors;
 public final class ClientSlabfishManager implements SlabfishManager {
 	static final ClientSlabfishManager INSTANCE = new ClientSlabfishManager();
 
-	private final Map<ResourceLocation, SlabfishType> slabfishTypes;
 	private final Map<ResourceLocation, SweaterType> sweaterTypes;
 	private final Map<ResourceLocation, BackpackType> backpackTypes;
 
 	private ClientSlabfishManager() {
-		this.slabfishTypes = new HashMap<>();
 		this.sweaterTypes = new HashMap<>();
 		this.backpackTypes = new HashMap<>();
-	}
-
-	/**
-	 * Receives the slabfish types from the server.
-	 *
-	 * @param msg The message containing the new types
-	 */
-	public static void receive(SSyncSlabfishTypeMessage msg) {
-		INSTANCE.slabfishTypes.clear();
-		INSTANCE.slabfishTypes.putAll(Arrays.stream(msg.getSlabfishTypes()).collect(Collectors.toMap(SlabfishType::getRegistryName, slabfishType -> slabfishType)));
 	}
 
 	/**
@@ -64,11 +52,6 @@ public final class ClientSlabfishManager implements SlabfishManager {
 	}
 
 	@Override
-	public Optional<SlabfishType> getSlabfishType(ResourceLocation registryName) {
-		return Optional.ofNullable(this.slabfishTypes.get(registryName));
-	}
-
-	@Override
 	public Optional<SweaterType> getSweaterType(ResourceLocation registryName) {
 		return Optional.ofNullable(this.sweaterTypes.get(registryName));
 	}
@@ -79,7 +62,7 @@ public final class ClientSlabfishManager implements SlabfishManager {
 	}
 
 	@Override
-	public Optional<SlabfishType> getSlabfishType(Predicate<SlabfishType> predicate, SlabfishConditionContext context) {
+	public Optional<SlabfishType> getSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, SlabfishConditionContext context) {
 		throw new UnsupportedOperationException("Client does not have access to select random slabfish");
 	}
 
@@ -94,13 +77,8 @@ public final class ClientSlabfishManager implements SlabfishManager {
 	}
 
 	@Override
-	public Optional<SlabfishType> getRandomSlabfishType(Predicate<SlabfishType> predicate, RandomSource random) {
+	public Optional<SlabfishType> getRandomSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, RandomSource random) {
 		throw new UnsupportedOperationException("Client does not have access to select random slabfish");
-	}
-
-	@Override
-	public SlabfishType[] getAllSlabfishTypes() {
-		return this.slabfishTypes.values().toArray(new SlabfishType[0]);
 	}
 
 	@Override

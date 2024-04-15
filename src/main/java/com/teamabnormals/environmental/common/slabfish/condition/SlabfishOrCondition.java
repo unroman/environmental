@@ -1,8 +1,11 @@
 package com.teamabnormals.environmental.common.slabfish.condition;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.teamabnormals.environmental.common.slabfish.SlabfishConditionType;
+import com.teamabnormals.environmental.core.registry.EnvironmentalSlabfishConditions;
+
+import java.util.Arrays;
 
 /**
  * <p>A {@link SlabfishCondition} that returns <code>true</code> if any of the child conditions are true.</p>
@@ -10,23 +13,18 @@ import com.google.gson.JsonSyntaxException;
  * @author Ocelot
  */
 public class SlabfishOrCondition implements SlabfishCondition {
+	public static final Codec<SlabfishOrCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			SlabfishCondition.CODEC.listOf().xmap(list -> list.toArray(SlabfishCondition[]::new), Arrays::asList).fieldOf("conditions").forGetter(SlabfishOrCondition::getConditions)
+	).apply(instance, SlabfishOrCondition::new));
+
 	private final SlabfishCondition[] conditions;
 
 	public SlabfishOrCondition(SlabfishCondition[] conditions) {
 		this.conditions = conditions;
 	}
 
-	/**
-	 * Creates a new {@link SlabfishOrCondition} from the specified json.
-	 *
-	 * @param json    The json to deserialize
-	 * @param context The context of the json deserialization
-	 * @return A new slabfish condition from that json
-	 */
-	public static SlabfishCondition deserialize(JsonObject json, JsonDeserializationContext context) {
-		if (!json.has("conditions"))
-			throw new JsonSyntaxException("'conditions' must be present.");
-		return new SlabfishOrCondition(context.deserialize(json.get("conditions"), SlabfishCondition[].class));
+	public SlabfishCondition[] getConditions() {
+		return conditions;
 	}
 
 	@Override
@@ -35,5 +33,10 @@ public class SlabfishOrCondition implements SlabfishCondition {
 			if (condition.test(context))
 				return true;
 		return false;
+	}
+
+	@Override
+	public SlabfishConditionType getType() {
+		return EnvironmentalSlabfishConditions.OR.get();
 	}
 }

@@ -1,0 +1,17 @@
+{
+  "values": [
+    "environmental:plains",
+    "environmental:hill",
+    "environmental:forest",
+    "environmental:blossom",
+    "environmental:taiga",
+    "environmental:pine",
+    "environmental:snowy",
+    "environmental:river",
+    "environmental:beach",
+    "environmental:ocean",
+    "environmental:desert",
+    "environmental:savanna",
+    "environmental:cave"
+  ]
+}
