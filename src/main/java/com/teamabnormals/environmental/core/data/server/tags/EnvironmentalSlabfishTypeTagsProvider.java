@@ -34,7 +34,7 @@ public class EnvironmentalSlabfishTypeTagsProvider extends TagsProvider<Slabfish
 				DESERT, SAVANNA, CAVE);
 		this.tag(EnvironmentalSlabfishTypeTags.RARE).add(
 				DARK_FOREST, FLOWER_FOREST,
-				JUNGLE, BADLANDS, MOUNTAIN,
+				JUNGLE, BADLANDS, MOUNTAIN, CHERRY_GROVE,
 				WARM_OCEAN, FROZEN_OCEAN,
 				DEEPSLATE, LUSH_CAVES, DRIPSTONE_CAVES, NETHER);
 		this.tag(EnvironmentalSlabfishTypeTags.EPIC).add(

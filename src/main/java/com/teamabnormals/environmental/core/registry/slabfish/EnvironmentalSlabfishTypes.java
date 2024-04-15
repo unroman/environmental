@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class EnvironmentalSlabfishTypes {
+	public static final ResourceKey<SlabfishType> SWAMP = createKey("swamp");
 	public static final ResourceKey<SlabfishType> BADLANDS = createKey("badlands");
 	public static final ResourceKey<SlabfishType> BAMBOO = createKey("bamboo");
 	public static final ResourceKey<SlabfishType> BEACH = createKey("beach");
@@ -47,7 +48,7 @@ public class EnvironmentalSlabfishTypes {
 	public static final ResourceKey<SlabfishType> SAVANNA = createKey("savanna");
 	public static final ResourceKey<SlabfishType> SNOWY = createKey("snowy");
 	public static final ResourceKey<SlabfishType> TAIGA = createKey("taiga");
-	public static final ResourceKey<SlabfishType> SWAMP = createKey("swamp");
+	public static final ResourceKey<SlabfishType> CHERRY_GROVE = createKey("cherry_grove");
 
 	public static final ResourceKey<SlabfishType> MARSH = createKey("marsh");
 	public static final ResourceKey<SlabfishType> PINE = createKey("pine");
@@ -104,6 +105,7 @@ public class EnvironmentalSlabfishTypes {
 		register(context, BLOSSOM, 1, spawn(), or(biome(context, EnvironmentalBiomes.BLOSSOM_WOODS), biome(context, EnvironmentalBiomes.BLOSSOM_VALLEYS)));
 		register(context, BROWN_MUSHROOM, 2, new SlabfishEventCondition(Event.LIGHTNING), new SlabfishTypeCondition(MUSHROOM.location()));
 		register(context, CAVE, 2, spawn(), new SlabfishHeightCondition(0, 48), new SlabfishLightCondition(0, 0, LightLayer.SKY), dimension(BuiltinDimensionTypes.OVERWORLD));
+		register(context, CHERRY_GROVE, 1, Biomes.CHERRY_GROVE);
 		register(context, CHORUS, 1, BlueprintBiomeTags.IS_OUTER_END);
 		register(context, CRIMSON, 1, Biomes.CRIMSON_FOREST);
 		register(context, DARK_FOREST, 1, Biomes.DARK_FOREST);
