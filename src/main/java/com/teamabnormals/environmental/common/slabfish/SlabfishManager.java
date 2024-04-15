@@ -20,11 +20,6 @@ import java.util.function.Predicate;
  */
 public interface SlabfishManager {
 	/**
-	 * The default backpack that exists if there are no other backpack types to choose from.
-	 */
-	BackpackType BROWN_BACKPACK = new BackpackType(null, Ingredient.EMPTY).setRegistryName(new ResourceLocation(Environmental.MOD_ID, "brown"));
-
-	/**
 	 * Fetches the slabfish manager for the specified side.
 	 *
 	 * @param side The logical side to get the slabfish manager for
@@ -43,14 +38,6 @@ public interface SlabfishManager {
 	static SlabfishManager get(LevelReader world) {
 		return world.isClientSide() ? ClientSlabfishManager.INSTANCE : SlabfishLoader.instance;
 	}
-
-	/**
-	 * Checks the backpack types for a backpack of the specified name.
-	 *
-	 * @param registryName The name of the backpack to search for
-	 * @return The sweater type by that name or {@link #BROWN_BACKPACK} for no sweater under that name
-	 */
-	Optional<BackpackType> getBackpackType(ResourceLocation registryName);
 
 	/**
 	 * Checks through all slabfish types for a slabfish conditions that succeed in the current context.
@@ -85,7 +72,7 @@ public interface SlabfishManager {
 	 * @param stack The stack to test against the backpack types
 	 * @return The backpack type using that stack or {@link #BROWN_BACKPACK} if that item has no backpack type
 	 */
-	Optional<BackpackType> getBackpackType(ItemStack stack);
+	Optional<BackpackType> getBackpackType(Registry<BackpackType> registry, ItemStack stack);
 
 	/**
 	 * Fetches a random slabfish type by the specified {@link Predicate}.
@@ -95,9 +82,4 @@ public interface SlabfishManager {
 	 * @return A random slabfish type by that rarity or {@link #DEFAULT_SLABFISH} if there were no results
 	 */
 	Optional<SlabfishType> getRandomSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, RandomSource random);
-
-	/**
-	 * @return All registered backpack types
-	 */
-	BackpackType[] getAllBackpackTypes();
 }

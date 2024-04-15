@@ -18,11 +18,6 @@ import net.minecraft.world.level.ItemLike;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-/**
- * <p>A single type of sweater that exists.</p>
- *
- * @author Ocelot
- */
 public record SweaterType(Optional<Component> displayName, Optional<ResourceLocation> texture, Optional<Holder<Item>> item, Optional<TagKey<Item>> tagKey) implements Predicate<ItemStack> {
 	public static final Codec<SweaterType> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(

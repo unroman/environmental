@@ -25,11 +25,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-/**
- * <p>A single type of slabfish that exists.</p>
- *
- * @author Ocelot
- */
 public record SlabfishType(Component displayName, ResourceLocation texture, Optional<ResourceLocation> backpack, int priority, SlabfishCondition[] conditions) implements Predicate<SlabfishConditionContext> {
 
 	public static final Map<TagKey<SlabfishType>, Pair<Float, ChatFormatting>> RARITIES = Util.make(new HashMap<>(), map -> {
@@ -114,5 +109,9 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 		}
 
 		return EnvironmentalSlabfishTypeTags.COMMON;
+	}
+
+	public boolean isBackpackEmpty(Level level) {
+		return this.backpack().isEmpty() || EnvironmentalRegistries.slabfishBackpacks(level).get(this.backpack().get()) == null;
 	}
 }

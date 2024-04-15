@@ -6,6 +6,7 @@ import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.common.slabfish.SweaterType;
 import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishBackpacks;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishSweaters;
 import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.ChatFormatting;
@@ -58,8 +59,9 @@ public class SlabfishBucketItem extends MobBucketItem {
 				tooltip.add((Component.translatable("entity.environmental.slabfish.baby").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
 			}
 			if (tag.contains("BackpackType", Tag.TAG_STRING)) {
-				BackpackType backpackType = slabfishManager.getBackpackType(LOCATION_CACHE.computeIfAbsent(tag.getString("BackpackType"), ResourceLocation::new)).orElse(SlabfishManager.BROWN_BACKPACK);
-				tooltip.add(backpackType.getDisplayName().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+				Registry<BackpackType> registry = EnvironmentalRegistries.slabfishBackpacks(worldIn);
+				BackpackType backpackType = registry.get(LOCATION_CACHE.computeIfAbsent(tag.getString("BackpackType"), ResourceLocation::new));
+				tooltip.add(backpackType.displayName().get().copy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 			}
 
 			Registry<SweaterType> sweaters = EnvironmentalRegistries.slabfishSweaters(worldIn);

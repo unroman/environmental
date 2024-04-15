@@ -4,13 +4,10 @@ import com.teamabnormals.environmental.client.gui.screens.inventory.SlabfishInve
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
 import com.teamabnormals.environmental.common.inventory.SlabfishInventoryMenu;
 import com.teamabnormals.environmental.common.network.message.SOpenSlabfishInventoryMessage;
-import com.teamabnormals.environmental.common.network.message.SSyncBackpackTypeMessage;
-import com.teamabnormals.environmental.common.slabfish.ClientSlabfishManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkEvent;
 
 public class ClientNetworkHandler {
 	public static void handleOpenSlabfishInventory(SOpenSlabfishInventoryMessage packet) {
@@ -26,9 +23,5 @@ public class ClientNetworkHandler {
 				Minecraft.getInstance().setScreen(new SlabfishInventoryScreen(container, player.getInventory(), slabfish));
 			}
 		}
-	}
-
-	public static void handleSyncBackpackType(SSyncBackpackTypeMessage msg, NetworkEvent.Context ctx) {
-		ClientSlabfishManager.receive(msg);
 	}
 }

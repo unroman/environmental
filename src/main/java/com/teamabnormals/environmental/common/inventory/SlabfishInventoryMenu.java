@@ -1,12 +1,10 @@
 package com.teamabnormals.environmental.common.inventory;
 
 import com.teamabnormals.environmental.common.entity.animal.slabfish.Slabfish;
-import com.teamabnormals.environmental.common.slabfish.SlabfishManager;
 import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
-import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import com.teamabnormals.environmental.core.registry.EnvironmentalMenuTypes;
-import net.minecraft.core.Registry;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -51,9 +49,8 @@ public class SlabfishInventoryMenu extends AbstractContainerMenu {
 					public boolean isActive() {
 						if (this.getSlotIndex() != 2)
 							return true;
-						SlabfishManager slabfishManager = SlabfishManager.get(slabfish.getCommandSenderWorld());
 						SlabfishType slabfishType = slabfish.getSlabfishType();
-						return slabfish.hasBackpack() && (slabfishType.backpack().isEmpty() || slabfishManager.getBackpackType(slabfishType.backpack().get()).isEmpty());
+						return slabfish.hasBackpack() && (slabfishType.backpack().isEmpty() || EnvironmentalRegistries.slabfishBackpacks(slabfish.level()).get(slabfishType.backpack().get()) == null);
 					}
 				}).setBackground(InventoryMenu.BLOCK_ATLAS, SLOT_INDEX_NAMES[i]);
 			}

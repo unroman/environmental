@@ -30,10 +30,10 @@ public class SlabfishInventory extends DynamicInventory {
 				return stack.is(Tags.Items.CHESTS_WOODEN);
 			case 2:
 				SlabfishManager slabfishManager = SlabfishManager.get(this.slabfish.getCommandSenderWorld());
-				if (!slabfishManager.getBackpackType(stack).isPresent())
+				if (slabfishManager.getBackpackType(EnvironmentalRegistries.slabfishBackpacks(this.slabfish.getCommandSenderWorld()), stack).isEmpty())
 					return false;
 				SlabfishType slabfishType = this.slabfish.getSlabfishType();
-				return this.slabfish.hasBackpack() && (slabfishType.backpack().isEmpty() || slabfishManager.getBackpackType(slabfishType.backpack().get()).isEmpty());
+				return this.slabfish.hasBackpack() && (slabfishType.isBackpackEmpty(this.slabfish.getCommandSenderWorld()));
 			default:
 				return super.canPlaceItem(index, stack);
 		}
