@@ -5,13 +5,17 @@ import com.teamabnormals.environmental.common.entity.animal.koi.KoiBreed;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.Locale;
 
 import static com.teamabnormals.environmental.core.registry.EnvironmentalItems.*;
@@ -42,6 +46,18 @@ public class EnvironmentalItemModelProvider extends BlueprintItemModelProvider {
 
 		this.trimmableArmorItem(YAK_PANTS);
 		this.koiBuckets();
+
+		this.getBuilder(name(SLABFISH_BUCKET.get()));
+		Arrays.stream(EnvironmentalSlabfishTypes.class.getDeclaredFields()).forEach(field -> {
+			if (Modifier.isStatic(field.getModifiers()) && ResourceKey.class.isAssignableFrom(field.getType())) {
+				try {
+					ResourceLocation location = ((ResourceKey<?>) field.get(null)).location().withPath(s -> "item/slabfish_bucket/" + s);
+					this.withExistingParent(location.getPath(), "item/generated").texture("layer0", location);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
 	}
 
 	private void koiBuckets() {
