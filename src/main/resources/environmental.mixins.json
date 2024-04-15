@@ -17,6 +17,7 @@
     "MobMixin",
     "MoveControlMixin",
     "PigMixin",
+    "PinkPetalsBlockMixin",
     "PlayerMixin",
     "RabbitMixin",
     "ShearsItemMixin",

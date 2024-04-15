@@ -17,8 +17,12 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.PinkPetalsBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class EnvironmentalCompat {
 
