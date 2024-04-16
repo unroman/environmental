@@ -1,0 +1,6 @@
+{
+  "parent": "environmental:block/chiseled_pine_bookshelf_slot_bottom_left",
+  "textures": {
+    "texture": "environmental:block/chiseled_pine_bookshelf_occupied"
+  }
+}

@@ -111,7 +111,7 @@ public class EnvironmentalBlockTagsProvider extends BlockTagsProvider {
 		this.tag(BlueprintBlockTags.WOODEN_LADDERS).add(WILLOW_LADDER.get(), PINE_LADDER.get(), WISTERIA_LADDER.get(), PLUM_LADDER.get());
 		this.tag(BlueprintBlockTags.WOODEN_BEEHIVES).add(WILLOW_BEEHIVE.get(), PINE_BEEHIVE.get(), WISTERIA_BEEHIVE.get(), PLUM_BEEHIVE.get());
 		this.tag(BlueprintBlockTags.WOODEN_BOOKSHELVES).add(WILLOW_BOOKSHELF.get(), PINE_BOOKSHELF.get(), WISTERIA_BOOKSHELF.get(), PLUM_BOOKSHELF.get());
-		this.tag(BlueprintBlockTags.WOODEN_CHISELED_BOOKSHELVES).add(CHISELED_WILLOW_BOOKSHELF.get());
+		this.tag(BlueprintBlockTags.WOODEN_CHISELED_BOOKSHELVES).add(CHISELED_WILLOW_BOOKSHELF.get(), CHISELED_PINE_BOOKSHELF.get());
 
 		this.tag(BlueprintBlockTags.WOODEN_BOARDS).add(WILLOW_BOARDS.get(), PINE_BOARDS.get(), WISTERIA_BOARDS.get(), PLUM_BOARDS.get());
 		this.tag(BlueprintBlockTags.LEAF_PILES).add(WILLOW_LEAF_PILE.get(), PINE_LEAF_PILE.get(), WISTERIA_LEAF_PILE.get(), PINK_WISTERIA_LEAF_PILE.get(), BLUE_WISTERIA_LEAF_PILE.get(), PURPLE_WISTERIA_LEAF_PILE.get(), WHITE_WISTERIA_LEAF_PILE.get(), PLUM_LEAF_PILE.get(), CHEERFUL_PLUM_LEAF_PILE.get(), MOODY_PLUM_LEAF_PILE.get(), HIBISCUS_LEAF_PILE.get());

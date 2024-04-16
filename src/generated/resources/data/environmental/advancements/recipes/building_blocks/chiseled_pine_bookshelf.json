@@ -18,7 +18,7 @@
           },
           "has_the_recipe": {
             "conditions": {
-              "recipe": "environmental:dark_oak_stairs"
+              "recipe": "environmental:chiseled_pine_bookshelf"
             },
             "trigger": "minecraft:recipe_unlocked"
           }
@@ -31,7 +31,7 @@
         ],
         "rewards": {
           "recipes": [
-            "environmental:dark_oak_stairs"
+            "environmental:chiseled_pine_bookshelf"
           ]
         },
         "sends_telemetry_event": false

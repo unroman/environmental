@@ -34,7 +34,7 @@
           "###"
         ],
         "result": {
-          "item": "minecraft:dark_oak_stairs"
+          "item": "environmental:chiseled_pine_bookshelf"
         },
         "show_notification": true
       }

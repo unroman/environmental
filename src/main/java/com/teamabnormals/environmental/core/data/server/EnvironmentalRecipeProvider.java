@@ -132,7 +132,7 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		hangingSign(consumer, PINE_HANGING_SIGNS.getFirst().get(), STRIPPED_PINE_LOG.get());
 		WoodworksRecipeProvider.leafPileRecipes(consumer, PINE_LEAVES.get(), PINE_LEAF_PILE.get(), Environmental.MOD_ID);
 		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.PINE);
-		WoodworksRecipeProvider.baseRecipes(consumer, PINE_PLANKS.get(), PINE_SLAB.get(), PINE_BOARDS.get(), PINE_BOOKSHELF.get(), Blocks.DARK_OAK_STAIRS, PINE_LADDER.get(), PINE_BEEHIVE.get(), PINE_CHEST.get(), TRAPPED_PINE_CHEST.get(), Environmental.MOD_ID);
+		WoodworksRecipeProvider.baseRecipes(consumer, PINE_PLANKS.get(), PINE_SLAB.get(), PINE_BOARDS.get(), PINE_BOOKSHELF.get(), CHISELED_PINE_BOOKSHELF.get(), PINE_LADDER.get(), PINE_BEEHIVE.get(), PINE_CHEST.get(), TRAPPED_PINE_CHEST.get(), Environmental.MOD_ID);
 		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.PINE_PLANKS_FAMILY, EnvironmentalItemTags.PINE_LOGS, PINE_BOARDS.get(), PINE_LADDER.get(), Environmental.MOD_ID);
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, WAXED_PINECONE.get()).requires(PINECONE.get()).requires(Items.HONEYCOMB).unlockedBy(getHasName(PINECONE.get()), has(PINECONE.get())).save(consumer, getConversionRecipeName(WAXED_PINECONE.get(), Items.HONEYCOMB));

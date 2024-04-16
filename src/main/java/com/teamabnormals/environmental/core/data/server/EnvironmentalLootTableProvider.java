@@ -247,6 +247,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(PINE_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(TRAPPED_PINE_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(PINE_BOOKSHELF.get(), (block) -> createSingleItemTableWithSilkTouch(block, Items.BOOK, ConstantValue.exactly(3.0F)));
+			this.dropWhenSilkTouch(CHISELED_PINE_BOOKSHELF.get());
 			this.add(PINE_LEAVES.get(), (block) -> createLeavesDrops(block, PINE_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
 			this.dropSelf(PLUM_PLANKS.get());

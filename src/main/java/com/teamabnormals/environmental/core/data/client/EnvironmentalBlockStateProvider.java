@@ -46,6 +46,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.leavesBlocks(PINE_LEAVES, PINE_LEAF_PILE);
 		this.crossBlockWithPot(PINE_SAPLING, POTTED_PINE_SAPLING);
 		this.woodworksBlocks(PINE_PLANKS, PINE_BOARDS, PINE_LADDER, PINE_BOOKSHELF, PINE_BEEHIVE, PINE_CHEST, TRAPPED_PINE_CHEST);
+		this.chiseledBookshelfBlock(CHISELED_PINE_BOOKSHELF, ALTERNATE_BOOKSHELF_POSITIONS);
 
 		this.cubeColumnBlock(PINECONE);
 		this.cubeColumnBlock(WAXED_PINECONE, PINECONE);

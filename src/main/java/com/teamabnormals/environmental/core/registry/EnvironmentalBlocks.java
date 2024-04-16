@@ -1,7 +1,10 @@
 package com.teamabnormals.environmental.core.registry;
 
 import com.mojang.datafixers.util.Pair;
-import com.teamabnormals.blueprint.common.block.*;
+import com.teamabnormals.blueprint.common.block.BlueprintBeehiveBlock;
+import com.teamabnormals.blueprint.common.block.BlueprintDirectionalBlock;
+import com.teamabnormals.blueprint.common.block.LeafPileBlock;
+import com.teamabnormals.blueprint.common.block.LogBlock;
 import com.teamabnormals.blueprint.common.block.chest.BlueprintChestBlock;
 import com.teamabnormals.blueprint.common.block.chest.BlueprintTrappedChestBlock;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintCeilingHangingSignBlock;
@@ -218,6 +221,7 @@ public class EnvironmentalBlocks {
 
 	public static final RegistryObject<Block> PINE_BOARDS = HELPER.createFuelBlock("pine_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.PINE.planks()), 300);
 	public static final RegistryObject<Block> PINE_BOOKSHELF = HELPER.createFuelBlock("pine_bookshelf", () -> new Block(EnvironmentalProperties.PINE.bookshelf()), 300);
+	public static final RegistryObject<Block> CHISELED_PINE_BOOKSHELF = HELPER.createFuelBlock("chiseled_pine_bookshelf", () -> new ChiseledPineBookShelfBlock(EnvironmentalProperties.PINE.chiseledBookshelf()), 300);
 	public static final RegistryObject<Block> PINE_LADDER = HELPER.createFuelBlock("pine_ladder", () -> new LadderBlock(EnvironmentalProperties.PINE.ladder()), 300);
 	public static final RegistryObject<Block> PINE_BEEHIVE = HELPER.createBlock("pine_beehive", () -> new BlueprintBeehiveBlock(EnvironmentalProperties.PINE.beehive()));
 	public static final RegistryObject<Block> PINE_LEAF_PILE = HELPER.createBlock("pine_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.PINE.leafPile()));
