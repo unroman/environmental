@@ -11,6 +11,7 @@ import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
@@ -20,10 +21,12 @@ import net.minecraft.world.level.storage.loot.LootPool.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +47,9 @@ public class EnvironmentalLootModifierProvider extends LootModifierProvider {
 		this.entry(BuiltInLootTables.SIMPLE_DUNGEON.getPath()).selects(BuiltInLootTables.SIMPLE_DUNGEON).addModifier(new LootPoolEntriesModifier(false, 0, Collections.singletonList(LootItem.lootTableItem(EnvironmentalItems.THIEF_HOOD.get()).setWeight(10).build())));
 
 		this.entry("blocks/pink_petals").selects("blocks/pink_petals").addModifier(new LootPoolsModifier(List.of(createPetalsDrops(Blocks.PINK_PETALS).build()), true));
+		this.entry("blocks/cherry_leaves").selects("blocks/cherry_leaves").addModifier(new LootPoolsModifier(List.of(
+				LootPool.lootPool().name("environmental:cherries").setRolls(ConstantValue.exactly(1.0F)).when(EnvironmentalBlockLoot.HAS_NO_SHEARS_OR_SILK_TOUCH).add(LootItem.lootTableItem(EnvironmentalItems.CHERRIES.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))).apply(ApplyExplosionDecay.explosionDecay()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.055555557F, 0.0625F, 0.08333334F, 0.25F))).build()
+		), false));
 	}
 
 	protected static Builder createPetalsDrops(Block block) {

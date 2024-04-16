@@ -35,7 +35,7 @@ public class EnvironmentalItemModelProvider extends BlueprintItemModelProvider {
 				PLUM_BOAT.getFirst(), PLUM_BOAT.getSecond(), PLUM_FURNACE_BOAT, LARGE_PLUM_BOAT,
 				LUMBERER_BANNER_PATTERN,
 				CATTAIL_FLUFF, EnvironmentalBlocks.CATTAIL,
-				CHERRIES, CHERRY_PIE,
+				CHERRIES, PLUM,
 				VENISON, COOKED_VENISON,
 				DUCK_EGG, DUCK, COOKED_DUCK,
 				TRUFFLE, YAK_HAIR, KOI, MUD_BALL,

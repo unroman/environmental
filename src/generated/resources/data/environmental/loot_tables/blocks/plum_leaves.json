@@ -182,19 +182,10 @@
           ],
           "functions": [
             {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            },
-            {
               "function": "minecraft:explosion_decay"
             }
           ],
-          "name": "environmental:cherries"
+          "name": "environmental:plum"
         }
       ],
       "rolls": 1.0

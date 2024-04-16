@@ -68,8 +68,9 @@ public class EnvironmentalCompat {
 		DataUtil.registerCompostable(EnvironmentalBlocks.MOODY_PLUM_SAPLING.get(), 0.30F);
 
 		DataUtil.registerCompostable(EnvironmentalItems.CHERRIES.get(), 0.30F);
-		DataUtil.registerCompostable(EnvironmentalItems.CHERRY_PIE.get(), 1.0F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.CHERRY_CRATE.get(), 1.0F);
+
+		DataUtil.registerCompostable(EnvironmentalItems.PLUM.get(), 0.65F);
 
 		DataUtil.registerCompostable(EnvironmentalItems.CATTAIL_FLUFF.get(), 0.30F);
 		DataUtil.registerCompostable(EnvironmentalBlocks.CATTAIL_FLUFF_BLOCK.get(), 1.0F);

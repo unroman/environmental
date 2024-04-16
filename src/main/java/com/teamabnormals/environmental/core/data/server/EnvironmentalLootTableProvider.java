@@ -356,7 +356,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 		}
 
 		protected LootTable.Builder createPlumLeavesDrops(Block block, Block sapling, float... saplingChances) {
-			return createLeavesDrops(block, sapling, saplingChances).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(HAS_NO_SHEARS_OR_SILK_TOUCH).add(applyExplosionDecay(block, LootItem.lootTableItem(EnvironmentalItems.CHERRIES.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.055555557F, 0.0625F, 0.08333334F, 0.25F))));
+			return createLeavesDrops(block, sapling, saplingChances).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(HAS_NO_SHEARS_OR_SILK_TOUCH).add(applyExplosionDecay(block, LootItem.lootTableItem(EnvironmentalItems.PLUM.get())).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.055555557F, 0.0625F, 0.08333334F, 0.25F))));
 		}
 
 		protected LootTable.Builder createWisteriaLeavesDrops(Block block, Block sapling, float... saplingChances) {
