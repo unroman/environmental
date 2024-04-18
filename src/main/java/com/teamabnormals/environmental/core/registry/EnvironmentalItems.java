@@ -2,6 +2,8 @@ package com.teamabnormals.environmental.core.registry;
 
 import com.mojang.datafixers.util.Pair;
 import com.teamabnormals.blueprint.common.item.BlueprintRecordItem;
+import com.teamabnormals.blueprint.core.util.item.CreativeModeTabContentsPopulator;
+import com.teamabnormals.blueprint.core.util.registry.BlockSubRegistryHelper;
 import com.teamabnormals.blueprint.core.util.registry.ItemSubRegistryHelper;
 import com.teamabnormals.environmental.common.item.*;
 import com.teamabnormals.environmental.common.item.explorer.ArchitectBeltItem;
@@ -12,14 +14,22 @@ import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalTiers.EnvironmentalArmorMaterials;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBannerPatternTags;
 import com.teamabnormals.environmental.integration.boatload.EnvironmentalBoatTypes;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Predicate;
+
+import static com.teamabnormals.blueprint.core.util.item.ItemStackUtil.is;
+import static net.minecraft.world.item.CreativeModeTabs.*;
+import static net.minecraft.world.item.crafting.Ingredient.of;
 
 @EventBusSubscriber(modid = Environmental.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class EnvironmentalItems {
@@ -109,4 +119,45 @@ public class EnvironmentalItems {
 
 		public static final FoodProperties KOI = new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build();
 	}
+
+	public static void setupTabEditors() {
+		CreativeModeTabContentsPopulator.mod(Environmental.MOD_ID)
+				.tab(FOOD_AND_DRINKS)
+				.addItemsBefore(of(Items.SWEET_BERRIES), CHERRIES, PLUM)
+				.addItemsBefore(of(Items.CHICKEN), VENISON, COOKED_VENISON)
+				.addItemsBefore(of(Items.RABBIT), DUCK, COOKED_DUCK)
+				.addItemsBefore(of(Items.ROTTEN_FLESH), TRUFFLE)
+				.addItemsBefore(of(Items.TROPICAL_FISH), KOI)
+				.tab(INGREDIENTS)
+				.addItemsAfter(of(Items.GLOBE_BANNER_PATTERN), LUMBERER_BANNER_PATTERN)
+				.addItemsAfter(of(Items.EGG), DUCK_EGG)
+				.addItemsBefore(of(Items.LEATHER), YAK_HAIR)
+				.addItemsAfter(of(Items.CLAY_BALL), MUD_BALL)
+				.addItemsBefore(of(Items.STRING), CATTAIL_FLUFF)
+				.tab(COMBAT)
+				.addItemsAfter(of(Items.EGG), MUD_BALL)
+				.addItemsBefore(of(Items.TURTLE_HELMET), THIEF_HOOD, HEALER_POUCH, ARCHITECT_BELT, WANDERER_BOOTS)
+				.addItemsBefore(of(Items.LEATHER_HORSE_ARMOR), YAK_PANTS)
+				.tab(TOOLS_AND_UTILITIES)
+				.addItemsBefore(of(Items.TROPICAL_FISH), KOI_BUCKET)
+				.addItemsBefore(of(Items.TADPOLE_BUCKET), SLABFISH_BUCKET)
+				.addItemsBefore(of(Items.BAMBOO_RAFT), WILLOW_BOAT.getFirst(), WILLOW_BOAT.getSecond())
+				.addItemsBefore(modLoaded(Items.BAMBOO_RAFT, "boatload"), WILLOW_FURNACE_BOAT, LARGE_WILLOW_BOAT)
+				.addItemsBefore(of(Items.BAMBOO_RAFT), PINE_BOAT.getFirst(), PINE_BOAT.getSecond())
+				.addItemsBefore(modLoaded(Items.BAMBOO_RAFT, "boatload"), PINE_FURNACE_BOAT, LARGE_PINE_BOAT)
+				.addItemsBefore(of(Items.BAMBOO_RAFT), PLUM_BOAT.getFirst(), PLUM_BOAT.getSecond())
+				.addItemsBefore(modLoaded(Items.BAMBOO_RAFT, "boatload"), PLUM_FURNACE_BOAT, LARGE_PLUM_BOAT)
+				.addItemsBefore(of(Items.BAMBOO_RAFT), WISTERIA_BOAT.getFirst(), WISTERIA_BOAT.getSecond())
+				.addItemsBefore(modLoaded(Items.BAMBOO_RAFT, "boatload"), WISTERIA_FURNACE_BOAT, LARGE_WISTERIA_BOAT)
+				.addItemsBefore(of(Items.MUSIC_DISC_5), MUSIC_DISC_LEAVING_HOME, MUSIC_DISC_SLABRAVE)
+				.tab(NATURAL_BLOCKS)
+				.addItemsBefore(of(Items.TORCHFLOWER_SEEDS), CATTAIL_FLUFF)
+				.tab(SPAWN_EGGS)
+				.addItemsAlphabetically(is(SpawnEggItem.class), SLABFISH_SPAWN_EGG, DUCK_SPAWN_EGG, DEER_SPAWN_EGG, REINDEER_SPAWN_EGG, YAK_SPAWN_EGG, KOI_SPAWN_EGG, TAPIR_SPAWN_EGG, ZEBRA_SPAWN_EGG);
+	}
+
+	public static Predicate<ItemStack> modLoaded(ItemLike item, String... modids) {
+		return stack -> of(item).test(stack) && BlockSubRegistryHelper.areModsLoaded(modids);
+	}
+
 }

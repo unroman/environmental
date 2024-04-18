@@ -91,6 +91,8 @@ public class Environmental {
 		bus.addListener(this::dataSetup);
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			EnvironmentalItems.setupTabEditors();
+			EnvironmentalBlocks.setupTabEditors();
 			SlabfishSpriteUploader.init(bus);
 			bus.addListener(this::registerLayerDefinitions);
 			bus.addListener(this::registerRenderers);

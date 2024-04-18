@@ -15,6 +15,7 @@ import com.teamabnormals.blueprint.common.block.thatch.ThatchBlock;
 import com.teamabnormals.blueprint.common.block.thatch.ThatchSlabBlock;
 import com.teamabnormals.blueprint.common.block.thatch.ThatchStairBlock;
 import com.teamabnormals.blueprint.core.util.PropertyUtil;
+import com.teamabnormals.blueprint.core.util.item.CreativeModeTabContentsPopulator;
 import com.teamabnormals.blueprint.core.util.registry.BlockSubRegistryHelper;
 import com.teamabnormals.environmental.common.block.*;
 import com.teamabnormals.environmental.common.block.grower.*;
@@ -22,14 +23,23 @@ import com.teamabnormals.environmental.common.levelgen.util.WisteriaColor;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalConstants;
 import com.teamabnormals.environmental.core.other.EnvironmentalProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Predicate;
+
+import static net.minecraft.world.item.CreativeModeTabs.*;
+import static net.minecraft.world.item.crafting.Ingredient.of;
 
 @EventBusSubscriber(modid = Environmental.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class EnvironmentalBlocks {
@@ -320,4 +330,101 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> WHITE_WISTERIA_LEAF_PILE = HELPER.createBlock("white_wisteria_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.WISTERIA.leafPile()));
 	public static final RegistryObject<BlueprintChestBlock> WISTERIA_CHEST = HELPER.createChestBlock("wisteria", EnvironmentalProperties.WISTERIA.chest());
 	public static final RegistryObject<BlueprintTrappedChestBlock> TRAPPED_WISTERIA_CHEST = HELPER.createTrappedChestBlockNamed("wisteria", EnvironmentalProperties.WISTERIA.chest());
+
+	public static void setupTabEditors() {
+		CreativeModeTabContentsPopulator.mod(Environmental.MOD_ID)
+				.tab(BUILDING_BLOCKS)
+				.addItemsBefore(of(Blocks.PACKED_MUD), () -> Blocks.DIRT, DIRT_BRICKS, DIRT_BRICK_STAIRS, DIRT_BRICK_SLAB, DIRT_BRICK_WALL, DIRT_TILE_STAIRS, DIRT_TILES, DIRT_TILE_SLAB, DIRT_TILE_WALL)
+				.addItemsBefore(of(Blocks.MUD_BRICKS), SMOOTH_MUD, SMOOTH_MUD_SLAB)
+				.addItemsAfter(of(Blocks.MUD_BRICK_WALL), CHISELED_MUD_BRICKS)
+				.addItemsBefore(of(Blocks.BAMBOO_BLOCK), WILLOW_LOG, WILLOW_WOOD, STRIPPED_WILLOW_LOG, STRIPPED_WILLOW_WOOD, WILLOW_PLANKS)
+				.addItemsBefore(modLoaded(Blocks.BAMBOO_BLOCK, "woodworks"), WILLOW_BOARDS)
+				.addItemsBefore(of(Blocks.BAMBOO_BLOCK),
+						WILLOW_STAIRS, WILLOW_SLAB, WILLOW_FENCE, WILLOW_FENCE_GATE, WILLOW_DOOR, WILLOW_TRAPDOOR, WILLOW_PRESSURE_PLATE, WILLOW_BUTTON,
+						PINE_LOG, PINE_WOOD, STRIPPED_PINE_LOG, STRIPPED_PINE_WOOD, PINE_PLANKS)
+				.addItemsBefore(modLoaded(Blocks.BAMBOO_BLOCK, "woodworks"), PINE_BOARDS)
+				.addItemsBefore(of(Blocks.BAMBOO_BLOCK),
+						PINE_STAIRS, PINE_SLAB, PINE_FENCE, PINE_FENCE_GATE, PINE_DOOR, PINE_TRAPDOOR, PINE_PRESSURE_PLATE, PINE_BUTTON,
+						PLUM_LOG, PLUM_WOOD, STRIPPED_PLUM_LOG, STRIPPED_PLUM_WOOD, PLUM_PLANKS)
+				.addItemsBefore(modLoaded(Blocks.BAMBOO_BLOCK, "woodworks"), PLUM_BOARDS)
+				.addItemsBefore(of(Blocks.BAMBOO_BLOCK),
+						PLUM_STAIRS, PLUM_SLAB, PLUM_FENCE, PLUM_FENCE_GATE, PLUM_DOOR, PLUM_TRAPDOOR, PLUM_PRESSURE_PLATE, PLUM_BUTTON,
+						WISTERIA_LOG, WISTERIA_WOOD, STRIPPED_WISTERIA_LOG, STRIPPED_WISTERIA_WOOD, WISTERIA_PLANKS)
+				.addItemsBefore(modLoaded(Blocks.BAMBOO_BLOCK, "woodworks"), WISTERIA_BOARDS)
+				.addItemsBefore(of(Blocks.BAMBOO_BLOCK),
+						WISTERIA_STAIRS, WISTERIA_SLAB, WISTERIA_FENCE, WISTERIA_FENCE_GATE, WISTERIA_DOOR, WISTERIA_TRAPDOOR, WISTERIA_PRESSURE_PLATE, WISTERIA_BUTTON
+				)
+				.addItemsBefore(of(Blocks.SANDSTONE), GRASS_THATCH, GRASS_THATCH_STAIRS, GRASS_THATCH_SLAB, CATTAIL_THATCH, CATTAIL_THATCH_STAIRS, CATTAIL_THATCH_SLAB, DUCKWEED_THATCH, DUCKWEED_THATCH_SLAB, DUCKWEED_THATCH_STAIRS)
+				.tab(FUNCTIONAL_BLOCKS)
+				.addItemsBefore(of(Blocks.BAMBOO_SIGN),
+						WILLOW_SIGNS.getFirst(), WILLOW_HANGING_SIGNS.getFirst(),
+						PINE_SIGNS.getFirst(), PINE_HANGING_SIGNS.getFirst(),
+						PLUM_SIGNS.getFirst(),
+						WISTERIA_SIGNS.getFirst(), WISTERIA_HANGING_SIGNS.getFirst()
+				)
+				.addItemsBefore(of(Items.ARMOR_STAND), SLABFISH_EFFIGY)
+				.tab(NATURAL_BLOCKS)
+				.editor(event -> event.getEntries().remove(new ItemStack(Blocks.DIRT_PATH)))
+				.addItemsAfter(of(Blocks.GRASS_BLOCK), () -> Blocks.DIRT_PATH)
+				.addItemsAfter(of(Blocks.PODZOL), PODZOL_PATH)
+				.addItemsAfter(of(Blocks.MYCELIUM), MYCELIUM_PATH)
+				.addItemsAfter(of(Blocks.DIRT), DIRT_PATH)
+				.addItemsBefore(of(Blocks.FARMLAND), BURIED_TRUFFLE)
+				.addItemsAfter(of(Blocks.LILY_PAD), LARGE_LILY_PAD, GIANT_LILY_PAD, DUCKWEED)
+				.addItemsAfter(of(Blocks.SUGAR_CANE), CATTAIL)
+				.addItemsAfter(of(Blocks.FERN), DWARF_SPRUCE)
+				.addItemsAfter(of(Blocks.TALL_GRASS), GIANT_TALL_GRASS)
+				.addItemsAfter(of(Blocks.GLOW_LICHEN), CUP_LICHEN)
+				.addItemsBefore(of(Blocks.TORCHFLOWER), BLUEBELL, DIANTHUS, VIOLET, TASSELFLOWER, RED_LOTUS_FLOWER, WHITE_LOTUS_FLOWER, CARTWHEEL,
+						YELLOW_HIBISCUS, ORANGE_HIBISCUS, RED_HIBISCUS, PINK_HIBISCUS, MAGENTA_HIBISCUS, PURPLE_HIBISCUS)
+				.addItemsBefore(of(Blocks.PITCHER_PLANT), PINK_DELPHINIUM, PURPLE_DELPHINIUM, BLUE_DELPHINIUM, WHITE_DELPHINIUM, BIRD_OF_PARADISE)
+				.addItemsBefore(of(Blocks.MUSHROOM_STEM), WILLOW_LOG, PINE_LOG, PLUM_LOG, WISTERIA_LOG)
+				.addItemsBefore(of(Blocks.MELON), PINECONE, WAXED_PINECONE)
+				.addItemsAfter(modLoaded(Blocks.HAY_BLOCK, "quark"), CHERRY_CRATE)
+				.addItemsAfter(of(Blocks.HAY_BLOCK), CATTAIL_FLUFF_BLOCK, YAK_HAIR_BLOCK, YAK_HAIR_RUG)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), WILLOW_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), WILLOW_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), PINE_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), PINE_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), CHEERFUL_PLUM_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), CHEERFUL_PLUM_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), PLUM_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), PLUM_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), MOODY_PLUM_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), MOODY_PLUM_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), WISTERIA_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), WISTERIA_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), PINK_WISTERIA_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), PINK_WISTERIA_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), PURPLE_WISTERIA_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), PURPLE_WISTERIA_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), BLUE_WISTERIA_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), BLUE_WISTERIA_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), WHITE_WISTERIA_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), WHITE_WISTERIA_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA_LEAVES), HIBISCUS_LEAVES)
+				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), HIBISCUS_LEAF_PILE)
+				.addItemsBefore(of(Blocks.AZALEA), WILLOW_SAPLING, PINE_SAPLING, CHEERFUL_PLUM_SAPLING, PLUM_SAPLING, MOODY_PLUM_SAPLING, PINK_WISTERIA_SAPLING, PURPLE_WISTERIA_SAPLING, BLUE_WISTERIA_SAPLING, WHITE_WISTERIA_SAPLING);
+
+		CreativeModeTabContentsPopulator.mod("woodworks_1")
+				.tab(FUNCTIONAL_BLOCKS)
+				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_LADDER), WILLOW_LADDER, PINE_LADDER, PLUM_LADDER, WISTERIA_LADDER)
+				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_BEEHIVE), WILLOW_BEEHIVE, PINE_BEEHIVE, PLUM_BEEHIVE, WISTERIA_BEEHIVE)
+				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_BOOKSHELF), WILLOW_BOOKSHELF, CHISELED_WILLOW_BOOKSHELF, PINE_BOOKSHELF, CHISELED_PINE_BOOKSHELF, PLUM_BOOKSHELF, WISTERIA_BOOKSHELF)
+				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_CLOSET), WILLOW_CHEST, PINE_CHEST, PLUM_CHEST, WISTERIA_CHEST)
+				.tab(REDSTONE_BLOCKS)
+				.addItemsBefore(ofID(EnvironmentalConstants.TRAPPED_BAMBOO_CLOSET), TRAPPED_WILLOW_CHEST, TRAPPED_PINE_CHEST, TRAPPED_PLUM_CHEST, TRAPPED_WISTERIA_CHEST);
+	}
+
+	public static Predicate<ItemStack> modLoaded(ItemLike item, String... modids) {
+		return stack -> of(item).test(stack) && BlockSubRegistryHelper.areModsLoaded(modids);
+	}
+
+	public static Predicate<ItemStack> ofID(ResourceLocation location, ItemLike fallback, String... modids) {
+		return stack -> (BlockSubRegistryHelper.areModsLoaded(modids) ? of(ForgeRegistries.ITEMS.getValue(location)) : of(fallback)).test(stack);
+	}
+
+	public static Predicate<ItemStack> ofID(ResourceLocation location, String... modids) {
+		return stack -> (BlockSubRegistryHelper.areModsLoaded(modids) && of(ForgeRegistries.ITEMS.getValue(location)).test(stack));
+	}
 }
