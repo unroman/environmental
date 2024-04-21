@@ -28,7 +28,10 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraftforge.common.Tags;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EnvironmentalSlabfishTypes {
 	public static final ResourceKey<SlabfishType> SWAMP = createKey("swamp");
@@ -96,6 +99,12 @@ public class EnvironmentalSlabfishTypes {
 	public static final ResourceKey<SlabfishType> WITHER = createKey("wither");
 	public static final ResourceKey<SlabfishType> TOTEM = createKey("totem");
 
+	public static final List<ResourceKey<SlabfishType>> ATMOSPHERIC_SLABFISH = List.of(RAINFOREST, DUNES, SCRUBLAND, SPINY_THICKET, ASPEN, KOUSA, LAUREL);
+	public static final List<ResourceKey<SlabfishType>> AUTUMNITY_SLABFISH = List.of(MAPLE);
+	public static final List<ResourceKey<SlabfishType>> ENDERGETIC_SLABFISH = List.of(POISE);
+
+	public static final List<ResourceKey<SlabfishType>> COMPAT_SLABFISH = Stream.concat(Stream.concat(ATMOSPHERIC_SLABFISH.stream(), AUTUMNITY_SLABFISH.stream()), ENDERGETIC_SLABFISH.stream()).collect(Collectors.toList());
+
 	public static void bootstrap(BootstapContext<SlabfishType> context) {
 		register(context, SWAMP, -1);
 
@@ -105,16 +114,16 @@ public class EnvironmentalSlabfishTypes {
 		register(context, BEACH, 0, spawn(), or(biome(context, BiomeTags.IS_BEACH), biome(context, Biomes.STONY_SHORE)));
 		register(context, BLOSSOM, 1, spawn(), or(biome(context, EnvironmentalBiomes.BLOSSOM_WOODS), biome(context, EnvironmentalBiomes.BLOSSOM_VALLEYS)));
 		register(context, BROWN_MUSHROOM, 2, new SlabfishEventCondition(Event.LIGHTNING), new SlabfishTypeCondition(MUSHROOM.location()));
-		register(context, CAVE, 2, spawn(), new SlabfishHeightCondition(0, 48), new SlabfishLightCondition(0, 0, LightLayer.SKY), dimension(BuiltinDimensionTypes.OVERWORLD));
+		register(context, CAVE, 2, spawn(), new SlabfishHeightCondition(Integer.MIN_VALUE, 48), new SlabfishLightCondition(0, 0, LightLayer.SKY), dimension(BuiltinDimensionTypes.OVERWORLD));
 		register(context, CHERRY_GROVE, 1, Biomes.CHERRY_GROVE);
 		register(context, CHORUS, 1, BlueprintBiomeTags.IS_OUTER_END);
 		register(context, CRIMSON, 1, Biomes.CRIMSON_FOREST);
 		register(context, DARK_FOREST, 1, Biomes.DARK_FOREST);
 		register(context, DEEP_DARK, 5, Biomes.DEEP_DARK);
-		register(context, DEEPSLATE, 3, spawn(), new SlabfishHeightCondition(-64, 0), new SlabfishLightCondition(0, 0, LightLayer.SKY), dimension(BuiltinDimensionTypes.OVERWORLD));
+		register(context, DEEPSLATE, 3, spawn(), new SlabfishHeightCondition(Integer.MIN_VALUE, 0), new SlabfishLightCondition(0, 0, LightLayer.SKY), dimension(BuiltinDimensionTypes.OVERWORLD));
 		register(context, DRIPSTONE_CAVES, 5, Biomes.DRIPSTONE_CAVES);
 		register(context, DESERT, 0, Biomes.DESERT);
-		register(context, DROWNED, 2, spawn(), biome(context, BiomeTags.IS_OCEAN), new SlabfishHeightCondition(-64, 48), new SlabfishInFluidCondition(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER)));
+		register(context, DROWNED, 2, spawn(), biome(context, BiomeTags.IS_OCEAN), new SlabfishHeightCondition(Integer.MIN_VALUE, 48), new SlabfishInFluidCondition(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER)));
 		register(context, END, 0, spawn(), dimension(BuiltinDimensionTypes.END));
 		register(context, FLOWER_FOREST, 1, Biomes.FLOWER_FOREST);
 		register(context, FOREST, 0, BiomeTags.IS_FOREST);
@@ -136,7 +145,7 @@ public class EnvironmentalSlabfishTypes {
 		register(context, RIVER, 0, BiomeTags.IS_RIVER);
 		register(context, SAVANNA, 0, BiomeTags.IS_SAVANNA);
 		register(context, SKELETON, 2, new SlabfishEventCondition(Event.LIGHTNING));
-		register(context, SKY, 2, spawn(), new SlabfishHeightCondition(256, 512), dimension(BuiltinDimensionTypes.OVERWORLD));
+		register(context, SKY, 2, spawn(), new SlabfishHeightCondition(256, Integer.MAX_VALUE), dimension(BuiltinDimensionTypes.OVERWORLD));
 		register(context, SNOWY, 1, Tags.Biomes.IS_SNOWY);
 		register(context, SOUL_SAND_VALLEY, 1, Biomes.SOUL_SAND_VALLEY);
 		register(context, STRAY, 2, new SlabfishEventCondition(Event.BREED), new SlabfishBreedCondition(SKELETON.location(), SKELETON.location()), biome(context, Tags.Biomes.IS_SNOWY));

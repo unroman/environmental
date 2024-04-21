@@ -10,8 +10,7 @@
     {
       "type": "environmental:height",
       "value": {
-        "max": 0,
-        "min": -64
+        "max": 0
       }
     },
     {
