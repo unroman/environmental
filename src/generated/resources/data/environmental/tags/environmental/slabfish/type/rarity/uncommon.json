@@ -1,18 +1,15 @@
 {
   "values": [
     "environmental:plains",
-    "environmental:hill",
+    "environmental:savanna",
+    "environmental:desert",
     "environmental:forest",
-    "environmental:maple",
-    "environmental:blossom",
+    "environmental:hill",
     "environmental:taiga",
-    "environmental:pine",
     "environmental:snowy",
     "environmental:river",
     "environmental:beach",
     "environmental:ocean",
-    "environmental:desert",
-    "environmental:savanna",
     "environmental:cave"
   ]
 }

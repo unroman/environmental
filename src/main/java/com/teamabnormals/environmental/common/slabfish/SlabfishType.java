@@ -27,10 +27,10 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 
 	public static final Map<TagKey<SlabfishType>, Pair<Float, ChatFormatting>> RARITIES = Util.make(new HashMap<>(), map -> {
 		map.put(EnvironmentalSlabfishTypeTags.COMMON, Pair.of(1.0F, ChatFormatting.GRAY));
-		map.put(EnvironmentalSlabfishTypeTags.UNCOMMON, Pair.of(0.55F, ChatFormatting.GREEN));
-		map.put(EnvironmentalSlabfishTypeTags.RARE, Pair.of(0.15F, ChatFormatting.AQUA));
-		map.put(EnvironmentalSlabfishTypeTags.EPIC, Pair.of(0.8F, ChatFormatting.LIGHT_PURPLE));
-		map.put(EnvironmentalSlabfishTypeTags.LEGENDARY, Pair.of(0.2F, ChatFormatting.GOLD));
+		map.put(EnvironmentalSlabfishTypeTags.UNCOMMON, Pair.of(0.60F, ChatFormatting.GREEN));
+		map.put(EnvironmentalSlabfishTypeTags.RARE, Pair.of(0.25F, ChatFormatting.AQUA));
+		map.put(EnvironmentalSlabfishTypeTags.EPIC, Pair.of(0.05F, ChatFormatting.LIGHT_PURPLE));
+		map.put(EnvironmentalSlabfishTypeTags.LEGENDARY, Pair.of(0.01F, ChatFormatting.GOLD));
 	});
 
 	public static final Codec<SlabfishType> CODEC = RecordCodecBuilder.create(instance -> {
