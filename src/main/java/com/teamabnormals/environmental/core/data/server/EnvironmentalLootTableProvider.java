@@ -256,6 +256,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.dropSelf(STRIPPED_PLUM_LOG.get());
 			this.dropSelf(STRIPPED_PLUM_WOOD.get());
 			this.dropSelf(PLUM_SIGNS.getFirst().get());
+			this.dropSelf(PLUM_HANGING_SIGNS.getFirst().get());
 			this.dropSelf(PLUM_PRESSURE_PLATE.get());
 			this.dropSelf(PLUM_TRAPDOOR.get());
 			this.dropSelf(PLUM_BUTTON.get());

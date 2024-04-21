@@ -159,6 +159,7 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		planksFromLogs(consumer, PLUM_PLANKS.get(), EnvironmentalItemTags.PLUM_LOGS, 4);
 		woodFromLogs(consumer, PLUM_WOOD.get(), PLUM_LOG.get());
 		woodFromLogs(consumer, STRIPPED_PLUM_WOOD.get(), STRIPPED_PLUM_LOG.get());
+		hangingSign(consumer, PLUM_HANGING_SIGNS.getFirst().get(), STRIPPED_PLUM_LOG.get());
 		leafPileRecipes(consumer, PLUM_LEAVES.get(), PLUM_LEAF_PILE.get());
 		leafPileRecipes(consumer, CHEERFUL_PLUM_LEAVES.get(), CHEERFUL_PLUM_LEAF_PILE.get());
 		leafPileRecipes(consumer, MOODY_PLUM_LEAVES.get(), MOODY_PLUM_LEAF_PILE.get());

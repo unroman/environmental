@@ -69,6 +69,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.blockFamily(EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY);
 		this.logBlocks(PLUM_LOG, PLUM_WOOD);
 		this.logBlocks(STRIPPED_PLUM_LOG, STRIPPED_PLUM_WOOD);
+		this.hangingSignBlocks(STRIPPED_PLUM_LOG, PLUM_HANGING_SIGNS);
 		this.leavesBlocks(PLUM_LEAVES, PLUM_LEAF_PILE);
 		this.leavesBlocks(CHEERFUL_PLUM_LEAVES, CHEERFUL_PLUM_LEAF_PILE);
 		this.leavesBlocks(MOODY_PLUM_LEAVES, MOODY_PLUM_LEAF_PILE);

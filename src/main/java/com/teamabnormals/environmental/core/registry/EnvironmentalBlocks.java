@@ -257,6 +257,7 @@ public class EnvironmentalBlocks {
 	public static final RegistryObject<Block> PLUM_DOOR = HELPER.createBlock("plum_door", () -> new DoorBlock(EnvironmentalProperties.PLUM.door(), EnvironmentalProperties.PLUM_BLOCK_SET));
 	public static final RegistryObject<Block> PLUM_TRAPDOOR = HELPER.createBlock("plum_trapdoor", () -> new TrapDoorBlock(EnvironmentalProperties.PLUM.trapdoor(), EnvironmentalProperties.PLUM_BLOCK_SET));
 	public static final Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> PLUM_SIGNS = HELPER.createSignBlock("plum", EnvironmentalProperties.PLUM_WOOD_TYPE, EnvironmentalProperties.PLUM.sign());
+	public static final Pair<RegistryObject<BlueprintCeilingHangingSignBlock>, RegistryObject<BlueprintWallHangingSignBlock>> PLUM_HANGING_SIGNS = HELPER.createHangingSignBlock("plum", EnvironmentalProperties.PLUM_WOOD_TYPE, EnvironmentalProperties.PLUM.hangingSign());
 
 	public static final RegistryObject<Block> PLUM_BOARDS = HELPER.createFuelBlock("plum_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.PLUM.planks()), 300);
 	public static final RegistryObject<Block> PLUM_BOOKSHELF = HELPER.createFuelBlock("plum_bookshelf", () -> new Block(EnvironmentalProperties.PLUM.bookshelf()), 300);
@@ -359,7 +360,7 @@ public class EnvironmentalBlocks {
 				.addItemsBefore(of(Blocks.BAMBOO_SIGN),
 						WILLOW_SIGNS.getFirst(), WILLOW_HANGING_SIGNS.getFirst(),
 						PINE_SIGNS.getFirst(), PINE_HANGING_SIGNS.getFirst(),
-						PLUM_SIGNS.getFirst(),
+						PLUM_SIGNS.getFirst(), PLUM_HANGING_SIGNS.getFirst(),
 						WISTERIA_SIGNS.getFirst(), WISTERIA_HANGING_SIGNS.getFirst()
 				)
 				.addItemsBefore(of(Items.ARMOR_STAND), SLABFISH_EFFIGY)
