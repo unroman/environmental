@@ -1,6 +1,7 @@
 package com.teamabnormals.environmental.core.data.server;
 
 import com.teamabnormals.environmental.common.advancement.UpgradeGearTrigger;
+import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalCriteriaTriggers;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalEntityTypeTags;
@@ -8,13 +9,18 @@ import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalEntityTypes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalItems;
+import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.TameAnimalTrigger.TriggerInstance;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EntityType;
@@ -71,7 +77,6 @@ public class EnvironmentalAdvancementProvider implements AdvancementGenerator {
 						EntityPredicate.wrap(EntityPredicate.Builder.entity().of(EntityType.PIG).build())))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/saddle_pig");
 
-
 		createAdvancement("when_pigs_fly", "husbandry", saddlePig, Items.CARROT_ON_A_STICK, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("when_pigs_fly", EnvironmentalCriteriaTriggers.WHEN_PIGS_FLY.createInstance())
 				.save(consumer, Environmental.MOD_ID + ":husbandry/when_pigs_fly");
@@ -114,6 +119,18 @@ public class EnvironmentalAdvancementProvider implements AdvancementGenerator {
 						ItemPredicate.Builder.item().of(EnvironmentalItemTags.DEER_PLANTABLES),
 						EntityPredicate.wrap(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypeTags.DEER).build())))
 				.save(consumer, Environmental.MOD_ID + ":husbandry/feed_deer_flower");
+
+		Advancement.Builder tameSlabfish = createAdvancement("tame_all_slabfish", "husbandry", new ResourceLocation("husbandry/tame_an_animal"), Items.TROPICAL_FISH, FrameType.CHALLENGE, true, true, false);
+		for (ResourceKey<SlabfishType> slabfish : provider.lookup(EnvironmentalRegistries.SLABFISH_TYPE).get().listElementIds().filter(key -> !EnvironmentalSlabfishTypes.COMPAT_SLABFISH.contains(key)).toList()) {
+			tameSlabfish.addCriterion(slabfish.location().toString(), slabfishCriterion(slabfish));
+		}
+		tameSlabfish.save(consumer, Environmental.MOD_ID + ":husbandry/tame_all_slabfish");
+	}
+
+	public static TriggerInstance slabfishCriterion(ResourceKey<SlabfishType> slabfish) {
+		CompoundTag tag = new CompoundTag();
+		tag.putString("SlabfishType", slabfish.location().toString());
+		return TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(EnvironmentalEntityTypes.SLABFISH.get()).nbt(new NbtPredicate(tag)).build());
 	}
 
 	private static Advancement.Builder createAdvancement(String name, String category, Advancement parent, ItemLike icon, FrameType frame, boolean showToast, boolean announceToChat, boolean hidden) {

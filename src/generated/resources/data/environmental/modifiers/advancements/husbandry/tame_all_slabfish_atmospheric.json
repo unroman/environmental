@@ -1,0 +1,153 @@
+{
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "environmental:aspen": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:aspen\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          },
+          "environmental:dunes": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:dunes\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          },
+          "environmental:kousa": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:kousa\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          },
+          "environmental:laurel": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:laurel\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          },
+          "environmental:rainforest": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:rainforest\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          },
+          "environmental:scrubland": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:scrubland\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          },
+          "environmental:spiny_thicket": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:spiny_thicket\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          }
+        },
+        "requirements": [
+          [
+            "environmental:rainforest"
+          ],
+          [
+            "environmental:dunes"
+          ],
+          [
+            "environmental:scrubland"
+          ],
+          [
+            "environmental:spiny_thicket"
+          ],
+          [
+            "environmental:aspen"
+          ],
+          [
+            "environmental:kousa"
+          ],
+          [
+            "environmental:laurel"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": {
+    "type": "names",
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "atmospheric"
+      }
+    ],
+    "config": [
+      "environmental:husbandry/tame_all_slabfish"
+    ]
+  }
+}

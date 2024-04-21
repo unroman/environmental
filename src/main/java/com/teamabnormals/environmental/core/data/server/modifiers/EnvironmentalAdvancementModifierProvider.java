@@ -3,17 +3,27 @@ package com.teamabnormals.environmental.core.data.server.modifiers;
 import com.teamabnormals.blueprint.common.advancement.modification.AdvancementModifierProvider;
 import com.teamabnormals.blueprint.common.advancement.modification.modifiers.CriteriaModifier;
 import com.teamabnormals.blueprint.common.advancement.modification.modifiers.EffectsChangedModifier;
+import com.teamabnormals.blueprint.core.util.modification.selection.ConditionedResourceSelector;
+import com.teamabnormals.blueprint.core.util.modification.selection.selectors.NamesResourceSelector;
+import com.teamabnormals.environmental.common.slabfish.SlabfishType;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.data.server.EnvironmentalAdvancementProvider;
+import com.teamabnormals.environmental.core.other.EnvironmentalConstants;
 import com.teamabnormals.environmental.core.registry.*;
+import com.teamabnormals.environmental.core.registry.slabfish.EnvironmentalSlabfishTypes;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class EnvironmentalAdvancementModifierProvider extends AdvancementModifierProvider {
@@ -44,7 +54,6 @@ public class EnvironmentalAdvancementModifierProvider extends AdvancementModifie
 		this.entry("husbandry/bred_all_animals").selects("husbandry/bred_all_animals").addModifier(breedAllAnimals.requirements(RequirementsStrategy.AND).build());
 
 		CriteriaModifier.Builder adventuringTime = CriteriaModifier.builder(this.modId);
-
 		EnvironmentalBiomes.NATURAL_BIOMES.forEach(biome -> {
 			adventuringTime.addCriterion(biome.location().toString(), PlayerTrigger.TriggerInstance.located(LocationPredicate.inBiome(biome)));
 		});
@@ -59,5 +68,18 @@ public class EnvironmentalAdvancementModifierProvider extends AdvancementModifie
 		this.entry("husbandry/plant_seed").selects("husbandry/plant_seed").addModifier(CriteriaModifier.builder(this.modId)
 				.addCriterion("cattail_sprouts", ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(EnvironmentalBlocks.CATTAIL_SPROUT.get()))
 				.addIndexedRequirements(0, false, "cattail_sprouts").build());
+
+		this.compatSlabfishModifier(EnvironmentalConstants.ATMOSPHERIC, EnvironmentalSlabfishTypes.ATMOSPHERIC_SLABFISH);
+		this.compatSlabfishModifier(EnvironmentalConstants.AUTUMNITY, EnvironmentalSlabfishTypes.AUTUMNITY_SLABFISH);
+		this.compatSlabfishModifier(EnvironmentalConstants.ENDERGETIC, EnvironmentalSlabfishTypes.ENDERGETIC_SLABFISH);
+	}
+
+	public void compatSlabfishModifier(String modid, List<ResourceKey<SlabfishType>> slabfishTypes) {
+		ConditionedResourceSelector selector = new ConditionedResourceSelector(new NamesResourceSelector(new ResourceLocation(Environmental.MOD_ID, "husbandry/tame_all_slabfish")), new ModLoadedCondition(modid));
+		CriteriaModifier.Builder tameAllSlabfish = CriteriaModifier.builder(this.modId);
+		slabfishTypes.forEach(slabfish -> {
+			tameAllSlabfish.addCriterion(slabfish.location().getPath(), EnvironmentalAdvancementProvider.slabfishCriterion(slabfish));
+		});
+		this.entry("husbandry/tame_all_slabfish_" + modid).selector(selector).addModifier(tameAllSlabfish.requirements(RequirementsStrategy.AND).build());
 	}
 }

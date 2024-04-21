@@ -1,0 +1,45 @@
+{
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "environmental:poise": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:poise\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          }
+        },
+        "requirements": [
+          [
+            "environmental:poise"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": {
+    "type": "names",
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "endergetic"
+      }
+    ],
+    "config": [
+      "environmental:husbandry/tame_all_slabfish"
+    ]
+  }
+}

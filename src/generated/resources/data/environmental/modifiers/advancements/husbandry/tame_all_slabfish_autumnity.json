@@ -1,0 +1,45 @@
+{
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "environmental:maple": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"environmental:maple\"}"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:tame_animal"
+          }
+        },
+        "requirements": [
+          [
+            "environmental:maple"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": {
+    "type": "names",
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "autumnity"
+      }
+    ],
+    "config": [
+      "environmental:husbandry/tame_all_slabfish"
+    ]
+  }
+}
