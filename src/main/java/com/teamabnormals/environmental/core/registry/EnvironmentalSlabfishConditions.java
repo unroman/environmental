@@ -29,6 +29,7 @@ public class EnvironmentalSlabfishConditions {
 	public static final RegistryObject<SlabfishConditionType> RANDOM = SLABFISH_CONDITIONS.register("random", () -> new SlabfishConditionType(SlabfishRandomCondition.CODEC));
 	public static final RegistryObject<SlabfishConditionType> TIME = SLABFISH_CONDITIONS.register("time", () -> new SlabfishConditionType(SlabfishTimeCondition.CODEC));
 	public static final RegistryObject<SlabfishConditionType> IN_BIOME = SLABFISH_CONDITIONS.register("in_biome", () -> new SlabfishConditionType(SlabfishInBiomeCondition.CODEC));
+	public static final RegistryObject<SlabfishConditionType> IN_BIOME_KEY = SLABFISH_CONDITIONS.register("in_biome_key", () -> new SlabfishConditionType(SlabfishInBiomeKeyCondition.CODEC));
 	public static final RegistryObject<SlabfishConditionType> IN_BLOCK = SLABFISH_CONDITIONS.register("in_block", () -> new SlabfishConditionType(SlabfishInBlockCondition.CODEC));
 	public static final RegistryObject<SlabfishConditionType> IN_FLUID = SLABFISH_CONDITIONS.register("in_fluid", () -> new SlabfishConditionType(SlabfishInFluidCondition.CODEC));
 	public static final RegistryObject<SlabfishConditionType> EVENT = SLABFISH_CONDITIONS.register("event", () -> new SlabfishConditionType(SlabfishEventCondition.CODEC));

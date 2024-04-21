@@ -4,6 +4,8 @@
     "environmental:deep_dark",
     "environmental:ice_spikes",
     "environmental:bamboo",
+    "environmental:kousa",
+    "environmental:spiny_thicket",
     "environmental:skeleton",
     "environmental:drowned",
     "environmental:nightmare",
@@ -13,6 +15,7 @@
     "environmental:soul_sand_valley",
     "environmental:basalt_deltas",
     "environmental:end",
-    "environmental:chorus"
+    "environmental:chorus",
+    "environmental:poise"
   ]
 }

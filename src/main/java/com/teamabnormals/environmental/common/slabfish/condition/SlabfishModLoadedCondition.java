@@ -13,7 +13,7 @@ public class SlabfishModLoadedCondition implements SlabfishCondition {
 
 	private final String modId;
 
-	private SlabfishModLoadedCondition(String modId) {
+	public SlabfishModLoadedCondition(String modId) {
 		this.modId = modId;
 	}
 

@@ -6,6 +6,7 @@ import com.teamabnormals.environmental.common.slabfish.condition.*;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext.Event;
 import com.teamabnormals.environmental.common.slabfish.condition.SlabfishConditionContext.Time;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.other.EnvironmentalConstants;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBiomeTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBiomes;
 import com.teamabnormals.environmental.core.registry.EnvironmentalRegistries;
@@ -144,6 +145,18 @@ public class EnvironmentalSlabfishTypes {
 		register(context, WARM_OCEAN, 1, Biomes.WARM_OCEAN);
 		register(context, WARPED, 1, Biomes.WARPED_FOREST);
 		register(context, WITHER, 2, new SlabfishEventCondition(Event.BREED), new SlabfishBreedCondition(SKELETON.location(), SKELETON.location()), dimension(BuiltinDimensionTypes.NETHER));
+
+		register(context, RAINFOREST, 1, EnvironmentalConstants.ATMOSPHERIC, EnvironmentalBiomeTags.IS_RAINFOREST);
+		register(context, DUNES, 0, EnvironmentalConstants.ATMOSPHERIC, EnvironmentalBiomeTags.IS_DUNES);
+		register(context, ASPEN, 1, EnvironmentalConstants.ATMOSPHERIC, EnvironmentalConstants.ASPEN_PARKLAND);
+		register(context, KOUSA, 2, EnvironmentalConstants.ATMOSPHERIC, EnvironmentalConstants.KOUSA_JUNGLE);
+		register(context, LAUREL, 1, EnvironmentalConstants.ATMOSPHERIC, EnvironmentalConstants.LAUREL_FOREST);
+		register(context, SPINY_THICKET, 1, EnvironmentalConstants.ATMOSPHERIC, EnvironmentalConstants.SPINY_THICKET);
+		register(context, SCRUBLAND, 2, modLoaded(EnvironmentalConstants.ATMOSPHERIC), spawn(), or(biome(EnvironmentalConstants.SCRUBLAND), biome(EnvironmentalConstants.SNOWY_SCRUBLAND)));
+
+		register(context, MAPLE, 1, modLoaded(EnvironmentalConstants.AUTUMNITY), spawn(), or(biome(EnvironmentalConstants.MAPLE_FOREST), biome(EnvironmentalConstants.PUMPKIN_FIELDS)));
+
+		register(context, POISE, 1, EnvironmentalConstants.ENDERGETIC, EnvironmentalConstants.POISE_FOREST);
 	}
 
 	public static void register(BootstapContext<SlabfishType> context, ResourceKey<SlabfishType> key, int priority, SlabfishCondition... conditions) {
@@ -159,6 +172,14 @@ public class EnvironmentalSlabfishTypes {
 
 	public static void register(BootstapContext<SlabfishType> context, ResourceKey<SlabfishType> key, int priority, ResourceKey<Biome> biome) {
 		register(context, key, priority, spawn(), biome(context, biome));
+	}
+
+	public static void register(BootstapContext<SlabfishType> context, ResourceKey<SlabfishType> key, int priority, String modid, TagKey<Biome> biomes) {
+		register(context, key, priority, modLoaded(modid), spawn(), biome(context, biomes));
+	}
+
+	public static void register(BootstapContext<SlabfishType> context, ResourceKey<SlabfishType> key, int priority, String modid, ResourceLocation biome) {
+		register(context, key, priority, modLoaded(modid), spawn(), biome(biome));
 	}
 
 	public static SlabfishEventCondition spawn() {
@@ -181,8 +202,16 @@ public class EnvironmentalSlabfishTypes {
 		return new SlabfishInBiomeCondition(context.lookup(Registries.BIOME).getOrThrow(biomes));
 	}
 
+	public static SlabfishInBiomeKeyCondition biome(ResourceLocation biome) {
+		return new SlabfishInBiomeKeyCondition(biome);
+	}
+
 	public static SlabfishDimensionCondition dimension(ResourceKey<DimensionType> dimension) {
 		return new SlabfishDimensionCondition(dimension.location());
+	}
+
+	public static SlabfishModLoadedCondition modLoaded(String modid) {
+		return new SlabfishModLoadedCondition(modid);
 	}
 
 	public static ResourceKey<SlabfishType> createKey(String name) {

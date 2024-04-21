@@ -109,6 +109,9 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 		this.tag(EnvironmentalBiomeTags.HAS_HIBISCUS).add(Biomes.JUNGLE);
 
 		this.tag(EnvironmentalBiomeTags.HAS_MUD_DISK).add(Biomes.SWAMP);
+
+		this.tag(EnvironmentalBiomeTags.IS_RAINFOREST);
+		this.tag(EnvironmentalBiomeTags.IS_DUNES);
 	}
 
 	@SafeVarargs

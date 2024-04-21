@@ -2,6 +2,8 @@ package com.teamabnormals.environmental.core.other.tags;
 
 import com.teamabnormals.blueprint.core.util.TagUtil;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.EnvironmentalConfig;
+import com.teamabnormals.environmental.core.other.EnvironmentalConstants;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
@@ -39,6 +41,9 @@ public class EnvironmentalBiomeTags {
 	public static final TagKey<Biome> HAS_HIBISCUS = biomeTag("has_feature/hibiscus");
 
 	public static final TagKey<Biome> HAS_MUD_DISK = biomeTag("has_feature/mud_disk");
+
+	public static final TagKey<Biome> IS_RAINFOREST = TagUtil.biomeTag(EnvironmentalConstants.ATMOSPHERIC, "is_rainforest");
+	public static final TagKey<Biome> IS_DUNES = TagUtil.biomeTag(EnvironmentalConstants.ATMOSPHERIC, "is_dunes");
 
 	private static TagKey<Biome> biomeTag(String tagName) {
 		return TagUtil.biomeTag(Environmental.MOD_ID, tagName);

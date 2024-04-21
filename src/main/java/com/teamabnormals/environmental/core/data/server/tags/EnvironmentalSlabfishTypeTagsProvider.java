@@ -25,23 +25,22 @@ public class EnvironmentalSlabfishTypeTagsProvider extends TagsProvider<Slabfish
 		this.tag(EnvironmentalSlabfishTypeTags.TRANSLUCENT).add(GHOST);
 		this.tag(EnvironmentalSlabfishTypeTags.NOT_SOLD_BY_WANDERING_TRADER);
 
-		// Dunes, Rainforest, Maple, Poise
 		this.tag(EnvironmentalSlabfishTypeTags.COMMON).add(SWAMP, MARSH, MANGROVE);
 		this.tag(EnvironmentalSlabfishTypeTags.UNCOMMON).add(
-				PLAINS, HILL, FOREST,
+				PLAINS, HILL, FOREST, MAPLE,
 				BLOSSOM, TAIGA, PINE, SNOWY,
 				RIVER, BEACH, OCEAN,
 				DESERT, SAVANNA, CAVE);
 		this.tag(EnvironmentalSlabfishTypeTags.RARE).add(
-				DARK_FOREST, FLOWER_FOREST,
-				JUNGLE, BADLANDS, MOUNTAIN, CHERRY_GROVE,
+				DARK_FOREST, FLOWER_FOREST, ASPEN, DUNES, LAUREL, SCRUBLAND,
+				JUNGLE, BADLANDS, MOUNTAIN, CHERRY_GROVE, RAINFOREST,
 				WARM_OCEAN, FROZEN_OCEAN,
 				DEEPSLATE, LUSH_CAVES, DRIPSTONE_CAVES, NETHER);
 		this.tag(EnvironmentalSlabfishTypeTags.EPIC).add(
-				MUSHROOM, DEEP_DARK, ICE_SPIKES, BAMBOO,
+				MUSHROOM, DEEP_DARK, ICE_SPIKES, BAMBOO, KOUSA, SPINY_THICKET,
 				SKELETON, DROWNED, NIGHTMARE, TOTEM,
 				CRIMSON, WARPED, SOUL_SAND_VALLEY, BASALT_DELTAS,
-				END, CHORUS);
+				END, CHORUS, POISE);
 		this.tag(EnvironmentalSlabfishTypeTags.LEGENDARY).add(BROWN_MUSHROOM, SKY, WITHER, STRAY, GHOST);
 	}
 }
