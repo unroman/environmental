@@ -22,10 +22,10 @@
         "category": "building",
         "key": {
           "#": {
-            "item": "environmental:wisteria_planks"
+            "item": "environmental:plum_planks"
           },
           "X": {
-            "item": "environmental:wisteria_slab"
+            "item": "environmental:plum_slab"
           }
         },
         "pattern": [
@@ -34,7 +34,7 @@
           "###"
         ],
         "result": {
-          "item": "minecraft:bamboo_stairs"
+          "item": "environmental:chiseled_plum_bookshelf"
         },
         "show_notification": true
       }

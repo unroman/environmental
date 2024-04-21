@@ -271,6 +271,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(PLUM_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(TRAPPED_PLUM_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(PLUM_BOOKSHELF.get(), (block) -> createSingleItemTableWithSilkTouch(block, Items.BOOK, ConstantValue.exactly(3.0F)));
+			this.dropWhenSilkTouch(CHISELED_PLUM_BOOKSHELF.get());
 
 			this.add(PLUM_LEAVES.get(), (block) -> createPlumLeavesDrops(block, PLUM_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 			this.add(PLUM_LEAF_PILE.get(), this::createLeafPileDrops);
@@ -326,6 +327,7 @@ public class EnvironmentalLootTableProvider extends LootTableProvider {
 			this.add(WISTERIA_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(TRAPPED_WISTERIA_CHEST.get(), this::createNameableBlockEntityTable);
 			this.add(WISTERIA_BOOKSHELF.get(), (block) -> createSingleItemTableWithSilkTouch(block, Items.BOOK, ConstantValue.exactly(3.0F)));
+			this.dropWhenSilkTouch(CHISELED_WISTERIA_BOOKSHELF.get());
 
 			this.add(PINK_WISTERIA_LEAVES.get(), (block) -> createWisteriaLeavesDrops(block, PINK_WISTERIA_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 			this.add(BLUE_WISTERIA_LEAVES.get(), (block) -> createWisteriaLeavesDrops(block, BLUE_WISTERIA_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));

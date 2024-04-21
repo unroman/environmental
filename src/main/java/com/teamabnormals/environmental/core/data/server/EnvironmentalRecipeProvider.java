@@ -137,6 +137,18 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, WAXED_PINECONE.get()).requires(PINECONE.get()).requires(Items.HONEYCOMB).unlockedBy(getHasName(PINECONE.get()), has(PINECONE.get())).save(consumer, getConversionRecipeName(WAXED_PINECONE.get(), Items.HONEYCOMB));
 
+		generateRecipes(consumer, EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY);
+		planksFromLogs(consumer, PLUM_PLANKS.get(), EnvironmentalItemTags.PLUM_LOGS, 4);
+		woodFromLogs(consumer, PLUM_WOOD.get(), PLUM_LOG.get());
+		woodFromLogs(consumer, STRIPPED_PLUM_WOOD.get(), STRIPPED_PLUM_LOG.get());
+		hangingSign(consumer, PLUM_HANGING_SIGNS.getFirst().get(), STRIPPED_PLUM_LOG.get());
+		leafPileRecipes(consumer, PLUM_LEAVES.get(), PLUM_LEAF_PILE.get());
+		leafPileRecipes(consumer, CHEERFUL_PLUM_LEAVES.get(), CHEERFUL_PLUM_LEAF_PILE.get());
+		leafPileRecipes(consumer, MOODY_PLUM_LEAVES.get(), MOODY_PLUM_LEAF_PILE.get());
+		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.PLUM);
+		WoodworksRecipeProvider.baseRecipes(consumer, PLUM_PLANKS.get(), PLUM_SLAB.get(), PLUM_BOARDS.get(), PLUM_BOOKSHELF.get(), CHISELED_PLUM_BOOKSHELF.get(), PLUM_LADDER.get(), PLUM_BEEHIVE.get(), PLUM_CHEST.get(), TRAPPED_PLUM_CHEST.get(), Environmental.MOD_ID);
+		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY, EnvironmentalItemTags.PLUM_LOGS, PLUM_BOARDS.get(), PLUM_LADDER.get(), Environmental.MOD_ID);
+
 		generateRecipes(consumer, EnvironmentalBlockFamilies.WISTERIA_PLANKS_FAMILY);
 		planksFromLogs(consumer, WISTERIA_PLANKS.get(), EnvironmentalItemTags.WISTERIA_LOGS, 4);
 		woodFromLogs(consumer, WISTERIA_WOOD.get(), WISTERIA_LOG.get());
@@ -152,20 +164,8 @@ public class EnvironmentalRecipeProvider extends RecipeProvider {
 		WoodworksRecipeProvider.leafPileRecipes(consumer, WHITE_WISTERIA_LEAVES.get(), WHITE_WISTERIA_LEAF_PILE.get(), Environmental.MOD_ID);
 		WoodworksRecipeProvider.leafPileRecipes(consumer, WISTERIA_LEAVES.get(), WISTERIA_LEAF_PILE.get(), Environmental.MOD_ID);
 		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.WISTERIA);
-		WoodworksRecipeProvider.baseRecipes(consumer, WISTERIA_PLANKS.get(), WISTERIA_SLAB.get(), WISTERIA_BOARDS.get(), WISTERIA_BOOKSHELF.get(), Blocks.BAMBOO_STAIRS, WISTERIA_LADDER.get(), WISTERIA_BEEHIVE.get(), WISTERIA_CHEST.get(), TRAPPED_WISTERIA_CHEST.get(), Environmental.MOD_ID);
+		WoodworksRecipeProvider.baseRecipes(consumer, WISTERIA_PLANKS.get(), WISTERIA_SLAB.get(), WISTERIA_BOARDS.get(), WISTERIA_BOOKSHELF.get(), CHISELED_WISTERIA_BOOKSHELF.get(), WISTERIA_LADDER.get(), WISTERIA_BEEHIVE.get(), WISTERIA_CHEST.get(), TRAPPED_WISTERIA_CHEST.get(), Environmental.MOD_ID);
 		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.WISTERIA_PLANKS_FAMILY, EnvironmentalItemTags.WISTERIA_LOGS, WISTERIA_BOARDS.get(), WISTERIA_LADDER.get(), Environmental.MOD_ID);
-
-		generateRecipes(consumer, EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY);
-		planksFromLogs(consumer, PLUM_PLANKS.get(), EnvironmentalItemTags.PLUM_LOGS, 4);
-		woodFromLogs(consumer, PLUM_WOOD.get(), PLUM_LOG.get());
-		woodFromLogs(consumer, STRIPPED_PLUM_WOOD.get(), STRIPPED_PLUM_LOG.get());
-		hangingSign(consumer, PLUM_HANGING_SIGNS.getFirst().get(), STRIPPED_PLUM_LOG.get());
-		leafPileRecipes(consumer, PLUM_LEAVES.get(), PLUM_LEAF_PILE.get());
-		leafPileRecipes(consumer, CHEERFUL_PLUM_LEAVES.get(), CHEERFUL_PLUM_LEAF_PILE.get());
-		leafPileRecipes(consumer, MOODY_PLUM_LEAVES.get(), MOODY_PLUM_LEAF_PILE.get());
-		BoatloadRecipeProvider.boatRecipes(consumer, EnvironmentalBoatTypes.PLUM);
-		WoodworksRecipeProvider.baseRecipes(consumer, PLUM_PLANKS.get(), PLUM_SLAB.get(), PLUM_BOARDS.get(), PLUM_BOOKSHELF.get(), Blocks.BIRCH_STAIRS, PLUM_LADDER.get(), PLUM_BEEHIVE.get(), PLUM_CHEST.get(), TRAPPED_PLUM_CHEST.get(), Environmental.MOD_ID);
-		WoodworksRecipeProvider.sawmillRecipes(consumer, EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY, EnvironmentalItemTags.PLUM_LOGS, PLUM_BOARDS.get(), PLUM_LADDER.get(), Environmental.MOD_ID);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE).define('A', BlueprintItemTags.BUCKETS_MILK).define('B', Items.SUGAR).define('C', Items.WHEAT).define('E', Tags.Items.EGGS).pattern("AAA").pattern("BEB").pattern("CCC").unlockedBy("has_egg", has(Items.EGG)).save(consumer);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.PUMPKIN_PIE).requires(BlueprintItemTags.PUMPKINS).requires(Items.SUGAR).requires(Tags.Items.EGGS).unlockedBy("has_carved_pumpkin", has(Blocks.CARVED_PUMPKIN)).unlockedBy("has_pumpkin", has(BlueprintItemTags.PUMPKINS)).save(consumer);

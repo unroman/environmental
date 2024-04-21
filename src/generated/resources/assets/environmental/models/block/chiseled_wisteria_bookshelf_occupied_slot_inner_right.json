@@ -1,0 +1,6 @@
+{
+  "parent": "environmental:block/chiseled_wisteria_bookshelf_slot_inner_right",
+  "textures": {
+    "texture": "environmental:block/chiseled_wisteria_bookshelf_occupied"
+  }
+}

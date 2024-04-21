@@ -261,6 +261,7 @@ public class EnvironmentalBlocks {
 
 	public static final RegistryObject<Block> PLUM_BOARDS = HELPER.createFuelBlock("plum_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.PLUM.planks()), 300);
 	public static final RegistryObject<Block> PLUM_BOOKSHELF = HELPER.createFuelBlock("plum_bookshelf", () -> new Block(EnvironmentalProperties.PLUM.bookshelf()), 300);
+	public static final RegistryObject<Block> CHISELED_PLUM_BOOKSHELF = HELPER.createFuelBlock("chiseled_plum_bookshelf", () -> new ChiseledPlumBookShelfBlock(EnvironmentalProperties.PLUM.chiseledBookshelf()), 300);
 	public static final RegistryObject<Block> PLUM_LADDER = HELPER.createFuelBlock("plum_ladder", () -> new LadderBlock(EnvironmentalProperties.PLUM.ladder()), 300);
 	public static final RegistryObject<Block> PLUM_BEEHIVE = HELPER.createBlock("plum_beehive", () -> new BlueprintBeehiveBlock(EnvironmentalProperties.PLUM.beehive()));
 	public static final RegistryObject<BlueprintChestBlock> PLUM_CHEST = HELPER.createChestBlock("plum", EnvironmentalProperties.PLUM.chest());
@@ -323,6 +324,7 @@ public class EnvironmentalBlocks {
 
 	public static final RegistryObject<Block> WISTERIA_BOARDS = HELPER.createFuelBlock("wisteria_boards", () -> new RotatedPillarBlock(EnvironmentalProperties.WISTERIA.planks()), 300);
 	public static final RegistryObject<Block> WISTERIA_BOOKSHELF = HELPER.createFuelBlock("wisteria_bookshelf", () -> new Block(EnvironmentalProperties.WISTERIA.bookshelf()), 300);
+	public static final RegistryObject<Block> CHISELED_WISTERIA_BOOKSHELF = HELPER.createFuelBlock("chiseled_wisteria_bookshelf", () -> new ChiseledWisteriaBookShelfBlock(EnvironmentalProperties.WISTERIA.chiseledBookshelf()), 300);
 	public static final RegistryObject<Block> WISTERIA_LADDER = HELPER.createFuelBlock("wisteria_ladder", () -> new LadderBlock(EnvironmentalProperties.WISTERIA.ladder()), 300);
 	public static final RegistryObject<Block> WISTERIA_BEEHIVE = HELPER.createBlock("wisteria_beehive", () -> new BlueprintBeehiveBlock(EnvironmentalProperties.WISTERIA.beehive()));
 	public static final RegistryObject<Block> PINK_WISTERIA_LEAF_PILE = HELPER.createBlock("pink_wisteria_leaf_pile", () -> new LeafPileBlock(EnvironmentalProperties.PINK_WISTERIA.leafPile()));
@@ -415,7 +417,7 @@ public class EnvironmentalBlocks {
 				.tab(FUNCTIONAL_BLOCKS)
 				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_LADDER), WILLOW_LADDER, PINE_LADDER, PLUM_LADDER, WISTERIA_LADDER)
 				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_BEEHIVE), WILLOW_BEEHIVE, PINE_BEEHIVE, PLUM_BEEHIVE, WISTERIA_BEEHIVE)
-				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_BOOKSHELF), WILLOW_BOOKSHELF, CHISELED_WILLOW_BOOKSHELF, PINE_BOOKSHELF, CHISELED_PINE_BOOKSHELF, PLUM_BOOKSHELF, WISTERIA_BOOKSHELF)
+				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_BOOKSHELF), WILLOW_BOOKSHELF, CHISELED_WILLOW_BOOKSHELF, PINE_BOOKSHELF, CHISELED_PINE_BOOKSHELF, PLUM_BOOKSHELF, CHISELED_PLUM_BOOKSHELF, WISTERIA_BOOKSHELF, CHISELED_WISTERIA_BOOKSHELF)
 				.addItemsBefore(ofID(EnvironmentalConstants.BAMBOO_CLOSET), WILLOW_CHEST, PINE_CHEST, PLUM_CHEST, WISTERIA_CHEST)
 				.tab(REDSTONE_BLOCKS)
 				.addItemsBefore(ofID(EnvironmentalConstants.TRAPPED_BAMBOO_CLOSET), TRAPPED_WILLOW_CHEST, TRAPPED_PINE_CHEST, TRAPPED_PLUM_CHEST, TRAPPED_WISTERIA_CHEST);

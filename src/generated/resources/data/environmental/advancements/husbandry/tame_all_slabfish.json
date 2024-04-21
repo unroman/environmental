@@ -724,100 +724,64 @@
   },
   "requirements": [
     [
-      "environmental:totem"
-    ],
-    [
-      "environmental:hill"
-    ],
-    [
-      "environmental:bamboo"
-    ],
-    [
-      "environmental:nether"
-    ],
-    [
-      "environmental:mangrove"
-    ],
-    [
-      "environmental:beach"
-    ],
-    [
-      "environmental:dripstone_caves"
-    ],
-    [
-      "environmental:cherry_grove"
-    ],
-    [
-      "environmental:skeleton"
-    ],
-    [
-      "environmental:savanna"
-    ],
-    [
-      "environmental:nightmare"
+      "environmental:badlands"
     ],
     [
       "environmental:warm_ocean"
     ],
     [
-      "environmental:warped"
+      "environmental:forest"
     ],
     [
-      "environmental:deepslate"
-    ],
-    [
-      "environmental:soul_sand_valley"
-    ],
-    [
-      "environmental:badlands"
-    ],
-    [
-      "environmental:frozen_ocean"
-    ],
-    [
-      "environmental:jungle"
-    ],
-    [
-      "environmental:swamp"
-    ],
-    [
-      "environmental:pine"
-    ],
-    [
-      "environmental:flower_forest"
-    ],
-    [
-      "environmental:wither"
-    ],
-    [
-      "environmental:marsh"
-    ],
-    [
-      "environmental:drowned"
-    ],
-    [
-      "environmental:stray"
-    ],
-    [
-      "environmental:taiga"
-    ],
-    [
-      "environmental:desert"
-    ],
-    [
-      "environmental:cave"
+      "environmental:basalt_deltas"
     ],
     [
       "environmental:ghost"
     ],
     [
-      "environmental:mountain"
+      "environmental:mangrove"
     ],
     [
-      "environmental:chorus"
+      "environmental:desert"
     ],
     [
-      "environmental:blossom"
+      "environmental:warped"
+    ],
+    [
+      "environmental:totem"
+    ],
+    [
+      "environmental:taiga"
+    ],
+    [
+      "environmental:skeleton"
+    ],
+    [
+      "environmental:cave"
+    ],
+    [
+      "environmental:bamboo"
+    ],
+    [
+      "environmental:lush_caves"
+    ],
+    [
+      "environmental:deep_dark"
+    ],
+    [
+      "environmental:pine"
+    ],
+    [
+      "environmental:nether"
+    ],
+    [
+      "environmental:savanna"
+    ],
+    [
+      "environmental:end"
+    ],
+    [
+      "environmental:river"
     ],
     [
       "environmental:dark_forest"
@@ -826,43 +790,79 @@
       "environmental:mushroom"
     ],
     [
-      "environmental:ocean"
+      "environmental:snowy"
     ],
     [
-      "environmental:basalt_deltas"
+      "environmental:swamp"
+    ],
+    [
+      "environmental:dripstone_caves"
+    ],
+    [
+      "environmental:nightmare"
     ],
     [
       "environmental:ice_spikes"
     ],
     [
-      "environmental:forest"
-    ],
-    [
-      "environmental:crimson"
-    ],
-    [
-      "environmental:snowy"
-    ],
-    [
-      "environmental:deep_dark"
-    ],
-    [
-      "environmental:river"
-    ],
-    [
-      "environmental:lush_caves"
+      "environmental:flower_forest"
     ],
     [
       "environmental:plains"
     ],
     [
-      "environmental:sky"
-    ],
-    [
-      "environmental:end"
+      "environmental:stray"
     ],
     [
       "environmental:brown_mushroom"
+    ],
+    [
+      "environmental:deepslate"
+    ],
+    [
+      "environmental:beach"
+    ],
+    [
+      "environmental:mountain"
+    ],
+    [
+      "environmental:marsh"
+    ],
+    [
+      "environmental:hill"
+    ],
+    [
+      "environmental:chorus"
+    ],
+    [
+      "environmental:cherry_grove"
+    ],
+    [
+      "environmental:soul_sand_valley"
+    ],
+    [
+      "environmental:frozen_ocean"
+    ],
+    [
+      "environmental:sky"
+    ],
+    [
+      "environmental:wither"
+    ],
+    [
+      "environmental:jungle"
+    ],
+    [
+      "environmental:blossom"
+    ],
+    [
+      "environmental:drowned"
+    ],
+    [
+      "environmental:crimson"
+    ],
+    [
+      "environmental:ocean"
     ]
   ],
   "sends_telemetry_event": true

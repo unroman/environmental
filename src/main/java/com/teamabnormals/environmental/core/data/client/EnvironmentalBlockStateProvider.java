@@ -5,6 +5,7 @@ import com.teamabnormals.environmental.common.block.CattailBlock;
 import com.teamabnormals.environmental.common.block.CattailStalkBlock;
 import com.teamabnormals.environmental.core.Environmental;
 import com.teamabnormals.environmental.core.other.EnvironmentalBlockFamilies;
+import com.teamabnormals.woodworks.core.registry.WoodworksBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -20,6 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 import static com.teamabnormals.environmental.core.registry.EnvironmentalBlocks.*;
 
 public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider {
+	public static final String[] WISTERIA_BOOKSHELF_POSITIONS = new String[]{"outer_left", "mid_left", "inner_left", "inner_right", "mid_right", "outer_right"};
 
 	public EnvironmentalBlockStateProvider(PackOutput output, ExistingFileHelper helper) {
 		super(output, Environmental.MOD_ID, helper);
@@ -51,6 +53,19 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.cubeColumnBlock(PINECONE);
 		this.cubeColumnBlock(WAXED_PINECONE, PINECONE);
 
+		this.blockFamily(EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY);
+		this.logBlocks(PLUM_LOG, PLUM_WOOD);
+		this.logBlocks(STRIPPED_PLUM_LOG, STRIPPED_PLUM_WOOD);
+		this.hangingSignBlocks(STRIPPED_PLUM_LOG, PLUM_HANGING_SIGNS);
+		this.leavesBlocks(PLUM_LEAVES, PLUM_LEAF_PILE);
+		this.leavesBlocks(CHEERFUL_PLUM_LEAVES, CHEERFUL_PLUM_LEAF_PILE);
+		this.leavesBlocks(MOODY_PLUM_LEAVES, MOODY_PLUM_LEAF_PILE);
+		this.crossBlockWithPot(PLUM_SAPLING, POTTED_PLUM_SAPLING);
+		this.crossBlockWithPot(CHEERFUL_PLUM_SAPLING, POTTED_CHEERFUL_PLUM_SAPLING);
+		this.crossBlockWithPot(MOODY_PLUM_SAPLING, POTTED_MOODY_PLUM_SAPLING);
+		this.woodworksBlocks(PLUM_PLANKS, PLUM_BOARDS, PLUM_LADDER, PLUM_BOOKSHELF, PLUM_BEEHIVE, PLUM_CHEST, TRAPPED_PLUM_CHEST);
+		this.chiseledBookshelfBlock(CHISELED_PLUM_BOOKSHELF, DEFAULT_BOOKSHELF_POSITIONS);
+
 		this.blockFamily(EnvironmentalBlockFamilies.WISTERIA_PLANKS_FAMILY);
 		this.logBlocks(WISTERIA_LOG, WISTERIA_WOOD);
 		this.logBlocks(STRIPPED_WISTERIA_LOG, STRIPPED_WISTERIA_WOOD);
@@ -65,18 +80,7 @@ public class EnvironmentalBlockStateProvider extends BlueprintBlockStateProvider
 		this.leafPileBlock(BLUE_WISTERIA_LEAVES, BLUE_WISTERIA_LEAF_PILE);
 		this.leafPileBlock(PURPLE_WISTERIA_LEAVES, PURPLE_WISTERIA_LEAF_PILE);
 		this.leafPileBlock(WHITE_WISTERIA_LEAVES, WHITE_WISTERIA_LEAF_PILE);
-
-		this.blockFamily(EnvironmentalBlockFamilies.PLUM_PLANKS_FAMILY);
-		this.logBlocks(PLUM_LOG, PLUM_WOOD);
-		this.logBlocks(STRIPPED_PLUM_LOG, STRIPPED_PLUM_WOOD);
-		this.hangingSignBlocks(STRIPPED_PLUM_LOG, PLUM_HANGING_SIGNS);
-		this.leavesBlocks(PLUM_LEAVES, PLUM_LEAF_PILE);
-		this.leavesBlocks(CHEERFUL_PLUM_LEAVES, CHEERFUL_PLUM_LEAF_PILE);
-		this.leavesBlocks(MOODY_PLUM_LEAVES, MOODY_PLUM_LEAF_PILE);
-		this.crossBlockWithPot(PLUM_SAPLING, POTTED_PLUM_SAPLING);
-		this.crossBlockWithPot(CHEERFUL_PLUM_SAPLING, POTTED_CHEERFUL_PLUM_SAPLING);
-		this.crossBlockWithPot(MOODY_PLUM_SAPLING, POTTED_MOODY_PLUM_SAPLING);
-		this.woodworksBlocks(PLUM_PLANKS, PLUM_BOARDS, PLUM_LADDER, PLUM_BOOKSHELF, PLUM_BEEHIVE, PLUM_CHEST, TRAPPED_PLUM_CHEST);
+		this.chiseledBookshelfBlock(CHISELED_WISTERIA_BOOKSHELF, WISTERIA_BOOKSHELF_POSITIONS);
 
 		this.leavesBlocks(HIBISCUS_LEAVES, HIBISCUS_LEAF_PILE);
 

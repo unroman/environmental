@@ -1,0 +1,6 @@
+{
+  "parent": "environmental:block/chiseled_plum_bookshelf_slot_top_right",
+  "textures": {
+    "texture": "environmental:block/chiseled_plum_bookshelf_empty"
+  }
+}
