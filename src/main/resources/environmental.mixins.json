@@ -17,7 +17,6 @@
     "PigMixin",
     "PinkPetalsBlockMixin",
     "PlayerMixin",
-    "RabbitMixin",
     "ShearsItemMixin",
     "SurfaceSystemMixin",
     "WitherSkeletonEntityMixin"
