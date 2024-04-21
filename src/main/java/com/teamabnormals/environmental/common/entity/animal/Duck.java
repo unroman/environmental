@@ -1,5 +1,6 @@
 package com.teamabnormals.environmental.common.entity.animal;
 
+import com.teamabnormals.blueprint.core.api.EggLayer;
 import com.teamabnormals.environmental.common.entity.ai.goal.DuckSwimGoal;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBlockTags;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalItemTags;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -34,7 +36,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class Duck extends Animal {
+public class Duck extends Animal implements EggLayer {
 	private static final EntityDataAccessor<Integer> EATING = SynchedEntityData.defineId(Duck.class, EntityDataSerializers.INT);
 	private float wingRotation;
 	private float destPos;
@@ -119,10 +121,10 @@ public class Duck extends Animal {
 
 		if (!this.level().isClientSide) {
 			// Egg laying
-			if (this.isAlive() && !this.isBaby() && !this.wasTouchingWater && !this.isDuckJockey() && --this.timeUntilNextEgg <= 0) {
-				this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-				this.spawnAtLocation(EnvironmentalItems.DUCK_EGG.get());
-				this.timeUntilNextEgg = this.getRandomNextEggTime(this.random);
+			if (this.isAlive() && !this.isBaby() && !this.wasTouchingWater && !this.isBirdJockey() && --this.timeUntilNextEgg <= 0) {
+				this.playSound(this.getEggLayingSound(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+				this.spawnAtLocation(this.getEggItem());
+				this.timeUntilNextEgg = this.getNextEggTime(this.random);
 			}
 
 			// Eating
@@ -202,7 +204,7 @@ public class Duck extends Animal {
 
 	@Override
 	public int getExperienceReward() {
-		return this.isDuckJockey() ? 10 : super.getExperienceReward();
+		return this.isBirdJockey() ? 10 : super.getExperienceReward();
 	}
 
 	@Override
@@ -212,7 +214,6 @@ public class Duck extends Animal {
 		if (compound.contains("EggLayTime")) {
 			this.timeUntilNextEgg = compound.getInt("EggLayTime");
 		}
-
 	}
 
 	@Override
@@ -224,7 +225,7 @@ public class Duck extends Animal {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return this.isDuckJockey();
+		return this.isBirdJockey();
 	}
 
 	@Override
@@ -238,10 +239,6 @@ public class Duck extends Animal {
 		}
 	}
 
-	public boolean isDuckJockey() {
-		return this.duckJockey;
-	}
-
 	public void setDuckJockey(boolean jockey) {
 		this.duckJockey = jockey;
 	}
@@ -251,7 +248,33 @@ public class Duck extends Animal {
 		return EnvironmentalEntityTypes.DUCK.get().create(world);
 	}
 
-	public int getRandomNextEggTime(RandomSource rand) {
+	@Override
+	public int getEggTimer() {
+		return this.timeUntilNextEgg;
+	}
+
+	@Override
+	public void setEggTimer(int time) {
+		this.timeUntilNextEgg = time;
+	}
+
+	@Override
+	public boolean isBirdJockey() {
+		return this.duckJockey;
+	}
+
+	@Override
+	public Item getEggItem() {
+		return EnvironmentalItems.DUCK_EGG.get();
+	}
+
+	@Override
+	public int getNextEggTime(RandomSource rand) {
 		return rand.nextInt(6000) + 6000;
+	}
+
+	@Override
+	public SoundEvent getEggLayingSound() {
+		return EnvironmentalSoundEvents.DUCK_EGG.get();
 	}
 }
