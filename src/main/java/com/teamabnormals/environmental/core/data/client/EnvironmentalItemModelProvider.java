@@ -44,7 +44,6 @@ public class EnvironmentalItemModelProvider extends BlueprintItemModelProvider {
 
 		this.spawnEggItem(SLABFISH_SPAWN_EGG, DUCK_SPAWN_EGG, DEER_SPAWN_EGG, REINDEER_SPAWN_EGG, YAK_SPAWN_EGG, KOI_SPAWN_EGG, TAPIR_SPAWN_EGG, ZEBRA_SPAWN_EGG);
 
-		this.trimmableArmorItem(YAK_PANTS);
 		this.koiBuckets();
 
 		this.getBuilder(name(SLABFISH_BUCKET.get()));
