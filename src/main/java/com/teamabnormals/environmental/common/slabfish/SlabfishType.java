@@ -82,7 +82,7 @@ public record SlabfishType(Component displayName, ResourceLocation texture, Opti
 	}
 
 	public boolean canBeSold(Level level) {
-		return this.is(level, EnvironmentalSlabfishTypeTags.NOT_SOLD_BY_WANDERING_TRADER);
+		return !this.is(level, EnvironmentalSlabfishTypeTags.NOT_SOLD_BY_WANDERING_TRADER);
 	}
 
 	public boolean translucent(Level level) {
