@@ -139,7 +139,7 @@ public class EnvironmentalItems {
 				.addItemsBefore(of(Items.TURTLE_HELMET), THIEF_HOOD, HEALER_POUCH, ARCHITECT_BELT, WANDERER_BOOTS)
 				.addItemsBefore(of(Items.LEATHER_HORSE_ARMOR), YAK_PANTS)
 				.tab(TOOLS_AND_UTILITIES)
-				.addItemsBefore(of(Items.TROPICAL_FISH), KOI_BUCKET)
+				.addItemsBefore(of(Items.TROPICAL_FISH_BUCKET), KOI_BUCKET)
 				.addItemsBefore(of(Items.TADPOLE_BUCKET), SLABFISH_BUCKET)
 				.addItemsBefore(of(Items.BAMBOO_RAFT), WILLOW_BOAT.getFirst(), WILLOW_BOAT.getSecond())
 				.addItemsBefore(modLoaded(Items.BAMBOO_RAFT, "boatload"), WILLOW_FURNACE_BOAT, LARGE_WILLOW_BOAT)
