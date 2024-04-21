@@ -91,7 +91,7 @@ public class EnvironmentalBlockTagsProvider extends BlockTagsProvider {
 		this.tag(BlockTags.DAMPENS_VIBRATIONS).add(YAK_HAIR_BLOCK.get(), YAK_HAIR_RUG.get());
 
 		this.tag(DEER_SPAWNABLE_ON).add(Blocks.GRASS_BLOCK, Blocks.SNOW, Blocks.SNOW_BLOCK);
-		this.tag(WATER_ANIMALS_SPAWNABLE_ON).addTag(BlockTags.ANIMALS_SPAWNABLE_ON).add(Blocks.WATER);
+		this.tag(WATER_ANIMALS_SPAWNABLE_ON).addTag(BlockTags.ANIMALS_SPAWNABLE_ON).add(Blocks.WATER, Blocks.MUD);
 		this.tag(GRASS_LIKE).add(Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.MYCELIUM).addOptional(new ResourceLocation("atmospheric", "crustose"));
 		this.tag(CUP_LICHEN_PLANTABLE_ON).addTag(BlockTags.DIRT).addTag(Tags.Blocks.STONE).addTag(Tags.Blocks.ORES).addTag(BlockTags.LOGS);
 		this.tag(CACTUS_BOBBLE_PLANTABLE_ON).add(Blocks.CACTUS).addOptional(new ResourceLocation("atmospheric", "snowy_cactus"));

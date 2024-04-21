@@ -2,6 +2,7 @@ package com.teamabnormals.environmental.core.data.server.tags;
 
 import com.teamabnormals.blueprint.core.other.tags.BlueprintBiomeTags;
 import com.teamabnormals.environmental.core.Environmental;
+import com.teamabnormals.environmental.core.other.EnvironmentalConstants;
 import com.teamabnormals.environmental.core.other.tags.EnvironmentalBiomeTags;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBiomes;
 import net.minecraft.core.HolderLookup.Provider;
@@ -87,7 +88,7 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 		this.tag(EnvironmentalBiomeTags.HAS_SLABFISH).addTag(Tags.Biomes.IS_SWAMP);
 		this.tag(EnvironmentalBiomeTags.HAS_DUCK).addTag(Tags.Biomes.IS_SWAMP);
 		this.tag(EnvironmentalBiomeTags.HAS_DEER).addTag(BiomeTags.IS_FOREST);
-		this.tag(EnvironmentalBiomeTags.WITHOUT_DEER).add(Biomes.GROVE).addOptional(new ResourceLocation("atmospheric", "aspen_parkland")).addOptional(new ResourceLocation("atmospheric", "grimwoods"));
+		this.tag(EnvironmentalBiomeTags.WITHOUT_DEER).add(Biomes.GROVE).addOptional(EnvironmentalConstants.ASPEN_PARKLAND).addOptional(EnvironmentalConstants.GRIMWOODS);
 		this.tag(EnvironmentalBiomeTags.HAS_MUDDY_PIG).addTag(Tags.Biomes.IS_SWAMP);
 		this.tag(EnvironmentalBiomeTags.HAS_REINDEER).addTag(BlueprintBiomeTags.IS_ICY).addTag(BiomeTags.IS_TAIGA).add(Biomes.GROVE);
 		this.tag(EnvironmentalBiomeTags.HAS_TAPIR).add(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE);
@@ -105,7 +106,7 @@ public class EnvironmentalBiomeTagsProvider extends BiomeTagsProvider {
 		this.tag(EnvironmentalBiomeTags.HAS_BLUEBELL).add(Biomes.DARK_FOREST);
 		this.tag(EnvironmentalBiomeTags.HAS_VIOLET).addTag(BiomeTags.IS_TAIGA);
 		this.tag(EnvironmentalBiomeTags.HAS_TASSELFLOWER).addTag(BiomeTags.IS_SAVANNA);
-		this.tag(EnvironmentalBiomeTags.HAS_BIRD_OF_PARADISE).addTag(BiomeTags.IS_JUNGLE).addOptionalTag(new ResourceLocation("atmospheric", "is_rainforest"));
+		this.tag(EnvironmentalBiomeTags.HAS_BIRD_OF_PARADISE).addTag(BiomeTags.IS_JUNGLE).addTag(EnvironmentalBiomeTags.IS_RAINFOREST);
 		this.tag(EnvironmentalBiomeTags.HAS_HIBISCUS).add(Biomes.JUNGLE);
 
 		this.tag(EnvironmentalBiomeTags.HAS_MUD_DISK).add(Biomes.SWAMP);

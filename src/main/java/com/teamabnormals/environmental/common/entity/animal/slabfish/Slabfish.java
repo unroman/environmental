@@ -168,7 +168,7 @@ public class Slabfish extends TamableAnimal implements ContainerListener, Bucket
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		this.setSlabfishTypeFromLocation(new ResourceLocation(compound.getString("SlabfishType")));
+		this.setSlabfishTypeFromLocation(compound.contains("SlabfishType") ? new ResourceLocation(compound.getString("SlabfishType")) : EnvironmentalSlabfishTypes.SWAMP.location());
 		this.setSlabfishOverlay(SlabfishOverlay.byId(compound.getInt("SlabfishOverlay")));
 		this.setBackpack(compound.contains("BackpackType", Tag.TAG_STRING) ? new ResourceLocation(compound.getString("BackpackType")) : EnvironmentalSlabfishBackpacks.BROWN.location());
 		this.setFromBucket(compound.getBoolean("FromBucket"));

@@ -34,7 +34,7 @@ public class SlabfishHelper {
 	}
 
 	public static Optional<SlabfishType> getSlabfishType(Registry<SlabfishType> registry, Predicate<SlabfishType> predicate, SlabfishConditionContext context) {
-		return registry.stream().filter(slabfishType -> !registry.getKey(slabfishType).equals(EnvironmentalSlabfishTypes.SWAMP.location()) && predicate.test(slabfishType) && slabfishType.test(context)).max(Comparator.comparingInt(SlabfishType::priority));
+		return registry.stream().filter(slabfishType -> predicate.test(slabfishType) && slabfishType.test(context)).max(Comparator.comparingInt(SlabfishType::priority));
 	}
 
 	public static Optional<SweaterType> getSweaterType(Registry<SweaterType> registry, ItemStack stack) {

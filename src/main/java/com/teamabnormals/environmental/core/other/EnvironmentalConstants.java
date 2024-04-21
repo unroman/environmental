@@ -14,6 +14,7 @@ public class EnvironmentalConstants {
 	public static final ResourceLocation SCRUBLAND = new ResourceLocation(ATMOSPHERIC, "scrubland");
 	public static final ResourceLocation SNOWY_SCRUBLAND = new ResourceLocation(ATMOSPHERIC, "snowy_scrubland");
 	public static final ResourceLocation SPINY_THICKET = new ResourceLocation(ATMOSPHERIC, "spiny_thicket");
+	public static final ResourceLocation GRIMWOODS = new ResourceLocation(ATMOSPHERIC, "grimwoods");
 
 	public static final ResourceLocation MAPLE_FOREST = new ResourceLocation(AUTUMNITY, "maple_forest");
 	public static final ResourceLocation PUMPKIN_FIELDS = new ResourceLocation(AUTUMNITY, "pumpkin_fields");
