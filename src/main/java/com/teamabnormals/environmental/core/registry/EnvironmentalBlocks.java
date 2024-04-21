@@ -380,7 +380,7 @@ public class EnvironmentalBlocks {
 				.addItemsBefore(of(Blocks.PITCHER_PLANT), PINK_DELPHINIUM, PURPLE_DELPHINIUM, BLUE_DELPHINIUM, WHITE_DELPHINIUM, BIRD_OF_PARADISE)
 				.addItemsBefore(of(Blocks.MUSHROOM_STEM), WILLOW_LOG, PINE_LOG, PLUM_LOG, WISTERIA_LOG)
 				.addItemsBefore(of(Blocks.MELON), PINECONE, WAXED_PINECONE)
-				.addItemsAfter(modLoaded(Blocks.HAY_BLOCK, "quark"), CHERRY_CRATE)
+				.addItemsAfter(modLoaded(Blocks.HAY_BLOCK, "berry_good"), CHERRY_CRATE)
 				.addItemsAfter(of(Blocks.HAY_BLOCK), CATTAIL_FLUFF_BLOCK, YAK_HAIR_BLOCK, YAK_HAIR_RUG)
 				.addItemsBefore(of(Blocks.AZALEA_LEAVES), WILLOW_LEAVES)
 				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), WILLOW_LEAF_PILE)
@@ -405,6 +405,10 @@ public class EnvironmentalBlocks {
 				.addItemsBefore(of(Blocks.AZALEA_LEAVES), HIBISCUS_LEAVES)
 				.addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), HIBISCUS_LEAF_PILE)
 				.addItemsBefore(of(Blocks.AZALEA), WILLOW_SAPLING, PINE_SAPLING, CHEERFUL_PLUM_SAPLING, PLUM_SAPLING, MOODY_PLUM_SAPLING, PINK_WISTERIA_SAPLING, PURPLE_WISTERIA_SAPLING, BLUE_WISTERIA_SAPLING, WHITE_WISTERIA_SAPLING);
+
+		CreativeModeTabContentsPopulator.mod("incubation_1")
+				.tab(NATURAL_BLOCKS)
+				.addItemsAfter(ofID(EnvironmentalConstants.CHICKEN_EGG_CRATE), DUCK_EGG_CRATE);
 
 		CreativeModeTabContentsPopulator.mod("woodworks_1")
 				.tab(FUNCTIONAL_BLOCKS)
