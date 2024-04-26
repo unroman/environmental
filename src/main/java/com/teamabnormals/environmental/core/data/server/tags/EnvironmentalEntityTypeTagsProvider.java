@@ -26,7 +26,6 @@ public class EnvironmentalEntityTypeTagsProvider extends EntityTypeTagsProvider 
 	public void addTags(Provider provider) {
 		this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(MUD_BALL.get(), DUCK_EGG.get());
 		this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(REINDEER.get());
-		this.tag(EntityTypeTags.AXOLOTL_HUNT_TARGETS).add(KOI.get());
 
 		this.tag(UNAFFECTED_BY_SERENITY);
 		this.tag(EnvironmentalEntityTypeTags.DEER).add(EnvironmentalEntityTypes.DEER.get(), REINDEER.get());
